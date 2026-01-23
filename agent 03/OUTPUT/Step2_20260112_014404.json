@@ -1,0 +1,24 @@
+{
+  "asset_types": [
+    {
+      "Icon": "A magnifying glass over a document",
+      "asset_type": "Search Document"
+    },
+    {
+      "Icon": "A cloud with an arrow pointing down",
+      "asset_type": "Download from Cloud"
+    },
+    {
+      "Icon": "A gear symbol",
+      "asset_type": "Settings"
+    },
+    {
+      "Icon": "A bell with a notification dot",
+      "asset_type": "Notifications"
+    },
+    {
+      "Icon": "A person silhouette",
+      "asset_type": "User Profile"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "templates": [
+    {
+      "template_id": "tmpl-q4-release-review",
+      "name": "Q4 Release Compliance Review",
+      "description": "Standard procedure for validating the Q4 software release candidate against compliance and security standards.",
+      "triggers": ["review release", "q4 audit", "release validation"],
+      "estimated_duration": "5m",
+      
+      "steps": [
+        {
+          "step_number": 1,
+          "name": "Fetch Release Artifacts",
+          "description": "Retrieve the build manifest and changelog for the latest Q4 candidate.",
+          "required_resources": {
+            "agent_id": "agent-devops-01",
+            "tool_id": "tool-github-fetch",
+            "knowledge_id": null
+          },
+          "validation": {
+            "criteria": "Must return a JSON object containing 'build_id' and 'commit_hash'.",
+            "retry_on_failure": true,
+            "max_retries": 3
+          }
+        },
+        {
+          "step_number": 2,
+          "name": "Compliance Scan",
+          "description": "Compare the changelog against the 2025 IT Security Policy to identify banned libraries or patterns.",
+          "required_resources": {
+            "agent_id": "agent-compliance-01",
+            "tool_id": null,
+            "knowledge_id": "kb-it-policy-2025"
+          },
+          "validation": {
+            "criteria": "Must produce a list of 'violations'. If list is empty, return 'status: compliant'.",
+            "critical_fail": true
+          }
+        },
+        {
+          "step_number": 3,
+          "name": "Generate Final Report",
+          "description": "Compile findings into a PDF report for the CTO.",
+          "required_resources": {
+            "agent_id": "agent-reporter-01",
+            "tool_id": "tool-pdf-generator",
+            "knowledge_id": null
+          },
+          "validation": {
+            "criteria": "Output must be a valid file path ending in .pdf",
+            "critical_fail": false
+          }
+        }
+      ]
+    },
+    {
+      "template_id": "tmpl-cc-review-asset-number-check",
+      "name": "Customer Connections Asset Number Diagram Check",
+      "description": "Standard procedure for validating all assets are represented on a line diagram.",
+      "triggers": ["review diagram", "connections audit", "submission validation"],
+      "estimated_duration": "5m",
+      
+      "steps": [
+        {
+          "step_number": 1,
+          "name": "Fetch customer connections submission asset data",
+          "description": "Send the raw asset information file (CSV, Excel, JSON, or Doc) to the Asset Ops Agent for LLM extraction and logging.",
+          "required_resources": {
+            "agent_id": "agent-asset-ops",
+            "tool_id": null,
+            "knowledge_id": null
+          },
+          "validation": {
+            "criteria": "Must return a JSON object with an 'assets' key containing a list of items with 'asset_number' and 'asset_type'.",
+            "retry_on_failure": true,
+            "max_retries": 3
+          }
+        },
+        {
+          "step_number": 2,
+          "name": "Extract Asset types from asset legend diagram",
+          "description": "Analyse each icon and create a descriptive description, extract the matching text for the icon and create a JSON file with Icon description and Icon Text.",
+          "required_resources": {
+            "agent_id": "agent-content-reviewer",
+            "tool_id": null,
+            "knowledge_id": null
+          },
+          "validation": {
+            "criteria": "Must return a JSON object with the text for each icon 'Icon' and a discription of the icon 'asset_type' into a JSON format of asset_types.",
+            "critical_fail": true
+          }
+        },
+        {
+          "step_number": 3,
+          "name": "Verify Assets vs Legend",
+          "description": "Invoke the Verification Agent. Request the user to upload the P&ID Drawing file (PDF or Image) to visually cross-reference the extracted Asset List against the Legend.",
+          "required_resources": {
+            "agent_id": "agent-verification",
+            "tool_id": null,
+            "knowledge_id": null
+          },
+          "validation": {
+            "criteria": "Output must be a valid JSON object containing a 'verification_report' list with status flags for each asset.",
+            "critical_fail": true
+          }
+        }
+      ]
+    }
+  ]
+}

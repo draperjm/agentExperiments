@@ -1,0 +1,93 @@
+services:
+  # 1. Decomposer Service
+  decomposer:
+    build:
+      context: .
+      dockerfile: Dockerfile.decomposer
+    container_name: agent-decomposer
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ORCHESTRATOR_URL=http://orchestrator:8001/execute
+    volumes:
+      - .:/app
+    depends_on:
+      - orchestrator
+    networks:
+      - agent-network
+
+  # 2. Orchestrator Service
+  orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile.orchestrator
+    container_name: agent-orchestrator
+    ports:
+      - "8001:8001"
+    volumes:
+      - .:/app
+    networks:
+      - agent-network
+
+  # 3. Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: agent-frontend
+    ports:
+      - "8080:80"
+    networks:
+      - agent-network
+
+  # 4. Asset Operations Agent
+  asset-ops:
+    build:
+      context: .
+      dockerfile: Dockerfile.asset_ops
+    container_name: agent-asset-ops
+    ports:
+      - "8084:8084"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - .:/app
+    networks:
+      - agent-network
+
+  # 5. Content Reviewer Agent (New)
+  content-reviewer:
+    build:
+      context: .
+      dockerfile: Dockerfile.content_reviewer
+    container_name: agent-content-reviewer
+    ports:
+      - "8085:8085"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      - .:/app
+    networks:
+      - agent-network
+
+  # 6. Verification Agent
+  agent-verification:
+    build:
+      context: .
+      dockerfile: Dockerfile.verification
+    container_name: agent-verification
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./OUTPUT:/app/OUTPUT
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    networks:
+      - agent-network
+
+networks:
+  agent-network:
+    driver: bridge

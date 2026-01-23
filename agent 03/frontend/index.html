@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent Command Center</title>
+    <style>
+        /* ... existing styles ... */
+        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 2rem; max-width: 1000px; margin: 0 auto; }
+        .container { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        .card { background: var(--card); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        h2 { margin-top: 0; color: var(--primary); font-size: 1.25rem; }
+        .input-group { display: flex; gap: 10px; margin-bottom: 1rem; }
+        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background 0.2s; }
+        button:hover { background: #1d4ed8; }
+        button:disabled { background: #94a3b8; cursor: not-allowed; }
+        #runStepBtn { background: #16a34a; display: none; width: 100%; margin-top: 1rem; }
+        #runStepBtn:hover { background: #15803d; }
+        .status-box { background: #1e293b; color: #00ff00; font-family: 'Courier New', monospace; padding: 1rem; border-radius: 8px; height: 300px; overflow-y: auto; white-space: pre-wrap; font-size: 0.9rem; }
+        .step-list { list-style: none; padding: 0; }
+        .step-item { border-left: 3px solid #cbd5e1; padding-left: 1rem; margin-bottom: 1rem; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
+        .modal { background: white; padding: 2rem; border-radius: 12px; width: 400px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        .modal h3 { margin-top: 0; }
+        .file-drop { border: 2px dashed #cbd5e1; padding: 2rem; text-align: center; margin: 1rem 0; border-radius: 8px; cursor: pointer; }
+        .file-drop:hover { border-color: var(--primary); background: #eff6ff; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h2>🚀 Command Center</h2>
+            <div class="input-group">
+                <input type="text" id="taskInput" placeholder="Enter task (e.g., 'Extract assets from spreadsheet')..." />
+                <button onclick="submitTask()" id="submitBtn">Decompose</button>
+            </div>
+            <button id="runStepBtn" onclick="handleRunClick()">▶ Run Next Step</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div class="card">
+                <h2>📋 Generated Plan</h2>
+                <div id="planContainer"><p style="color: #64748b;">Waiting for task...</p></div>
+            </div>
+
+            <div class="card">
+                <h2>⚙️ Execution Logs</h2>
+                <div class="status-box" id="consoleOutput">[SYSTEM] Ready...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal">
+            <h3>📂 Input Required</h3>
+            <p>The next step requires a file upload.</p>
+            <input type="file" id="fileInput" style="display: block; margin-bottom: 1rem;">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button onclick="closeModal()" style="background: #64748b;">Cancel</button>
+                <button onclick="confirmUpload()">Upload & Execute</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPlanId = null;
+        let currentStepIndex = 0;
+        let planSteps = [];
+
+        async function submitTask() {
+            const input = document.getElementById('taskInput');
+            const btn = document.getElementById('submitBtn');
+            const runBtn = document.getElementById('runStepBtn');
+            const consoleBox = document.getElementById('consoleOutput');
+            const planBox = document.getElementById('planContainer');
+
+            if (!input.value.trim()) return;
+
+            btn.disabled = true;
+            runBtn.style.display = "none";
+            currentPlanId = null;
+            currentStepIndex = 0;
+            
+            consoleBox.innerText = `> Analysis started for: "${input.value}"...\n`;
+            planBox.innerHTML = '<p style="color: #64748b;">Generating plan...</p>';
+
+            try {
+                const response = await fetch('http://localhost:8000/decompose', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ task: input.value })
+                });
+
+                if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+                const data = await response.json();
+
+                planSteps = data.plan.steps;
+
+                let stepsHtml = `<ul class="step-list">`;
+                planSteps.forEach(step => {
+                    stepsHtml += `
+                        <li class="step-item">
+                            <div style="font-weight:bold; color:#2563eb">Step ${step.step_number}</div>
+                            <strong>${step.name || 'Action'}</strong>
+                            <div style="font-size: 0.9rem;">${step.description}</div>
+                        </li>`;
+                });
+                stepsHtml += '</ul>';
+                planBox.innerHTML = `<h3>${data.plan.plan_overview}</h3>${stepsHtml}`;
+                consoleBox.innerText += `> Plan generated.\n`;
+
+                if (data.orchestrator_data && data.orchestrator_data.plan_id) {
+                    currentPlanId = data.orchestrator_data.plan_id;
+                    consoleBox.innerText += `> Plan initialized [ID: ${currentPlanId}]\n> Waiting for user approval...\n`;
+                    runBtn.style.display = "block";
+                    runBtn.innerText = "▶ Run Step 1";
+                }
+
+            } catch (err) {
+                consoleBox.innerText += `[ERROR] ${err.message}\n`;
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // --- UPDATED LOGIC HERE ---
+        function handleRunClick() {
+            if (!currentPlanId) {
+                console.warn("[UI] No active plan ID found.");
+                return;
+            }
+            if (currentStepIndex >= planSteps.length) {
+                console.warn("[UI] All steps already completed.");
+                return;
+            }
+
+            const nextStep = planSteps[currentStepIndex];
+            
+            // 1. Determine Resource ID
+            let resource = nextStep.assigned_resource_id;
+            if (nextStep.required_resources && nextStep.required_resources.agent_id) {
+                resource = nextStep.required_resources.agent_id;
+            }
+
+            console.log(`[UI] Current Step: ${currentStepIndex + 1}`);
+            console.log(`[UI] Detected Resource: "${resource}"`);
+
+            const r = (resource || "").toLowerCase();
+
+            // 2. CHECK MATCHES (Added "verification")
+            const isFileAgent = (r.includes("asset") && r.includes("ops")) || 
+                                (r.includes("content") && r.includes("reviewer")) ||
+                                (r.includes("verification")); // <--- NEW CHECK ADDED
+
+            if (isFileAgent) {
+                console.log("[UI] File-handling agent detected! Opening Modal...");
+                // Reset file input for fresh upload
+                document.getElementById('fileInput').value = ""; 
+                document.getElementById('uploadModal').style.display = 'flex';
+            } else {
+                console.log("[UI] Standard agent. Executing immediately.");
+                executeStep(null); 
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('uploadModal').style.display = 'none';
+        }
+
+        async function confirmUpload() {
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length === 0) {
+                alert("Please select a file.");
+                return;
+            }
+            closeModal();
+            executeStep(fileInput.files[0]);
+        }
+
+        async function executeStep(fileToUpload) {
+            const runBtn = document.getElementById('runStepBtn');
+            const consoleBox = document.getElementById('consoleOutput');
+            
+            runBtn.disabled = true;
+            runBtn.innerText = "Running...";
+
+            try {
+                // Prepare Request
+                let url = `http://localhost:8001/run_next/${currentPlanId}`;
+                let options = { method: 'POST' };
+
+                // If file exists, use FormData
+                if (fileToUpload) {
+                    const formData = new FormData();
+                    formData.append('file', fileToUpload);
+                    options.body = formData;
+                }
+
+                const response = await fetch(url, options);
+
+                if (!response.ok) throw new Error(`Execution Failed: ${response.status}`);
+                const result = await response.json();
+                
+                // Handle "Paused" state from backend if Orchestrator asks for file dynamically
+                if (result.status === "paused" && result.action === "request_file_upload") {
+                     consoleBox.innerText += `\n[PAUSED] ${result.message}\n`;
+                     document.getElementById('uploadModal').style.display = 'flex';
+                     runBtn.innerText = "Retry Step";
+                     runBtn.disabled = false;
+                     return; 
+                }
+
+                consoleBox.innerText += `\n${result.log}\n`;
+                
+                if (result.status === "completed") {
+                    consoleBox.innerText += "\n[SYSTEM] ✅ Workflow Finished.\n";
+                    runBtn.style.display = "none";
+                } else {
+                    currentStepIndex = result.step_index; 
+                    runBtn.innerText = `▶ Run Step ${result.step_index + 1}`;
+                }
+
+            } catch (err) {
+                consoleBox.innerText += `\n[ERROR] Execution failed: ${err.message}\n`;
+            } finally {
+                if (runBtn.style.display !== "none" && runBtn.innerText !== "Retry Step") {
+                    runBtn.disabled = false;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
