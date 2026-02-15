@@ -92,8 +92,22 @@
         },
         {
           "step_number": 3,
+          "name": "Create Asset-to-Legend Mapping",
+          "description": "Join the extracted asset data from Step 1 with the legend icon data from Step 2. For each asset, match the asset_type to its corresponding legend icon description and produce a unified mapping file.",
+          "required_resources": {
+            "agent_id": "agent-mapper",
+            "tool_id": null,
+            "knowledge_id": null
+          },
+          "validation": {
+            "criteria": "Must return a JSON object with an 'asset_map' key containing a list of items with 'asset_number', 'asset_type', and 'expected_icon_description'. Items without a legend match must show 'NOT FOUND IN LEGEND'.",
+            "critical_fail": true
+          }
+        },
+        {
+          "step_number": 4,
           "name": "Verify Assets vs Legend",
-          "description": "Invoke the Verification Agent. Request the user to upload the P&ID Drawing file (PDF or Image) to visually cross-reference the extracted Asset List against the Legend.",
+          "description": "Invoke the Verification Agent. Request the user to upload the P&ID Drawing file (PDF or Image) to visually cross-reference the mapped Asset List against the Legend.",
           "required_resources": {
             "agent_id": "agent-verification",
             "tool_id": null,

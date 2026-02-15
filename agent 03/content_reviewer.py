@@ -245,7 +245,15 @@ async def review_content(
             "3. Do NOT include stray strings, numbers, or partial values in arrays.\n"
             "4. Do NOT add commas after the last item in arrays or objects.\n"
             "5. Use double quotes for all JSON keys and string values.\n"
-            "6. Validate your JSON is parseable before responding."
+            "6. Validate your JSON is parseable before responding.\n"
+            "7. When extracting legend/icon data, each object MUST have exactly these fields:\n"
+            '   - "Icon": A visual description of what the icon/symbol LOOKS LIKE (e.g. "Small hollow square", "Single dashed horizontal line")\n'
+            '   - "asset_type": The TEXT LABEL or NAME of the asset type (e.g. "NEW COLUMN", "EXISTING UNDERGROUND MAINS")\n'
+            "   IMPORTANT: Do NOT swap these fields. 'Icon' = visual appearance, 'asset_type' = the name/label.\n"
+            "8. Every 'Icon' description MUST be UNIQUE across all entries. If two icons look similar,\n"
+            "   describe their visual differences precisely (e.g. line thickness, dash pattern, spacing,\n"
+            "   additional marks like hash marks or perpendicular segments). Two different asset types\n"
+            "   MUST NEVER share the same Icon description."
         )
         if agent_instructions:
             sys_prompt += f"\n\nCRITICAL OPERATIONAL PROTOCOLS:\n{agent_instructions}"
@@ -293,7 +301,38 @@ async def review_content(
                 json.dump(parsed_result, f, indent=2, ensure_ascii=False)
             print(f"[REVIEWER] 💾 Output saved to {output_filename}")
             
-            return {"status": "success", "model": model, "result": parsed_result, "output_file": output_filename}
+            # For visual PDF processing (Gemini), pdfplumber may return [EMPTY_PAGE]
+            # because the PDF contains images not text. In that case, provide the
+            # LLM's own extraction as the source context for the validator.
+            source_text = extracted_text[:10000]
+            is_empty_extraction = all(
+                line.strip() in ("[EMPTY_PAGE]", "") for line in extracted_text.split("\n")
+            )
+            if is_empty_extraction and media_payload:
+                source_text = (
+                    f"[VISUAL PDF] File '{file.filename}' ({file_size} bytes) was processed "
+                    f"visually by {provider}/{model} (multimodal). Text extraction returned empty "
+                    f"because the PDF contains images/diagrams, not selectable text. "
+                    f"The model analysed the raw PDF bytes directly. "
+                    f"Validator should assess output structure and internal consistency rather "
+                    f"than cross-referencing against raw text."
+                )
+
+            return {
+                "status": "success",
+                "model": model,
+                "result": parsed_result,
+                "output_file": output_filename,
+                "extracted_text": source_text,
+                "files": {
+                    "files_read": [
+                        {"filename": file.filename, "role": "input", "description": f"Content file for review ({file_ext.upper()})"}
+                    ],
+                    "files_output": [
+                        {"filename": os.path.basename(output_filename), "path": output_filename, "role": "output", "description": "Extracted legend/content data (JSON)"}
+                    ]
+                }
+            }
         
         last_feedback = feedback
         print(f"[REVIEWER] ❌ Validation Failed: {feedback}")

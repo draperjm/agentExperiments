@@ -5,62 +5,325 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Command Center</title>
     <style>
-        /* ... existing styles ... */
-        :root { --primary: #2563eb; --bg: #f8fafc; --card: #ffffff; --text: #1e293b; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 2rem; max-width: 1000px; margin: 0 auto; }
-        .container { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        .card { background: var(--card); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-        h2 { margin-top: 0; color: var(--primary); font-size: 1.25rem; }
-        .input-group { display: flex; gap: 10px; margin-bottom: 1rem; }
-        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
-        button { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: background 0.2s; }
-        button:hover { background: #1d4ed8; }
-        button:disabled { background: #94a3b8; cursor: not-allowed; }
-        #runStepBtn { background: #16a34a; display: none; width: 100%; margin-top: 1rem; }
+        :root { --primary: #2563eb; --bg: #f1f5f9; --card: #ffffff; --text: #1e293b; --success: #16a34a; --pending: #94a3b8; --active: #f59e0b; --error: #dc2626; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 1.5rem; }
+
+        /* Header */
+        .header { max-width: 1400px; margin: 0 auto 1.5rem; }
+        .header h1 { font-size: 1.5rem; color: var(--text); margin-bottom: 1rem; }
+        .input-row { display: flex; gap: 10px; align-items: center; }
+        .input-row select { flex: 1; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; background: white; }
+        .input-row button { padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; transition: background 0.2s; }
+        #submitBtn { background: var(--primary); color: white; }
+        #submitBtn:hover { background: #1d4ed8; }
+        #submitBtn:disabled { background: var(--pending); cursor: not-allowed; }
+        #runStepBtn { background: var(--success); color: white; display: none; }
         #runStepBtn:hover { background: #15803d; }
-        .status-box { background: #1e293b; color: #00ff00; font-family: 'Courier New', monospace; padding: 1rem; border-radius: 8px; height: 300px; overflow-y: auto; white-space: pre-wrap; font-size: 0.9rem; }
-        .step-list { list-style: none; padding: 0; }
-        .step-item { border-left: 3px solid #cbd5e1; padding-left: 1rem; margin-bottom: 1rem; }
+        #runStepBtn:disabled { background: var(--pending); cursor: not-allowed; }
+
+        /* Main layout: workflow | logs + output */
+        .main-layout { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 480px; gap: 1.5rem; align-items: start; }
+
+        /* Workflow panel */
+        .workflow-panel { background: var(--card); border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 3px rgb(0 0 0 / 0.1); }
+        .workflow-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem; }
+        .workflow-overview { font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem; }
+        .workflow-placeholder { color: #94a3b8; font-size: 0.9rem; padding: 2rem 0; text-align: center; }
+
+        /* Step cards in workflow */
+        .workflow-steps { display: flex; flex-direction: column; gap: 0; }
+        .step-node { position: relative; display: grid; grid-template-columns: 56px 1fr; gap: 0; }
+
+        /* Left column: circle + connector line */
+        .step-indicator { display: flex; flex-direction: column; align-items: center; }
+        .step-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; color: white; flex-shrink: 0; transition: background 0.3s, box-shadow 0.3s; }
+        .step-circle.pending { background: #cbd5e1; color: #64748b; }
+        .step-circle.active { background: var(--active); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25); }
+        .step-circle.running { background: var(--active); box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25); animation: pulse 1.5s infinite; }
+        .step-circle.completed { background: var(--success); }
+        .step-circle.error { background: var(--error); }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25); } 50% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0.1); } }
+
+        .step-connector { width: 3px; flex: 1; min-height: 16px; background: #e2e8f0; transition: background 0.3s; }
+        .step-connector.done { background: var(--success); }
+        .step-node:last-child .step-connector { display: none; }
+
+        /* Right column: step content card */
+        .step-content { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 12px; transition: border-color 0.3s, box-shadow 0.3s; }
+        .step-content.active { border-color: var(--active); box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15); }
+        .step-content.completed { border-color: var(--success); background: #f0fdf4; }
+        .step-content.error { border-color: var(--error); background: #fef2f2; }
+
+        .step-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; }
+        .step-name { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+        .step-badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 9999px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+        .step-badge.pending { background: #f1f5f9; color: #64748b; }
+        .step-badge.active { background: #fef3c7; color: #92400e; }
+        .step-badge.running { background: #fef3c7; color: #92400e; }
+        .step-badge.completed { background: #dcfce7; color: #166534; }
+        .step-badge.error { background: #fee2e2; color: #991b1b; }
+
+        .step-desc { font-size: 0.82rem; color: #475569; line-height: 1.45; margin-bottom: 0.6rem; }
+
+        .step-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+        .meta-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; padding: 3px 8px; border-radius: 6px; background: #e2e8f0; color: #475569; }
+        .meta-tag .icon { font-size: 0.8rem; }
+
+        /* Step output toggle inside step card */
+        .step-output-toggle { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; padding: 3px 8px; border-radius: 6px; background: #dbeafe; color: #1d4ed8; cursor: pointer; border: none; font-family: inherit; margin-top: 8px; transition: background 0.2s; }
+        .step-output-toggle:hover { background: #bfdbfe; }
+        .step-output-inline { margin-top: 8px; background: #1e293b; color: #4ade80; font-family: 'Courier New', monospace; font-size: 0.72rem; padding: 0.6rem 0.8rem; border-radius: 6px; max-height: 150px; overflow-y: auto; white-space: pre-wrap; line-height: 1.4; word-break: break-all; }
+
+        /* Validator status bar */
+        .validator-bar { margin-top: 10px; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .validator-header { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; user-select: none; transition: background 0.2s; }
+        .validator-header:hover { filter: brightness(0.97); }
+        .validator-header.pass { background: #f0fdf4; border-color: #bbf7d0; }
+        .validator-header.fail { background: #fef2f2; border-color: #fecaca; }
+        .validator-header.pending { background: #f8fafc; border-color: #e2e8f0; }
+        .validator-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: white; flex-shrink: 0; }
+        .validator-icon.pass { background: #16a34a; }
+        .validator-icon.fail { background: #dc2626; }
+        .validator-icon.pending { background: #94a3b8; }
+        .validator-label { font-size: 0.72rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
+        .validator-status-text { font-size: 0.8rem; font-weight: 600; flex: 1; }
+        .validator-status-text.pass { color: #166534; }
+        .validator-status-text.fail { color: #991b1b; }
+        .validator-status-text.pending { color: #64748b; }
+        .validator-score { font-size: 0.78rem; font-weight: 700; padding: 2px 10px; border-radius: 9999px; }
+        .validator-score.pass { background: #dcfce7; color: #166534; }
+        .validator-score.fail { background: #fee2e2; color: #991b1b; }
+        .validator-chevron { font-size: 0.7rem; color: #94a3b8; transition: transform 0.2s; }
+        .validator-chevron.open { transform: rotate(180deg); }
+
+        .validator-details { display: none; padding: 10px 12px; border-top: 1px solid #e2e8f0; background: white; font-size: 0.78rem; line-height: 1.6; }
+        .validator-details.open { display: block; }
+        .val-section { margin-bottom: 8px; }
+        .val-section:last-child { margin-bottom: 0; }
+        .val-section-title { font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
+        .val-summary-text { color: var(--text); font-weight: 500; }
+        .val-confidence { display: inline-block; font-size: 0.7rem; padding: 1px 8px; border-radius: 9999px; background: #f1f5f9; color: #475569; font-weight: 600; margin-left: 6px; }
+        .val-check-item { display: flex; align-items: flex-start; gap: 6px; padding: 3px 0; }
+        .val-check-icon { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: white; margin-top: 1px; }
+        .val-check-icon.pass { background: #16a34a; }
+        .val-check-icon.fail { background: #dc2626; }
+        .val-check-text { color: var(--text); }
+        .val-check-detail { color: #64748b; font-size: 0.72rem; }
+        .val-issue-item { display: flex; align-items: flex-start; gap: 6px; padding: 2px 0; color: #991b1b; }
+        .val-issue-item::before { content: "!"; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: #fee2e2; color: #dc2626; font-size: 0.65rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+        .val-rec-item { display: flex; align-items: flex-start; gap: 6px; padding: 2px 0; color: #1d4ed8; }
+        .val-rec-item::before { content: "i"; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 50%; background: #dbeafe; color: #2563eb; font-size: 0.65rem; font-weight: 700; font-style: italic; flex-shrink: 0; margin-top: 2px; }
+
+        /* Right sidebar: tabs for logs + output + tests */
+        .sidebar { display: flex; flex-direction: column; gap: 0; position: sticky; top: 1.5rem; max-height: 85vh; }
+
+        .sidebar-tabs { display: flex; border-bottom: 2px solid #e2e8f0; background: var(--card); border-radius: 12px 12px 0 0; }
+        .sidebar-tab { flex: 1; padding: 10px 12px; font-size: 0.82rem; font-weight: 600; text-align: center; cursor: pointer; border: none; background: transparent; color: #64748b; transition: color 0.2s, border-color 0.2s; border-bottom: 2px solid transparent; margin-bottom: -2px; white-space: nowrap; }
+        .sidebar-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+        .sidebar-tab:hover { color: var(--text); }
+
+        .sidebar-panel { background: var(--card); border-radius: 0 0 12px 12px; box-shadow: 0 1px 3px rgb(0 0 0 / 0.1); flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+        .tab-content { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+        .tab-content.active { display: flex; }
+
+        .logs-body { background: #1e293b; color: #4ade80; font-family: 'Courier New', monospace; font-size: 0.8rem; padding: 1rem; flex: 1; overflow-y: auto; white-space: pre-wrap; line-height: 1.5; min-height: 300px; max-height: 70vh; }
+
+        /* Step output viewer */
+        .output-viewer { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .output-step-selector { padding: 0.75rem 1rem; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 8px; }
+        .output-step-selector label { font-size: 0.8rem; font-weight: 600; color: #64748b; white-space: nowrap; }
+        .output-step-selector select { flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.8rem; background: white; }
+        .output-body { background: #1e293b; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.78rem; padding: 1rem; flex: 1; overflow-y: auto; white-space: pre-wrap; line-height: 1.5; min-height: 300px; max-height: 65vh; word-break: break-all; }
+        .output-body .key { color: #93c5fd; }
+        .output-body .string { color: #86efac; }
+        .output-body .number { color: #fbbf24; }
+        .output-body .null { color: #94a3b8; }
+        .output-empty { color: #64748b; font-size: 0.85rem; padding: 2rem; text-align: center; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+        /* ---- Test Output Viewer ---- */
+        .test-viewer { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .test-step-selector { padding: 0.75rem 1rem; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 8px; }
+        .test-step-selector label { font-size: 0.8rem; font-weight: 600; color: #64748b; white-space: nowrap; }
+        .test-step-selector select { flex: 1; padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.8rem; background: white; }
+        .test-body { flex: 1; overflow-y: auto; padding: 0.75rem; min-height: 300px; max-height: 65vh; }
+
+        /* Test run summary banner */
+        .test-summary-banner { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px; margin-bottom: 10px; }
+        .test-summary-banner.pass { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .test-summary-banner.fail { background: #fef2f2; border: 1px solid #fecaca; }
+        .test-summary-result { font-size: 0.95rem; font-weight: 700; }
+        .test-summary-result.pass { color: #166534; }
+        .test-summary-result.fail { color: #991b1b; }
+        .test-summary-stats { display: flex; gap: 12px; flex: 1; justify-content: flex-end; align-items: center; }
+        .test-stat { font-size: 0.75rem; font-weight: 600; padding: 2px 10px; border-radius: 9999px; }
+        .test-stat.total { background: #f1f5f9; color: #475569; }
+        .test-stat.passed { background: #dcfce7; color: #166534; }
+        .test-stat.failed { background: #fee2e2; color: #991b1b; }
+        .test-stat.score { background: #dbeafe; color: #1e40af; }
+        .test-summary-text { font-size: 0.78rem; color: #475569; margin-bottom: 12px; line-height: 1.5; }
+
+        /* Test case cards */
+        .test-case-card { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.2s; }
+        .test-case-card.pass { border-left: 3px solid #16a34a; }
+        .test-case-card.fail { border-left: 3px solid #dc2626; }
+
+        .test-case-header { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; user-select: none; background: #f8fafc; transition: background 0.15s; }
+        .test-case-header:hover { background: #f1f5f9; }
+        .tc-result-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: white; flex-shrink: 0; }
+        .tc-result-icon.pass { background: #16a34a; }
+        .tc-result-icon.fail { background: #dc2626; }
+        .tc-id { font-size: 0.72rem; font-weight: 700; color: #64748b; font-family: 'Courier New', monospace; flex-shrink: 0; }
+        .tc-name { font-size: 0.8rem; font-weight: 600; color: var(--text); flex: 1; }
+        .tc-category { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; }
+        .tc-category.completeness { background: #dbeafe; color: #1e40af; }
+        .tc-category.correctness { background: #fef3c7; color: #92400e; }
+        .tc-category.format { background: #e0e7ff; color: #3730a3; }
+        .tc-category.consistency { background: #f3e8ff; color: #6b21a8; }
+        .tc-category.data_integrity { background: #ccfbf1; color: #065f46; }
+        .tc-chevron { font-size: 0.65rem; color: #94a3b8; transition: transform 0.2s; flex-shrink: 0; }
+        .tc-chevron.open { transform: rotate(180deg); }
+
+        .test-case-body { display: none; padding: 10px 12px; border-top: 1px solid #e2e8f0; background: white; font-size: 0.78rem; line-height: 1.6; }
+        .test-case-body.open { display: block; }
+
+        .tc-field { margin-bottom: 8px; }
+        .tc-field:last-child { margin-bottom: 0; }
+        .tc-field-label { font-size: 0.68rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+        .tc-field-value { color: var(--text); word-break: break-word; }
+        .tc-field-value.expected { color: #1e40af; }
+        .tc-field-value.actual { color: #065f46; }
+        .tc-field-value.actual.mismatch { color: #991b1b; }
+        .tc-reasoning { color: #475569; font-size: 0.76rem; line-height: 1.55; background: #f8fafc; padding: 8px 10px; border-radius: 6px; border: 1px solid #e2e8f0; }
+
+        /* Test files panel */
+        .test-files-panel { margin-bottom: 10px; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+        .test-files-header { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+        .test-files-title { font-size: 0.72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; }
+        .test-files-body { padding: 8px 12px; }
+        .test-files-group { margin-bottom: 6px; }
+        .test-files-group:last-child { margin-bottom: 0; }
+        .test-files-group-label { font-size: 0.68rem; font-weight: 700; color: #475569; margin-bottom: 3px; }
+        .test-file-item { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; margin-bottom: 2px; }
+        .test-file-item.input { background: #eff6ff; border: 1px solid #bfdbfe; }
+        .test-file-item.output { background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .test-file-item.report { background: #faf5ff; border: 1px solid #e9d5ff; }
+        .test-file-icon { flex-shrink: 0; font-size: 0.8rem; }
+        .test-file-name { font-weight: 600; color: var(--text); font-family: 'Courier New', monospace; font-size: 0.72rem; }
+        .test-file-role { font-size: 0.65rem; font-weight: 600; padding: 1px 6px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.03em; flex-shrink: 0; }
+        .test-file-role.input { background: #dbeafe; color: #1e40af; }
+        .test-file-role.output { background: #dcfce7; color: #166534; }
+        .test-file-role.report { background: #f3e8ff; color: #6b21a8; }
+        .test-file-detail { font-size: 0.68rem; color: #64748b; margin-left: auto; flex-shrink: 0; }
+        .test-file-ingested { font-size: 0.6rem; padding: 1px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+        .test-file-ingested.yes { background: #dcfce7; color: #166534; }
+        .test-file-ingested.no { background: #fee2e2; color: #991b1b; }
+
+        /* Test issues/recommendations at bottom */
+        .test-issues-section { margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: #fef2f2; border: 1px solid #fecaca; }
+        .test-recs-section { margin-top: 8px; padding: 10px 12px; border-radius: 8px; background: #eff6ff; border: 1px solid #bfdbfe; }
+        .test-section-title { font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+        .test-section-item { font-size: 0.78rem; padding: 2px 0; line-height: 1.5; }
+        .test-section-item.issue { color: #991b1b; }
+        .test-section-item.rec { color: #1d4ed8; }
+
+        /* Modal */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 1000; }
-        .modal { background: white; padding: 2rem; border-radius: 12px; width: 400px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
-        .modal h3 { margin-top: 0; }
-        .file-drop { border: 2px dashed #cbd5e1; padding: 2rem; text-align: center; margin: 1rem 0; border-radius: 8px; cursor: pointer; }
-        .file-drop:hover { border-color: var(--primary); background: #eff6ff; }
+        .modal { background: white; padding: 2rem; border-radius: 12px; width: 420px; box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        .modal h3 { margin-bottom: 0.5rem; }
+        .modal p { color: #64748b; font-size: 0.9rem; margin-bottom: 1rem; }
+        .modal input[type="file"] { display: block; margin-bottom: 1rem; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-actions button { padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .btn-cancel { background: #e2e8f0; color: var(--text); }
+        .btn-confirm { background: var(--primary); color: white; }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; max-height: 500px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="card">
-            <h2>🚀 Command Center</h2>
-            <div class="input-group">
-                <input type="text" id="taskInput" placeholder="Enter task (e.g., 'Extract assets from spreadsheet')..." />
-                <button onclick="submitTask()" id="submitBtn">Decompose</button>
+    <!-- Header with task selector -->
+    <div class="header">
+        <h1>AI Agent Command Center</h1>
+        <div class="input-row">
+            <select id="taskInput">
+                <option value="" disabled selected>Loading tasks...</option>
+            </select>
+            <button onclick="submitTask()" id="submitBtn">Decompose</button>
+            <button id="runStepBtn" onclick="handleRunClick()">Run Next Step</button>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-layout">
+        <!-- Workflow visualization -->
+        <div class="workflow-panel">
+            <div class="workflow-title" id="workflowTitle">Workflow</div>
+            <div class="workflow-overview" id="workflowOverview"></div>
+            <div id="workflowContainer">
+                <div class="workflow-placeholder">Select a task and click Decompose to generate a workflow.</div>
             </div>
-            <button id="runStepBtn" onclick="handleRunClick()">▶ Run Next Step</button>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-            <div class="card">
-                <h2>📋 Generated Plan</h2>
-                <div id="planContainer"><p style="color: #64748b;">Waiting for task...</p></div>
+        <!-- Right sidebar: Logs + Step Output + Test Output tabs -->
+        <div class="sidebar">
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" data-tab="logs" onclick="switchTab('logs')">Execution Logs</button>
+                <button class="sidebar-tab" data-tab="output" onclick="switchTab('output')">Step Output</button>
+                <button class="sidebar-tab" data-tab="tests" onclick="switchTab('tests')">Test Output</button>
             </div>
-
-            <div class="card">
-                <h2>⚙️ Execution Logs</h2>
-                <div class="status-box" id="consoleOutput">[SYSTEM] Ready...</div>
+            <div class="sidebar-panel">
+                <!-- Logs tab -->
+                <div class="tab-content active" id="tab-logs">
+                    <div class="logs-body" id="consoleOutput">[SYSTEM] Ready...</div>
+                </div>
+                <!-- Step Output tab -->
+                <div class="tab-content" id="tab-output">
+                    <div class="output-viewer">
+                        <div class="output-step-selector">
+                            <label>Step:</label>
+                            <select id="outputStepSelect" onchange="showStepOutput()">
+                                <option value="" disabled selected>No steps executed</option>
+                            </select>
+                        </div>
+                        <div class="output-body" id="outputBody">
+                            <div class="output-empty">Execute a step to see its output here.</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Test Output tab -->
+                <div class="tab-content" id="tab-tests">
+                    <div class="test-viewer">
+                        <div class="test-step-selector">
+                            <label>Step:</label>
+                            <select id="testStepSelect" onchange="showTestOutput()">
+                                <option value="" disabled selected>No tests executed</option>
+                            </select>
+                        </div>
+                        <div class="test-body" id="testBody">
+                            <div class="output-empty">Execute a step to see test results here.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- File upload modal -->
     <div class="modal-overlay" id="uploadModal">
         <div class="modal">
-            <h3>📂 Input Required</h3>
-            <p>The next step requires a file upload.</p>
-            <input type="file" id="fileInput" style="display: block; margin-bottom: 1rem;">
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                <button onclick="closeModal()" style="background: #64748b;">Cancel</button>
-                <button onclick="confirmUpload()">Upload & Execute</button>
+            <h3>File Required</h3>
+            <p id="uploadModalMsg">This step requires a file upload to proceed.</p>
+            <input type="file" id="fileInput">
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-confirm" onclick="confirmUpload()">Upload & Execute</button>
             </div>
         </div>
     </div>
@@ -69,23 +332,558 @@
         let currentPlanId = null;
         let currentStepIndex = 0;
         let planSteps = [];
+        let stepStatuses = [];
+        let stepOutputs = [];  // stores output data per step
+        let stepValidations = [];  // stores validation results per step
 
+        // --- Tab switching ---
+        function switchTab(tab) {
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.sidebar-tab[data-tab="${tab}"]`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        }
+
+        // --- Syntax-highlighted JSON ---
+        function syntaxHighlight(json) {
+            if (typeof json !== 'string') json = JSON.stringify(json, null, 2);
+            return json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?)/g, function (match) {
+                    if (/:$/.test(match)) return '<span class="key">' + match + '</span>';
+                    return '<span class="string">' + match + '</span>';
+                })
+                .replace(/\b(-?\d+(\.\d+)?([eE][+-]?\d+)?)\b/g, '<span class="number">$1</span>')
+                .replace(/\bnull\b/g, '<span class="null">null</span>')
+                .replace(/\btrue\b/g, '<span class="number">true</span>')
+                .replace(/\bfalse\b/g, '<span class="number">false</span>');
+        }
+
+        // --- Show output for selected step ---
+        function showStepOutput() {
+            const select = document.getElementById('outputStepSelect');
+            const body = document.getElementById('outputBody');
+            const idx = parseInt(select.value);
+
+            if (isNaN(idx) || !stepOutputs[idx]) {
+                body.innerHTML = '<div class="output-empty">No output data for this step.</div>';
+                return;
+            }
+
+            body.innerHTML = syntaxHighlight(stepOutputs[idx]);
+        }
+
+        // --- Show test output for selected step ---
+        function showTestOutput() {
+            const select = document.getElementById('testStepSelect');
+            const body = document.getElementById('testBody');
+            const idx = parseInt(select.value);
+
+            if (isNaN(idx) || !stepValidations[idx]) {
+                body.innerHTML = '<div class="output-empty">No test results for this step.</div>';
+                return;
+            }
+
+            const v = stepValidations[idx];
+            const testCases = v.test_cases || [];
+            const summary = v.test_run_summary || {};
+            const overall = summary.overall_result || (v.is_valid ? 'PASS' : 'FAIL');
+            const cls = overall === 'PASS' ? 'pass' : 'fail';
+            const totalTests = summary.total_tests || testCases.length;
+            const passedTests = summary.passed || testCases.filter(tc => tc.result === 'PASS').length;
+            const failedTests = summary.failed || testCases.filter(tc => tc.result === 'FAIL').length;
+            const score = summary.score != null ? summary.score : (v.score != null ? v.score : '?');
+            const summaryText = summary.summary || v.summary || '';
+
+            let html = '';
+
+            // Summary banner
+            html += `
+            <div class="test-summary-banner ${cls}">
+                <span class="test-summary-result ${cls}">${overall}</span>
+                <div class="test-summary-stats">
+                    <span class="test-stat total">${totalTests} tests</span>
+                    <span class="test-stat passed">${passedTests} passed</span>
+                    ${failedTests > 0 ? `<span class="test-stat failed">${failedTests} failed</span>` : ''}
+                    <span class="test-stat score">${score}%</span>
+                </div>
+            </div>`;
+
+            // Summary text
+            if (summaryText) {
+                html += `<div class="test-summary-text">${summaryText}</div>`;
+            }
+
+            // Helper: render a list of file items
+            function renderFileItems(files, defaultRole) {
+                return files.map(f => {
+                    const role = f.role || defaultRole || 'file';
+                    const roleCls = role === 'input' ? 'input' : (role === 'test_report' ? 'report' : 'output');
+                    const icon = role === 'input' ? '&#128229;' : (role === 'test_report' ? '&#128196;' : '&#128228;');
+                    const ingestedHtml = f.ingested != null
+                        ? `<span class="test-file-ingested ${f.ingested ? 'yes' : 'no'}">${f.ingested ? 'Ingested' : 'Not ingested'}</span>`
+                        : '';
+                    const sizeHtml = f.size_chars ? `<span class="test-file-detail">${(f.size_chars / 1024).toFixed(1)}KB</span>` : '';
+                    const descHtml = f.description ? `<span class="test-file-detail">${f.description}</span>` : '';
+                    return `<div class="test-file-item ${roleCls}">
+                        <span class="test-file-icon">${icon}</span>
+                        <span class="test-file-name">${f.filename || 'Unknown'}</span>
+                        <span class="test-file-role ${roleCls}">${role}</span>
+                        ${ingestedHtml}
+                        ${sizeHtml || descHtml}
+                    </div>`;
+                }).join('');
+            }
+
+            // Agent files panel (files the agent read and produced)
+            const agentFiles = v.agent_files || {};
+            const agentFilesRead = agentFiles.files_read || [];
+            const agentFilesOutput = agentFiles.files_output || [];
+            if (agentFilesRead.length > 0 || agentFilesOutput.length > 0) {
+                html += `<div class="test-files-panel">
+                    <div class="test-files-header">
+                        <span class="test-files-title">&#129302; Agent Files</span>
+                    </div>
+                    <div class="test-files-body">`;
+                if (agentFilesRead.length > 0) {
+                    html += `<div class="test-files-group">
+                        <div class="test-files-group-label">Files Read by Agent</div>
+                        ${renderFileItems(agentFilesRead, 'input')}
+                    </div>`;
+                }
+                if (agentFilesOutput.length > 0) {
+                    html += `<div class="test-files-group">
+                        <div class="test-files-group-label">Files Output by Agent</div>
+                        ${renderFileItems(agentFilesOutput, 'output')}
+                    </div>`;
+                }
+                html += `</div></div>`;
+            }
+
+            // Validator files panel (files the validator ingested and produced)
+            const validatorFiles = v.files || {};
+            const validatorFilesRead = validatorFiles.files_read || [];
+            const validatorFilesOutput = validatorFiles.files_output || [];
+            if (validatorFilesRead.length > 0 || validatorFilesOutput.length > 0) {
+                html += `<div class="test-files-panel">
+                    <div class="test-files-header">
+                        <span class="test-files-title">&#128270; Validator Files</span>
+                    </div>
+                    <div class="test-files-body">`;
+                if (validatorFilesRead.length > 0) {
+                    html += `<div class="test-files-group">
+                        <div class="test-files-group-label">Files Ingested for Testing</div>
+                        ${renderFileItems(validatorFilesRead, 'input')}
+                    </div>`;
+                }
+                if (validatorFilesOutput.length > 0) {
+                    html += `<div class="test-files-group">
+                        <div class="test-files-group-label">Test Reports Generated</div>
+                        ${renderFileItems(validatorFilesOutput, 'test_report')}
+                    </div>`;
+                }
+                html += `</div></div>`;
+            }
+
+            // Test case cards
+            if (testCases.length > 0) {
+                testCases.forEach((tc, tcIdx) => {
+                    const tcCls = tc.result === 'PASS' ? 'pass' : 'fail';
+                    const tcIcon = tc.result === 'PASS' ? '&#10003;' : '&#10007;';
+                    const catCls = (tc.category || '').toLowerCase().replace(/ /g, '_');
+                    const isMismatch = tc.result === 'FAIL' ? ' mismatch' : '';
+                    const uniqueId = `tc-body-${idx}-${tcIdx}`;
+                    const chevronId = `tc-chev-${idx}-${tcIdx}`;
+
+                    html += `
+                    <div class="test-case-card ${tcCls}">
+                        <div class="test-case-header" onclick="toggleTestCase('${uniqueId}', '${chevronId}')">
+                            <div class="tc-result-icon ${tcCls}">${tcIcon}</div>
+                            <span class="tc-id">${tc.test_id || '?'}</span>
+                            <span class="tc-name">${tc.test_name || 'Unnamed test'}</span>
+                            <span class="tc-category ${catCls}">${tc.category || '?'}</span>
+                            <span class="tc-chevron" id="${chevronId}">&#9660;</span>
+                        </div>
+                        <div class="test-case-body" id="${uniqueId}">
+                            ${tc.description ? `
+                            <div class="tc-field">
+                                <div class="tc-field-label">Description</div>
+                                <div class="tc-field-value">${tc.description}</div>
+                            </div>` : ''}
+                            ${tc.input_data ? `
+                            <div class="tc-field">
+                                <div class="tc-field-label">Input Data Examined</div>
+                                <div class="tc-field-value" style="font-size:0.74rem; background:#f8fafc; padding:6px 8px; border-radius:4px; border:1px solid #e2e8f0; white-space:pre-wrap; word-break:break-word;">${tc.input_data}</div>
+                            </div>` : ''}
+                            <div class="tc-field">
+                                <div class="tc-field-label">Expected Output</div>
+                                <div class="tc-field-value expected">${tc.expected_output || tc.expected || 'N/A'}</div>
+                            </div>
+                            <div class="tc-field">
+                                <div class="tc-field-label">Actual Output</div>
+                                <div class="tc-field-value actual${isMismatch}">${tc.actual_output || tc.actual || 'N/A'}</div>
+                            </div>
+                            ${tc.execution_notes ? `
+                            <div class="tc-field">
+                                <div class="tc-field-label">Execution Notes</div>
+                                <div class="tc-field-value" style="font-size:0.74rem; color:#475569; background:#fffbeb; padding:6px 8px; border-radius:4px; border:1px solid #fde68a; white-space:pre-wrap;">${tc.execution_notes}</div>
+                            </div>` : ''}
+                            ${tc.reasoning ? `
+                            <div class="tc-field">
+                                <div class="tc-field-label">Reasoning</div>
+                                <div class="tc-reasoning">${tc.reasoning}</div>
+                            </div>` : ''}
+                        </div>
+                    </div>`;
+                });
+            } else {
+                html += '<div class="output-empty">No individual test cases available.</div>';
+            }
+
+            // Issues
+            const issues = v.issues || [];
+            const filteredIssues = issues.filter(i => i);
+            if (filteredIssues.length > 0) {
+                html += `
+                <div class="test-issues-section">
+                    <div class="test-section-title">Issues Found</div>
+                    ${filteredIssues.map(i => `<div class="test-section-item issue">${i}</div>`).join('')}
+                </div>`;
+            }
+
+            // Recommendations
+            const recs = v.recommendations || [];
+            const filteredRecs = recs.filter(r => r);
+            if (filteredRecs.length > 0) {
+                html += `
+                <div class="test-recs-section">
+                    <div class="test-section-title">Recommendations</div>
+                    ${filteredRecs.map(r => `<div class="test-section-item rec">${r}</div>`).join('')}
+                </div>`;
+            }
+
+            body.innerHTML = html;
+        }
+
+        // Toggle individual test case detail
+        function toggleTestCase(bodyId, chevronId) {
+            const body = document.getElementById(bodyId);
+            const chevron = document.getElementById(chevronId);
+            if (body) {
+                const isOpen = body.classList.toggle('open');
+                if (chevron) chevron.classList.toggle('open', isOpen);
+            }
+        }
+
+        // --- Update the output step selector dropdown ---
+        function updateOutputSelector() {
+            const select = document.getElementById('outputStepSelect');
+            const prevValue = select.value;
+            select.innerHTML = '';
+
+            let hasCompleted = false;
+            planSteps.forEach((step, i) => {
+                if (stepStatuses[i] === 'completed') {
+                    hasCompleted = true;
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.textContent = `Step ${step.step_number}: ${step.name || 'Action'}`;
+                    if (stepOutputs[i]) {
+                        opt.textContent += ' (has data)';
+                    }
+                    select.appendChild(opt);
+                }
+            });
+
+            if (!hasCompleted) {
+                select.innerHTML = '<option value="" disabled selected>No steps executed</option>';
+            } else if (prevValue !== '') {
+                select.value = prevValue;
+            }
+        }
+
+        // --- Update the test step selector dropdown ---
+        function updateTestSelector() {
+            const select = document.getElementById('testStepSelect');
+            const prevValue = select.value;
+            select.innerHTML = '';
+
+            let hasTests = false;
+            planSteps.forEach((step, i) => {
+                if (stepStatuses[i] === 'completed' && stepValidations[i]) {
+                    hasTests = true;
+                    const v = stepValidations[i];
+                    const tcCount = (v.test_cases || []).length;
+                    const overall = (v.test_run_summary && v.test_run_summary.overall_result) || (v.is_valid ? 'PASS' : 'FAIL');
+                    const opt = document.createElement('option');
+                    opt.value = i;
+                    opt.textContent = `Step ${step.step_number}: ${step.name || 'Action'} [${overall} - ${tcCount} tests]`;
+                    select.appendChild(opt);
+                }
+            });
+
+            if (!hasTests) {
+                select.innerHTML = '<option value="" disabled selected>No tests executed</option>';
+            } else if (prevValue !== '') {
+                select.value = prevValue;
+            }
+        }
+
+        // --- Toggle inline output in step card ---
+        function toggleStepOutput(idx) {
+            const el = document.getElementById(`step-output-${idx}`);
+            if (el) {
+                el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        // --- Toggle validation detail panel ---
+        function toggleValidation(idx) {
+            const details = document.getElementById(`val-details-${idx}`);
+            const chevron = document.getElementById(`val-chevron-${idx}`);
+            if (details) {
+                const isOpen = details.classList.toggle('open');
+                if (chevron) chevron.classList.toggle('open', isOpen);
+            }
+        }
+
+        // --- Build validator status bar HTML for a step ---
+        function buildValidationHtml(idx) {
+            const v = stepValidations[idx];
+
+            // No validation data yet - show pending state
+            if (!v) {
+                return `
+                <div class="validator-bar">
+                    <div class="validator-header pending">
+                        <div class="validator-icon pending">&#8230;</div>
+                        <span class="validator-label">Validator Agent</span>
+                        <span class="validator-status-text pending">Awaiting validation</span>
+                    </div>
+                </div>`;
+            }
+
+            const isValid = v.is_valid;
+            const cls = isValid ? 'pass' : 'fail';
+            const icon = isValid ? '&#10003;' : '&#10007;';
+            const score = v.score != null ? v.score : '?';
+
+            // Use test_run_summary if available, otherwise fallback
+            const summary = v.test_run_summary || {};
+            const totalTests = summary.total_tests || (v.test_cases || []).length || 0;
+            const passedTests = summary.passed || (v.test_cases || []).filter(tc => tc.result === 'PASS').length || 0;
+            const failedTests = summary.failed || (v.test_cases || []).filter(tc => tc.result === 'FAIL').length || 0;
+            const statusText = totalTests > 0
+                ? `${passedTests}/${totalTests} tests passed`
+                : (isValid ? 'Passed' : 'Failed');
+
+            // Build test case summary (compact view in step card)
+            let testsHtml = '';
+            const testCases = v.test_cases || [];
+            if (testCases.length > 0) {
+                testsHtml = `
+                    <div class="val-section">
+                        <div class="val-section-title">Test Cases (${testCases.length})</div>
+                        ${testCases.map(tc => {
+                            const cCls = tc.result === 'PASS' ? 'pass' : 'fail';
+                            const cIcon = tc.result === 'PASS' ? '&#10003;' : '&#10007;';
+                            return `<div class="val-check-item">
+                                <div class="val-check-icon ${cCls}">${cIcon}</div>
+                                <div>
+                                    <div class="val-check-text">${tc.test_id || ''}: ${tc.test_name || ''}</div>
+                                    ${tc.category ? `<div class="val-check-detail">[${tc.category}]</div>` : ''}
+                                </div>
+                            </div>`;
+                        }).join('')}
+                    </div>`;
+            }
+
+            // Fallback: old checks format
+            let checksHtml = '';
+            if (testCases.length === 0 && v.checks && v.checks.length > 0) {
+                checksHtml = `
+                    <div class="val-section">
+                        <div class="val-section-title">Checks</div>
+                        ${v.checks.map(c => {
+                            const cCls = c.passed ? 'pass' : 'fail';
+                            const cIcon = c.passed ? '&#10003;' : '&#10007;';
+                            return `<div class="val-check-item">
+                                <div class="val-check-icon ${cCls}">${cIcon}</div>
+                                <div>
+                                    <div class="val-check-text">${c.check || ''}</div>
+                                    ${c.detail ? `<div class="val-check-detail">${c.detail}</div>` : ''}
+                                </div>
+                            </div>`;
+                        }).join('')}
+                    </div>`;
+            }
+
+            // Build issues section
+            let issuesHtml = '';
+            if (v.issues && v.issues.length > 0 && !(v.issues.length === 1 && !v.issues[0])) {
+                issuesHtml = `
+                    <div class="val-section">
+                        <div class="val-section-title">Issues</div>
+                        ${v.issues.filter(i => i).map(i => `<div class="val-issue-item">${i}</div>`).join('')}
+                    </div>`;
+            }
+
+            // Build recommendations section
+            let recsHtml = '';
+            if (v.recommendations && v.recommendations.length > 0 && !(v.recommendations.length === 1 && !v.recommendations[0])) {
+                recsHtml = `
+                    <div class="val-section">
+                        <div class="val-section-title">Recommendations</div>
+                        ${v.recommendations.filter(r => r).map(r => `<div class="val-rec-item">${r}</div>`).join('')}
+                    </div>`;
+            }
+
+            return `
+            <div class="validator-bar">
+                <div class="validator-header ${cls}" onclick="toggleValidation(${idx})">
+                    <div class="validator-icon ${cls}">${icon}</div>
+                    <span class="validator-label">Validator</span>
+                    <span class="validator-status-text ${cls}">${statusText}</span>
+                    <span class="validator-score ${cls}">${score}%</span>
+                    <span class="validator-chevron" id="val-chevron-${idx}">&#9660;</span>
+                </div>
+                <div class="validator-details" id="val-details-${idx}">
+                    <div class="val-section">
+                        <div class="val-section-title">Summary</div>
+                        <div class="val-summary-text">${v.summary || 'No summary available'}</div>
+                        <span class="val-confidence">${v.confidence || 'Unknown'} confidence</span>
+                    </div>
+                    ${testsHtml}
+                    ${checksHtml}
+                    ${issuesHtml}
+                    ${recsHtml}
+                </div>
+            </div>`;
+        }
+
+        // --- Load tasks into combo box ---
+        async function loadTasks() {
+            const select = document.getElementById('taskInput');
+            try {
+                const response = await fetch('http://localhost:8000/tasks');
+                if (!response.ok) throw new Error(`Failed to load tasks: ${response.status}`);
+                const data = await response.json();
+
+                select.innerHTML = '<option value="" disabled selected>-- Select a task --</option>';
+                data.templates.forEach(t => {
+                    const option = document.createElement('option');
+                    option.value = t.name;
+                    option.textContent = t.name;
+                    option.title = t.description || '';
+                    select.appendChild(option);
+                });
+            } catch (err) {
+                select.innerHTML = '<option value="" disabled selected>Failed to load tasks</option>';
+                console.error('[UI] Error loading tasks:', err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadTasks);
+
+        // --- Render workflow ---
+        function renderWorkflow() {
+            const container = document.getElementById('workflowContainer');
+            if (!planSteps.length) {
+                container.innerHTML = '<div class="workflow-placeholder">Select a task and click Decompose to generate a workflow.</div>';
+                return;
+            }
+
+            let html = '<div class="workflow-steps">';
+            planSteps.forEach((step, i) => {
+                const status = stepStatuses[i] || 'pending';
+                const connectorClass = (status === 'completed') ? 'done' : '';
+                const contentClass = (status === 'active' || status === 'running') ? 'active' : status;
+
+                const agentId = (step.required_resources && step.required_resources.agent_id) || step.assigned_resource_id || null;
+                const toolId = (step.required_resources && step.required_resources.tool_id) || null;
+                const knowledgeId = (step.required_resources && step.required_resources.knowledge_id) || null;
+                const validation = step.validation ? step.validation.criteria : null;
+                const isCritical = step.validation && step.validation.critical_fail;
+
+                const statusLabels = { pending: 'Pending', active: 'Next', running: 'Running', completed: 'Done', error: 'Error' };
+
+                // Inline output section (only for completed steps with output)
+                let outputHtml = '';
+                if (status === 'completed' && stepOutputs[i]) {
+                    outputHtml = `
+                        <button class="step-output-toggle" onclick="toggleStepOutput(${i})">View Output</button>
+                        <div class="step-output-inline" id="step-output-${i}" style="display:none;">${syntaxHighlight(stepOutputs[i])}</div>`;
+                }
+
+                // Validator agent status bar (for completed steps)
+                let validationHtml = '';
+                if (status === 'completed') {
+                    validationHtml = buildValidationHtml(i);
+                } else if (status === 'running') {
+                    validationHtml = `
+                    <div class="validator-bar" style="margin-top:10px;">
+                        <div class="validator-header pending">
+                            <div class="validator-icon pending" style="animation: pulse 1.5s infinite;">&#8230;</div>
+                            <span class="validator-label">Validator Agent</span>
+                            <span class="validator-status-text pending">Will validate after execution</span>
+                        </div>
+                    </div>`;
+                }
+
+                html += `
+                <div class="step-node" id="step-node-${i}">
+                    <div class="step-indicator">
+                        <div class="step-circle ${status}">${status === 'completed' ? '&#10003;' : step.step_number}</div>
+                        <div class="step-connector ${connectorClass}"></div>
+                    </div>
+                    <div class="step-content ${contentClass}">
+                        <div class="step-header">
+                            <span class="step-name">${step.name || 'Step ' + step.step_number}</span>
+                            <span class="step-badge ${status}">${statusLabels[status]}</span>
+                        </div>
+                        <div class="step-desc">${step.description}</div>
+                        <div class="step-meta">
+                            ${agentId ? `<span class="meta-tag"><span class="icon">&#129302;</span> ${agentId}</span>` : ''}
+                            ${toolId ? `<span class="meta-tag"><span class="icon">&#128295;</span> ${toolId}</span>` : ''}
+                            ${knowledgeId ? `<span class="meta-tag"><span class="icon">&#128218;</span> ${knowledgeId}</span>` : ''}
+                            ${isCritical ? '<span class="meta-tag" style="background:#fee2e2;color:#991b1b;"><span class="icon">&#9888;</span> Critical</span>' : ''}
+                            ${validation ? `<span class="meta-tag"><span class="icon">&#9989;</span> Validated</span>` : ''}
+                        </div>
+                        ${outputHtml}
+                        ${validationHtml}
+                    </div>
+                </div>`;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        // --- Submit task ---
         async function submitTask() {
             const input = document.getElementById('taskInput');
             const btn = document.getElementById('submitBtn');
             const runBtn = document.getElementById('runStepBtn');
             const consoleBox = document.getElementById('consoleOutput');
-            const planBox = document.getElementById('planContainer');
 
-            if (!input.value.trim()) return;
+            if (!input.value) return;
 
             btn.disabled = true;
             runBtn.style.display = "none";
             currentPlanId = null;
             currentStepIndex = 0;
-            
+            planSteps = [];
+            stepStatuses = [];
+            stepOutputs = [];
+            stepValidations = [];
+
+            document.getElementById('workflowTitle').textContent = 'Workflow';
+            document.getElementById('workflowOverview').textContent = '';
+            document.getElementById('outputBody').innerHTML = '<div class="output-empty">Execute a step to see its output here.</div>';
+            document.getElementById('outputStepSelect').innerHTML = '<option value="" disabled selected>No steps executed</option>';
+            document.getElementById('testBody').innerHTML = '<div class="output-empty">Execute a step to see test results here.</div>';
+            document.getElementById('testStepSelect').innerHTML = '<option value="" disabled selected>No tests executed</option>';
+            renderWorkflow();
+
             consoleBox.innerText = `> Analysis started for: "${input.value}"...\n`;
-            planBox.innerHTML = '<p style="color: #64748b;">Generating plan...</p>';
 
             try {
                 const response = await fetch('http://localhost:8000/decompose', {
@@ -98,25 +896,21 @@
                 const data = await response.json();
 
                 planSteps = data.plan.steps;
+                stepStatuses = planSteps.map((_, i) => i === 0 ? 'active' : 'pending');
+                stepOutputs = planSteps.map(() => null);
+                stepValidations = planSteps.map(() => null);
 
-                let stepsHtml = `<ul class="step-list">`;
-                planSteps.forEach(step => {
-                    stepsHtml += `
-                        <li class="step-item">
-                            <div style="font-weight:bold; color:#2563eb">Step ${step.step_number}</div>
-                            <strong>${step.name || 'Action'}</strong>
-                            <div style="font-size: 0.9rem;">${step.description}</div>
-                        </li>`;
-                });
-                stepsHtml += '</ul>';
-                planBox.innerHTML = `<h3>${data.plan.plan_overview}</h3>${stepsHtml}`;
-                consoleBox.innerText += `> Plan generated.\n`;
+                document.getElementById('workflowTitle').textContent = input.value;
+                document.getElementById('workflowOverview').textContent = data.plan.plan_overview || '';
+                renderWorkflow();
+
+                consoleBox.innerText += `> Plan generated with ${planSteps.length} steps.\n`;
 
                 if (data.orchestrator_data && data.orchestrator_data.plan_id) {
                     currentPlanId = data.orchestrator_data.plan_id;
-                    consoleBox.innerText += `> Plan initialized [ID: ${currentPlanId}]\n> Waiting for user approval...\n`;
-                    runBtn.style.display = "block";
-                    runBtn.innerText = "▶ Run Step 1";
+                    consoleBox.innerText += `> Plan initialized [ID: ${currentPlanId}]\n> Ready. Click "Run Next Step" to begin.\n`;
+                    runBtn.style.display = "inline-flex";
+                    runBtn.innerText = `Run Step 1: ${planSteps[0].name || 'Execute'}`;
                 }
 
             } catch (err) {
@@ -126,43 +920,30 @@
             }
         }
 
-        // --- UPDATED LOGIC HERE ---
+        // --- Handle run click ---
         function handleRunClick() {
-            if (!currentPlanId) {
-                console.warn("[UI] No active plan ID found.");
-                return;
-            }
-            if (currentStepIndex >= planSteps.length) {
-                console.warn("[UI] All steps already completed.");
-                return;
-            }
+            if (!currentPlanId) return;
+            if (currentStepIndex >= planSteps.length) return;
 
             const nextStep = planSteps[currentStepIndex];
-            
-            // 1. Determine Resource ID
+
             let resource = nextStep.assigned_resource_id;
             if (nextStep.required_resources && nextStep.required_resources.agent_id) {
                 resource = nextStep.required_resources.agent_id;
             }
 
-            console.log(`[UI] Current Step: ${currentStepIndex + 1}`);
-            console.log(`[UI] Detected Resource: "${resource}"`);
-
             const r = (resource || "").toLowerCase();
-
-            // 2. CHECK MATCHES (Added "verification")
-            const isFileAgent = (r.includes("asset") && r.includes("ops")) || 
+            const isFileAgent = (r.includes("asset") && r.includes("ops")) ||
                                 (r.includes("content") && r.includes("reviewer")) ||
-                                (r.includes("verification")); // <--- NEW CHECK ADDED
+                                (r.includes("verification"));
 
             if (isFileAgent) {
-                console.log("[UI] File-handling agent detected! Opening Modal...");
-                // Reset file input for fresh upload
-                document.getElementById('fileInput').value = ""; 
+                document.getElementById('fileInput').value = "";
+                document.getElementById('uploadModalMsg').textContent =
+                    `Step ${nextStep.step_number} (${nextStep.name || 'Action'}) requires a file upload.`;
                 document.getElementById('uploadModal').style.display = 'flex';
             } else {
-                console.log("[UI] Standard agent. Executing immediately.");
-                executeStep(null); 
+                executeStep(null);
             }
         }
 
@@ -180,19 +961,25 @@
             executeStep(fileInput.files[0]);
         }
 
+        // --- Execute step ---
         async function executeStep(fileToUpload) {
             const runBtn = document.getElementById('runStepBtn');
             const consoleBox = document.getElementById('consoleOutput');
-            
+            const executedStepIdx = currentStepIndex;
+
             runBtn.disabled = true;
             runBtn.innerText = "Running...";
 
+            stepStatuses[currentStepIndex] = 'running';
+            renderWorkflow();
+
+            const activeNode = document.getElementById(`step-node-${currentStepIndex}`);
+            if (activeNode) activeNode.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
             try {
-                // Prepare Request
                 let url = `http://localhost:8001/run_next/${currentPlanId}`;
                 let options = { method: 'POST' };
 
-                // If file exists, use FormData
                 if (fileToUpload) {
                     const formData = new FormData();
                     formData.append('file', fileToUpload);
@@ -200,31 +987,72 @@
                 }
 
                 const response = await fetch(url, options);
-
                 if (!response.ok) throw new Error(`Execution Failed: ${response.status}`);
                 const result = await response.json();
-                
-                // Handle "Paused" state from backend if Orchestrator asks for file dynamically
+
+                // Handle paused state
                 if (result.status === "paused" && result.action === "request_file_upload") {
-                     consoleBox.innerText += `\n[PAUSED] ${result.message}\n`;
-                     document.getElementById('uploadModal').style.display = 'flex';
-                     runBtn.innerText = "Retry Step";
-                     runBtn.disabled = false;
-                     return; 
+                    consoleBox.innerText += `\n[PAUSED] ${result.message}\n`;
+                    stepStatuses[currentStepIndex] = 'active';
+                    renderWorkflow();
+                    document.getElementById('uploadModalMsg').textContent = result.message;
+                    document.getElementById('uploadModal').style.display = 'flex';
+                    runBtn.innerText = "Retry Step";
+                    runBtn.disabled = false;
+                    return;
                 }
 
                 consoleBox.innerText += `\n${result.log}\n`;
-                
-                if (result.status === "completed") {
-                    consoleBox.innerText += "\n[SYSTEM] ✅ Workflow Finished.\n";
-                    runBtn.style.display = "none";
-                } else {
-                    currentStepIndex = result.step_index; 
-                    runBtn.innerText = `▶ Run Step ${result.step_index + 1}`;
+
+                // Store step output
+                if (result.step_output) {
+                    stepOutputs[executedStepIdx] = result.step_output;
                 }
+
+                // Store validation result
+                if (result.validation) {
+                    stepValidations[executedStepIdx] = result.validation;
+                }
+
+                // Mark completed
+                stepStatuses[executedStepIdx] = 'completed';
+                updateOutputSelector();
+                updateTestSelector();
+
+                // Auto-select the just-completed step in the output viewer
+                if (result.step_output) {
+                    const outputSelect = document.getElementById('outputStepSelect');
+                    outputSelect.value = executedStepIdx;
+                    showStepOutput();
+                }
+
+                // Auto-select the just-completed step in the test viewer and switch to tests tab
+                if (result.validation) {
+                    const testSelect = document.getElementById('testStepSelect');
+                    testSelect.value = executedStepIdx;
+                    showTestOutput();
+                    switchTab('tests');
+                }
+
+                if (result.status === "completed") {
+                    consoleBox.innerText += "\n[SYSTEM] Workflow Finished.\n";
+                    runBtn.style.display = "none";
+                    renderWorkflow();
+                } else {
+                    currentStepIndex = result.step_index;
+                    stepStatuses[currentStepIndex] = 'active';
+                    renderWorkflow();
+
+                    const nextName = planSteps[currentStepIndex] ? planSteps[currentStepIndex].name : 'Execute';
+                    runBtn.innerText = `Run Step ${result.step_index + 1}: ${nextName}`;
+                }
+
+                consoleBox.scrollTop = consoleBox.scrollHeight;
 
             } catch (err) {
                 consoleBox.innerText += `\n[ERROR] Execution failed: ${err.message}\n`;
+                stepStatuses[currentStepIndex] = 'error';
+                renderWorkflow();
             } finally {
                 if (runBtn.style.display !== "none" && runBtn.innerText !== "Retry Step") {
                     runBtn.disabled = false;

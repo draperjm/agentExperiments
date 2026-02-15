@@ -73,7 +73,20 @@ services:
     networks:
       - agent-network
 
-  # 6. Verification Agent
+  # 6. Mapping Agent
+  agent-mapper:
+    build:
+      context: .
+      dockerfile: Dockerfile.mapper
+    container_name: agent-mapper
+    ports:
+      - "8087:8087"
+    volumes:
+      - .:/app
+    networks:
+      - agent-network
+
+  # 7. Verification Agent
   agent-verification:
     build:
       context: .
@@ -85,6 +98,22 @@ services:
       - ./OUTPUT:/app/OUTPUT
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    networks:
+      - agent-network
+
+  # 8. Step Validator Agent
+  step-validator:
+    build:
+      context: .
+      dockerfile: Dockerfile.step_validator
+    container_name: agent-step-validator
+    ports:
+      - "8088:8088"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - .:/app
     networks:
       - agent-network
 

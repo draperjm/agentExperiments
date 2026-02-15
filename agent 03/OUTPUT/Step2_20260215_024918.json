@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Single solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single dashed horizontal line",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single long-dashed horizontal line",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Horizontal line with alternating long dashes and single dots",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Horizontal line with alternating long dashes and pairs of short vertical lines",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Double solid horizontal line",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Solid black rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Hollow rectangle",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Four-pointed star shape with a small circle in the center",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Circle with a horizontal line bisecting it and a cross on top",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Triangle with a circle in the center",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with an 'X' inside it",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Horizontal line with short vertical ticks pointing downwards at regular intervals",
+    "asset_type": "EXISTING FENCE"
+  }
+]

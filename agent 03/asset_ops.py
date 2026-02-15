@@ -100,4 +100,17 @@ async def extract_assets(file: UploadFile = File(...)):
         json.dump(extracted_data, f, indent=2, ensure_ascii=False)
     print(f"[ASSET_OPS] 💾 Output saved to {output_filename}")
     
-    return {"status": "success", "result": extracted_data, "output_file": output_filename}
+    return {
+        "status": "success",
+        "result": extracted_data,
+        "output_file": output_filename,
+        "extracted_text": raw_text[:10000],
+        "files": {
+            "files_read": [
+                {"filename": file.filename, "role": "input", "description": "Raw asset data file uploaded by user"}
+            ],
+            "files_output": [
+                {"filename": os.path.basename(output_filename), "path": output_filename, "role": "output", "description": "Extracted asset list (JSON)"}
+            ]
+        }
+    }

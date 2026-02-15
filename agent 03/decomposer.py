@@ -65,6 +65,16 @@ client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 class TaskRequest(BaseModel):
     task: str
 
+@app.get("/tasks")
+def list_tasks():
+    """Return the list of available task templates for the UI combo box."""
+    return {
+        "templates": [
+            {"template_id": t.get("template_id"), "name": t.get("name"), "description": t.get("description", "")}
+            for t in task_library.data
+        ]
+    }
+
 @app.post("/decompose")
 def decompose_task(request: TaskRequest):
     if not request.task:

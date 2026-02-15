@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Single thick solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single thin solid horizontal line",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single dashed horizontal line with short dashes",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single dashed horizontal line with longer dashes",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single dashed horizontal line with alternating long dashes and a short perpendicular slash mark",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Double thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Double thin solid horizontal line",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid black rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow rectangle",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "A cross shape with a small hollow circle in the center and four small, thin radiating lines",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "A cross shape with a small hollow circle in the center and four small, thick radiating lines",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "A hollow triangle inside a hollow circle",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "A hollow cross (X) inside a hollow square",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single dashed horizontal line with very short, thick dashes",
+    "asset_type": "EXISTING FENCE"
+  }
+]

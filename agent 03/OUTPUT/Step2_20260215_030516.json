@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Single thin solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single thin long-dashed horizontal line",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single thin short-dashed horizontal line",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single thin horizontal line with alternating short dashes and a single hash mark",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single thin horizontal line with alternating short dashes and two closely spaced hash marks",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Two closely spaced, parallel thin solid horizontal lines",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "A single thick solid horizontal line",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square (outline only)",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid black rectangle, taller than it is wide",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow rectangle (outline only), taller than it is wide",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "A stylized asterisk or starburst symbol with eight rays, with a small circle in the center",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "A stylized asterisk or starburst symbol with eight rays, without a central circle, contained within a circle outline",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "A triangle outline with a smaller circle outline inside, both centered",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "A square outline with an 'X' inscribed inside it, connecting opposite corners",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "A single thin horizontal line with very short, closely spaced vertical hash marks extending upwards",
+    "asset_type": "EXISTING FENCE"
+  }
+]
