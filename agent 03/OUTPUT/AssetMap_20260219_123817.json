@@ -1,0 +1,232 @@
+{
+  "asset_map": [
+    {
+      "asset_number": "SUB 95988",
+      "asset_type": "New Padmount Substation",
+      "expected_icon_description": "Square outline with an 'X' inside",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004852",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004853",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004854",
+      "asset_type": "NEW COLUMN",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2114855",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2224856",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004857",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004858",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004859",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004860",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004861",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004862",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004863",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004864",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004865",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004866",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004867",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004868",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "2004869",
+      "asset_type": "New Column",
+      "expected_icon_description": "Hollow square outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "S405104",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405105",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405108",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405109",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "S405110",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405111",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405112",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "S405113",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405114",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405115",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "S405116",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "S405117",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "S405118",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405119",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405120",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405121",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405122",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405123",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    },
+    {
+      "asset_number": "405125",
+      "asset_type": "New Pillar",
+      "expected_icon_description": "Hollow rectangle outline",
+      "match_method": "exact"
+    }
+  ]
+}

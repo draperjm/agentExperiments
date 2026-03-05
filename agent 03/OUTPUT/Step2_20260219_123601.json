@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Single solid thin horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single dashed horizontal line with short, evenly spaced dashes",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and short dash segments",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and single dot",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and two dots",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Double thin parallel solid horizontal lines",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Hollow square outline",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Solid black rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Hollow rectangle outline",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Four-pointed star shape outline with a central small dot and thin radiating lines",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Four-pointed star shape outline with a central solid black circle and thin radiating lines",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Equilateral triangle outline with a centered solid black circle",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square outline with an 'X' inside",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single solid horizontal line with short perpendicular hash marks at regular intervals",
+    "asset_type": "EXISTING FENCE"
+  }
+]

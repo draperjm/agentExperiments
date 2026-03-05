@@ -13280,3 +13280,747 @@ Respond with JSON: {"valid": boolean, "reason": string}
 {"valid": true, "reason": "The output meets the criteria by providing a JSON array where each object contains an 'Icon' key and an 'asset_type' key, with appropriate descriptions and meanings for each icon type."}
 =========================================
 
+2026-02-15 13:43:40,096 - INFO - 
+========== REQUEST START [Attempt 1] ==========
+PROVIDER: google / gemini-2.5-flash
+--- SYSTEM PROMPT ---
+You are a Strict Data Extraction and Review Agent.
+CRITICAL RULES:
+1. Output ONLY valid JSON - no markdown, no explanations, no extra text.
+2. Every item in arrays MUST be a complete dictionary/object.
+3. Do NOT include stray strings, numbers, or partial values in arrays.
+4. Do NOT add commas after the last item in arrays or objects.
+5. Use double quotes for all JSON keys and string values.
+6. Validate your JSON is parseable before responding.
+7. When extracting legend/icon data, each object MUST have exactly these fields:
+   - "Icon": A visual description of what the icon/symbol LOOKS LIKE (e.g. "Small hollow square", "Single dashed horizontal line")
+   - "asset_type": The TEXT LABEL or NAME of the asset type (e.g. "NEW COLUMN", "EXISTING UNDERGROUND MAINS")
+   IMPORTANT: Do NOT swap these fields. 'Icon' = visual appearance, 'asset_type' = the name/label.
+8. Every 'Icon' description MUST be UNIQUE across all entries. If two icons look similar,
+   describe their visual differences precisely (e.g. line thickness, dash pattern, spacing,
+   additional marks like hash marks or perpendicular segments). Two different asset types
+   MUST NEVER share the same Icon description.
+--- USER MESSAGE ---
+UPLOADED FILE: legend_v1.pdf
+
+INSTRUCTION: Analyse each icon and create a descriptive description, extract the matching text for the icon and create a JSON file with Icon description and Icon Text.
+=======================================================
+
+2026-02-15 13:43:50,800 - INFO - 
+========== RESPONSE [Attempt 1] ==========
+```json
+[
+  {
+    "Icon": "Single solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single long-dashed horizontal line",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single short-dashed horizontal line",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and single dots",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and two dots",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line with a right-pointing arrow at its right end",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Thick solid horizontal line without an arrow",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid filled circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid filled square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid filled vertical rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow vertical rectangle",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Four-pointed star shape (cross with diagonals) composed of thin lines",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Four-pointed star shape enclosed within a circle",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Upright triangle enclosed within a circle",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Large hollow square with an 'X' drawn inside",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating long dashes and two shorter perpendicular hash marks",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+```
+================================================
+
+2026-02-15 13:43:50,803 - INFO - 
+========== VALIDATION REQUEST ==========
+PROVIDER: openai / gpt-4o
+--- VALIDATION PROMPT ---
+Check if this output meets the criteria: Must return a JSON object with the text for each icon 'Icon' and a discription of the icon 'asset_type' into a JSON format of asset_types.
+OUTPUT: [
+  {
+    "Icon": "Single solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single long-dashed horizontal line",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single short-dashed horizontal line",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and single dots",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and two dots",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line with a right-pointing arrow at its right end",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Thick solid horizontal line without an arrow",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid filled circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid filled square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid filled vertical rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow vertical rectangle",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Four-pointed star shape (cross with diagonals) composed of thin lines",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Four-pointed star shape enclosed within a circle",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Upright triangle enclosed within a circle",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Large hollow square with an 'X' drawn inside",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating long dashes and two shorter perpendicular hash marks",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+Respond with JSON: {"valid": boolean, "reason": string}
+========================================
+
+2026-02-15 13:43:52,188 - INFO - 
+========== VALIDATION RESPONSE ==========
+{"valid": true, "reason": "The output meets the criteria of providing a JSON array of objects, each containing an 'Icon' and 'asset_type' key with appropriate descriptions."}
+=========================================
+
+2026-02-19 12:35:47,520 - INFO - 
+========== REQUEST START [Attempt 1] ==========
+PROVIDER: google / gemini-2.5-flash
+--- SYSTEM PROMPT ---
+You are a Strict Data Extraction and Review Agent.
+CRITICAL RULES:
+1. Output ONLY valid JSON - no markdown, no explanations, no extra text.
+2. Every item in arrays MUST be a complete dictionary/object.
+3. Do NOT include stray strings, numbers, or partial values in arrays.
+4. Do NOT add commas after the last item in arrays or objects.
+5. Use double quotes for all JSON keys and string values.
+6. Validate your JSON is parseable before responding.
+7. When extracting legend/icon data, each object MUST have exactly these fields:
+   - "Icon": A visual description of what the icon/symbol LOOKS LIKE (e.g. "Small hollow square", "Single dashed horizontal line")
+   - "asset_type": The TEXT LABEL or NAME of the asset type (e.g. "NEW COLUMN", "EXISTING UNDERGROUND MAINS")
+   IMPORTANT: Do NOT swap these fields. 'Icon' = visual appearance, 'asset_type' = the name/label.
+8. Every 'Icon' description MUST be UNIQUE across all entries. If two icons look similar,
+   describe their visual differences precisely (e.g. line thickness, dash pattern, spacing,
+   additional marks like hash marks or perpendicular segments). Two different asset types
+   MUST NEVER share the same Icon description.
+--- USER MESSAGE ---
+UPLOADED FILE: legend_v1.pdf
+
+INSTRUCTION: Analyse each icon and create a descriptive description, extract the matching text for the icon and create a JSON file with Icon description and Icon Text.
+=======================================================
+
+2026-02-19 12:35:59,357 - INFO - 
+========== RESPONSE [Attempt 1] ==========
+```json
+[
+  {
+    "Icon": "Single solid thin horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single dashed horizontal line with short, evenly spaced dashes",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and short dash segments",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and single dot",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and two dots",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Double thin parallel solid horizontal lines",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Hollow square outline",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Solid black rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Hollow rectangle outline",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Four-pointed star shape outline with a central small dot and thin radiating lines",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Four-pointed star shape outline with a central solid black circle and thin radiating lines",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Equilateral triangle outline with a centered solid black circle",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square outline with an 'X' inside",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single solid horizontal line with short perpendicular hash marks at regular intervals",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+```
+================================================
+
+2026-02-19 12:35:59,359 - INFO - 
+========== VALIDATION REQUEST ==========
+PROVIDER: openai / gpt-4o
+--- VALIDATION PROMPT ---
+Check if this output meets the criteria: Must return a JSON object with the text for each icon 'Icon' and a discription of the icon 'asset_type' into a JSON format of asset_types.
+OUTPUT: [
+  {
+    "Icon": "Single solid thin horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single dashed horizontal line with short, evenly spaced dashes",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and short dash segments",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and single dot",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line with alternating long dash and two dots",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Double thin parallel solid horizontal lines",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Hollow square outline",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Solid black rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Hollow rectangle outline",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Four-pointed star shape outline with a central small dot and thin radiating lines",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Four-pointed star shape outline with a central solid black circle and thin radiating lines",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Equilateral triangle outline with a centered solid black circle",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square outline with an 'X' inside",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single solid horizontal line with short perpendicular hash marks at regular intervals",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+Respond with JSON: {"valid": boolean, "reason": string}
+========================================
+
+2026-02-19 12:36:01,570 - INFO - 
+========== VALIDATION RESPONSE ==========
+{"valid": true, "reason": "The output meets the criteria by correctly providing a JSON array of objects, each containing an 'Icon' and 'asset_type' key as specified."}
+=========================================
+
+2026-03-02 22:27:26,673 - INFO - 
+========== REQUEST START [Attempt 1] ==========
+PROVIDER: google / gemini-2.5-flash
+--- SYSTEM PROMPT ---
+You are a Strict Data Extraction and Review Agent.
+CRITICAL RULES:
+1. Output ONLY valid JSON - no markdown, no explanations, no extra text.
+2. Every item in arrays MUST be a complete dictionary/object.
+3. Do NOT include stray strings, numbers, or partial values in arrays.
+4. Do NOT add commas after the last item in arrays or objects.
+5. Use double quotes for all JSON keys and string values.
+6. Validate your JSON is parseable before responding.
+7. When extracting legend/icon data, each object MUST have exactly these fields:
+   - "Icon": A visual description of what the icon/symbol LOOKS LIKE (e.g. "Small hollow square", "Single dashed horizontal line")
+   - "asset_type": The TEXT LABEL or NAME of the asset type (e.g. "NEW COLUMN", "EXISTING UNDERGROUND MAINS")
+   IMPORTANT: Do NOT swap these fields. 'Icon' = visual appearance, 'asset_type' = the name/label.
+8. Every 'Icon' description MUST be UNIQUE across all entries. If two icons look similar,
+   describe their visual differences precisely (e.g. line thickness, dash pattern, spacing,
+   additional marks like hash marks or perpendicular segments). Two different asset types
+   MUST NEVER share the same Icon description.
+--- USER MESSAGE ---
+UPLOADED FILE: legend_v1.pdf
+
+INSTRUCTION: Analyse each icon and create a descriptive description, extract the matching text for the icon and create a JSON file with Icon description and Icon Text.
+=======================================================
+
+2026-03-02 22:27:37,866 - INFO - 
+========== RESPONSE [Attempt 1] ==========
+[
+  {
+    "Icon": "Single thin solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single horizontal line composed of long dashes (dashes longer than gaps)",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single horizontal line composed of short dashes (dashes approximately equal to gaps)",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and single short perpendicular hash marks",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and two short perpendicular hash marks",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single medium-thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Single very thick solid horizontal line",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid black rectangle oriented vertically",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow rectangle oriented vertically",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Starburst shape with 8 rays, with a small hollow circle at its center",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Starburst shape with 8 rays, with a small solid black circle at its center",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Upward pointing triangle with solid outline, enclosing a small solid black circle at its center",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with solid outline, enclosing a diagonal cross ('X')",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating long dashes and single short perpendicular hash marks",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+================================================
+
+2026-03-02 22:27:37,868 - INFO - 
+========== VALIDATION REQUEST ==========
+PROVIDER: openai / gpt-4o
+--- VALIDATION PROMPT ---
+Check if this output meets the criteria: Must return a JSON object with the text for each icon 'Icon' and a discription of the icon 'asset_type' into a JSON format of asset_types.
+OUTPUT: [
+  {
+    "Icon": "Single thin solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single horizontal line composed of long dashes (dashes longer than gaps)",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single horizontal line composed of short dashes (dashes approximately equal to gaps)",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and single short perpendicular hash marks",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and two short perpendicular hash marks",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single medium-thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Single very thick solid horizontal line",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid black rectangle oriented vertically",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow rectangle oriented vertically",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Starburst shape with 8 rays, with a small hollow circle at its center",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Starburst shape with 8 rays, with a small solid black circle at its center",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Upward pointing triangle with solid outline, enclosing a small solid black circle at its center",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with solid outline, enclosing a diagonal cross ('X')",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating long dashes and single short perpendicular hash marks",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+Respond with JSON: {"valid": boolean, "reason": string}
+========================================
+
+2026-03-02 22:27:41,989 - INFO - 
+========== VALIDATION RESPONSE ==========
+{
+  "valid": true,
+  "reason": "The output meets the criteria as it returns a JSON array of objects, where each object contains an 'Icon' key with the description of the icon and an 'asset_type' key with the description. All required keys and formats are correctly present."
+}
+=========================================
+
+2026-03-03 10:10:55,806 - INFO - 
+========== REQUEST START [Attempt 1] ==========
+PROVIDER: google / gemini-2.5-flash
+--- SYSTEM PROMPT ---
+You are a Strict Data Extraction and Review Agent.
+CRITICAL RULES:
+1. Output ONLY valid JSON - no markdown, no explanations, no extra text.
+2. Every item in arrays MUST be a complete dictionary/object.
+3. Do NOT include stray strings, numbers, or partial values in arrays.
+4. Do NOT add commas after the last item in arrays or objects.
+5. Use double quotes for all JSON keys and string values.
+6. Validate your JSON is parseable before responding.
+7. When extracting legend/icon data, each object MUST have exactly these fields:
+   - "Icon": A visual description of what the icon/symbol LOOKS LIKE (e.g. "Small hollow square", "Single dashed horizontal line")
+   - "asset_type": The TEXT LABEL or NAME of the asset type (e.g. "NEW COLUMN", "EXISTING UNDERGROUND MAINS")
+   IMPORTANT: Do NOT swap these fields. 'Icon' = visual appearance, 'asset_type' = the name/label.
+8. Every 'Icon' description MUST be UNIQUE across all entries. If two icons look similar,
+   describe their visual differences precisely (e.g. line thickness, dash pattern, spacing,
+   additional marks like hash marks or perpendicular segments). Two different asset types
+   MUST NEVER share the same Icon description.
+--- USER MESSAGE ---
+UPLOADED FILE: legend_v1.pdf
+
+INSTRUCTION: Analyse each icon and create a descriptive description, extract the matching text for the icon and create a JSON file with Icon description and Icon Text.
+=======================================================
+
+2026-03-03 10:11:08,896 - INFO - 
+========== RESPONSE [Attempt 1] ==========
+```json
+[
+  {
+    "Icon": "Solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Horizontal line with a long dash followed by two short dashes",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Series of short evenly spaced horizontal dashes",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Horizontal line with a long dash followed by a single short dash",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Horizontal line with a pattern of a long dash, a forward slash, a short dash, and another forward slash",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Two parallel solid horizontal lines",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Hollow square outline",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Solid black vertical rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Hollow vertical rectangle outline",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Symbol consisting of a vertical and horizontal line intersecting, with four shorter diagonal lines also intersecting at the same center point",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Circle with an inscribed plus sign",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Triangle with an inscribed plus sign",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with an inscribed 'X' symbol",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Horizontal dashed line with a short vertical line centered on each dash",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+```
+================================================
+
+2026-03-03 10:11:08,898 - INFO - 
+========== VALIDATION REQUEST ==========
+PROVIDER: openai / gpt-4o
+--- VALIDATION PROMPT ---
+Check if this output meets the criteria: Must return a JSON object with the text for each icon 'Icon' and a discription of the icon 'asset_type' into a JSON format of asset_types.
+OUTPUT: [
+  {
+    "Icon": "Solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Horizontal line with a long dash followed by two short dashes",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Series of short evenly spaced horizontal dashes",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Horizontal line with a long dash followed by a single short dash",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Horizontal line with a pattern of a long dash, a forward slash, a short dash, and another forward slash",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Two parallel solid horizontal lines",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Hollow square outline",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Solid black vertical rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Hollow vertical rectangle outline",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Symbol consisting of a vertical and horizontal line intersecting, with four shorter diagonal lines also intersecting at the same center point",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Circle with an inscribed plus sign",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Triangle with an inscribed plus sign",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with an inscribed 'X' symbol",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Horizontal dashed line with a short vertical line centered on each dash",
+    "asset_type": "EXISTING FENCE"
+  }
+]
+Respond with JSON: {"valid": boolean, "reason": string}
+========================================
+
+2026-03-03 10:11:10,812 - INFO - 
+========== VALIDATION RESPONSE ==========
+{
+  "valid": true,
+  "reason": "The output meets the specified criteria. It returns a JSON array containing objects, each with 'Icon' and 'asset_type' keys, and the format is correct."
+}
+=========================================
+

@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Single thin solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single horizontal line composed of long dashes (dashes longer than gaps)",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single horizontal line composed of short dashes (dashes approximately equal to gaps)",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and single short perpendicular hash marks",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and two short perpendicular hash marks",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single medium-thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Single very thick solid horizontal line",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid black rectangle oriented vertically",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow rectangle oriented vertically",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Starburst shape with 8 rays, with a small hollow circle at its center",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Starburst shape with 8 rays, with a small solid black circle at its center",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Upward pointing triangle with solid outline, enclosing a small solid black circle at its center",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with solid outline, enclosing a diagonal cross ('X')",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating long dashes and single short perpendicular hash marks",
+    "asset_type": "EXISTING FENCE"
+  }
+]

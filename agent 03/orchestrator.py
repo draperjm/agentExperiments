@@ -45,8 +45,12 @@ class ExecutionRequest(BaseModel):
     plan_overview: str
     steps: List[PlanStep]
 
-# --- Validator Helper ---
-VALIDATOR_URL = "http://step-validator:8088/validate_step"
+# --- Service URLs (configurable for Azure Container Apps) ---
+VALIDATOR_URL = os.getenv("VALIDATOR_URL",  "http://step-validator:8088/validate_step")
+ASSET_OPS_URL = os.getenv("ASSET_OPS_URL",  "http://asset-ops:8084/extract_assets")
+REVIEWER_URL  = os.getenv("REVIEWER_URL",   "http://content-reviewer:8085/review_content")
+MAPPER_URL    = os.getenv("MAPPER_URL",     "http://agent-mapper:8087/create_mapping")
+VERIF_URL     = os.getenv("VERIF_URL",      "http://agent-verification:8086/verify_assets")
 
 def _call_validator(step_name: str, step_description: str,
                     input_data: Any, output_data: Any,
@@ -154,7 +158,7 @@ async def run_next_step(plan_id: str, file: UploadFile = File(None)):
         step_input_data = {"file": file_name}
         try:
             files = {'file': (file_name, BytesIO(file_bytes), file_content_type)}
-            resp = requests.post("http://asset-ops:8084/extract_assets", files=files, timeout=30)
+            resp = requests.post(ASSET_OPS_URL, files=files, timeout=30)
 
             if resp.status_code == 200:
                 data = resp.json()
@@ -190,7 +194,7 @@ async def run_next_step(plan_id: str, file: UploadFile = File(None)):
             files = {'file': (file_name, BytesIO(file_bytes), file_content_type)}
 
             resp = requests.post(
-                "http://content-reviewer:8085/review_content",
+                REVIEWER_URL,
                 files=files,
                 data=form_data,
                 timeout=60
@@ -227,7 +231,7 @@ async def run_next_step(plan_id: str, file: UploadFile = File(None)):
 
         try:
             resp = requests.post(
-                "http://agent-mapper:8087/create_mapping",
+                MAPPER_URL,
                 data=form_data,
                 timeout=30
             )
@@ -276,7 +280,7 @@ async def run_next_step(plan_id: str, file: UploadFile = File(None)):
         }
 
         try:
-            url = "http://agent-verification:8086/verify_assets"
+            url = VERIF_URL
 
             if file_bytes:
                 files = {'drawing': (file_name, BytesIO(file_bytes), file_content_type)}

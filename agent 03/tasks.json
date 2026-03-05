@@ -55,7 +55,7 @@
     },
     {
       "template_id": "tmpl-cc-review-asset-number-check",
-      "name": "Customer Connections Asset Number Diagram Check",
+      "name": "Junior Engineer: Asset Number Diagram Check",
       "description": "Standard procedure for validating all assets are represented on a line diagram.",
       "triggers": ["review diagram", "connections audit", "submission validation"],
       "estimated_duration": "5m",
