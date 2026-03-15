@@ -3,7 +3,11 @@
     "allow": [
       "Bash(docker compose build frontend orchestrator)",
       "Bash(docker compose:*)",
-      "Bash(docker exec:*)"
+      "Bash(docker exec:*)",
+      "Bash(python -m git_filter_repo --version)",
+      "Bash(python -c \"import git_filter_repo; print\\(''module ok''\\)\")",
+      "Bash(pip show:*)",
+      "Read(//c/Users/JohnDraper/miniconda3/**)"
     ]
   }
 }
