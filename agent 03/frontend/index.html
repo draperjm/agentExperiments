@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agent Workflow</title>
+    <!-- Auth guard: redirect to login if no valid session -->
+    <script>(function(){
+        try {
+            var a = JSON.parse(sessionStorage.getItem('agent_auth')||'null');
+            if (!a || !a.exp || Date.now()/1000 >= a.exp) {
+                sessionStorage.removeItem('agent_auth');
+                window.location.replace('/login.html');
+            }
+        } catch(e) { window.location.replace('/login.html'); }
+    })();</script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         :root {
             --bg: #161616;
@@ -237,6 +248,14 @@
         .m-cancel  { background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid rgba(255,255,255,0.1); }
         .m-confirm { background: #2563eb; color: white; }
 
+        /* User avatar in header */
+        .user-avatar-btn { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 3px 10px 3px 4px; cursor: pointer; transition: background .15s; flex-shrink: 0; }
+        .user-avatar-btn:hover { background: rgba(255,255,255,0.09); }
+        .user-avatar-btn img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+        .user-avatar-btn span { font-size: 0.72rem; color: var(--text-dim); max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .logout-btn { background: transparent; border: none; color: #555; font-size: 0.72rem; cursor: pointer; padding: 3px 6px; border-radius: 4px; transition: color .15s; }
+        .logout-btn:hover { color: #ef4444; }
+
         /* Scrollbars */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -257,6 +276,12 @@
     <button class="hbtn hbtn-green" id="runStepBtn" onclick="handleRunClick()">Run Next Step</button>
     <div class="header-sep"></div>
     <a href="validation_report.html" target="_blank" class="hbtn-purple">📊 Report</a>
+    <div class="header-sep"></div>
+    <div class="user-avatar-btn" id="userAvatarBtn" title="Signed in">
+        <img id="headerAvatar" src="" alt="">
+        <span id="headerUserName"></span>
+    </div>
+    <button class="logout-btn" onclick="logout()" title="Sign out">⏻</button>
     <span id="headerStatus">Select a task to begin</span>
 </header>
 
@@ -356,6 +381,29 @@
 // ═══════════════════════════════════════════
 //  STATE
 // ═══════════════════════════════════════════
+// Auth — populate header user info on load
+(function() {
+    try {
+        const auth = JSON.parse(sessionStorage.getItem('agent_auth') || 'null');
+        if (auth) {
+            const img = document.getElementById('headerAvatar');
+            const nm  = document.getElementById('headerUserName');
+            if (img && auth.picture) img.src = auth.picture;
+            if (nm)  nm.textContent = auth.name || auth.email || '';
+        }
+    } catch(e) {}
+})();
+
+function logout() {
+    const auth = JSON.parse(sessionStorage.getItem('agent_auth') || 'null');
+    sessionStorage.removeItem('agent_auth');
+    if (typeof google !== 'undefined' && auth && auth.email) {
+        google.accounts.id.revoke(auth.email, () => window.location.replace('/login.html'));
+    } else {
+        window.location.replace('/login.html');
+    }
+}
+
 let currentPlanId   = null;
 let currentStepIdx  = 0;
 let planSteps       = [];

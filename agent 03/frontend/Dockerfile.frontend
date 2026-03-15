@@ -1,12 +1,13 @@
 # Dockerfile.frontend
 FROM nginx:alpine
 
-# Copy the HTML files to the Nginx default directory
+# Copy the HTML files
 COPY index.html /usr/share/nginx/html/index.html
+COPY login.html /usr/share/nginx/html/login.html
 COPY validation_report.html /usr/share/nginx/html/validation_report.html
 
-# Reverse-proxy config (routes /api/decomposer/ and /api/orchestrator/ to backend)
+# Copy nginx config directly — no env var substitution needed,
+# service names (decomposer, orchestrator) are fixed in ACA environment
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
 EXPOSE 80

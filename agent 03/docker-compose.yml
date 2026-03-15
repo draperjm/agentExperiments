@@ -38,6 +38,12 @@ services:
     container_name: agent-frontend
     ports:
       - "8080:80"
+    environment:
+      - DECOMPOSER_HOST=decomposer:8000
+      - ORCHESTRATOR_HOST=orchestrator:8001
+    depends_on:
+      - decomposer
+      - orchestrator
     networks:
       - agent-network
 
