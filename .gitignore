@@ -1,0 +1,14 @@
+.env
+.env.local
+*.pem               # Private keys
+Test Data (version 2) (002).xlsx
+
+# Ignore these folders 
+Test Data/
+agent 03/Data/
+agent 04/OUTPUT/
+agent 04/Data/
+agent 04/documents/
+agent 05/OUTPUT/
+agent 05/Data/
+agent 05/documents/
