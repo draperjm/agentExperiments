@@ -10,6 +10,7 @@ Port:     8090
 """
 
 import concurrent.futures
+import ast
 import json
 import logging
 import os
@@ -122,13 +123,111 @@ def _alpha_ratio(text: str) -> float:
 
 _JSON_FENCE = re.compile(r"```(?:json)?\s*([\s\S]*?)```", re.IGNORECASE)
 
+def _strip_json_comments(text: str) -> str:
+    """Remove JS-style // line and /* block */ comments from JSON text, respecting strings."""
+    result = []
+    i = 0
+    in_string = False
+    while i < len(text):
+        if in_string:
+            if text[i] == '\\':
+                result.append(text[i])
+                i += 1
+                if i < len(text):
+                    result.append(text[i])
+                    i += 1
+            elif text[i] == '"':
+                result.append(text[i])
+                in_string = False
+                i += 1
+            else:
+                result.append(text[i])
+                i += 1
+        else:
+            if text[i] == '"':
+                result.append(text[i])
+                in_string = True
+                i += 1
+            elif text[i:i+2] == '//':
+                while i < len(text) and text[i] != '\n':
+                    i += 1
+            elif text[i:i+2] == '/*':
+                end = text.find('*/', i + 2)
+                i = len(text) if end == -1 else end + 2
+            else:
+                result.append(text[i])
+                i += 1
+    return ''.join(result)
+
+def _escape_string_newlines(text: str) -> str:
+    """Escape literal newlines/carriage-returns inside JSON double-quoted string values.
+    Gemini sometimes embeds raw newlines in string values, making the JSON invalid."""
+    result = []
+    in_string = False
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if in_string:
+            if c == '\\' and i + 1 < len(text):
+                # Already-escaped sequence — pass through both chars unchanged
+                result.append(c)
+                result.append(text[i + 1])
+                i += 2
+                continue
+            elif c == '"':
+                in_string = False
+                result.append(c)
+            elif c == '\n':
+                result.append('\\n')
+            elif c == '\r':
+                result.append('\\r')
+            else:
+                result.append(c)
+        else:
+            if c == '"':
+                in_string = True
+            result.append(c)
+        i += 1
+    return ''.join(result)
+
+
 def _parse_json_robust(text: str) -> Any:
-    """Parse JSON from LLM response, stripping markdown code fences if present."""
+    """Parse JSON from LLM response, handling fences, JS comments, literal newlines, and single-quoted literals."""
     text = text.strip()
     m = _JSON_FENCE.search(text)
     if m:
         text = m.group(1).strip()
-    return json.loads(text)
+    text = _strip_json_comments(text)
+
+    # Attempt 1: standard JSON parse
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Attempt 2: repair literal newlines inside string values (common Gemini issue)
+    try:
+        return json.loads(_escape_string_newlines(text))
+    except json.JSONDecodeError:
+        pass
+
+    # Attempt 3: Python-style single-quoted dicts (Gemini sometimes returns these)
+    py_text = re.sub(r'\bnull\b', 'None', text)
+    py_text = re.sub(r'\btrue\b', 'True', py_text)
+    py_text = re.sub(r'\bfalse\b', 'False', py_text)
+    try:
+        return ast.literal_eval(py_text)
+    except (ValueError, SyntaxError):
+        pass
+
+    # Attempt 4: repair newlines then try Python literal
+    try:
+        repaired = _escape_string_newlines(py_text)
+        return ast.literal_eval(repaired)
+    except (ValueError, SyntaxError):
+        pass
+
+    raise json.JSONDecodeError("Failed to parse LLM response after all repair attempts", text, 0)
 
 
 def _llm_call_claude(prompt: str, model: str) -> Any:
@@ -209,6 +308,57 @@ def _llm_call_vision(prompt: str, image_bytes: bytes) -> Any:
             logger.warning(f"Vision LLM call failed (attempt {attempt + 1}/{LLM_MAX_RETRIES}): {e}. Retrying in {delay}s…")
             time.sleep(delay)
     raise last_exc
+
+
+def _llm_call_vision_multi(prompt: str, image_bytes_list: List[bytes]) -> Any:
+    """Call Gemini with multiple inline PNG images + prompt. Returns parsed JSON.
+    Used for boundary stitching — shows two adjacent chunk images simultaneously."""
+    parts: list = [prompt]
+    for img_bytes in image_bytes_list:
+        parts.append(PIL.Image.open(io.BytesIO(img_bytes)))
+    last_exc = None
+    model = genai.GenerativeModel(VISION_MODEL)
+    for attempt in range(LLM_MAX_RETRIES):
+        try:
+            resp = model.generate_content(parts)
+            return _parse_json_robust(resp.text)
+        except Exception as e:
+            last_exc = e
+            delay = LLM_RETRY_DELAYS[min(attempt, len(LLM_RETRY_DELAYS) - 1)]
+            logger.warning(f"Multi-image vision call failed (attempt {attempt + 1}/{LLM_MAX_RETRIES}): {e}. Retrying in {delay}s…")
+            time.sleep(delay)
+    raise last_exc
+
+
+def _vision_page_has_legend(image_bytes_list: List[bytes]) -> bool:
+    """Ask the vision model whether a set of page chunk images contain a legend/symbol table.
+    Sends chunk images together so the model can assess the page as a whole.
+    Returns True if a legend is detected, False on confident NO.
+    Falls back to True on error (conservative — avoids silently dropping real entries)."""
+    prompt = (
+        "You are reviewing image tiles from a large-format engineering drawing. "
+        "These tiles show sections of a single page.\n"
+        "A LEGEND (also called KEY, SYMBOL TABLE, or NOTATION TABLE) is a structured section "
+        "that shows drawn graphical symbols (lines, circles, filled shapes, rectangles) "
+        "on the left paired with text labels on the right — "
+        "it is NOT a title block, revision table, schedule, or block of notes.\n\n"
+        "Do any of these images contain a LEGEND or SYMBOL TABLE with drawn symbols "
+        "paired with text labels?\n\n"
+        "Reply with a JSON object only: {\"has_legend\": true} or {\"has_legend\": false}"
+    )
+    parts: list = [prompt]
+    for img_bytes in image_bytes_list:
+        parts.append(PIL.Image.open(io.BytesIO(img_bytes)))
+    model = genai.GenerativeModel(VISION_MODEL)
+    try:
+        resp = model.generate_content(parts)
+        result = _parse_json_robust(resp.text)
+        if isinstance(result, dict):
+            return bool(result.get("has_legend", True))
+        return "true" in str(resp.text).lower()
+    except Exception as e:
+        logger.warning(f"Page legend presence check failed: {e} — assuming legend present")
+        return True
 
 
 # ── Request / response models ─────────────────────────────────────────────────
@@ -339,8 +489,10 @@ def extract_documents(request: ExtractionRequest):
 
         extractions.append(result)
 
-    # Consolidated report
-    report_path = eff_output_dir / f"ExtractionReport_{timestamp}.json"
+    # Consolidated report — include process_id slug so parallel steps don't collide
+    _proc_slug  = re.sub(r"[^\w]", "_", request.process_id or "")[:40] if request.process_id else ""
+    _report_sfx = f"_{_proc_slug}" if _proc_slug else ""
+    report_path = eff_output_dir / f"ExtractionReport{_report_sfx}_{timestamp}.json"
     report = {
         "process_step": request.process_step.dict(),
         "documents_folder": request.documents_folder,
@@ -440,6 +592,229 @@ def _extract_file(fe: FileEntry, filepath: str, step: ProcessStepDef) -> dict:
     return base
 
 
+_MARKER_WORDS = ["ATTENTION", "WARNING", "CAUTION", "NOTICE"]
+
+# Numbered note pattern — matches "1. text", "2. text" etc at start of line or after newline
+_NOTE_NUM_RE = re.compile(r"(?:^|\n)\s*(\d{1,2})\.\s+\S", re.MULTILINE)
+
+
+def _find_note_numbers(text: str) -> set:
+    """Return set of note numbers (ints 1-25) found in text."""
+    return {int(m.group(1)) for m in _NOTE_NUM_RE.finditer(text) if int(m.group(1)) <= 25}
+
+
+def _verify_and_fill_extraction(
+    consolidated: dict,
+    combined_raw: str,
+    sub_step_ids: List[str],
+    sub_step_schema_lines: List[str],
+) -> dict:
+    """Phase 4 — Programmatic gap detection followed by a targeted LLM fill pass.
+
+    Checks each sub-step extraction against the full raw text corpus for:
+    1. Missing numbered notes (gaps in the 1..N sequence found in raw text)
+    2. Missing marker-word callouts (ATTENTION / WARNING / CAUTION / NOTICE) that
+       appear as standalone annotations in the raw text but not in the extraction
+    3. Detected gaps trigger a single focused LLM re-pass that corrects only the
+       affected fields — complete fields are not changed.
+
+    Returns the (possibly corrected) consolidated dict.
+    """
+    if not isinstance(consolidated, dict):
+        return consolidated
+
+    raw_upper        = combined_raw.upper()
+    raw_note_nums    = _find_note_numbers(combined_raw)
+    raw_markers      = [m for m in _MARKER_WORDS if m in raw_upper]
+
+    gaps: List[str] = []
+    affected_ids: List[str] = []
+
+    for sid in sub_step_ids:
+        val = consolidated.get(sid)
+        if not isinstance(val, str) or not val.strip():
+            continue
+
+        val_upper = val.upper()
+        field_gaps: List[str] = []
+
+        if "note" in sid.lower():
+            # ── Check 1: numbered note sequence ───────────────────────────────
+            extracted_nums  = _find_note_numbers(val)
+            missing_nums    = raw_note_nums - extracted_nums
+            if missing_nums:
+                field_gaps.append(
+                    f"Missing numbered note(s) {sorted(missing_nums)} "
+                    f"(present in raw text, absent from extraction)"
+                )
+
+            # ── Check 2: marker-word callouts ─────────────────────────────────
+            # A marker in raw text that does NOT appear in the extraction at all
+            for marker in raw_markers:
+                if marker not in val_upper:
+                    field_gaps.append(
+                        f"Marker word '{marker}:' is present in raw text as a standalone "
+                        f"callout annotation but is not captured in this field"
+                    )
+
+            # ── Check 3: truncated sentences ──────────────────────────────────
+            # Last non-empty line ends mid-word (no punctuation and short word)
+            last_line = val.rstrip().split("\n")[-1].strip()
+            if last_line and not last_line[-1] in ".,:;)\"'" and len(last_line.split()) <= 3:
+                field_gaps.append(
+                    f"Extraction appears to end mid-sentence: '...{last_line}'"
+                )
+
+        if field_gaps:
+            gaps.extend(field_gaps)
+            affected_ids.append(sid)
+            for g in field_gaps:
+                logger.info(f"[Verification] gap in '{sid}': {g}")
+
+    if not gaps:
+        logger.info("[Verification] No gaps detected — extraction is complete")
+        return consolidated
+
+    logger.info(f"[Verification] {len(gaps)} gap(s) across {len(affected_ids)} field(s) — running gap-fill pass")
+
+    # Build a targeted fill prompt — only ask for the affected fields
+    affected_schema = "\n".join(
+        line for line in sub_step_schema_lines
+        if any(sid in line for sid in affected_ids)
+    )
+    affected_keys = ", ".join(f'"{sid}"' for sid in affected_ids)
+    current_values = {sid: consolidated.get(sid) for sid in affected_ids}
+
+    gap_fill_prompt = (
+        f"EXTRACTION REVIEW AND COMPLETION TASK\n\n"
+        f"The following gaps were detected in a prior extraction pass:\n" +
+        "\n".join(f"  - {g}" for g in gaps) +
+        f"\n\nFULL RAW TEXT EXTRACTED FROM ALL DOCUMENT CHUNKS (in spatial order):\n"
+        f"{combined_raw[:12000]}\n\n"
+        f"CURRENT (INCOMPLETE) VALUES FOR AFFECTED FIELDS:\n"
+        f"{json.dumps(current_values, indent=2)[:3000]}\n\n"
+        f"TASK: Review the raw text carefully and produce COMPLETE, corrected values "
+        f"for ONLY the following fields:\n{affected_schema}\n\n"
+        f"Gap-fill rules:\n"
+        f"- Include ALL numbered notes from the raw text in sequence order (1., 2., 3., ...)\n"
+        f"- Include ALL standalone callout annotations: any text preceded by ATTENTION:, "
+        f"WARNING:, CAUTION:, or NOTICE: — even if they repeat content from the numbered notes, "
+        f"capture them as separate entries appended after the numbered list\n"
+        f"- Reconstruct split text: the raw text has left-half and right-half fragments from "
+        f"adjacent image columns — join them into complete sentences\n"
+        f"- Do NOT truncate — if a note or callout seems to continue, find and include the rest "
+        f"from the raw text\n"
+        f"- Return ONLY the fields listed above, as a JSON object\n"
+        f"- Do NOT wrap output in markdown fences — return raw JSON only\n"
+        f"Required keys: {affected_keys}"
+    )
+
+    try:
+        filled = _llm_call(gap_fill_prompt)
+        if isinstance(filled, dict):
+            for sid in affected_ids:
+                if sid in filled and filled[sid] is not None:
+                    consolidated[sid] = filled[sid]
+                    logger.info(f"[Verification] gap-filled '{sid}': {str(filled[sid])[:80]}...")
+        logger.info("[Verification] gap-fill pass complete")
+    except Exception as e:
+        logger.warning(f"[Verification] gap-fill pass failed: {e}")
+
+    return consolidated
+
+
+def _stitch_adjacent_chunks(
+    chunks: List[dict],
+    chunk_results: List[dict],
+    sub_step_ids: List[str],
+) -> List[dict]:
+    """Phase 1.5 — For adjacent chunk pairs where content is cut off at a boundary,
+    run a multi-image Gemini call with both chunks visible simultaneously to assemble
+    the complete spanning text.  Only pairs that carry continuation markers (→ / ←)
+    in their raw_text are processed; all others are skipped to limit LLM cost.
+
+    Returns a list of stitch records:
+      {"chunk_ids": [...], "stitched_raw": "...", "data": {...}}
+    """
+    # Build a (chunk_meta, chunk_result) list sorted by page then sequence
+    ordered: List[tuple] = []
+    result_by_id = {cr.get("chunk_id"): cr for cr in chunk_results}
+    for chunk in sorted(chunks, key=lambda c: (c.get("page_number", 1), c.get("sequence", 0))):
+        cr = result_by_id.get(chunk.get("chunk_id"))
+        if cr and cr.get("extracted"):
+            ordered.append((chunk, cr))
+
+    stitched: List[dict] = []
+
+    for i in range(len(ordered) - 1):
+        chunk_a, result_a = ordered[i]
+        chunk_b, result_b = ordered[i + 1]
+
+        # Only stitch chunks on the same page
+        if chunk_a.get("page_number") != chunk_b.get("page_number"):
+            continue
+
+        raw_a = (result_a.get("extracted") or {}).get("raw_text", "") or ""
+        raw_b = (result_b.get("extracted") or {}).get("raw_text", "") or ""
+
+        # Only stitch when a continuation marker is present at this boundary
+        if "\u2192" not in raw_a and "\u2190" not in raw_b:
+            continue
+
+        fpath_a = chunk_a.get("filepath", "")
+        fpath_b = chunk_b.get("filepath", "")
+        if not (fpath_a and fpath_b and Path(fpath_a).exists() and Path(fpath_b).exists()):
+            logger.warning(f"Skipping stitch: missing file for chunks {chunk_a.get('chunk_id')}/{chunk_b.get('chunk_id')}")
+            continue
+
+        schema = (
+            "{\n" +
+            ",\n".join(f'  "{sid}": assembled value or null' for sid in sub_step_ids) +
+            "\n}"
+        )
+        stitch_prompt = (
+            f"You are an expert engineering document analyst.\n"
+            f"The two images shown are ADJACENT regions of the same engineering drawing page.\n"
+            f"Image 1 covers region '{chunk_a.get('region')}'. "
+            f"Image 2 covers region '{chunk_b.get('region')}' (immediately to the right of or below Image 1).\n\n"
+            f"Known partial text from Image 1 (last 800 chars, may be cut off at the boundary):\n"
+            f"{raw_a[-800:]}\n\n"
+            f"Known partial text from Image 2 (first 800 chars, may continue from Image 1):\n"
+            f"{raw_b[:800]}\n\n"
+            f"TASK: Identify any text, numbered notes, or data entries that are split across the "
+            f"boundary between these two images. Assemble the complete, uninterrupted text for each "
+            f"such entry by reading both images together.\n\n"
+            f"Return a JSON object with exactly two keys:\n"
+            f"  'stitched_raw': a single string containing the complete assembled text for any "
+            f"boundary-spanning content (empty string if nothing spans the boundary),\n"
+            f"  'data': {schema}\n"
+            f"Only populate 'data' fields where having both images gives you MORE COMPLETE information "
+            f"than either image alone. Use null for fields not affected by this boundary."
+        )
+
+        try:
+            img_a = Path(fpath_a).read_bytes()
+            img_b = Path(fpath_b).read_bytes()
+            result = _llm_call_vision_multi(stitch_prompt, [img_a, img_b])
+            stitched_raw = result.get("stitched_raw", "") if isinstance(result, dict) else ""
+            stitched_data = result.get("data", {}) if isinstance(result, dict) else {}
+            logger.info(
+                f"Boundary stitch {chunk_a.get('chunk_id')}/{chunk_b.get('chunk_id')}: "
+                f"{len(stitched_raw)} chars assembled"
+            )
+            stitched.append({
+                "chunk_ids":    [chunk_a.get("chunk_id"), chunk_b.get("chunk_id")],
+                "stitched_raw": stitched_raw,
+                "data":         stitched_data if isinstance(stitched_data, dict) else {},
+            })
+        except Exception as e:
+            logger.warning(
+                f"Boundary stitch failed for {chunk_a.get('chunk_id')}/{chunk_b.get('chunk_id')}: {e}"
+            )
+
+    return stitched
+
+
 def _extract_chunked_file(fe: FileEntry, chunk_manifest: dict, step: ProcessStepDef) -> dict:
     """
     Vision-based extraction for documents that have been pre-split into PNG chunks.
@@ -453,21 +828,92 @@ def _extract_chunked_file(fe: FileEntry, chunk_manifest: dict, step: ProcessStep
     page_size  = chunk_manifest.get("page_size", fe.page_size or "A4")
     total_pages = chunk_manifest.get("total_pages", 1)
 
+    # Build sub-step schema split by phase.
+    # Phase 1 sub-steps are extracted from image chunks (vision).
+    # Phase 2 sub-steps are analysed from the consolidated Phase 1 text (text-only LLM).
+    # Sub-steps without an explicit "phase" field default to Phase 1.
+    _p1_ids: List[str] = []   # Phase 1 — image-based extraction
+    _p1_schema: List[str] = []
+    _p2_ids: List[str] = []   # Phase 2 — text-based analysis of Phase 1 output
+    _p2_schema: List[str] = []
+    _p2_steps: List[dict] = []  # Full sub-step dicts for Phase 2 (used in analysis prompt)
+    _p1_output_formats: dict = {}  # sid -> output_format string for Phase 1 sub-steps
+
+    if step.sub_steps:
+        for ss in step.sub_steps:
+            ss_id    = ss.get("sub_step_id") or f"sub_step_{ss.get('sub_step_number', '')}"
+            ss_name  = ss.get("sub_step_name", ss_id)
+            ss_det   = (ss.get("details") or "")[:200]
+            ss_phase = ss.get("phase", 1)
+            schema_line = f'  "{ss_id}": <{ss_name}: {ss_det}>'
+            if ss_phase == 2:
+                _p2_ids.append(ss_id)
+                _p2_schema.append(schema_line)
+                _p2_steps.append(ss)
+            else:
+                _p1_ids.append(ss_id)
+                _p1_schema.append(schema_line)
+                if ss.get("output_format"):
+                    _p1_output_formats[ss_id] = ss["output_format"]
+
+    # Backward-compatible aliases — used by existing code below
+    _sub_step_ids          = _p1_ids
+    _sub_step_schema_lines = _p1_schema
+
+    # Sub-steps whose output_format declares a JSON array — need special handling
+    # (accumulation across chunks, positional label pairing). Defined here so Phase 1.25 can use it.
+    _array_sub_steps: set = {
+        sid for sid in _p1_ids
+        if sid in _p1_output_formats and _p1_output_formats[sid].lstrip().startswith("JSON array")
+    }
+
     # Build extraction instruction from the process step definition
     inst_parts = [f"Process step: {step.step_name}"]
-    if step.summary:
-        inst_parts.append(f"Summary: {step.summary}")
     if step.details:
-        inst_parts.append(f"Details: {step.details}")
-    if step.sub_steps:
-        inst_parts.append("Extract the following fields:")
-        for ss in step.sub_steps:
-            inst_parts.append(
-                f"  - {ss.get('sub_step_name', ss.get('sub_step_id', ''))}: {ss.get('details', '')}"
-            )
+        inst_parts.append(f"Details: {step.details[:300]}")
+    if _sub_step_schema_lines:
+        inst_parts.append("Fields to extract:")
+        inst_parts.extend(_sub_step_schema_lines)
     instruction = "\n".join(inst_parts)
 
+    # ── Page-level legend presence check (pre-Phase 1) ────────────────────────
+    # For array sub-steps (e.g. legend extraction), determine which pages actually
+    # contain a legend before running per-chunk extraction. Each page's chunks are
+    # sent together as a single multi-image call so the model sees the full page context.
+    # Pages with no legend will have their array sub-step entries discarded after Phase 1.
+    pages_with_legend: set = set(range(1, total_pages + 1))  # conservative default: all pages
+    if _array_sub_steps:
+        chunks_by_page: dict = {}
+        for c in chunks:
+            chunks_by_page.setdefault(c.get("page_number", 1), []).append(c)
+        confirmed_legend_pages: set = set()
+        for pg, page_chunks in sorted(chunks_by_page.items()):
+            sorted_pc = sorted(page_chunks, key=lambda c: c.get("sequence", 0))
+            # Use all chunks so the model sees the entire page; cap at 12 to stay within limits
+            sample = sorted_pc[:12]
+            valid = [c for c in sample if c.get("filepath") and Path(c["filepath"]).exists()]
+            if not valid:
+                logger.warning(f"Page {pg}: no valid chunk images for legend check — assuming present")
+                confirmed_legend_pages.add(pg)
+                continue
+            try:
+                img_bytes_list = [Path(c["filepath"]).read_bytes() for c in valid]
+                if _vision_page_has_legend(img_bytes_list):
+                    confirmed_legend_pages.add(pg)
+                    logger.info(f"Page {pg}: legend confirmed — array sub-steps will be extracted")
+                else:
+                    logger.info(f"Page {pg}: no legend detected — array sub-step entries will be discarded")
+            except Exception as e:
+                logger.warning(f"Page {pg} legend check error: {e} — assuming present")
+                confirmed_legend_pages.add(pg)
+        if confirmed_legend_pages:
+            pages_with_legend = confirmed_legend_pages
+
     # ── Phase 1: process each chunk with the vision model ─────────────────────
+    # Sort chunks into reading order (page asc, then sequence asc) so the prompt
+    # context and boundary markers are coherent.
+    chunks = sorted(chunks, key=lambda c: (c.get("page_number", 1), c.get("sequence", 0)))
+
     chunk_results: List[dict] = []
     for chunk in chunks:
         chunk_id   = chunk.get("chunk_id", "?")
@@ -482,16 +928,42 @@ def _extract_chunked_file(fe: FileEntry, chunk_manifest: dict, step: ProcessStep
                                    "error": "file not found"})
             continue
 
+        if _sub_step_ids:
+            schema_lines = []
+            for sid in _sub_step_ids:
+                if sid in _p1_output_formats:
+                    # Use the first line of output_format as the inline value hint
+                    fmt_hint = _p1_output_formats[sid].split("\n")[0][:200]
+                    schema_lines.append(f'    "{sid}": {fmt_hint}')
+                else:
+                    schema_lines.append(f'    "{sid}": extracted value or null')
+            data_schema = "{\n" + ",\n".join(schema_lines) + "\n  }"
+        else:
+            data_schema = "relevant extracted fields or null"
+
         prompt = (
             f"You are an expert engineering document analyst.\n"
             f"This image is region '{region}' (chunk {chunk_id}, page {page_num} of {total_pages}) "
-            f"from a {page_size} engineering document split using {strategy}.\n\n"
+            f"from a {page_size} engineering drawing split using {strategy}.\n\n"
             f"{instruction}\n\n"
-            f"Return a JSON object with:\n"
-            f"  'raw_text': all legible text visible in this image chunk,\n"
-            f"  'data': structured fields relevant to the process step extracted from this chunk "
-            f"(use null for fields not visible here).\n"
-            f"Only include information actually present in this image."
+            f"BOUNDARY AWARENESS: This image is one tile of a grid. Text may be cut off at the edges.\n"
+            f"- If text is cut off at the RIGHT or BOTTOM edge (continues in the next tile), "
+            f"append \u2192 to that line in raw_text.\n"
+            f"- If text starts abruptly at the LEFT or TOP edge (continues from a previous tile), "
+            f"prepend \u2190 to that line in raw_text.\n"
+            f"- Always capture partially-cut-off text in raw_text — do NOT omit it just because "
+            f"it is incomplete at the boundary.\n\n"
+            f"LEGEND EXTRACTION RULE: If this chunk contains a legend or symbol table, each legend row "
+            f"has a DRAWN SYMBOL on the left and a TEXT LABEL on the right (or directly below) the symbol. "
+            f"You MUST read BOTH the visual symbol AND the text label for every row and include them "
+            f"together in each legend entry. Do not leave the label field empty if label text is "
+            f"visible anywhere in this image next to or near the symbol.\n\n"
+            f"Return a JSON object with exactly two keys:\n"
+            f"  'raw_text': all legible text visible in this image chunk (preserve as plain text, "
+            f"  use \u2192/\u2190 markers at cut-off boundaries as instructed above),\n"
+            f"  'data': {data_schema}\n"
+            f"Use null for any field not visible in this specific chunk. "
+            f"Only report information actually present in this image."
         )
 
         try:
@@ -507,58 +979,683 @@ def _extract_chunked_file(fe: FileEntry, chunk_manifest: dict, step: ProcessStep
         except Exception as e:
             logger.warning(f"Vision extraction failed for {chunk_id}: {e}")
             chunk_results.append({
-                "chunk_id":    chunk_id,
-                "sequence":    chunk.get("sequence", 0),
-                "page_number": page_num,
-                "region":      region,
-                "extracted":   None,
-                "error":       str(e),
+                "chunk_id":      chunk_id,
+                "sequence":      chunk.get("sequence", 0),
+                "page_number":   page_num,
+                "region":        region,
+                "extracted":     None,
+                "skipped":       True,
+                "skip_reason":   str(e),
             })
 
+    # ── Phase 1.25: positional label pairing for array sub-steps ─────────────
+    # Engineering legend tables have symbols on the LEFT and label text on the RIGHT.
+    # The vision model correctly identifies the symbol geometry but often fails to pair
+    # the adjacent label text. This pass uses each chunk's own raw_text as a label source
+    # and matches label candidates to symbol entries positionally (same sequential order).
+    # Patterns that mark the END of the legend — stop extracting candidates here
+    _LEGEND_SECTION_END = re.compile(
+        r'TEMPLATE VERSION|MAY NOT BE COPIED|COPYRIGHT THEREIN|WRITTEN CONSENT'
+        r'|PROPERTY OF ENDEAVOUR|REPRODUCED[,.]|DISTRIBUTED[,.]|LOANED OR'
+        r'|REFERENCE DRAWING|CONNECTION OF LOAD',
+        re.IGNORECASE,
+    )
+    # Noise lines that look uppercase but are not legend labels
+    _LEGEND_NOISE = re.compile(
+        r'^[\d\s.,()/:@+\-]+$'                                  # pure numbers/punctuation
+        r'|©|www\.|http|\+61|@'                                 # web/email markers
+        r'|ORIGINAL\s+ISSUE|DRAFT\s+No|AMENDMENT'              # title block history
+        r'|SCALE\s*\d|\bDATE\s+\d|\bDRAWN\s+BY\b'             # drawing metadata
+        r'|CADASTRE|LAND AND PROPERTY'                          # attribution
+        r'|TELEPHONE\s*:|FACSIMILE\s*:|GPO\s+BOX'             # contact details
+        r'|GEORGE\s+STREET|ERNST\s+&|YOUNG\s+CENTRE'           # address
+        r'|ASP\s+REF|ACCREDIATION|ACCREDITATION'               # accreditation
+        r'|\bSITE\s+PLAN\s*$|\bGENERAL\s*$|\bOVERHEAD\s*$'   # standalone section labels
+        r'|\bUNDERGROUND\s*$|\bSUBSTATIONS\s*$',              # in work-order table
+        re.IGNORECASE,
+    )
+    # Common single English words that are never legend labels
+    _NON_LABELS = {
+        "AND", "THE", "OF", "OR", "FOR", "TO", "IN", "AT", "BY", "AS",
+        "IS", "IT", "BE", "AN", "ON", "NO", "SO", "DO", "UP",
+        "BUT", "NOT", "ARE", "HAS", "HAD", "WAS", "THIS", "WITH",
+    }
+    # ── Normalize label_text → label and filter bad entries across all chunks ──
+    # The vision model sometimes returns the label in 'label_text' instead of 'label',
+    # or has a shifted 'label' while 'label_text' is correct. Prefer 'label_text' when present.
+    # Also filter obviously non-legend entries (document references, very long text, etc.)
+    _BAD_LABEL_RE = re.compile(
+        r'\bFPJ\d{4}\b|\bFPJ-\d{4}\b'                     # work order references
+        r'|AGREEMENT FOR ENTRY|ENVIRONMENTAL REPORT'        # document references
+        r'|EQUIPMENT TO BE RETURNED|TELECOMMUNICATION ASSET'
+        r'|SER\s*\)|GRANT AND CREATION'
+        r'|DESIGNER.S SAFETY|ABORIGINAL CULTURAL|CULTURAL HERITAGE'
+        r'|DISPENSATION FORM|SKETCH SR\s*\d|LETTER FOR CONFIRMATION'
+        r'|SAFETY REPORT|ASP LEVEL\s+\d|ACCREDITATION|LEVEL 2/'
+        r'|^OVERHEAD$|^UNDERGROUND$|^SUBSTATIONS?$|^GENERAL$'
+        r'|ORIGINAL\s+SCALE|ORIGINAL\s+ISSUE|AMENDMENT\s+\d'
+        r'|\bLGA\b(?!\s+DEMARCATION)|DUCT USAGE CHARGES|(?<![A-Za-z])AVOUR ENERGY'
+        r'|^NIL$|^-\s*NIL\b|^-\s+[A-Z]|PM SUB\s+\d+|ESTABLISHED ON ARP\d+'
+        r'|\bFUNDED\b|\bCONTESTABLE\b|\bCUSTOMER\b(?!\s+CONNECT)'
+        r'|CO-ORDINATION SUPPLY|TO BE CONFIRMED|Third Quarter'
+        r'|RETURNED TO NEAREST|CONDUCTOR\s+[A-Z]\s+\'',
+        re.IGNORECASE,
+    )
+    # Canonical symbol descriptions and categories from the drawing reference table.
+    # Applied programmatically after accumulation to ensure consistent descriptions.
+    _SYMBOL_REF: dict = {
+        "NEW LV TRENCH":               ("Long dashed line",                                              "cable"),
+        "STRING NEW OH CABLE":         ("Short dashed line",                                             "cable"),
+        "EXISTING UNDERGROUND MAINS":  ("Alternating long-short dashed line",                           "cable"),
+        "EXISTING OH CABLE":           ("Solid thin line",                                               "cable"),
+        "REMOVE CONDUCTOR":            ("Dotted line",                                                   "cable"),
+        "EXISTING DUCTS":              ("Thick heavy solid black line",                                  "cable"),
+        "NEW HV TRENCH":               ("Solid line with two diagonal slash marks",                      "cable"),
+        "EXISTING LANTERN":            ("Small circle with internal cross (four-quadrant cross inside circle)", "equipment"),
+        "REMOVE LANTERN":              ("Circle with internal cross and starburst outer spikes radiating from edge", "equipment"),
+        "NEW LANTERN":                 ("Circle with starburst outer spikes and hollow centre",          "equipment"),
+        "EXISTING POLE":               ("Small solid black filled circle",                               "equipment"),
+        "REMOVE POLE":                 ("Small solid black filled circle with large X through it",       "equipment"),
+        "REPLACE POLE":                ("Circle split vertically half-black half-white",                 "equipment"),
+        "NEW POLE":                    ("Small hollow open circle",                                      "equipment"),
+        "EXISTING COLUMN":             ("Small solid black filled square",                               "equipment"),
+        "NEW COLUMN":                  ("Small hollow open square",                                      "equipment"),
+        "EXISTING PILLAR":             ("Solid black filled rectangle",                                  "equipment"),
+        "NEW PILLAR":                  ("Hollow rectangle outline",                                      "equipment"),
+        "PADMOUNT SUBSTATION":         ("Rectangle containing two triangles touching at their points",   "substation"),
+        "POLE SUBSTATION":             ("Circle with triangle inside",                                   "substation"),
+        "LV LINK (N/O)":              ("Small circle with short vertical ticks on top and bottom",      "equipment"),
+        "HV ABS (N/C)":               ("Circle with horizontal line through the centre",                "equipment"),
+        "HV USL (N/C)":               ("Semi-circle dome with horizontal base line",                    "equipment"),
+        "HIGH PRESSURE GAS":           ("Solid line with GAS text centred along it",                    "other"),
+        "WATER MAIN":                  ("Solid line with W characters spaced evenly along it",           "other"),
+        "LGA DEMARCATION":             ("Thin solid line",                                               "boundary"),
+        "NEW FREEWAY BOUNDARY":        ("Faint light grey long dashed line",                             "boundary"),
+        "ENDEAVOUR ENERGY EASEMENT":   ("Faint light grey medium dashed line",                           "boundary"),
+    }
+    for cr in chunk_results:
+        ext = cr.get("extracted")
+        if not isinstance(ext, dict):
+            continue
+        data = ext.get("data") or {}
+        for sid in _array_sub_steps:
+            entries = data.get(sid)
+            if not isinstance(entries, list):
+                continue
+            cleaned: list = []
+            for entry in entries:
+                if not isinstance(entry, dict):
+                    continue
+                lt  = (entry.get("label_text") or "").strip()
+                lbl = (entry.get("label") or "").strip()
+                # Prefer label_text over label (fixes off-by-one shifts from vision model)
+                if lt:
+                    # Normalise newlines inside label_text (multi-line cells in some chunk outputs)
+                    lt = re.sub(r'\s*\n\s*', ' ', lt).strip()
+                    entry["label"] = lt
+                    lbl = lt
+                elif lbl:
+                    # Clean up newlines in label too
+                    lbl = re.sub(r'\s*\n\s*', ' ', lbl).strip()
+                    entry["label"] = lbl
+                # Drop entries whose label looks like a document reference, not a legend item
+                if lbl and (_BAD_LABEL_RE.search(lbl) or len(lbl) > 70):
+                    continue
+                # Drop entries with no symbol and no label (completely empty)
+                sym = (entry.get("symbol_description") or "").strip()
+                if not lbl and not sym:
+                    continue
+                cleaned.append(entry)
+            data[sid] = cleaned
+
+    for cr in chunk_results:
+        ext = cr.get("extracted")
+        if not isinstance(ext, dict):
+            continue
+        data = ext.get("data") or {}
+        raw_text = ext.get("raw_text") or ""
+        for sid in _array_sub_steps:
+            entries = data.get(sid)
+            if not isinstance(entries, list) or not entries:
+                continue
+            # Only repair chunks where most labels are missing
+            missing = sum(1 for e in entries if isinstance(e, dict) and not (e.get("label") or "").strip())
+            if missing < len(entries) * 0.5:
+                continue  # Majority of labels already filled — trust the vision model
+            # Extract candidate label lines from raw_text.
+            # Stop as soon as we hit a copyright/section-end marker.
+            candidates: List[str] = []
+            for line in raw_text.split("\n"):
+                s = line.strip().lstrip("←").rstrip("→").strip()
+                if not s:
+                    continue
+                # Hard stop at copyright/legal/non-legend sections
+                if _LEGEND_SECTION_END.search(s):
+                    break
+                # Skip legend header itself
+                if re.search(r'\bLEGEND\b|\bSYMBOL\s+KEY\b', s, re.IGNORECASE):
+                    continue
+                if len(s) < 4 or len(s) > 60:
+                    continue
+                if _LEGEND_NOISE.search(s):
+                    continue
+                if s.upper().strip() in _NON_LABELS:
+                    continue
+                # Accept when ≥50% of ALPHA chars are uppercase (handles "LV LINK (N/O)")
+                alpha = [c for c in s if c.isalpha()]
+                if not alpha:
+                    continue
+                if sum(1 for c in alpha if c.isupper()) / len(alpha) >= 0.50:
+                    candidates.append(s)
+            if not candidates:
+                continue
+            # Pair if candidate count is within 40% of entry count (or within 3)
+            if abs(len(candidates) - len(entries)) > max(3, len(entries) * 0.4):
+                logger.debug(
+                    f"Legend pairing skipped for {cr.get('chunk_id')} {sid}: "
+                    f"{len(entries)} entries vs {len(candidates)} candidates"
+                )
+                continue
+            paired = 0
+            for i, entry in enumerate(entries):
+                if not isinstance(entry, dict):
+                    continue
+                if not (entry.get("label") or "").strip() and i < len(candidates):
+                    entry["label"] = candidates[i]
+                    paired += 1
+            if paired:
+                logger.info(
+                    f"Legend pairing: {cr.get('chunk_id')} {sid} — "
+                    f"paired {paired} labels from raw_text"
+                )
+
+    # ── Phase 1.3: reference-label gap fill from raw text ─────────────────────
+    # The vision model may miss some legend entries in Phase 1. This pass scans the raw_text
+    # of chunks that already have some extracted legend entries (confirmed legend regions)
+    # and injects any known reference-table labels that appear in raw_text but are absent
+    # from the extracted entries for that chunk's page.
+    _all_ref_labels_upper = {k.upper(): (k, v) for k, v in _SYMBOL_REF.items()}
+    for cr in chunk_results:
+        ext = cr.get("extracted")
+        if not isinstance(ext, dict):
+            continue
+        data = ext.get("data") or {}
+        raw_text = ext.get("raw_text") or ""
+        page_num = cr.get("page_number", 1)
+        raw_upper = raw_text.upper()
+        for sid in _array_sub_steps:
+            entries = data.get(sid, [])
+            if not isinstance(entries, list) or not entries:
+                continue  # Skip non-legend chunks (no entries extracted)
+            # Build set of labels already in this chunk's entries
+            current_labels = {
+                (e.get("label") or "").strip().upper()
+                for e in entries if isinstance(e, dict)
+            }
+            # Inject missing reference labels that appear in raw_text
+            for ref_upper, (ref_lbl, (ref_sym, ref_cat)) in _all_ref_labels_upper.items():
+                if ref_upper in current_labels:
+                    continue
+                if ref_upper in raw_upper:
+                    entries.append({
+                        "page": page_num,
+                        "symbol_description": ref_sym,
+                        "label": ref_lbl,
+                        "category": ref_cat,
+                    })
+                    logger.info(f"Gap fill: injected '{ref_lbl}' into {cr.get('chunk_id')} {sid}")
+            data[sid] = entries
+
+    # ── Page legend filter (post Phase 1.3) ───────────────────────────────────
+    # Discard array sub-step entries from pages confirmed to have no legend.
+    # This removes garbage entries that the vision model extracted from title blocks,
+    # cost tables, or notes on pages that don't contain a legend/symbol table.
+    if _array_sub_steps:
+        for cr in chunk_results:
+            pg = cr.get("page_number", 1)
+            if pg in pages_with_legend:
+                continue
+            ext = cr.get("extracted")
+            if not isinstance(ext, dict):
+                continue
+            data = ext.get("data") or {}
+            for sid in _array_sub_steps:
+                if data.get(sid):
+                    logger.info(
+                        f"Page legend filter: clearing {len(data[sid])} {sid} entries "
+                        f"from chunk {cr.get('chunk_id')} (page {pg} has no legend)"
+                    )
+                    data[sid] = []
+
+    # ── Phase 1.5: boundary stitching for adjacent chunk pairs ────────────────
+    # Run multi-image vision calls for chunk pairs where text is cut off at the boundary.
+    # Stitched fragments supplement the per-chunk extractions with assembled spanning content.
+    stitched_results: List[dict] = []
+    if _sub_step_ids:
+        try:
+            stitched_results = _stitch_adjacent_chunks(chunks, chunk_results, _sub_step_ids)
+            logger.info(f"Boundary stitching: {len(stitched_results)} pair(s) stitched")
+        except Exception as e:
+            logger.warning(f"Boundary stitching pass failed: {e}")
+
     # ── Phase 2: consolidate all chunk observations ────────────────────────────
-    # Collect raw text and per-chunk data observations
+    # Collect raw text and per-chunk data observations (sorted by sequence for ordered output)
     raw_text_parts: List[str] = []
     all_data_fragments: List[dict] = []
 
-    for cr in chunk_results:
+    for cr in sorted(chunk_results, key=lambda c: (c.get("page_number", 1), c.get("sequence", 0))):
         ext = cr.get("extracted") or {}
         raw = ext.get("raw_text", "") if isinstance(ext, dict) else ""
         if raw:
-            raw_text_parts.append(f"[{cr['region']}, p{cr['page_number']}] {raw}")
+            raw_text_parts.append(f"[{cr.get('region', '')}, p{cr.get('page_number', 1)}, seq{cr.get('sequence', 0)}] {raw}")
         data = ext.get("data") if isinstance(ext, dict) else None
         if isinstance(data, dict):
             all_data_fragments.append(data)
 
-    combined_raw = "\n\n".join(raw_text_parts)
+    # Append stitched raw text after individual chunk text so consolidation sees it clearly
+    for sr in stitched_results:
+        if sr.get("stitched_raw"):
+            ids_label = "-".join(str(cid) for cid in sr.get("chunk_ids", []))
+            raw_text_parts.append(f"[STITCHED {ids_label}] {sr['stitched_raw']}")
+
     successful   = [cr for cr in chunk_results if cr.get("extracted")]
 
-    # Merge data fragments: first non-null value per key wins
+    # Merge data fragments:
+    # - Scalar fields:  first non-null value wins
+    # - Array fields:   concatenate all non-null arrays from every chunk
+    # Stitched values then overwrite scalars (more complete — assembled from two images).
     merged_data: dict = {}
+    array_accumulator: dict = {sid: [] for sid in _array_sub_steps}
+
     for frag in all_data_fragments:
         for k, v in frag.items():
-            if v is not None and k not in merged_data:
-                merged_data[k] = v
+            if k in _array_sub_steps:
+                # Accumulate: parse string arrays too
+                entries = v if isinstance(v, list) else None
+                if entries is None and isinstance(v, str):
+                    try:
+                        parsed = json.loads(v)
+                        entries = parsed if isinstance(parsed, list) else None
+                    except Exception:
+                        pass
+                if entries:
+                    array_accumulator[k].extend(entries)
+            else:
+                if v is not None and k not in merged_data:
+                    merged_data[k] = v
+
+    # Deduplicate accumulated arrays by (label, page) and store in merged_data
+    for sid, entries in array_accumulator.items():
+        if entries:
+            seen_keys: set = set()
+            deduped: list = []
+            for entry in entries:
+                if isinstance(entry, dict):
+                    label = str(entry.get("label") or "").upper().strip()
+                    sym   = str(entry.get("symbol_description") or "").strip()
+                    page  = entry.get("page", 1)
+                    # Only deduplicate when at least one identifying field is non-empty;
+                    # entries with both label and symbol empty are kept as placeholders.
+                    if label:
+                        key = ("lbl", label, page)
+                    elif sym:
+                        key = ("sym", sym[:60], page)
+                    else:
+                        key = None  # always keep — can't distinguish
+                    if key is None or key not in seen_keys:
+                        if key is not None:
+                            seen_keys.add(key)
+                        deduped.append(entry)
+                else:
+                    deduped.append(entry)
+            # Apply reference table: override symbol_description and set category for known labels
+            for entry in deduped:
+                if not isinstance(entry, dict):
+                    continue
+                lbl_upper = (entry.get("label") or "").strip().upper()
+                # Try exact match, then check if label ENDS WITH a known key (handles "EXISTING 9.145m WIDTH ENDEAVOUR ENERGY EASEMENT")
+                ref = _SYMBOL_REF.get(lbl_upper)
+                if ref is None:
+                    for ref_key, ref_val in _SYMBOL_REF.items():
+                        if lbl_upper.endswith(ref_key.upper()):
+                            ref = ref_val
+                            break
+                if ref:
+                    entry["symbol_description"] = ref[0]
+                    if not entry.get("category"):
+                        entry["category"] = ref[1]
+            merged_data[sid] = deduped
+
+    for sr in stitched_results:
+        for k, v in (sr.get("data") or {}).items():
+            if v is not None:
+                merged_data[k] = v  # stitched value wins over single-chunk value
+
+    combined_raw = "\n\n".join(raw_text_parts)
 
     # ── Phase 3: final consolidation LLM pass (if sub_steps present) ──────────
-    # Feed all raw observations back to the model to produce the final structured output
-    if step.sub_steps and combined_raw:
+    # Feed all raw observations back to the model to produce the final structured output.
+    # Use head + tail budget so late chunks (where NOTES often appear) are never silently cut.
+    if step.sub_steps and (combined_raw or merged_data):
+        # Build required_keys_str: include output_format hints for structured sub-steps
+        _rk_lines = []
+        for line, sid in zip(_sub_step_schema_lines, _sub_step_ids):
+            if sid in _p1_output_formats:
+                _rk_lines.append(f'{line}\n    [OUTPUT FORMAT: {_p1_output_formats[sid][:400]}]')
+            else:
+                _rk_lines.append(line)
+        required_keys_str = "\n".join(_rk_lines)
+        keys_list = ", ".join(f'"{k}"' for k in _sub_step_ids)
+        num_chunks    = len(chunks)
+        num_stitched  = len(stitched_results)
+
+        _MAX_RAW = 12000
+        if len(combined_raw) > _MAX_RAW:
+            _head = combined_raw[:8000]
+            _tail = combined_raw[-3000:]
+            _omitted = len(combined_raw) - 11000
+            combined_raw_for_prompt = (
+                _head +
+                f"\n\n[... {_omitted} characters omitted from middle — "
+                f"head and tail preserved to retain both early and late chunk content ...]\n\n" +
+                _tail
+            )
+        else:
+            combined_raw_for_prompt = combined_raw
+
+        # Build notes-specific assembly hint for list-type sub-steps
+        notes_hint = ""
+        notes_ids = [sid for sid in _sub_step_ids if "note" in sid.lower()]
+        if notes_ids:
+            notes_hint = (
+                f"\nNOTES ASSEMBLY — for fields: {', '.join(notes_ids)}\n"
+                f"The NOTES section on engineering drawings is typically a numbered list "
+                f"(e.g. 1., 2., 3. ...) that may span 3–6 adjacent image chunks.\n"
+                f"Collect EVERY note number and its full text from ALL chunks in order.\n"
+                f"Return the complete list as a single string with each note on its own line, "
+                f"e.g.: \"1. All HV cable to comply...\\n2. Earthing to be designed...\\n3. New sub by ARP...\"\n"
+                f"De-duplicate any note that appears in both a chunk and a [STITCHED ...] fragment.\n"
+            )
+
+        # Build legend-specific assembly hint for array-type sub-steps
+        array_hint = ""
+        array_ids = [sid for sid in _sub_step_ids if sid in _array_sub_steps]
+        if array_ids:
+            pre_merged_counts = {sid: len(merged_data.get(sid, [])) for sid in array_ids}
+            # Build a summary of which entries are missing labels so the consolidation can fix them
+            missing_label_summaries = {}
+            for sid in array_ids:
+                entries = merged_data.get(sid, [])
+                missing = [e for e in entries if isinstance(e, dict) and not (e.get("label") or "").strip()]
+                missing_label_summaries[sid] = len(missing)
+            array_hint = (
+                f"\nLEGEND/ARRAY ASSEMBLY — for fields: {', '.join(array_ids)}\n"
+                f"The PARTIAL STRUCTURED DATA above already contains pre-merged arrays accumulated "
+                f"from ALL {num_chunks} image chunks. Entry counts: "
+                + ", ".join(f"{sid}={pre_merged_counts[sid]} entries ({missing_label_summaries[sid]} missing labels)" for sid in array_ids) +
+                f"\nIMPORTANT: Many entries have symbol_description filled in but empty labels. "
+                f"The ALL TEXT section above contains the actual label text for these symbols — "
+                f"the legend rows appear in sequence in the raw text (e.g. 'NEW LV TRENCH', 'REMOVE LANTERN', etc.). "
+                f"Match the symbol entries (in order) with the label text lines (in order) from the raw text "
+                f"to complete each entry. The symbols and labels appear in the same sequential order in the legend. "
+                f"OUTPUT the complete merged array with all symbol_description and label fields filled in. "
+                f"De-duplicate by (label, page) when both are present. "
+                f"CRITICAL: symbol_description must describe the VISUAL GEOMETRY of the drawn symbol "
+                f"(e.g. 'Small hollow circle', 'Long dashed line', 'Hollow rectangle outline') — "
+                f"NEVER a paraphrase of the label. Do NOT hallucinate entries.\n"
+            )
+
         consolidation_prompt = (
-            f"You are an expert document analyst. The following text was extracted from all "
-            f"regions of a {page_size} engineering document ({strategy} chunking).\n\n"
-            f"EXTRACTED TEXT:\n{combined_raw[:8000]}\n\n"
-            f"PARTIAL STRUCTURED DATA:\n{json.dumps(merged_data, indent=2)[:4000]}\n\n"
-            f"{instruction}\n\n"
-            f"Using all the above information, produce a final consolidated JSON extraction. "
-            f"For each sub-step field, provide the best answer found across all chunks. "
-            f"Return a JSON object with a key per sub-step id containing the extracted value."
+            f"You are an expert engineering document analyst.\n\n"
+            f"DOCUMENT: {fe.filename} ({page_size}, {strategy} chunking, {total_pages} page(s), "
+            f"{num_chunks} chunks processed, {num_stitched} boundary pair(s) stitched)\n\n"
+            f"ALL TEXT EXTRACTED FROM DOCUMENT CHUNKS (in sequence order):\n"
+            f"{combined_raw_for_prompt}\n\n"
+            f"PARTIAL STRUCTURED DATA FROM CHUNKS:\n{json.dumps(merged_data, indent=2)[:10000]}\n\n"
+            f"TASK: {step.step_name}\n"
+            f"{('DETAILS: ' + (step.details or '')[:300]) if step.details else ''}\n\n"
+            f"CROSS-CHUNK ASSEMBLY — CRITICAL:\n"
+            f"The text above was extracted from {num_chunks} separate image tiles of a large drawing.\n"
+            f"- Lines marked with \u2192 were cut off at the right/bottom tile boundary "
+            f"(content continues in the next tile).\n"
+            f"- Lines marked with \u2190 continue from the previous tile.\n"
+            f"- Sections labelled [STITCHED ...] are pre-assembled boundary fragments — "
+            f"treat these as authoritative and prefer them over individual chunk fragments.\n"
+            f"- For ALL list-type or multi-sentence fields: assemble the complete value by "
+            f"reading ALL chunks in sequence order and joining partial entries at boundaries.\n"
+            f"- Do NOT stop after the first chunk that mentions a field — read every chunk.\n"
+            f"- De-duplicate entries that appear in both chunk text and stitched fragments.\n"
+            f"{notes_hint}"
+            f"{array_hint}\n"
+            f"Using ALL the extracted text above, produce the final JSON extraction.\n"
+            f"You MUST return a JSON object with EXACTLY these keys (no others):\n"
+            f"{required_keys_str}\n\n"
+            f"Rules:\n"
+            f"- Search the full extracted text carefully for each field\n"
+            f"- Each value should be the best extracted text or data for that field\n"
+            f"- If a value is genuinely not present anywhere in the document, use null\n"
+            f"- Do NOT wrap output in markdown fences — return raw JSON only\n"
+            f"Required keys: {keys_list}"
         )
         try:
             consolidated = _llm_call(consolidation_prompt)
         except Exception as e:
             logger.warning(f"Consolidation LLM call failed: {e}. Using merged chunk data.")
             consolidated = merged_data
+        # Post-consolidation protection for array sub-steps:
+        # If the LLM dropped entries vs the pre-merged data, restore or inject missing entries.
+        if isinstance(consolidated, dict):
+            for sid in _array_sub_steps:
+                pre = merged_data.get(sid)
+                post = consolidated.get(sid)
+                if not isinstance(pre, list):
+                    continue
+                if not isinstance(post, list) or len(post) < len(pre):
+                    # LLM dropped too many — restore entirely
+                    logger.info(
+                        f"Array protection: restoring {sid} from {len(post) if isinstance(post, list) else '?'} "
+                        f"→ {len(pre)} entries (LLM dropped entries)"
+                    )
+                    consolidated[sid] = pre
+                else:
+                    # Inject any pre-merged entries whose label is absent from LLM output
+                    post_labels = {
+                        (e.get("label") or "").strip().upper()
+                        for e in post if isinstance(e, dict)
+                    }
+                    for entry in pre:
+                        if not isinstance(entry, dict):
+                            continue
+                        lbl = (entry.get("label") or "").strip().upper()
+                        if lbl and lbl not in post_labels:
+                            post.append(entry)
+                            post_labels.add(lbl)
+                            logger.info(
+                                f"Array injection: '{entry.get('label')}' missing from LLM output, restored"
+                            )
     else:
         consolidated = merged_data
+
+    # ── Phase 4: verification and gap-fill ────────────────────────────────────
+    # Programmatically detect extraction gaps, then run a targeted LLM fill pass.
+    consolidated = _verify_and_fill_extraction(
+        consolidated, combined_raw, _sub_step_ids, _sub_step_schema_lines
+    )
+
+    # ── Phase 5: text-only analysis pass for Phase 2 sub-steps ───────────────
+    # Phase 2 sub-steps are NOT extracted from images — they analyse the already-
+    # consolidated Phase 1 text (drawing notes) via a plain text LLM call.
+    # This ensures the analysis LLM sees the COMPLETE assembled notes rather than
+    # partial chunks, and doesn't need to interpret images.
+    p2_consolidated: dict = {}
+    if _p2_ids:
+        # Use the Phase 1 notes as the primary source — prefer the explicit notes
+        # sub-step value if present, otherwise fall back to the full combined raw text
+        notes_sid = next((sid for sid in _p1_ids if "note" in sid.lower()), None)
+        p1_notes = (
+            consolidated.get(notes_sid)
+            if (notes_sid and isinstance(consolidated, dict) and consolidated.get(notes_sid))
+            else combined_raw
+        )
+
+        p2_schema_str = "\n".join(_p2_schema)
+        p2_keys_list  = ", ".join(f'"{k}"' for k in _p2_ids)
+
+        # Build per-field instruction blocks — include output_format when defined
+        p2_details_parts = []
+        for ss in _p2_steps:
+            sid    = ss.get("sub_step_id", "")
+            sname  = ss.get("sub_step_name", sid)
+            det    = ss.get("details", "")
+            ofmt   = ss.get("output_format", "")
+            req_tmpl = ss.get("required_note_template", "") or ss.get("required_note_text", "")
+            block = f'Field "{sid}" — {sname}:\n{det}'
+            if req_tmpl:
+                block += f'\nRequired note text: "{req_tmpl}"'
+            if ofmt:
+                block += f'\nOutput format: {ofmt}'
+            p2_details_parts.append(block)
+        p2_details_str = "\n\n".join(p2_details_parts)
+
+        # Budget combined_raw with head+tail so Phase 2 can find Substation Notes
+        # annotation blocks that appear outside the numbered NOTES section
+        _p2_MAX = 12000
+        if len(combined_raw) > _p2_MAX:
+            _p2_head = combined_raw[:8000]
+            _p2_tail = combined_raw[-3000:]
+            _p2_raw  = _p2_head + f"\n\n[...middle omitted...]\n\n" + _p2_tail
+        else:
+            _p2_raw = combined_raw
+
+        p2_prompt = (
+            f"You are an expert engineering document analyst.\n\n"
+            f"DOCUMENT: {fe.filename}\n\n"
+            f"ASSEMBLED NUMBERED NOTES AND CALLOUTS FROM THIS DRAWING:\n"
+            f"{p1_notes}\n\n"
+            f"FULL RAW TEXT FROM ALL DRAWING REGIONS (includes annotation blocks "
+            f"outside the NOTES section, such as Substation Notes tables, funding "
+            f"tables, and title block annotations):\n"
+            f"{_p2_raw}\n\n"
+            f"TASK: Analyse the text above and produce structured outputs for the "
+            f"following fields. Read each field's instructions carefully.\n\n"
+            f"{p2_details_str}\n\n"
+            f"CRITICAL OUTPUT RULES:\n"
+            f"- For 'sub-step-substation-data': search the FULL RAW TEXT for a "
+            f"'Substation Notes', 'Sub Notes', or nearby annotation block listing "
+            f"transformer size, switchgear, voltage, etc. Use EXACTLY these seven "
+            f"field name labels in the output:\n"
+            f"  Substation Asset Number, Transformer Size, HV Switchgear, "
+            f"Voltage Level, LV Switchgear, Cubicle Size, Earthing\n"
+            f"  Do not rename, add, or remove any field label.\n"
+            f"- For 'sub-step-field-check': the required note is note 11 or similar. "
+            f"The answer immediately follows the question as 'YES' or 'NO'. "
+            f"If the note shows 'YES/NO' printed together (both options listed, "
+            f"none crossed out or circled), the answer has NOT been filled in — "
+            f"return exactly: 'NOT COMPLETED — note present but answer not filled in'. "
+            f"If answered YES return 'YES'. If answered NO return "
+            f"'NO — NON-COMPLIANT'. If note is absent return "
+            f"'NOT FOUND — MISSING: this compliance note is mandatory'.\n"
+            f"- For easement fields: return full verbatim note text with lot number(s) "
+            f"if found; 'NOT REQUIRED' if not applicable; "
+            f"'NOT FOUND — REQUIRED' if applicable but absent.\n"
+            f"- Do NOT wrap output in markdown fences — return raw JSON only\n"
+            f"Required keys: {p2_keys_list}"
+        )
+
+        try:
+            p2_consolidated = _llm_call(p2_prompt)
+            if not isinstance(p2_consolidated, dict):
+                p2_consolidated = {}
+            logger.info(f"Phase 2 analysis pass complete — {len(p2_consolidated)} field(s) produced")
+        except Exception as e:
+            logger.warning(f"Phase 2 analysis pass failed: {e}")
+            p2_consolidated = {}
+
+    # Merge Phase 1 and Phase 2 results into a single consolidated dict
+    all_consolidated: dict = {}
+    if isinstance(consolidated, dict):
+        all_consolidated.update(consolidated)
+    all_consolidated.update(p2_consolidated)
+
+    # ── Apply reference table to array sub-step outputs ───────────────────────
+    # Programmatically fix symbol_description and category for known legend labels,
+    # regardless of what the consolidation LLM produced.
+    for sid in _array_sub_steps:
+        entries = all_consolidated.get(sid)
+        if not isinstance(entries, list):
+            continue
+        # Also filter bad entries that slipped through (document references, etc.)
+        _NON_LEGEND_SYM_RE = re.compile(
+            r'cell\b.*\btable\b|in a table|at top of|horizontal line at top'
+            r'|No symbol|no geometry|text label only|text only|label only'
+            r'|Dash before text|dash.*text.*No geometry',
+            re.IGNORECASE,
+        )
+        _NON_LEGEND_LBL_RE = re.compile(
+            r"'\d{2}'|'23'|'24'|'25'"                      # construction ref numbers like '23'
+            r'|\bFUNDED\b|\bCONTESTABLE\b'                 # cost table rows
+            r'|\bCUSTOMER\b(?!\s+CONNECT)'                  # standalone CUSTOMER (not CONNECTION)
+            r'|CO-ORDINATION SUPPLY|TO BE CONFIRMED'        # boilerplate
+            r'|QUARTER OF 20\d\d|Third Quarter'             # dates
+            r'|ASP LEVEL.*RETURN|RETURNED TO NEAREST'       # work instructions
+            r'|CONDUCTOR\s+[A-Z]\s+\''                      # wiring notes like "CONDUCTOR B '23'"
+            r'|\bLGA\b(?!\s+DEMARCATION)'                   # LGA area labels (not "LGA DEMARCATION")
+            r'|DUCT USAGE CHARGES|USAGE CHARGES'            # cost table rows
+            r'|(?<![A-Za-z])AVOUR ENERGY'                   # garbled "ENDEAVOUR ENERGY" (not "ENDEAVOUR ENERGY EASEMENT")
+            r'|^NIL$|^-\s*NIL\b|^-\s+[A-Z]'               # "Nil", "- Nil", "- text" (list items)
+            r'|PM SUB\s+\d+|ESTABLISHED ON ARP\d+'         # substation reference numbers
+            r'|DESCRIPTION OF WORKS|SCOPE OF WORKS'         # notes section headers
+            r'|DECOMMISSION EXISTING'                        # construction action verbs (not legend symbols)
+            r'|POLE SUB\s+\d+'                              # pole substation references with numbers
+            r'|\d+m/\d+kN'                                  # pole specifications (e.g. "14m/12kN")
+            r'|\bAAC\b|\bABC\b',                            # conductor type codes (not legend entries)
+            re.IGNORECASE,
+        )
+        cleaned_final: list = []
+        seen_sym_page: set = set()   # deduplicate by (symbol_description, page) after ref-table lookup
+        for entry in entries:
+            if not isinstance(entry, dict):
+                continue
+            lbl = (entry.get("label") or "").strip()
+            sym = (entry.get("symbol_description") or "").strip()
+            # Drop entries with no label or single-char labels (e.g. north arrow "N")
+            if not lbl or len(lbl) < 2:
+                continue
+            if _BAD_LABEL_RE.search(lbl) or len(lbl) > 70:
+                continue
+            # Drop entries that look like table rows or construction notes, not legend symbols
+            if _NON_LEGEND_LBL_RE.search(lbl):
+                continue
+            if sym and _NON_LEGEND_SYM_RE.search(sym):
+                continue
+            lbl_upper = lbl.upper()
+            ref = _SYMBOL_REF.get(lbl_upper)
+            if ref is None:
+                for ref_key, ref_val in _SYMBOL_REF.items():
+                    if lbl_upper.endswith(ref_key.upper()):
+                        ref = ref_val
+                        break
+            if ref:
+                entry["symbol_description"] = ref[0]
+                if not entry.get("category"):
+                    entry["category"] = ref[1]
+                # If matched via endswith (not exact key), normalize label to canonical form
+                if _SYMBOL_REF.get(lbl_upper) is None:
+                    for ref_key in _SYMBOL_REF:
+                        if lbl_upper.endswith(ref_key.upper()):
+                            entry["label"] = ref_key
+                            break
+            # Deduplicate by (symbol_description, page): keep first occurrence
+            # (covers cases where two labels map to the same visual description)
+            sym_after = (entry.get("symbol_description") or "").strip().upper()
+            page_key  = entry.get("page", 1)
+            sym_page_key = (sym_after, page_key)
+            if sym_after and sym_page_key in seen_sym_page:
+                continue
+            if sym_after:
+                seen_sym_page.add(sym_page_key)
+            cleaned_final.append(entry)
+        all_consolidated[sid] = cleaned_final
 
     # ── Assemble output in the same shape as _extract_file ────────────────────
     base = {
@@ -578,20 +1675,22 @@ def _extract_chunked_file(fe: FileEntry, chunk_manifest: dict, step: ProcessStep
         "relevant_sections":     len(successful),
         "raw_text_from_chunks":  combined_raw,
         "chunk_details":         chunk_results,
+        "stitched_boundaries":   stitched_results,
     }
 
     if step.sub_steps:
-        # Map each sub-step id to its value from consolidated output
+        # Map each sub-step id to its value — Phase 1 from consolidated, Phase 2 from p2_consolidated
         sub_step_extractions = {}
         for ss in step.sub_steps:
             ss_id = ss.get("sub_step_id") or f"sub_step_{ss.get('sub_step_number', '')}"
             sub_step_extractions[ss_id] = {
-                "value":          consolidated.get(ss_id) if isinstance(consolidated, dict) else None,
+                "value":          all_consolidated.get(ss_id),
                 "sub_step_name":  ss.get("sub_step_name", ss_id),
+                "phase":          ss.get("phase", 1),
             }
         base["sub_step_extractions"] = sub_step_extractions
     else:
-        base["step_extraction"] = {"value": consolidated}
+        base["step_extraction"] = {"value": all_consolidated}
 
     return base
 
@@ -1015,7 +2114,11 @@ def _extract_asset_spreadsheet(fe: FileEntry, filepath: str) -> dict:
                 "  asset_id, serial_number, asset_type, description, location, address,\n"
                 "  feeder, voltage_level, capacity_rating, manufacturer, model,\n"
                 "  condition_rating, status, installation_date, last_inspection_date\n\n"
-                "Map spreadsheet columns to these fields as best you can. "
+                "CRITICAL — asset_id mapping rule:\n"
+                "  Use the 'Superior Functional Location' column as asset_id. "
+                "If that column is absent or empty for a row, fall back to any column "
+                "named 'Functional Location', 'FLOC', 'Asset ID', or 'Tag'.\n\n"
+                "Map all other spreadsheet columns to the remaining fields as best you can. "
                 "Do NOT skip rows — include one record per data row even if some fields are null.\n\n"
                 "Return ONLY a JSON object: "
                 "{\"asset_records\": [{...}, ...], \"total_assets\": <int>}"

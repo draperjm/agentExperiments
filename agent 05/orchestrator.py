@@ -1,4 +1,5 @@
 import asyncio
+import re
 import time
 import uuid
 import requests
@@ -62,9 +63,18 @@ DOC_PLAN_URL        = os.getenv("DOC_PLAN_URL",         "http://document-reviewe
 DOC_EXTRACTOR_URL   = os.getenv("DOC_EXTRACTOR_URL",    "http://document-extractor:8090/extract")
 DOC_RAW_TEXT_URL    = os.getenv("DOC_RAW_TEXT_URL",     "http://document-extractor:8090/raw_text")
 CHUNKER_URL         = os.getenv("CHUNKER_URL",           "http://document-chunker:8091/chunk")
+ANALYTICS_URL       = os.getenv("ANALYTICS_URL",         "http://data-analytics:8092/analyse")
 DOCUMENTS_FOLDER    = os.getenv("DOCUMENTS_FOLDER",     "/documents")
 MAX_STEP_RETRIES    = 2   # automatic retries per step before marking as failed
 RETRY_DELAY_SECS    = 3   # seconds between retries
+
+
+def _compute_bare_id(asset_id: str) -> str:
+    """Strip leading alpha prefix and leading zeros from an asset ID.
+    e.g. SLGT00302876 → 302876, CB00045 → 45, TX0001234 → 1234, POLE01 → 1"""
+    stripped = re.sub(r'^[A-Za-z\-_]+', '', asset_id or "")
+    numeric = stripped.lstrip("0")
+    return numeric if numeric else (stripped or asset_id or "")
 
 
 def _make_job_key(folder_path: str) -> str:
@@ -398,23 +408,34 @@ async def run_next_step(plan_id: str, file: UploadFile = File(None), folder_path
     task: asyncio.Task = asyncio.ensure_future(
         _run_step_impl(plan_id, file_bytes, file_name, file_content_type, folder_path)
     )
+    state["pending_task"] = task
 
-    async def _stream():
-        # Send a space every 5 s so the WSL2 NAT never sees an idle connection.
-        while not task.done():
-            yield b" "
-            await asyncio.sleep(5)
-        try:
-            result = task.result()
-        except Exception as exc:
-            result = {"status": "error", "log": f"Unexpected error: {exc}"}
-        yield json.dumps(result).encode()
+    return {"status": "running"}
 
-    return StreamingResponse(
-        _stream(),
-        media_type="application/json",
-        headers={"X-Accel-Buffering": "no"},
-    )
+
+@app.get("/step_result/{plan_id}")
+async def get_step_result(plan_id: str):
+    """Poll this endpoint after run_next returns {status: running}.
+    Returns {status: running} until the task completes, then the step result."""
+    if plan_id not in executions:
+        raise HTTPException(status_code=404, detail="Plan ID not found")
+
+    state = executions[plan_id]
+    task: Optional[asyncio.Task] = state.get("pending_task")
+
+    if task is None:
+        raise HTTPException(status_code=400, detail="No pending task for this plan")
+
+    if not task.done():
+        return {"status": "running"}
+
+    # Task is done — clear it and return the result
+    state["pending_task"] = None
+    try:
+        result = task.result()
+    except Exception as exc:
+        result = {"status": "error", "log": f"Unexpected error: {exc}"}
+    return result
 
 
 async def _run_step_impl(
@@ -443,9 +464,11 @@ async def _run_step_impl(
     step_output_file_path = ""  # Track where agent saved its output file
     agent_files = None  # Track files the agent ingested/output
     step_failed = False  # Set True when all retries are exhausted
+    step_name_lower = (step.name or "").lower()
     validation_result = None  # Set by validation logic below
     parallel_completed_indices = None  # Filled when a parallel group runs
     parallel_step_validations = None   # {0-based-idx: validation} for each parallel step
+    parallel_step_outputs = None       # {0-based-idx: step_output} for each parallel step
 
     # --- ROUTING LOGIC ---
 
@@ -785,10 +808,11 @@ async def _run_step_impl(
             "total_documents_in_plan": len(plan_entries),
             "documents_requiring_chunking": [
                 {
-                    "filename":       e.get("filename"),
-                    "page_size":      e.get("page_size"),
-                    "chunk_strategy": e.get("chunk_strategy"),
-                    "estimated_chunks": e.get("estimated_chunks"),
+                    "filename":                  e.get("filename"),
+                    "page_size":                 e.get("page_size"),
+                    "chunk_strategy":            e.get("chunk_strategy"),
+                    "estimated_chunks_per_page": e.get("estimated_chunks"),
+                    "note":                      "estimated_chunks_per_page is per PDF page; total_chunks = estimated_chunks_per_page × total_pages",
                 }
                 for e in plan_entries if e.get("requires_chunking")
             ],
@@ -799,7 +823,8 @@ async def _run_step_impl(
 
         for entry in plan_entries:
             filename = entry.get("filename", "")
-            if not entry.get("requires_chunking"):
+            # TAL files (route_to_step=6) must never be chunked regardless of requires_chunking flag
+            if not entry.get("requires_chunking") or entry.get("route_to_step") == 6:
                 docs_not_chunked.append(filename)
                 continue
 
@@ -814,7 +839,7 @@ async def _run_step_impl(
             log_message += f"   Chunking: {filename} | strategy={strategy}, page_size={psize}\n"
 
             chunk_job_key   = state.get("results", {}).get("job_key")
-            chunk_form_data = {"chunk_strategy": strategy, "page_size": psize, "dpi": "200"}
+            chunk_form_data = {"chunk_strategy": strategy, "page_size": psize, "dpi": "300"}
             if chunk_job_key:
                 chunk_form_data["output_base"] = f"/app/OUTPUT/{chunk_job_key}/chunks"
 
@@ -912,6 +937,13 @@ async def _run_step_impl(
                 agent_files           = current_ps_result.get("agent_files")
                 step_input_data       = current_ps_result.get("input_data", {})
 
+            # Build per-step output map so the frontend can show each step's own data
+            parallel_step_outputs = {
+                idx + i: parallel_result_map[gs.step_number].get("data")
+                for i, gs in enumerate(group_steps)
+                if gs.step_number in parallel_result_map and parallel_result_map[gs.step_number].get("data")
+            }
+
             # Record which 0-based indices completed so the frontend can mark them all
             parallel_completed_indices = list(range(idx, idx + len(group_steps)))
 
@@ -933,20 +965,571 @@ async def _run_step_impl(
                 step_failed = True
             if result.get("data"):
                 state["results"]["extraction"] = result["data"]
-                # Also store under a knowledge-specific key so steps don't overwrite each other
+                # Store under extraction_step_N so the consolidator finds it alongside parallel steps
+                state["results"][f"extraction_step_{step.step_number}"] = result["data"]
+                # Store under a knowledge+step-scoped key so parallel steps with the same
+                # knowledge_id (e.g. steps 5 and 6 both use proc-extract-site-plan-info)
+                # don't overwrite each other.
                 if step_knowledge_id:
-                    state["results"][f"extraction_{step_knowledge_id.replace('-', '_')}"] = result["data"]
-                # Store dedicated asset extraction result for downstream use
+                    base_key = f"extraction_{step_knowledge_id.replace('-', '_')}"
+                    state["results"][f"{base_key}_step_{step.step_number}"] = result["data"]
+                    # Also keep the plain key for backwards-compatible lookups (last writer wins,
+                    # but extraction_step_N keys are the authoritative source).
+                    state["results"][base_key] = result["data"]
+                # Store dedicated asset extraction result for downstream use (Steps 8 & 9)
                 if step_knowledge_id == "proc-extract-asset-spreadsheet":
                     asset_ext = result["data"].get("asset_extract")
                     if asset_ext:
                         state["results"]["asset_extraction"] = asset_ext
+                    else:
+                        log_message += (
+                            "   WARNING: Step 7 agent response missing 'asset_extract' key — "
+                            "asset_extraction not populated. Steps 8 and 9 will fail to find asset records.\n"
+                        )
                 step_output_data      = result["data"]
                 step_output_file_path = result.get("output_file", "")
                 agent_files           = result.get("agent_files")
                 step_input_data       = result.get("input_data", {})
 
-    # G. REPORT CONSOLIDATOR
+    # G. DATA ANALYTICS AGENT (Port 8092)
+    elif "analytics" in resource_key:
+        log_message += f"   Routing to Data Analytics Agent (Port 8092)...\n"
+
+        # ── Shared: pull legend entries from step 6 ───────────────────────────
+        legend_extraction = (
+            state["results"].get("extraction_proc_extract_site_plan_info_step_6")
+            or state["results"].get("extraction_step_6")
+            or {}
+        )
+        legend_entries: list = []
+        for ex in (legend_extraction.get("extractions") or []):
+            sse = ex.get("sub_step_extractions") or {}
+            for v in sse.values():
+                arr = v if isinstance(v, list) else (v.get("value") if isinstance(v, dict) else None)
+                if isinstance(arr, list):
+                    legend_entries.extend(arr)
+
+        # ── Shared: pull asset records from step 7 ────────────────────────────
+        asset_extraction = (
+            state["results"].get("extraction_proc_extract_asset_spreadsheet")
+            or state["results"].get("extraction_step_7")
+            or {}
+        )
+        asset_records: list = []
+        for ex in (asset_extraction.get("extractions") or []):
+            se = ex.get("step_extraction") or ex.get("sub_step_extractions") or {}
+            recs = se.get("asset_records") or []
+            asset_records.extend(recs)
+
+        if not asset_records:
+            log_message += "   WARNING: No asset records found in state — skipping.\n"
+            step_failed = True
+
+        # ── G1. Asset-to-Drawing Symbol Matching ─────────────────────────────
+        if not step_failed and "match" in step_name_lower and "symbol" in step_name_lower:
+            log_message += (
+                f"   Matching {len(asset_records)} assets to site plan symbols "
+                f"using {len(legend_entries)} legend entries...\n"
+            )
+            step_input_data = {"asset_count": len(asset_records), "legend_count": len(legend_entries)}
+
+            # Build bare_id → asset_id lookup
+            bare_id_map: dict = {}
+            for rec in asset_records:
+                bid = _compute_bare_id(rec.get("asset_id", ""))
+                bare_id_map[bid] = rec.get("asset_id", "")
+            bare_ids_sorted = sorted(bare_id_map.keys(), key=lambda x: x.zfill(10))
+            log_message += f"   {len(bare_ids_sorted)} bare IDs to search (sample: {bare_ids_sorted[:5]})\n"
+
+            # Find site plan chunk manifest from step 3
+            chunk_manifests = state["results"].get("chunk_manifests", {})
+            processing_plan_data = state["results"].get("processing_plan", {})
+            plan_entries_all = processing_plan_data.get("processing_plan", [])
+            _SP_KW = ("retic", "reticulation", "drawing", "diagram", "network")
+            site_plan_entry = None
+            for _e in plan_entries_all:
+                _cat   = (_e.get("document_category") or "").strip()
+                _dtype = (_e.get("document_type") or "").lower()
+                if _cat == "Site Plan" or any(k in _dtype for k in _SP_KW):
+                    site_plan_entry = _e
+                    break
+            site_plan_manifest = (
+                chunk_manifests.get(site_plan_entry.get("filename", ""))
+                if site_plan_entry else None
+            )
+
+            sym_matches: list = []  # populated by whichever approach succeeds
+
+            if site_plan_manifest:
+                # ── Approach A: Visual chunk search via Document Extractor ──────
+                total_chunks = site_plan_manifest.get("total_chunks", 0)
+                log_message += (
+                    f"   Chunk manifest found — {total_chunks} chunks from "
+                    f"'{site_plan_entry.get('filename', '')}'. Using visual extraction.\n"
+                )
+
+                legend_compact = json.dumps([
+                    {
+                        "label":       _le.get("label"),
+                        "description": _le.get("description") or _le.get("symbol_description"),
+                    }
+                    for _le in legend_entries[:60]
+                ])
+
+                doc_review  = state["results"].get("document_review", {})
+                docs_folder = doc_review.get("folder_path", DOCUMENTS_FOLDER)
+                job_key_g1  = state["results"].get("job_key", "")
+                output_dir_g1 = str(OUTPUT_DIR / job_key_g1) if job_key_g1 else None
+
+                extractor_payload = {
+                    "files": [
+                        {
+                            "filename":           site_plan_entry.get("filename", ""),
+                            "processing_tool_id": "tool-extract-pdf-content",
+                            "document_type":      site_plan_entry.get("document_type"),
+                            "document_category":  "Site Plan",
+                            "content_type":       "visual",
+                            "requires_chunking":  True,
+                            "chunk_strategy":     site_plan_manifest.get("chunk_strategy", "quadrant-split"),
+                            "chunk_manifest":     site_plan_manifest,
+                        }
+                    ],
+                    "process_step": {
+                        "step_id":   "match-assets-to-drawing-symbols",
+                        "step_name": "Match Assets to Site Plan Drawing Symbols",
+                        "details": (
+                            "Extract ALL numeric labels visible in each drawing chunk. "
+                            "Asset IDs appear as standalone multi-digit numbers adjacent to drawing symbols. "
+                            f"Legend entries for symbol matching: {legend_compact}"
+                        ),
+                        "expected_output": {
+                            "description": "All numeric labels visible in this chunk with adjacent symbol info",
+                            "fields": {
+                                "found_ids": "array of all numeric label strings visible in this chunk",
+                            },
+                        },
+                        "sub_steps": [
+                            {
+                                "sub_step_id":   "sub-step-find-asset-ids",
+                                "sub_step_name": "Find Asset IDs in Drawing Chunk",
+                                "description": (
+                                    "Scan this drawing chunk image and extract EVERY numeric label you can see. "
+                                    "Asset IDs are standalone multi-digit numbers (4-10 digits) positioned "
+                                    "adjacent to drawing symbols (poles, lanterns, pillars, cables, etc.) "
+                                    "on the reticulation site plan. "
+                                    "Do NOT filter by any expected list — report every number you can read. "
+                                    "Return a JSON array of all numeric strings found: "
+                                    "[\"302876\", \"2002180\", \"402679\", ...]"
+                                ),
+                                "output_type": "json",
+                                "output_fields": {
+                                    "found_ids": "array of numeric string labels visible in this chunk",
+                                },
+                            }
+                        ],
+                    },
+                    "documents_folder": docs_folder,
+                    "output_dir":       output_dir_g1,
+                }
+
+                for _try in range(MAX_STEP_RETRIES + 1):
+                    try:
+                        resp = requests.post(DOC_EXTRACTOR_URL, json=extractor_payload, timeout=600)
+                        if resp.status_code == 200:
+                            res_json = resp.json()
+                            # Aggregate found bare IDs across chunk_details (per-chunk results).
+                            # The extractor returns a single top-level object with chunk_details[].
+                            # Each chunk has extracted.data["sub-step-find-asset-ids"] which may be:
+                            #   - list of bare_id strings (e.g. ["302876", "302877"])
+                            #   - list of dicts with {bare_id, symbol_description, label}
+                            # First occurrence of a bare_id across chunks wins.
+                            found_map: dict = {}
+
+                            def _absorb_item(item):
+                                if isinstance(item, str):
+                                    bid = item.strip()
+                                    if bid and bid not in found_map:
+                                        found_map[bid] = {"symbol_description": None, "label": None}
+                                elif isinstance(item, dict):
+                                    bid = str(item.get("bare_id", "")).strip()
+                                    if bid and bid not in found_map:
+                                        found_map[bid] = {
+                                            "symbol_description": item.get("symbol_description"),
+                                            "label":              item.get("label"),
+                                        }
+
+                            # The extractor returns {"extractions": [per_file_result], ...}
+                            # chunk_details lives inside extractions[0], not at the top level.
+                            # Collect all extraction objects to search: top-level + each extractions[i].
+                            _all_ext_objs = [res_json] + (res_json.get("extractions") or [])
+
+                            # Primary: per-chunk data in chunk_details
+                            for _eo in _all_ext_objs:
+                                for _cd in (_eo.get("chunk_details") or []):
+                                    _chunk_data = (_cd.get("extracted") or {}).get("data") or {}
+                                    for _cd_val in _chunk_data.values():
+                                        _items = _cd_val if isinstance(_cd_val, list) else [_cd_val]
+                                        for _item in _items:
+                                            _absorb_item(_item)
+
+                            # Secondary: sub_step_extractions.value (aggregated by extractor)
+                            for _eo in _all_ext_objs:
+                                for _sv in (_eo.get("sub_step_extractions") or {}).values():
+                                    _agg_val = _sv.get("value") if isinstance(_sv, dict) else (
+                                        _sv if isinstance(_sv, list) else None)
+                                    for _item in (_agg_val or []):
+                                        _absorb_item(_item)
+
+                            # Filter found_map to only bare IDs that belong to our asset list.
+                            # Since we now ask the extractor for ALL visible numbers (not just
+                            # the target list), filter out any numbers that aren't asset IDs.
+                            _bare_id_set = set(bare_ids_sorted)
+                            found_map = {k: v for k, v in found_map.items() if k in _bare_id_set}
+
+                            log_message += (
+                                f"   Visual extraction: {len(found_map)}/{len(bare_ids_sorted)} "
+                                f"asset IDs located in drawing chunks.\n"
+                            )
+
+                            # ── Legend correlation: for found IDs missing symbol/label,
+                            # collect raw text context from each chunk and use the
+                            # analytics agent to match to the best legend entry. ──────
+                            needs_legend = {bid for bid, v in found_map.items()
+                                            if not v.get("symbol_description") and not v.get("label")}
+                            if needs_legend and legend_entries:
+                                # Build bid → list of raw_text snippets (max 2 chunks per ID)
+                                context_map: dict = {}
+                                for _eo2 in _all_ext_objs:
+                                    for _cd in (_eo2.get("chunk_details") or []):
+                                        _raw = (_cd.get("extracted") or {}).get("raw_text", "")[:600]
+                                        _chunk_data = (_cd.get("extracted") or {}).get("data") or {}
+                                        _chunk_bids: set = set()
+                                        for _cdv in _chunk_data.values():
+                                            for _ci in (_cdv if isinstance(_cdv, list) else [_cdv]):
+                                                if isinstance(_ci, str):
+                                                    _cb = _ci.strip()
+                                                elif isinstance(_ci, dict):
+                                                    _cb = str(_ci.get("bare_id", "") or "").strip()
+                                                else:
+                                                    continue
+                                                if _cb in needs_legend:
+                                                    _chunk_bids.add(_cb)
+                                        for _cb in _chunk_bids:
+                                            context_map.setdefault(_cb, [])
+                                            if len(context_map[_cb]) < 2:
+                                                context_map[_cb].append(_raw)
+
+                                legend_payload = {
+                                    "context": (
+                                        "Drawing chunk text contexts for found asset IDs on a reticulation site plan. "
+                                        "Match each asset's surrounding text to the most appropriate legend entry."
+                                    ),
+                                    "data": [
+                                        {"bare_id": _bid, "chunk_context": " | ".join(context_map.get(_bid, []))}
+                                        for _bid in needs_legend
+                                    ],
+                                    "reference_data": legend_entries,
+                                    "tasks": [{
+                                        "task_id":   "task-legend-correlation",
+                                        "task_name": "Legend Symbol Correlation",
+                                        "task_type": "comparison",
+                                        "description": (
+                                            "For each item in 'data', read the chunk_context text from the site plan "
+                                            "drawing and identify which legend entry from 'reference_data' best describes "
+                                            "the asset symbol associated with this bare_id. "
+                                            "Look for symbol letters, equipment descriptions, or action words "
+                                            "(e.g. NEW POLE, EXISTING LANTERN, REMOVE) near the ID in the context. "
+                                            "Return one match per bare_id."
+                                        ),
+                                        "output_format": (
+                                            '{"matches": [{"bare_id": "...", '
+                                            '"symbol_description": "matching legend symbol description or null", '
+                                            '"label": "matching legend label text or null"}]}'
+                                        ),
+                                    }],
+                                }
+                                try:
+                                    _leg_resp = requests.post(ANALYTICS_URL, json=legend_payload, timeout=120)
+                                    if _leg_resp.status_code == 200:
+                                        _leg_res = _leg_resp.json()
+                                        _leg_task = (_leg_res.get("analytics_results") or {}).get("task-legend-correlation") or {}
+                                        _leg_result = _leg_task.get("result") if isinstance(_leg_task, dict) else None
+                                        _leg_matches = (_leg_result.get("matches") if isinstance(_leg_result, dict) else None) or []
+                                        for _lm in _leg_matches:
+                                            if not isinstance(_lm, dict):
+                                                continue
+                                            _lbid = str(_lm.get("bare_id", "") or "").strip()
+                                            if _lbid in found_map:
+                                                found_map[_lbid]["symbol_description"] = _lm.get("symbol_description")
+                                                found_map[_lbid]["label"]              = _lm.get("label")
+                                        log_message += f"   Legend correlation: matched {len(_leg_matches)} found IDs to legend entries.\n"
+                                    else:
+                                        log_message += f"   Legend correlation skipped (analytics {_leg_resp.status_code}).\n"
+                                except Exception as _leg_err:
+                                    log_message += f"   Legend correlation error (non-fatal): {_leg_err}\n"
+
+                            # Build sym_matches — one entry per asset record
+                            for _rec in asset_records:
+                                _aid = _rec.get("asset_id", "")
+                                _bid = _compute_bare_id(_aid)
+                                if _bid in found_map:
+                                    sym_matches.append({
+                                        "asset_id":           _aid,
+                                        "bare_id":            _bid,
+                                        "symbol_description": found_map[_bid]["symbol_description"],
+                                        "label":              found_map[_bid]["label"],
+                                        "match_status":       "found",
+                                    })
+                                else:
+                                    sym_matches.append({
+                                        "asset_id":           _aid,
+                                        "bare_id":            _bid,
+                                        "symbol_description": None,
+                                        "label":              None,
+                                        "match_status":       "not_found",
+                                    })
+                            break
+                        else:
+                            log_message += f"   Extractor error (attempt {_try+1}/{MAX_STEP_RETRIES+1}): {resp.text[:300]}\n"
+                    except Exception as _ex_err:
+                        log_message += f"   Network error (attempt {_try+1}/{MAX_STEP_RETRIES+1}): {_ex_err}\n"
+                    if _try < MAX_STEP_RETRIES:
+                        log_message += f"   Retrying in {RETRY_DELAY_SECS}s...\n"
+                        time.sleep(RETRY_DELAY_SECS)
+                    else:
+                        step_failed = True
+                        log_message += "   Step 8 failed after all retries (visual chunk search).\n"
+
+            else:
+                # No chunk manifest — mark all assets not_found without calling any agent
+                log_message += "   No site plan chunk manifest found — all assets marked not_found.\n"
+                for _rec in asset_records:
+                    _aid = _rec.get("asset_id", "")
+                    sym_matches.append({
+                        "asset_id":           _aid,
+                        "bare_id":            _compute_bare_id(_aid),
+                        "symbol_description": None,
+                        "label":              None,
+                        "match_status":       "not_found",
+                    })
+
+            if not step_failed:
+                # ── Shared: merge sym_matches into updated_assets ─────────────
+                match_lookup = {m.get("asset_id"): m for m in sym_matches if m.get("asset_id")}
+                updated_assets = []
+                for rec in asset_records:
+                    aid = rec.get("asset_id", "")
+                    m = match_lookup.get(aid, {})
+                    updated = dict(rec)
+                    updated["bare_id"]            = _compute_bare_id(aid)
+                    updated["symbol_description"] = m.get("symbol_description")
+                    updated["label"]              = m.get("label")
+                    updated["match_status"]       = m.get("match_status", "not_found")
+                    updated_assets.append(updated)
+                log_message += f"   Merged into {len(updated_assets)} updated asset records.\n"
+
+                found_n     = sum(1 for r in updated_assets if r["match_status"] == "found")
+                not_found_n = sum(1 for r in updated_assets if r["match_status"] == "not_found")
+                match_sum = {
+                    "total":     len(updated_assets),
+                    "found":     found_n,
+                    "not_found": not_found_n,
+                }
+                log_message += (
+                    f"   Symbol match complete — {found_n} found, {not_found_n} not_found "
+                    f"of {len(updated_assets)} total.\n"
+                )
+
+                step_output = {
+                    "updated_assets":       updated_assets,
+                    "asset_symbol_matches": sym_matches,
+                    "match_summary":        match_sum,
+                }
+
+                job_key  = state["results"].get("job_key", "")
+                out_dir  = OUTPUT_DIR / job_key if job_key else OUTPUT_DIR
+                out_dir.mkdir(parents=True, exist_ok=True)
+                ts       = datetime.utcnow().strftime("%Y%m%dT%H%M%S")
+                out_path = out_dir / f"AssetSymbolMatches_{ts}.json"
+                with open(out_path, "w", encoding="utf-8") as _f:
+                    json.dump(step_output, _f, indent=2, default=str)
+                log_message += f"   Saved: {out_path.name}\n"
+
+                symbol_match_extraction = {
+                    "total_files": 1,
+                    "output_file": str(out_path),
+                    "extractions": [
+                        {
+                            "filename":          out_path.name,
+                            "document_type":     "Asset Symbol Matches",
+                            "document_category": "TAL",
+                            "process_step_name": step.name or "Match Assets to Site Plan Drawing Symbols",
+                            "total_sections":    len(updated_assets),
+                            "relevant_sections": match_sum.get("found", 0),
+                            "sub_step_extractions": {
+                                "sub-step-asset-symbol-match": {
+                                    "updated_assets": updated_assets,
+                                    "match_summary":  match_sum,
+                                }
+                            },
+                        }
+                    ],
+                }
+                state["results"]["updated_assets"]                      = updated_assets
+                state["results"]["asset_symbol_matches"]                = sym_matches
+                state["results"][f"extraction_step_{step.step_number}"] = symbol_match_extraction
+                step_output_data      = step_output
+                step_output_file_path = str(out_path)
+
+        # ── G2. Asset-Legend Enrichment ───────────────────────────────────────
+        elif not step_failed:
+            # Use updated_assets from step 8 (already merged with match data).
+            # Fall back to asset_records + raw matches if step 8 didn't produce updated_assets.
+            updated_assets_from_8 = state["results"].get("updated_assets") or []
+            if updated_assets_from_8:
+                enhanced_records = [
+                    {**rec,
+                     "_drawing_symbol":       rec.get("symbol_description"),
+                     "_drawing_label":        rec.get("label"),
+                     "_drawing_match_status": rec.get("match_status", "not_found")}
+                    for rec in updated_assets_from_8
+                ]
+            else:
+                # Fallback: rebuild from raw matches
+                raw_symbol_matches = state["results"].get("asset_symbol_matches") or []
+                symbol_match_map = {
+                    m.get("asset_id"): m for m in raw_symbol_matches if m.get("asset_id")
+                }
+                enhanced_records = []
+                for rec in asset_records:
+                    aid = rec.get("asset_id") or ""
+                    m = symbol_match_map.get(aid, {})
+                    enhanced = dict(rec)
+                    enhanced["_drawing_symbol"]       = m.get("symbol_description")
+                    enhanced["_drawing_label"]        = m.get("label")
+                    enhanced["_drawing_match_status"] = m.get("match_status", "not_found")
+                    enhanced_records.append(enhanced)
+
+            found_count = sum(
+                1 for rec in enhanced_records if rec.get("_drawing_match_status") == "found"
+            )
+            log_message += (
+                f"   Enriching {len(asset_records)} assets against {len(legend_entries)} legend entries "
+                f"({found_count} pre-matched from drawing, "
+                f"{len(asset_records) - found_count} require text inference)...\n"
+            )
+            step_input_data = {
+                "asset_count":     len(asset_records),
+                "legend_count":    len(legend_entries),
+                "drawing_matched": found_count,
+                "text_fallback":   len(asset_records) - found_count,
+            }
+
+            payload = {
+                "context": (
+                    "Electricity network asset register combined with symbol matches from a site plan drawing. "
+                    "Each asset record has _drawing_symbol, _drawing_label, and _drawing_match_status fields "
+                    "from the previous drawing-search step. "
+                    "Assets with _drawing_match_status='found' already have their symbol identified from the drawing. "
+                    "Assets with _drawing_match_status='not_found' need text-based legend matching as fallback."
+                ),
+                "data": enhanced_records,
+                "reference_data": legend_entries,
+                "tasks": [
+                    {
+                        "task_id":   "task-asset-legend-enrich",
+                        "task_name": "Asset-Legend Enrichment",
+                        "task_type": "comparison",
+                        "description": (
+                            "For each asset record in the primary data:\n"
+                            "1. If _drawing_match_status is 'found': use _drawing_symbol as symbol_description, "
+                            "_drawing_label as label, set match_confidence to 'high'. "
+                            "Look up the legend entry whose label matches _drawing_label to get legend_category.\n"
+                            "2. If _drawing_match_status is 'not_found': find the best-matching legend entry "
+                            "from reference_data by comparing the asset's asset_type and description fields "
+                            "against the legend's label field (use fuzzy/partial string matching). "
+                            "Set match_confidence to 'medium' for a good text match, 'low' for a weak match, "
+                            "or 'none' if no match is found.\n"
+                            "Remove the _drawing_symbol, _drawing_label, and _drawing_match_status helper fields "
+                            "from the output. Preserve all other original asset fields in every enriched record."
+                        ),
+                        "output_format": (
+                            '{"enriched_assets": ['
+                            '  {<all original asset fields minus _drawing_* helpers>, '
+                            '   "symbol_description": "string or null", '
+                            '   "label": "string or null", '
+                            '   "legend_label": "string or null", '
+                            '   "legend_category": "string or null", '
+                            '   "match_confidence": "high|medium|low|none"}'
+                            '], '
+                            '"match_summary": {'
+                            '  "total": N, "found_on_drawing": N, "inferred": N, "not_found": N'
+                            '}}'
+                        ),
+                    }
+                ],
+            }
+
+            for _try in range(MAX_STEP_RETRIES + 1):
+                try:
+                    resp = requests.post(ANALYTICS_URL, json=payload, timeout=300)
+                    if resp.status_code == 200:
+                        res_json      = resp.json()
+                        task_res      = (res_json.get("analytics_results") or {}).get("task-asset-legend-enrich", {})
+                        enriched      = task_res.get("result") or {}
+                        enriched_list = enriched.get("enriched_assets") or []
+                        match_summary = enriched.get("match_summary") or {}
+                        log_message += (
+                            f"   Enrichment complete — {len(enriched_list)} assets. "
+                            f"Summary: {match_summary}\n"
+                        )
+
+                        job_key  = state["results"].get("job_key", "")
+                        out_dir  = OUTPUT_DIR / job_key if job_key else OUTPUT_DIR
+                        out_dir.mkdir(parents=True, exist_ok=True)
+                        ts       = datetime.utcnow().strftime("%Y%m%dT%H%M%S")
+                        out_path = out_dir / f"AssetLegendEnrichment_{ts}.json"
+                        with open(out_path, "w", encoding="utf-8") as _f:
+                            json.dump(enriched, _f, indent=2, default=str)
+                        log_message += f"   Saved: {out_path.name}\n"
+
+                        enrichment_extraction = {
+                            "total_files": 1,
+                            "output_file": str(out_path),
+                            "extractions": [
+                                {
+                                    "filename":          out_path.name,
+                                    "document_type":     "Asset-Legend Enrichment",
+                                    "document_category": "Site Plan",
+                                    "process_step_name": step.name or "Enrich Assets with Legend Data",
+                                    "total_sections":    len(enriched_list),
+                                    "relevant_sections": len(enriched_list),
+                                    "sub_step_extractions": {
+                                        "sub-step-asset-legend-enrichment": {
+                                            "value":         enriched_list,
+                                            "match_summary": match_summary,
+                                        }
+                                    },
+                                }
+                            ],
+                        }
+                        state["results"]["enriched_assets"]                          = enriched
+                        state["results"][f"extraction_step_{step.step_number}"]      = enrichment_extraction
+                        step_output_data      = enriched
+                        step_output_file_path = str(out_path)
+                        break
+                    else:
+                        log_message += f"   Agent Error (attempt {_try+1}/{MAX_STEP_RETRIES+1}): {resp.text[:300]}\n"
+                except Exception as e:
+                    log_message += f"   Network Error (attempt {_try+1}/{MAX_STEP_RETRIES+1}): {e}\n"
+                if _try < MAX_STEP_RETRIES:
+                    log_message += f"   Retrying in {RETRY_DELAY_SECS}s...\n"
+                    time.sleep(RETRY_DELAY_SECS)
+                else:
+                    step_failed = True
+                    log_message += "   Step failed after all retries.\n"
+
+    # H. REPORT CONSOLIDATOR
     elif "consolidat" in resource_key:
         log_message += f"   Consolidating parallel extraction results...\n"
 
@@ -974,11 +1557,21 @@ async def _run_step_impl(
             if not ext_data:
                 continue
             step_num = key.replace("extraction_step_", "")
-            report["source_extractions"][key] = {
+            entry = {
                 "total_files":  ext_data.get("total_files", 0),
                 "output_file":  ext_data.get("output_file", ""),
                 "extractions":  ext_data.get("extractions", []),
             }
+            # Include asset extract summary for TAL/spreadsheet steps
+            if ext_data.get("asset_extract_file"):
+                entry["asset_extract_file"] = ext_data.get("asset_extract_file", "")
+                ae = ext_data.get("asset_extract", {})
+                entry["asset_extract"] = {
+                    "total_assets":     ae.get("total_assets", 0),
+                    "source_documents": ae.get("source_documents", []),
+                    "output_file":      ae.get("output_file", ""),
+                }
+            report["source_extractions"][key] = entry
             all_extractions.extend(ext_data.get("extractions", []))
 
         report["summary"]["total_documents_processed"] = len(all_extractions)
@@ -1059,14 +1652,51 @@ async def _run_step_impl(
         if file_bytes and file_name:
             input_file_tuple = (file_name, file_bytes, file_content_type)
 
+        # Trim oversized fields from extractor step data before sending to validator.
+        # sub_steps and full asset_records bloat the prompt beyond LLM context limits.
+        val_input_data  = step_input_data
+        val_output_data = step_output_data
+        val_output_file = step_output_file_path
+        is_asset_spreadsheet = "extractor" in resource_key and isinstance(val_output_data, dict) and "asset_extract" in val_output_data
+        if "extractor" in resource_key:
+            # Strip sub_steps from process_step (verbose instructions not needed for validation)
+            if isinstance(val_input_data, dict) and "process_step" in val_input_data:
+                ps = val_input_data["process_step"]
+                if ps.get("sub_steps"):
+                    val_input_data = {**val_input_data, "process_step": {k: v for k, v in ps.items() if k != "sub_steps"}}
+            if is_asset_spreadsheet:
+                # Strip asset_records from output data — keep only counts and metadata.
+                # Validator needs to verify structure and totals, not all individual records.
+                def _slim_extractions(exts):
+                    slimmed = []
+                    for ex in exts:
+                        se = ex.get("step_extraction", {})
+                        records = se.get("asset_records", [])
+                        slim_se = {**se, "asset_records": records[:3], "total_assets": len(records), "_note": f"{len(records)} records total, showing first 3"}
+                        slimmed.append({**ex, "step_extraction": slim_se})
+                    return slimmed
+                ae = val_output_data["asset_extract"]
+                slim_ae = {k: v for k, v in ae.items() if k != "asset_records"}
+                slim_ae["total_assets"] = ae.get("total_assets", 0)
+                val_output_data = {
+                    **{k: v for k, v in val_output_data.items() if k not in ("extractions", "asset_extract", "process_step")},
+                    "total_files": val_output_data.get("total_files"),
+                    "asset_extract": slim_ae,
+                    "asset_extract_file": val_output_data.get("asset_extract_file", ""),
+                    "extractions": _slim_extractions(val_output_data.get("extractions", [])),
+                }
+                # Don't pass the raw ExtractionReport file — it contains all records and the
+                # full process_step blob, which pushes the prompt over the LLM context limit.
+                val_output_file = ae.get("output_file", "")  # pass AssetExtract file instead
+
         _val_kwargs = dict(
             step_name=step.name or f"Step {step.step_number}",
             step_description=step.description,
-            input_data=step_input_data,
-            output_data=step_output_data,
+            input_data=val_input_data,
+            output_data=val_output_data,
             validation_criteria=step.validation.criteria if step.validation else "",
             input_file_tuple=input_file_tuple,
-            output_file_path=step_output_file_path,
+            output_file_path=val_output_file,
             agent_files=agent_files,
         )
         validation_result = await asyncio.get_event_loop().run_in_executor(
@@ -1082,6 +1712,38 @@ async def _run_step_impl(
             if files_info:
                 log_message += f"   Files validated: input={files_info.get('input_file', 'None')}, output={files_info.get('output_file', 'None')}\n"
             state["results"].setdefault("validations", []).append(validation_result)
+
+            # ── Step 8: inject asset drawing match visualisation into TestReport ──
+            if "match" in step_name_lower and "symbol" in step_name_lower:
+                _report_file = validation_result.get("test_report_file")
+                _updated = (step_output_data or {}).get("updated_assets") or []
+                if _report_file and _updated:
+                    try:
+                        with open(_report_file, encoding="utf-8") as _rf:
+                            _tr = json.load(_rf)
+                        _viz_rows = [
+                            {
+                                "asset_id":          _r.get("asset_id", ""),
+                                "asset_type":        _r.get("asset_type", ""),
+                                "description":       _r.get("description", ""),
+                                "label":             _r.get("label"),
+                                "symbol_description": _r.get("symbol_description"),
+                                "found":             _r.get("match_status") == "found",
+                            }
+                            for _r in _updated
+                        ]
+                        _ms = (step_output_data or {}).get("match_summary", {})
+                        _tr["asset_drawing_match"] = {
+                            "total":     _ms.get("total", len(_viz_rows)),
+                            "found":     _ms.get("found", 0),
+                            "not_found": _ms.get("not_found", len(_viz_rows)),
+                            "assets":    _viz_rows,
+                        }
+                        with open(_report_file, "w", encoding="utf-8") as _rf:
+                            json.dump(_tr, _rf, indent=2, ensure_ascii=False)
+                        log_message += f"   Asset drawing match visualisation added to TestReport.\n"
+                    except Exception as _ve:
+                        log_message += f"   WARNING: Could not augment TestReport with visualisation: {_ve}\n"
         else:
             log_message += f"   Validator unavailable, skipping.\n"
 
@@ -1111,8 +1773,39 @@ async def _run_step_impl(
         step_output = state["results"].get("asset_map")
     elif "verification" in resource_key:
         step_output = state["results"].get("verification_report")
+    elif "chunker" in resource_key:
+        raw_manifests = state["results"].get("chunk_manifests", {})
+        step_output = {
+            "chunk_summary": True,
+            "total_documents_chunked": len(raw_manifests),
+            "documents": [
+                {
+                    "filename":      fname,
+                    "page_size":     m.get("page_size", ""),
+                    "chunk_strategy": m.get("chunk_strategy", ""),
+                    "total_pages":   m.get("total_pages", 0),
+                    "total_chunks":  m.get("total_chunks", 0),
+                    "output_directory": m.get("output_directory", ""),
+                    "chunks": [
+                        {
+                            "sequence": c.get("sequence"),
+                            "page_number": c.get("page_number"),
+                            "region":    c.get("region", ""),
+                            "filename":  c.get("filename", ""),
+                            "filepath":  c.get("filepath", ""),
+                            "width_px":  c.get("width_px"),
+                            "height_px": c.get("height_px"),
+                        }
+                        for c in m.get("chunks", [])
+                    ],
+                }
+                for fname, m in raw_manifests.items()
+            ],
+        }
     elif "extractor" in resource_key:
-        step_output = state["results"].get("extraction")
+        # For parallel groups, step_output_data was set to the current (leader) step's data,
+        # not the last-write winner in state["results"]["extraction"]. Use it directly.
+        step_output = step_output_data if step_output_data else state["results"].get("extraction")
     elif "consolidat" in resource_key:
         step_output = state["results"].get("consolidated_report")
 
@@ -1128,6 +1821,8 @@ async def _run_step_impl(
         response["parallel_completed_indices"] = parallel_completed_indices
     if parallel_step_validations is not None:
         response["parallel_step_validations"] = parallel_step_validations
+    if parallel_step_outputs is not None:
+        response["parallel_step_outputs"] = parallel_step_outputs
     return response
 
 PROCESS_DIR = Path(__file__).parent / "process"
@@ -1217,27 +1912,30 @@ def get_process(process_id: str):
 
 @app.get("/output_files")
 def list_output_files():
-    """List all JSON files in the OUTPUT directory, grouped by date."""
+    """List all JSON files in the OUTPUT directory, including job subdirectories."""
     if not OUTPUT_DIR.exists():
         return {"files": []}
     files = []
-    for f in OUTPUT_DIR.iterdir():
-        if f.suffix == ".json":
-            stat = f.stat()
-            files.append({
-                "filename": f.name,
-                "size_bytes": stat.st_size,
-                "modified_ts": stat.st_mtime,
-            })
-    files.sort(key=lambda x: x["filename"], reverse=True)
+    for f in OUTPUT_DIR.rglob("*.json"):
+        stat = f.stat()
+        # Return path relative to OUTPUT_DIR so the frontend can request it
+        rel = f.relative_to(OUTPUT_DIR)
+        files.append({
+            "filename": str(rel),
+            "size_bytes": stat.st_size,
+            "modified_ts": stat.st_mtime,
+        })
+    files.sort(key=lambda x: x["modified_ts"], reverse=True)
     return {"files": files}
 
 
-@app.get("/output_file/{filename}")
+@app.get("/output_file/{filename:path}")
 def get_output_file(filename: str):
     """Return the parsed JSON content of a specific OUTPUT file."""
-    safe = Path(filename).name  # prevent path traversal
-    path = OUTPUT_DIR / safe
+    # Resolve relative path under OUTPUT_DIR, preventing traversal outside it
+    path = (OUTPUT_DIR / filename).resolve()
+    if not str(path).startswith(str(OUTPUT_DIR.resolve())):
+        raise HTTPException(status_code=403, detail="Access denied")
     if not path.exists() or path.suffix != ".json":
         raise HTTPException(status_code=404, detail="File not found")
     try:
@@ -1270,13 +1968,13 @@ def serve_document(filepath: str):
 # ═══════════════════════════════════════════
 
 _MANAGED_SERVICES = [
-    {"name": "agent04-responder",          "label": "Responder",         "health": "http://responder:8000/tasks"},
-    {"name": "agent04-orchestrator",       "label": "Orchestrator",      "health": None},
-    {"name": "agent04-document-reviewer",  "label": "Document Reviewer", "health": "http://document-reviewer:8089/health"},
-    {"name": "agent04-document-extractor", "label": "Document Extractor","health": "http://document-extractor:8090/health"},
-    {"name": "agent04-step-validator",     "label": "Step Validator",    "health": "http://step-validator:8088/health"},
-    {"name": "agent04-document-chunker",   "label": "Document Chunker",  "health": "http://document-chunker:8091/health"},
-    {"name": "agent04-frontend",           "label": "Frontend",          "health": None},
+    {"name": "agent05-responder",          "label": "Responder",         "health": "http://responder:8000/tasks"},
+    {"name": "agent05-orchestrator",       "label": "Orchestrator",      "health": None},
+    {"name": "agent05-document-reviewer",  "label": "Document Reviewer", "health": "http://document-reviewer:8089/health"},
+    {"name": "agent05-document-extractor", "label": "Document Extractor","health": "http://document-extractor:8090/health"},
+    {"name": "agent05-step-validator",     "label": "Step Validator",    "health": "http://step-validator:8088/health"},
+    {"name": "agent05-document-chunker",   "label": "Document Chunker",  "health": "http://document-chunker:8091/health"},
+    {"name": "agent05-frontend",           "label": "Frontend",          "health": None},
 ]
 
 

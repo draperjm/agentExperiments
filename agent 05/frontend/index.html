@@ -155,7 +155,50 @@
         .s-panel { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
         .tab-c { display: none; flex: 1; flex-direction: column; overflow: hidden; }
         .tab-c.active { display: flex; }
-        .logs-body { background: #0d1117; color: #4ade80; font-family: 'Courier New', monospace; font-size: 0.73rem; padding: 12px; flex: 1; overflow-y: auto; white-space: pre-wrap; line-height: 1.5; }
+        .logs-body { background: #0d1117; font-family: 'Courier New', monospace; font-size: 0.73rem; padding: 10px 12px; flex: 1; overflow-y: auto; line-height: 1.55; }
+        /* ── LOG LINE TYPES ── */
+        .log-line { display: block; padding: 1px 0; white-space: pre-wrap; word-break: break-word; }
+        .log-step-hdr { margin: 10px 0 3px; padding: 5px 10px; background: rgba(99,102,241,0.15); border-left: 3px solid #6366f1; border-radius: 0 4px 4px 0; color: #a5b4fc; font-weight: 700; font-size: 0.76rem; letter-spacing: .02em; }
+        .log-sub-hdr  { margin: 6px 0 1px; padding: 3px 10px; background: rgba(56,189,248,0.08); border-left: 2px solid #38bdf8; border-radius: 0 3px 3px 0; color: #7dd3fc; font-weight: 600; }
+        .log-parallel { padding: 3px 10px; background: rgba(168,85,247,0.1); border-left: 2px solid #a855f7; border-radius: 0 3px 3px 0; color: #d8b4fe; }
+        .log-ok       { color: #4ade80; }
+        .log-err      { color: #f87171; }
+        .log-warn     { color: #fbbf24; }
+        .log-retry    { color: #fb923c; }
+        .log-failed   { margin: 6px 0; padding: 5px 10px; background: rgba(239,68,68,0.15); border-left: 3px solid #ef4444; border-radius: 0 4px 4px 0; color: #fca5a5; font-weight: 700; }
+        .log-paused   { margin: 4px 0; padding: 4px 10px; background: rgba(251,191,36,0.12); border-left: 3px solid #f59e0b; border-radius: 0 4px 4px 0; color: #fde68a; font-weight: 600; }
+        .log-system   { color: #6b7280; font-style: italic; }
+        .log-info     { color: #94a3b8; }
+        .log-item     { color: #cbd5e1; padding-left: 8px; }
+        .log-chunk    { color: #67e8f9; }
+        .log-complete { margin: 6px 0; padding: 5px 10px; background: rgba(74,222,128,0.1); border-left: 3px solid #4ade80; border-radius: 0 4px 4px 0; color: #86efac; font-weight: 700; }
+        .log-default  { color: #c8c8c8; }
+        /* score badge inside validation lines */
+        .log-score-hi  { background: #14532d; color: #4ade80; border-radius: 3px; padding: 0 4px; font-weight: 700; }
+        .log-score-mid { background: #451a03; color: #fbbf24; border-radius: 3px; padding: 0 4px; font-weight: 700; }
+        .log-score-lo  { background: #450a0a; color: #f87171; border-radius: 3px; padding: 0 4px; font-weight: 700; }
+        /* blank separator */
+        .log-sep { height: 4px; display: block; }
+        /* light mode */
+        html.light .logs-body { background: #f0f4f8; }
+        html.light .log-step-hdr { background: rgba(99,102,241,0.08); color: #4338ca; border-color: #6366f1; }
+        html.light .log-sub-hdr  { background: rgba(56,189,248,0.07); color: #0369a1; border-color: #38bdf8; }
+        html.light .log-parallel { background: rgba(168,85,247,0.07); color: #7e22ce; border-color: #a855f7; }
+        html.light .log-ok       { color: #166534; }
+        html.light .log-err      { color: #b91c1c; }
+        html.light .log-warn     { color: #92400e; }
+        html.light .log-retry    { color: #c2410c; }
+        html.light .log-failed   { background: rgba(239,68,68,0.06); color: #7f1d1d; border-color: #ef4444; }
+        html.light .log-paused   { background: rgba(251,191,36,0.08); color: #78350f; border-color: #f59e0b; }
+        html.light .log-system   { color: #9ca3af; }
+        html.light .log-info     { color: #64748b; }
+        html.light .log-item     { color: #374151; }
+        html.light .log-chunk    { color: #0e7490; }
+        html.light .log-complete { background: rgba(74,222,128,0.07); color: #14532d; border-color: #4ade80; }
+        html.light .log-default  { color: #374151; }
+        html.light .log-score-hi  { background: #dcfce7; color: #15803d; }
+        html.light .log-score-mid { background: #fef3c7; color: #b45309; }
+        html.light .log-score-lo  { background: #fee2e2; color: #b91c1c; }
         .out-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .s-selector { padding: 9px 12px; border-bottom: 1px solid var(--panel-border); display: flex; align-items: center; gap: 8px; background: var(--header-bg); flex-shrink: 0; }
         .s-selector label { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
@@ -353,6 +396,185 @@
         .dr-reader { font-size: 0.58rem; font-weight: 600; padding: 1px 5px; border-radius: 3px; background: rgba(77,159,255,0.1); color: #60a5fa; border: 1px solid rgba(77,159,255,0.2); white-space: nowrap; flex-shrink: 0; font-family: monospace; }
         .dr-reader.ocr { background: rgba(239,68,68,0.1); color: #fca5a5; border-color: rgba(239,68,68,0.2); }
         .dr-quality-note { font-size: 0.62rem; color: var(--text-muted); margin-top: 5px; line-height: 1.4; padding: 4px 6px; background: rgba(0,0,0,0.2); border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        /* ── PROCESSING PLAN OUTPUT ── */
+        .pp-card { border: 1px solid rgba(255,255,255,0.08); border-left: 3px solid #4d9fff; border-radius: 6px; margin-bottom: 8px; padding: 10px 12px; background: rgba(77,159,255,0.03); }
+        .pp-card.site-plan { border-left-color: #f59e0b; background: rgba(245,158,11,0.03); }
+        .pp-card.tal { border-left-color: #a78bfa; background: rgba(139,92,246,0.03); }
+        .pp-route { font-size: 0.58rem; font-weight: 700; padding: 2px 7px; border-radius: 9999px; white-space: nowrap; flex-shrink: 0; }
+        .pp-route.design-brief { background: rgba(77,159,255,0.15); color: #4d9fff; border: 1px solid rgba(77,159,255,0.25); }
+        .pp-route.site-plan { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+        .pp-route.tal { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.25); }
+        .pp-route.step-badge { background: rgba(255,255,255,0.06); color: var(--text-dim); border: 1px solid rgba(255,255,255,0.1); }
+        .pp-convert { font-size: 0.6rem; font-weight: 700; padding: 2px 7px; border-radius: 9999px; background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); white-space: nowrap; flex-shrink: 0; }
+        .pp-page-size { font-size: 0.6rem; font-weight: 700; padding: 2px 6px; border-radius: 9999px; white-space: nowrap; flex-shrink: 0; }
+        .pp-page-size.large  { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+        .pp-page-size.normal { background: rgba(255,255,255,0.06); color: var(--text-dim); border: 1px solid rgba(255,255,255,0.1); }
+        .pp-chunk-bar { display: flex; align-items: center; gap: 6px; margin-top: 6px; padding: 4px 8px; background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.15); border-radius: 4px; }
+        .pp-chunk-label { font-size: 0.61rem; color: #f59e0b; font-weight: 700; }
+        .pp-chunk-pill { font-size: 0.59rem; font-weight: 600; padding: 1px 6px; border-radius: 9999px; background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); white-space: nowrap; }
+        .pp-sheets { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+        .pp-sheet-tag { font-size: 0.59rem; padding: 2px 7px; background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.2); color: #a78bfa; border-radius: 3px; font-family: monospace; }
+        html.light .pp-card { border-color: rgba(0,0,0,0.1); background: rgba(77,159,255,0.03); }
+        html.light .pp-card.site-plan { background: rgba(245,158,11,0.03); }
+        html.light .pp-card.tal { background: rgba(139,92,246,0.03); }
+        html.light .pp-page-size.normal { background: rgba(0,0,0,0.04); color: #6b7280; border-color: rgba(0,0,0,0.09); }
+        html.light .pp-route.step-badge { background: rgba(0,0,0,0.04); color: #6b7280; border-color: rgba(0,0,0,0.09); }
+        /* ── STEP ERROR REPORT ── */
+        .err-wrap { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; padding: 10px; background: var(--panel-bg); }
+        .err-banner { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-left: 4px solid #ef4444; border-radius: 6px; margin-bottom: 12px; }
+        .err-banner-icon { font-size: 1.3rem; flex-shrink: 0; }
+        .err-banner-body { flex: 1; min-width: 0; }
+        .err-banner-title { font-size: 0.82rem; font-weight: 700; color: #ef4444; margin-bottom: 2px; }
+        .err-banner-sub { font-size: 0.67rem; color: var(--text-muted); }
+        .err-section { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); margin: 12px 0 5px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 4px; }
+        .err-log { background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.07); border-radius: 5px; padding: 9px 11px; font-family: 'Courier New', monospace; font-size: 0.67rem; color: #d4d4d4; white-space: pre-wrap; word-break: break-word; line-height: 1.55; max-height: 420px; overflow-y: auto; }
+        .err-log .log-err  { color: #f87171; }
+        .err-log .log-warn { color: #fbbf24; }
+        .err-log .log-ok   { color: #4ade80; }
+        html.light .err-banner { background: rgba(239,68,68,0.05); }
+        html.light .err-log { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: #374151; }
+        /* ── SITE PLAN EXTRACTION OUTPUT ── */
+        .sp-doc-card { border: 1px solid rgba(255,255,255,0.08); border-left: 3px solid #f59e0b; border-radius: 6px; margin-bottom: 12px; padding: 11px 13px; background: rgba(245,158,11,0.03); }
+        .sp-doc-name { font-family: 'Courier New', monospace; font-size: 0.73rem; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; word-break: break-all; }
+        .sp-coverage { margin: 8px 0; }
+        .sp-coverage-label { font-size: 0.6rem; color: var(--text-muted); margin-bottom: 3px; display: flex; justify-content: space-between; }
+        .sp-coverage-bar { height: 5px; border-radius: 9999px; background: rgba(255,255,255,0.08); overflow: hidden; }
+        .sp-coverage-fill { height: 100%; border-radius: 9999px; background: #22c55e; transition: width .4s; }
+        .sp-coverage-fill.partial { background: #f59e0b; }
+        .sp-coverage-fill.none { background: #ef4444; }
+        /* sub-step section cards */
+        .sp-section { border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; margin-top: 10px; overflow: hidden; }
+        .sp-section-hdr { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 0.7rem; font-weight: 700; letter-spacing: .03em; }
+        .sp-section-hdr .sp-section-icon { font-size: 0.85rem; flex-shrink: 0; }
+        .sp-section-hdr .sp-section-title { flex: 1; }
+        .sp-section-hdr .sp-phase-badge { font-size: 0.55rem; font-weight: 700; padding: 1px 6px; border-radius: 9999px; opacity: 0.75; background: rgba(255,255,255,0.08); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1); }
+        .sp-section-body { padding: 10px 12px; }
+        /* section themes */
+        .sp-section.notes     { border-left: 3px solid #f59e0b; }
+        .sp-section.notes     .sp-section-hdr { background: rgba(245,158,11,0.08); color: #fbbf24; border-bottom: 1px solid rgba(245,158,11,0.15); }
+        .sp-section.substation { border-left: 3px solid #2dd4bf; }
+        .sp-section.substation .sp-section-hdr { background: rgba(20,184,166,0.08); color: #2dd4bf; border-bottom: 1px solid rgba(20,184,166,0.15); }
+        .sp-section.fieldcheck { border-left: 3px solid #60a5fa; }
+        .sp-section.fieldcheck .sp-section-hdr { background: rgba(59,130,246,0.08); color: #60a5fa; border-bottom: 1px solid rgba(59,130,246,0.15); }
+        .sp-section.easement-restriction { border-left: 3px solid #c4b5fd; }
+        .sp-section.easement-restriction .sp-section-hdr { background: rgba(139,92,246,0.08); color: #c4b5fd; border-bottom: 1px solid rgba(139,92,246,0.15); }
+        .sp-section.easement-substation { border-left: 3px solid #a5b4fc; }
+        .sp-section.easement-substation .sp-section-hdr { background: rgba(99,102,241,0.08); color: #a5b4fc; border-bottom: 1px solid rgba(99,102,241,0.15); }
+        .sp-section.legend { border-left: 3px solid #34d399; }
+        .sp-section.legend .sp-section-hdr { background: rgba(16,185,129,0.08); color: #34d399; border-bottom: 1px solid rgba(16,185,129,0.15); }
+        /* legend table */
+        .sp-legend-table { width: 100%; border-collapse: collapse; font-size: 0.67rem; }
+        .sp-legend-table thead tr { border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .sp-legend-table th { text-align: left; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); padding: 3px 8px 5px; }
+        .sp-legend-table th:first-child { width: 32px; text-align: center; }
+        .sp-legend-table td { padding: 4px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; line-height: 1.4; }
+        .sp-legend-table tr:last-child td { border-bottom: none; }
+        .sp-legend-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .sp-legend-pg { font-size: 0.6rem; font-weight: 700; width: 22px; height: 18px; border-radius: 3px; background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.2); display: inline-flex; align-items: center; justify-content: center; }
+        .sp-legend-symbol { color: #d4d4d4; }
+        .sp-legend-label { color: #f0f0f0; font-weight: 500; }
+        .sp-legend-cat { display: inline-block; font-size: 0.55rem; font-weight: 700; padding: 1px 5px; border-radius: 9999px; white-space: nowrap; }
+        .sp-legend-cat.cable      { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+        .sp-legend-cat.equipment  { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+        .sp-legend-cat.substation { background: rgba(20,184,166,0.12); color: #2dd4bf; border: 1px solid rgba(20,184,166,0.2); }
+        .sp-legend-cat.boundary   { background: rgba(139,92,246,0.12); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.2); }
+        .sp-legend-cat.earthing   { background: rgba(249,115,22,0.12); color: #fb923c; border: 1px solid rgba(249,115,22,0.2); }
+        .sp-legend-cat.annotation { background: rgba(148,163,184,0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.15); }
+        .sp-legend-cat.other      { background: rgba(255,255,255,0.06); color: #888; border: 1px solid rgba(255,255,255,0.1); }
+        html.light .sp-legend-table th { color: #9ca3af; }
+        html.light .sp-legend-table td { border-bottom-color: rgba(0,0,0,0.05); }
+        html.light .sp-legend-symbol { color: #374151; }
+        html.light .sp-legend-label { color: #111827; }
+        /* notes list */
+        .sp-notes-list { display: flex; flex-direction: column; gap: 4px; }
+        .sp-note-item { display: flex; gap: 8px; align-items: flex-start; padding: 5px 8px; border-radius: 4px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); }
+        .sp-note-num { font-size: 0.6rem; font-weight: 700; min-width: 20px; text-align: right; color: #f59e0b; flex-shrink: 0; padding-top: 1px; }
+        .sp-note-text { font-size: 0.68rem; color: #d4d4d4; line-height: 1.5; }
+        .sp-note-item.attention { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.15); }
+        .sp-note-item.warning   { background: rgba(239,68,68,0.06);  border-color: rgba(239,68,68,0.15); }
+        .sp-note-item.caution   { background: rgba(249,115,22,0.06); border-color: rgba(249,115,22,0.15); }
+        .sp-note-item.notice    { background: rgba(99,102,241,0.06); border-color: rgba(99,102,241,0.15); }
+        .sp-note-marker { font-size: 0.55rem; font-weight: 700; padding: 1px 5px; border-radius: 3px; margin-right: 4px; flex-shrink: 0; }
+        .sp-note-marker.attention { background: rgba(245,158,11,0.2); color: #fbbf24; }
+        .sp-note-marker.warning   { background: rgba(239,68,68,0.2);  color: #f87171; }
+        .sp-note-marker.caution   { background: rgba(249,115,22,0.2); color: #fb923c; }
+        .sp-note-marker.notice    { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+        /* substation key-value table */
+        .sp-kv-table { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; }
+        .sp-kv-key { font-size: 0.62rem; font-weight: 700; color: var(--text-muted); white-space: nowrap; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .sp-kv-val { font-size: 0.68rem; color: #e2e8f0; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.4; }
+        .sp-kv-val.not-found { color: #555; font-style: italic; }
+        .sp-kv-val.overridden { color: #f59e0b; }
+        .sp-kv-override-badge { font-size: 0.5rem; font-weight: 700; padding: 1px 5px; border-radius: 9999px; background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); margin-left: 5px; vertical-align: middle; }
+        /* compliance status */
+        .sp-compliance-wrap { display: flex; align-items: center; gap: 10px; }
+        .sp-compliance-badge { font-size: 0.7rem; font-weight: 700; padding: 5px 12px; border-radius: 6px; letter-spacing: .02em; }
+        .sp-compliance-badge.yes         { background: rgba(34,197,94,0.15);  color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+        .sp-compliance-badge.no          { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+        .sp-compliance-badge.not-found   { background: rgba(239,68,68,0.12);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.25); }
+        .sp-compliance-badge.not-completed { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+        .sp-compliance-note { font-size: 0.6rem; color: var(--text-muted); line-height: 1.4; }
+        /* easement result */
+        .sp-easement-result { }
+        .sp-easement-badge { font-size: 0.68rem; font-weight: 700; padding: 4px 10px; border-radius: 5px; display: inline-block; }
+        .sp-easement-badge.ok        { background: rgba(34,197,94,0.12);  color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+        .sp-easement-badge.na        { background: rgba(255,255,255,0.06); color: #888; border: 1px solid rgba(255,255,255,0.1); }
+        .sp-easement-badge.required  { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+        .sp-easement-quote { margin-top: 8px; padding: 8px 10px; border-left: 3px solid rgba(167,139,250,0.5); background: rgba(139,92,246,0.05); border-radius: 0 4px 4px 0; font-size: 0.67rem; color: #c4b5fd; line-height: 1.55; font-style: italic; }
+        /* chunk map */
+        .sp-chunk-section { margin-top: 10px; }
+        .sp-chunk-grid { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+        .sp-chunk { width: 38px; height: 28px; border-radius: 3px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 600; border: 1px solid transparent; cursor: default; transition: transform .1s; position: relative; }
+        .sp-chunk:hover { transform: scale(1.15); z-index: 10; }
+        .sp-chunk.ok    { background: rgba(34,197,94,0.15);  border-color: rgba(34,197,94,0.3);  color: #4ade80; }
+        .sp-chunk.data  { background: rgba(77,159,255,0.15); border-color: rgba(77,159,255,0.3); color: #60a5fa; }
+        .sp-chunk.err   { background: rgba(239,68,68,0.15);  border-color: rgba(239,68,68,0.3);  color: #f87171; }
+        .sp-chunk.null  { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); color: #555; }
+        .sp-chunk-label { font-size: 0.48rem; color: inherit; text-align: center; max-width: 36px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .sp-chunk-pg { font-size: 0.42rem; color: inherit; opacity: 0.7; }
+        .sp-raw-toggle { font-size: 0.61rem; color: #4d9fff; cursor: pointer; border: none; background: none; padding: 4px 0; text-decoration: underline; display: block; margin-top: 8px; }
+        .sp-raw-block { margin-top: 5px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.07); border-radius: 4px; padding: 8px 10px; font-family: 'Courier New', monospace; font-size: 0.62rem; color: #aaa; white-space: pre-wrap; word-break: break-word; line-height: 1.5; max-height: 200px; overflow-y: auto; }
+        html.light .sp-doc-card { border-color: rgba(0,0,0,0.1); background: rgba(245,158,11,0.03); }
+        html.light .sp-doc-name { color: #1e293b; }
+        html.light .sp-section { border-color: rgba(0,0,0,0.1); }
+        html.light .sp-note-item { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.07); }
+        html.light .sp-note-text { color: #374151; }
+        html.light .sp-kv-val { color: #1e293b; }
+        html.light .sp-kv-val.not-found { color: #bbb; }
+        html.light .sp-chunk.null { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.09); color: #bbb; }
+        html.light .sp-raw-block { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.09); color: #6b7280; }
+        /* ── DESIGN BRIEF EXTRACTION ── */
+        .db-section { margin-top: 12px; border: 1px solid rgba(255,255,255,0.07); border-radius: 6px; overflow: hidden; }
+        .db-section-hdr { padding: 6px 10px; font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; display: flex; align-items: center; gap: 6px; }
+        .db-section-hdr.hv         { background: rgba(59,130,246,0.15);  color: #60a5fa; border-bottom: 1px solid rgba(59,130,246,0.2); }
+        .db-section-hdr.lv         { background: rgba(34,197,94,0.12);   color: #4ade80; border-bottom: 1px solid rgba(34,197,94,0.2); }
+        .db-section-hdr.sl         { background: rgba(245,158,11,0.12);  color: #fbbf24; border-bottom: 1px solid rgba(245,158,11,0.2); }
+        .db-section-hdr.earthing   { background: rgba(249,115,22,0.12);  color: #fb923c; border-bottom: 1px solid rgba(249,115,22,0.2); }
+        .db-section-hdr.easements  { background: rgba(167,139,250,0.12); color: #c4b5fd; border-bottom: 1px solid rgba(167,139,250,0.2); }
+        .db-section-hdr.substation { background: rgba(20,184,166,0.12);  color: #2dd4bf; border-bottom: 1px solid rgba(20,184,166,0.2); }
+        .db-section-hdr.funding    { background: rgba(239,68,68,0.12);   color: #f87171; border-bottom: 1px solid rgba(239,68,68,0.2); }
+        .db-section-hdr.ancillary  { background: rgba(148,163,184,0.1);  color: #94a3b8; border-bottom: 1px solid rgba(148,163,184,0.15); }
+        .db-section-hdr.payment    { background: rgba(99,102,241,0.12);  color: #a5b4fc; border-bottom: 1px solid rgba(99,102,241,0.2); }
+        .db-section-body { padding: 8px 10px; display: flex; flex-direction: column; gap: 8px; }
+        .db-group-label { font-size: 0.61rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+        .db-item { display: flex; flex-direction: column; gap: 2px; padding: 5px 8px; background: rgba(255,255,255,0.03); border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        .db-item-desc { font-size: 0.69rem; color: var(--text); line-height: 1.45; }
+        .db-item-src { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+        .db-src-badge { font-size: 0.55rem; padding: 1px 6px; border-radius: 9999px; background: rgba(77,159,255,0.1); color: #60a5fa; border: 1px solid rgba(77,159,255,0.2); }
+        .db-src-page  { font-size: 0.55rem; padding: 1px 6px; border-radius: 9999px; background: rgba(255,255,255,0.06); color: #888; border: 1px solid rgba(255,255,255,0.08); }
+        .db-empty { font-size: 0.65rem; color: #444; font-style: italic; padding: 4px 0; }
+        .db-table { width: 100%; border-collapse: collapse; font-size: 0.67rem; }
+        .db-table th { text-align: left; padding: 4px 8px; color: var(--text-muted); font-weight: 700; font-size: 0.6rem; text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .db-table td { padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; line-height: 1.4; }
+        .db-table tr:last-child td { border-bottom: none; }
+        .db-fund-cat { font-size: 0.6rem; padding: 2px 6px; border-radius: 9999px; font-weight: 600; }
+        .db-fund-cat.capital   { background: rgba(34,197,94,0.12);  color: #4ade80; border: 1px solid rgba(34,197,94,0.2); }
+        .db-fund-cat.customer  { background: rgba(239,68,68,0.1);   color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+        .db-fund-cat.reimburse { background: rgba(245,158,11,0.1);  color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+        html.light .db-section { border-color: rgba(0,0,0,0.08); }
+        html.light .db-item { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.07); }
+        html.light .db-item-desc { color: #1e293b; }
+        html.light .db-empty { color: #bbb; }
         /* ── THEME TOGGLE BUTTON ── */
         .theme-toggle-btn { background: transparent; border: 1px solid var(--panel-border); border-radius: 6px; color: var(--text-dim); cursor: pointer; font-size: 0.9rem; padding: 5px 9px; line-height: 1; transition: background .15s, border-color .15s; flex-shrink: 0; }
         .theme-toggle-btn:hover { background: rgba(128,128,128,0.12); border-color: rgba(128,128,128,0.3); }
@@ -413,7 +635,6 @@
         html.light .s-selector select { background: #ffffff; border-color: rgba(0,0,0,0.12); color: #18181b; }
         html.light .s-selector select option { background: #ffffff; }
         /* Output/log panels */
-        html.light .logs-body { background: #f0f4f8; color: #166534; }
         html.light .out-body { background: #f5f7fa; color: #1e293b; }
         html.light .out-body .key { color: #1d4ed8; }
         html.light .out-body .string { color: #16a34a; }
@@ -535,7 +756,7 @@
         </div>
         <div class="s-panel">
             <div class="tab-c active" id="tab-logs">
-                <div class="logs-body" id="consoleOutput">[SYSTEM] Ready…</div>
+                <div class="logs-body" id="consoleOutput"></div>
             </div>
             <div class="tab-c" id="tab-output">
                 <div class="out-wrap">
@@ -1426,13 +1647,646 @@ function renderDocumentReview(out) {
     return html;
 }
 
+function renderChunkSummary(out) {
+    const docs = out.documents || [];
+    const totalChunks = docs.reduce((n, d) => n + (d.total_chunks || 0), 0);
+    let html = `<div class="dr-wrap">
+        <div class="dr-summary">
+            <span class="dr-stat"><b>${docs.length}</b> document${docs.length !== 1 ? 's' : ''} chunked</span>
+            <span class="dr-stat"><b>${totalChunks}</b> total chunks</span>
+        </div>`;
+    for (const doc of docs) {
+        html += `<div class="dr-doc-card" style="margin-bottom:14px;">
+            <div class="dr-doc-head" style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="font-weight:700;font-size:0.85rem;">${doc.filename}</span>
+                <span class="dr-badge">${doc.page_size}</span>
+                <span class="dr-badge">${doc.chunk_strategy}</span>
+                <span class="dr-badge">${doc.total_pages} page${doc.total_pages !== 1 ? 's' : ''}</span>
+                <span class="dr-badge">${doc.total_chunks} chunks</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">`;
+        for (const chunk of doc.chunks) {
+            const url = `/api/orchestrator/serve_document/${chunk.filepath.replace(/^\//,'')}`;
+            const label = chunk.region ? `P${chunk.page_number} ${chunk.region}` : `P${chunk.page_number} #${chunk.sequence}`;
+            html += `<a href="${url}" target="_blank" title="${chunk.filename} — ${label} (${chunk.width_px}×${chunk.height_px}px)"
+                style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;
+                       background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+                       border-radius:5px;padding:5px 7px;transition:background .15s;"
+                onmouseover="this.style.background='rgba(59,130,246,0.15)'"
+                onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                <span style="font-size:1.2rem;">🖼</span>
+                <span style="font-size:0.6rem;color:var(--text-muted);text-align:center;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${label}</span>
+            </a>`;
+        }
+        html += `</div></div>`;
+    }
+    html += `</div>`;
+    return html;
+}
+
+function renderDesignBriefExtraction(out) {
+    const extractions = out.extractions || [];
+    const totalFiles  = out.total_files || extractions.length;
+
+    const SUB_STEP_META = {
+        'sub-step-extract-hv':                     { label: 'HV Works',              cls: 'hv' },
+        'sub-step-extract-lv':                     { label: 'LV Works',              cls: 'lv' },
+        'sub-step-extract-sl':                     { label: 'Service Line',          cls: 'sl' },
+        'sub-step-extract-earthing':               { label: 'Earthing',              cls: 'earthing' },
+        'sub-step-extract-easements':              { label: 'Easements',             cls: 'easements' },
+        'sub-step-extract-substation':             { label: 'Substation',            cls: 'substation' },
+        'sub-step-extract-funding-determination':  { label: 'Funding Determination', cls: 'funding' },
+        'sub-step-extract-funding-ancillary-fees': { label: 'Ancillary Fees',        cls: 'ancillary' },
+        'sub-step-extract-payment-instructions':   { label: 'Payment Instructions',  cls: 'payment' },
+    };
+    const SUB_STEP_ORDER = Object.keys(SUB_STEP_META);
+
+    function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+    function renderItem(item) {
+        if (typeof item === 'string') {
+            return `<div class="db-item"><div class="db-item-desc">${esc(item)}</div></div>`;
+        }
+        if (item && typeof item === 'object') {
+            const srcHtml = [
+                item.source_section ? `<span class="db-src-badge">${esc(item.source_section)}</span>` : '',
+                item.source_page != null ? `<span class="db-src-page">p${item.source_page}</span>` : '',
+            ].join('');
+            return `<div class="db-item">
+                <div class="db-item-desc">${esc(item.description)}</div>
+                ${srcHtml ? `<div class="db-item-src">${srcHtml}</div>` : ''}
+            </div>`;
+        }
+        return '';
+    }
+
+    // Count extracted items for summary bar
+    let totalItems = 0;
+    for (const ext of extractions) {
+        const sse = ext.sub_step_extractions || {};
+        for (const [key, val] of Object.entries(sse)) {
+            if (key === 'sub-step-extract-funding-determination') {
+                totalItems += (val?.items || []).length;
+            } else if (val && typeof val === 'object' && !Array.isArray(val)) {
+                for (const gv of Object.values(val)) {
+                    if (Array.isArray(gv)) totalItems += gv.length;
+                    else if (gv && typeof gv === 'object' && gv.description) totalItems += 1;
+                }
+            }
+        }
+    }
+
+    let html = `<div class="dr-wrap">
+        <div class="dr-stat-bar">
+            <span class="dr-stat scanned">${totalFiles} document${totalFiles !== 1 ? 's' : ''}</span>
+            <span class="dr-stat" style="background:rgba(59,130,246,0.12);color:#60a5fa;">${totalItems} extracted item${totalItems !== 1 ? 's' : ''}</span>
+        </div>`;
+
+    for (const ext of extractions) {
+        const sse = ext.sub_step_extractions || {};
+        html += `<div class="pp-card">
+            <div class="dr-doc-name">${esc(ext.filename)}</div>
+            <div class="dr-doc-pills">
+                <span class="pp-route design-brief">${esc(ext.document_category || 'Design Brief')}</span>
+                ${ext.document_type ? `<span class="dr-badge">${esc(ext.document_type)}</span>` : ''}
+                ${ext.page_size ? `<span class="pp-page-size normal">${esc(ext.page_size)}</span>` : ''}
+                ${ext.document_quality ? `<span class="dr-badge" style="background:rgba(34,197,94,0.1);color:#22c55e;border-color:rgba(34,197,94,0.2);">${esc(ext.document_quality)}</span>` : ''}
+                ${ext.total_sections != null ? `<span class="dr-badge">${ext.relevant_sections || 0}/${ext.total_sections} relevant sections</span>` : ''}
+            </div>`;
+
+        const knownSet = new Set(SUB_STEP_ORDER);
+        const orderedKeys = [
+            ...SUB_STEP_ORDER.filter(k => k in sse),
+            ...Object.keys(sse).filter(k => !knownSet.has(k)),
+        ];
+
+        for (const key of orderedKeys) {
+            const val  = sse[key];
+            const meta = SUB_STEP_META[key] || { label: key, cls: 'ancillary' };
+
+            html += `<div class="db-section">
+                <div class="db-section-hdr ${meta.cls}">${meta.label}</div>
+                <div class="db-section-body">`;
+
+            if (key === 'sub-step-extract-funding-determination') {
+                const items = val?.items || [];
+                if (!items.length) {
+                    html += `<div class="db-empty">No funding items found</div>`;
+                } else {
+                    html += `<table class="db-table">
+                        <thead><tr><th>Item</th><th>Category</th><th>Party</th><th>Amount</th><th>Source</th></tr></thead>
+                        <tbody>`;
+                    for (const item of items) {
+                        const catKey = (item.funding_category || '').toLowerCase();
+                        const catCls = catKey.includes('capital') ? 'capital' : catKey.includes('reimburse') ? 'reimburse' : 'customer';
+                        const srcStr = item.source_section ? `p${item.source_page}: ${esc(item.source_section)}` : '';
+                        html += `<tr>
+                            <td>${esc(item.item_description)}</td>
+                            <td><span class="db-fund-cat ${catCls}">${esc(item.funding_category)}</span></td>
+                            <td style="color:#aaa">${esc(item.responsible_party)}</td>
+                            <td style="color:#888">${item.amount_or_formula ? esc(item.amount_or_formula) : '—'}</td>
+                            <td style="color:#555;font-size:0.6rem">${srcStr}</td>
+                        </tr>`;
+                    }
+                    html += `</tbody></table>`;
+                }
+            } else if (val && typeof val === 'object' && !Array.isArray(val)) {
+                for (const [groupLabel, groupVal] of Object.entries(val)) {
+                    const labelEsc = groupLabel.replace(/_/g,' ').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+                    html += `<div class="db-group">
+                        <div class="db-group-label">${labelEsc}</div>`;
+                    if (groupVal == null) {
+                        html += `<div class="db-empty">Not found</div>`;
+                    } else if (Array.isArray(groupVal)) {
+                        if (!groupVal.length) {
+                            html += `<div class="db-empty">No data found</div>`;
+                        } else {
+                            groupVal.forEach(item => { html += renderItem(item); });
+                        }
+                    } else if (typeof groupVal === 'object') {
+                        html += renderItem(groupVal);
+                    } else {
+                        html += `<div class="db-item"><div class="db-item-desc">${esc(groupVal)}</div></div>`;
+                    }
+                    html += `</div>`;
+                }
+            } else if (Array.isArray(val)) {
+                if (!val.length) {
+                    html += `<div class="db-empty">No data found</div>`;
+                } else {
+                    val.forEach(item => { html += renderItem(item); });
+                }
+            } else {
+                html += `<div class="db-empty">No data</div>`;
+            }
+
+            html += `</div></div>`; // close db-section-body, db-section
+        }
+
+        html += `</div>`; // close pp-card
+    }
+
+    html += `</div>`;
+    return html;
+}
+
+// ── Legend section renderer ──────────────────────────────────────────────────
+function renderLegendSection(entry) {
+    const val = entry && entry.value;
+    if (!val) return '';   // legend step not run — omit silently
+
+    function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+    let entries = [];
+    if (Array.isArray(val)) {
+        entries = val;
+    } else if (typeof val === 'string') {
+        try { entries = JSON.parse(val); } catch(e) {
+            // plain string fallback — show as raw
+            return `<div class="sp-section legend">
+                <div class="sp-section-hdr"><span class="sp-section-icon">🗺️</span><span class="sp-section-title">Drawing Legend</span><span class="sp-phase-badge">Phase 1 · Vision</span></div>
+                <div class="sp-section-body" style="font-size:0.67rem;color:#d4d4d4;white-space:pre-wrap;line-height:1.5;">${esc(val)}</div>
+            </div>`;
+        }
+    }
+
+    if (!Array.isArray(entries) || !entries.length) {
+        return `<div class="sp-section legend">
+            <div class="sp-section-hdr"><span class="sp-section-icon">🗺️</span><span class="sp-section-title">Drawing Legend</span><span class="sp-phase-badge">Phase 1 · Vision</span></div>
+            <div class="sp-section-body" style="color:#555;font-style:italic;font-size:0.67rem;">No legend entries extracted</div>
+        </div>`;
+    }
+
+    // Group by page
+    const pages = {};
+    for (const e of entries) {
+        const pg = e.page || 1;
+        if (!pages[pg]) pages[pg] = [];
+        pages[pg].push(e);
+    }
+
+    const CAT_LABELS = { cable:'Cable', equipment:'Equipment', substation:'Substation', boundary:'Boundary', earthing:'Earthing', annotation:'Annotation', other:'Other' };
+
+    let tableHtml = `<table class="sp-legend-table">
+        <thead><tr>
+            <th>Pg</th>
+            <th>Symbol Description</th>
+            <th>Label</th>
+            <th>Category</th>
+        </tr></thead><tbody>`;
+
+    for (const pg of Object.keys(pages).sort((a,b) => a-b)) {
+        for (const e of pages[pg]) {
+            const cat = (e.category || 'other').toLowerCase();
+            const catLabel = CAT_LABELS[cat] || esc(e.category || 'Other');
+            tableHtml += `<tr>
+                <td><span class="sp-legend-pg">${pg}</span></td>
+                <td class="sp-legend-symbol">${esc(e.symbol_description || '')}</td>
+                <td class="sp-legend-label">${esc(e.label || '')}</td>
+                <td><span class="sp-legend-cat ${cat}">${catLabel}</span></td>
+            </tr>`;
+        }
+    }
+
+    tableHtml += `</tbody></table>`;
+
+    const pageCount = Object.keys(pages).length;
+    const entryCount = entries.length;
+
+    return `<div class="sp-section legend">
+        <div class="sp-section-hdr">
+            <span class="sp-section-icon">🗺️</span>
+            <span class="sp-section-title">Drawing Legend</span>
+            <span style="font-size:0.62rem;color:rgba(52,211,153,0.7);margin-left:4px;">${entryCount} entr${entryCount !== 1 ? 'ies' : 'y'} · ${pageCount} page${pageCount !== 1 ? 's' : ''}</span>
+            <span class="sp-phase-badge">Phase 1 · Vision</span>
+        </div>
+        <div class="sp-section-body" style="padding:0;">${tableHtml}</div>
+    </div>`;
+}
+
+function renderSitePlanExtraction(out) {
+    const extractions = out.extractions || [];
+    const totalFiles  = out.total_files || extractions.length;
+
+    // Summary stats
+    const totalChunks     = extractions.reduce((s, e) => s + (e.total_sections || 0), 0);
+    const processedChunks = extractions.reduce((s, e) => s + (e.actual_chunks_processed || 0), 0);
+    const filesWithData   = extractions.filter(e => {
+        const sse = e.sub_step_extractions || {};
+        return Object.values(sse).some(v => v && v.value != null);
+    }).length;
+
+    function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+    // ── Notes section renderer ───────────────────────────────────────────────
+    function renderNotesSection(entry) {
+        const val = (entry && entry.value) ? String(entry.value) : null;
+        if (!val) return `<div class="sp-section notes">
+            <div class="sp-section-hdr"><span class="sp-section-icon">📋</span><span class="sp-section-title">Drawing Notes &amp; Annotations</span><span class="sp-phase-badge">Phase 1 · Vision</span></div>
+            <div class="sp-section-body" style="color:#555;font-style:italic;font-size:0.67rem;">No notes extracted</div>
+        </div>`;
+
+        const lines = val.split('\n');
+        let itemsHtml = '';
+        let currentNum = '';
+        let currentLines = [];
+        let currentType = '';
+
+        function flushItem() {
+            if (!currentLines.length) return;
+            const text = currentLines.join('\n');
+            const escaped = esc(text);
+            const formatted = escaped.replace(/\n/g, '<br>');
+            let markerHtml = '';
+            let itemCls = '';
+            if (currentType) {
+                markerHtml = `<span class="sp-note-marker ${currentType}">${currentType.toUpperCase()}</span>`;
+                itemCls = currentType;
+            }
+            const numDisplay = currentNum || '•';
+            itemsHtml += `<div class="sp-note-item ${itemCls}">
+                <div class="sp-note-num">${esc(numDisplay)}</div>
+                <div class="sp-note-text">${markerHtml}${formatted}</div>
+            </div>`;
+            currentNum = ''; currentLines = []; currentType = '';
+        }
+
+        for (const line of lines) {
+            const numbered = line.match(/^(\d+)\.\s+(.*)/);
+            const callout  = line.match(/^(ATTENTION|WARNING|CAUTION|NOTICE):\s*(.*)/i);
+            if (numbered) {
+                flushItem();
+                currentNum = numbered[1];
+                const rest = numbered[2];
+                const m = rest.match(/^(ATTENTION|WARNING|CAUTION|NOTICE):\s*(.*)/i);
+                if (m) { currentType = m[1].toLowerCase(); currentLines = [m[2]]; }
+                else { currentType = ''; currentLines = [rest]; }
+            } else if (callout && !currentNum) {
+                flushItem();
+                currentNum = '';
+                currentType = callout[1].toLowerCase();
+                currentLines = [callout[2]];
+            } else if (line.trim()) {
+                currentLines.push(line);
+            }
+        }
+        flushItem();
+
+        return `<div class="sp-section notes">
+            <div class="sp-section-hdr"><span class="sp-section-icon">📋</span><span class="sp-section-title">Drawing Notes &amp; Annotations</span><span class="sp-phase-badge">Phase 1 · Vision</span></div>
+            <div class="sp-section-body"><div class="sp-notes-list">${itemsHtml}</div></div>
+        </div>`;
+    }
+
+    // ── Substation data section renderer ────────────────────────────────────
+    function renderSubstationSection(entry) {
+        const val = (entry && entry.value) ? String(entry.value) : null;
+        const FIELDS = ['Substation Asset Number','Transformer Size','HV Switchgear','Voltage Level','LV Switchgear','Cubicle Size','Earthing'];
+
+        let rowsHtml = '';
+        if (val) {
+            const parsed = {};
+            for (const line of val.split('\n')) {
+                const m = line.match(/^([^:]+):\s*(.*)/);
+                if (m) parsed[m[1].trim()] = m[2].trim();
+            }
+            for (const field of FIELDS) {
+                const raw = parsed[field] || '';
+                const isEmpty = !raw || /^not found$/i.test(raw);
+                const isOverride = /OVERRIDDEN/i.test(raw);
+                const cls = isEmpty ? 'not-found' : (isOverride ? 'overridden' : '');
+                const overrideBadge = isOverride ? `<span class="sp-kv-override-badge">rule applied</span>` : '';
+                rowsHtml += `<div class="sp-kv-key">${esc(field)}</div>
+                    <div class="sp-kv-val ${cls}">${isEmpty ? 'Not found' : esc(raw)}${overrideBadge}</div>`;
+            }
+        } else {
+            for (const field of FIELDS) {
+                rowsHtml += `<div class="sp-kv-key">${esc(field)}</div><div class="sp-kv-val not-found">Not found</div>`;
+            }
+        }
+
+        return `<div class="sp-section substation">
+            <div class="sp-section-hdr"><span class="sp-section-icon">🏗️</span><span class="sp-section-title">Substation Notes — Structured Data</span><span class="sp-phase-badge">Phase 2 · Analysis</span></div>
+            <div class="sp-section-body"><div class="sp-kv-table">${rowsHtml}</div></div>
+        </div>`;
+    }
+
+    // ── Field check compliance section renderer ──────────────────────────────
+    function renderFieldCheckSection(entry) {
+        const val = (entry && entry.value) ? String(entry.value).trim() : null;
+        let badgeCls = 'not-found';
+        let badgeText = 'Not Found';
+        let noteText  = 'Required compliance note is absent from the drawing.';
+        if (val) {
+            const upper = val.toUpperCase();
+            if (/^YES\b/.test(upper))                     { badgeCls='yes';           badgeText='YES';           noteText='All existing assets confirmed field checked and accurate at time of drawing.'; }
+            else if (/NOT COMPLETED/i.test(val))          { badgeCls='not-completed'; badgeText='NOT COMPLETED'; noteText='Note present but the YES/NO answer has not been filled in.'; }
+            else if (/NON.COMPLIANT/i.test(val))          { badgeCls='no';            badgeText='NO — NON-COMPLIANT'; noteText='Note present but answered NO — assets not confirmed field checked.'; }
+            else if (/NOT FOUND/i.test(val))              { badgeCls='not-found';     badgeText='NOT FOUND';     noteText='Required compliance note is absent from the drawing.'; }
+            else                                          { badgeCls='not-completed'; badgeText=val;             noteText=''; }
+        }
+        return `<div class="sp-section fieldcheck">
+            <div class="sp-section-hdr"><span class="sp-section-icon">✅</span><span class="sp-section-title">Assets Field Check Compliance</span><span class="sp-phase-badge">Phase 2 · Analysis</span></div>
+            <div class="sp-section-body">
+                <div class="sp-compliance-wrap">
+                    <span class="sp-compliance-badge ${badgeCls}">${esc(badgeText)}</span>
+                    ${noteText ? `<span class="sp-compliance-note">${esc(noteText)}</span>` : ''}
+                </div>
+                <div style="margin-top:6px;font-size:0.59rem;color:var(--text-muted);">Check: HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING?</div>
+            </div>
+        </div>`;
+    }
+
+    // ── Easement section renderer ────────────────────────────────────────────
+    function renderEasementSection(key, entry, icon, title, quoteColor) {
+        const val = (entry && entry.value) ? String(entry.value).trim() : null;
+        const sectionCls = key.includes('restriction') ? 'easement-restriction' : 'easement-substation';
+        let bodyHtml;
+        if (!val || /^NOT REQUIRED$/i.test(val)) {
+            bodyHtml = `<span class="sp-easement-badge na">NOT REQUIRED</span>
+                <div style="margin-top:6px;font-size:0.59rem;color:var(--text-muted);">Not applicable for this drawing — no padmount substation.</div>`;
+        } else if (/NOT FOUND.*REQUIRED/i.test(val)) {
+            bodyHtml = `<span class="sp-easement-badge required">NOT FOUND — REQUIRED</span>
+                <div style="margin-top:6px;font-size:0.59rem;color:#f87171;">This note is mandatory for drawings involving a padmount substation.</div>`;
+        } else {
+            bodyHtml = `<span class="sp-easement-badge ok">FOUND</span>
+                <div class="sp-easement-quote" style="border-left-color:${quoteColor};color:${quoteColor};">${esc(val)}</div>`;
+        }
+        return `<div class="sp-section ${sectionCls}">
+            <div class="sp-section-hdr"><span class="sp-section-icon">${icon}</span><span class="sp-section-title">${esc(title)}</span><span class="sp-phase-badge">Phase 2 · Analysis</span></div>
+            <div class="sp-section-body"><div class="sp-easement-result">${bodyHtml}</div></div>
+        </div>`;
+    }
+
+    let html = `<div class="dr-wrap">
+        <div class="dr-stat-bar">
+            <span class="dr-stat scanned">${totalFiles} document${totalFiles !== 1 ? 's' : ''}</span>
+            <span class="dr-stat" style="background:rgba(245,158,11,0.12);color:#f59e0b;">${processedChunks}/${totalChunks} chunks processed</span>
+            ${filesWithData > 0
+                ? `<span class="dr-stat matched">${filesWithData} with extracted data</span>`
+                : `<span class="dr-stat" style="background:rgba(239,68,68,0.1);color:#ef4444;">no structured data extracted</span>`}
+        </div>`;
+
+    for (const ext of extractions) {
+        const sse     = ext.sub_step_extractions || {};
+        const chunks  = ext.chunk_details || [];
+        const total   = ext.total_sections || chunks.length;
+        const done    = ext.actual_chunks_processed || 0;
+        const pct     = total > 0 ? Math.round(done / total * 100) : 0;
+        const fillCls = pct === 100 ? '' : (pct > 0 ? 'partial' : 'none');
+
+        html += `<div class="sp-doc-card">
+            <div class="dr-doc-name">${esc(ext.filename)}</div>
+            <div class="dr-doc-pills">
+                <span class="pp-route site-plan">${esc(ext.document_category || 'Site Plan')}</span>
+                <span class="dr-badge">${esc(ext.document_type || '')}</span>
+                ${ext.page_size ? `<span class="pp-page-size large">${esc(ext.page_size)}</span>` : ''}
+                ${ext.chunk_strategy ? `<span class="pp-chunk-pill">${esc(ext.chunk_strategy)}</span>` : ''}
+                <span class="dr-badge" style="background:rgba(34,197,94,0.1);color:#22c55e;border-color:rgba(34,197,94,0.2);">${esc(ext.document_quality || 'chunked-image')}</span>
+            </div>
+            <div class="sp-coverage">
+                <div class="sp-coverage-label">
+                    <span>Chunk coverage</span><span>${done} / ${total} chunks · ${pct}%</span>
+                </div>
+                <div class="sp-coverage-bar"><div class="sp-coverage-fill ${fillCls}" style="width:${pct}%"></div></div>
+            </div>`;
+
+        // ── Render known sub-step sections ───────────────────────────────
+        html += renderNotesSection(sse['sub-step-extract-all-notes']);
+        html += renderSubstationSection(sse['sub-step-substation-data']);
+        html += renderFieldCheckSection(sse['sub-step-field-check']);
+        html += renderEasementSection('easement-restriction', sse['sub-step-easement-restriction'], '🏊', 'Easement — Restriction on Use of Land (Swimming Pool Setback)', 'rgba(167,139,250,0.8)');
+        html += renderEasementSection('easement-substation',  sse['sub-step-easement-substation'],  '⚡', 'Easement — Padmount Substation Easement Creation', 'rgba(165,180,252,0.8)');
+        html += renderLegendSection(sse['sub-step-extract-legend']);
+
+        // ── Any additional unknown sub-steps ────────────────────────────
+        const KNOWN = new Set(['sub-step-extract-all-notes','sub-step-substation-data','sub-step-field-check','sub-step-easement-restriction','sub-step-easement-substation','sub-step-extract-legend']);
+        for (const [key, entry] of Object.entries(sse)) {
+            if (KNOWN.has(key)) continue;
+            const label = (entry && entry.sub_step_name) || key;
+            const val   = entry && entry.value;
+            html += `<div class="sp-section notes" style="border-left-color:#94a3b8;">
+                <div class="sp-section-hdr" style="background:rgba(148,163,184,0.08);color:#94a3b8;border-bottom:1px solid rgba(148,163,184,0.15);">
+                    <span class="sp-section-icon">📄</span><span class="sp-section-title">${esc(label)}</span>
+                </div>
+                <div class="sp-section-body" style="font-size:0.68rem;color:#d4d4d4;white-space:pre-wrap;line-height:1.5;">${val != null ? esc(String(val)) : '<span style="color:#555;font-style:italic">No value</span>'}</div>
+            </div>`;
+        }
+
+        // ── Chunk map ────────────────────────────────────────────────────
+        if (chunks.length) {
+            html += `<div class="sp-chunk-section">
+                <div class="dr-section-title">Chunk Map</div>
+                <div class="sp-chunk-grid">`;
+            for (const c of chunks) {
+                let cls = 'null';
+                let tip = `${c.chunk_id} · ${c.region} · p${c.page_number}`;
+                if (c.error) {
+                    cls = 'err'; tip += ` · ${c.error}`;
+                } else if (c.extracted) {
+                    const hasData = c.extracted.data && Object.values(c.extracted.data).some(v => v != null);
+                    cls = hasData ? 'data' : 'ok';
+                    if (hasData) tip += ` · data: ${Object.entries(c.extracted.data).filter(([,v])=>v!=null).map(([k])=>k).join(', ')}`;
+                }
+                html += `<div class="sp-chunk ${cls}" title="${tip.replace(/"/g,'&quot;')}">
+                    <span class="sp-chunk-label">${esc(c.region || c.chunk_id)}</span>
+                    <span class="sp-chunk-pg">p${c.page_number}</span>
+                </div>`;
+            }
+            html += `</div></div>`;
+        }
+
+        // ── Raw OCR text (collapsible) ───────────────────────────────────
+        if (ext.raw_text_from_chunks) {
+            const rawId = `sp-raw-${ext.filename.replace(/[^a-z0-9]/gi, '-')}`;
+            html += `<button class="sp-raw-toggle" onclick="
+                var el=document.getElementById('${rawId}');
+                el.style.display=el.style.display==='none'?'block':'none';
+                this.textContent=el.style.display==='none'?'▶ Show raw OCR text':'▼ Hide raw OCR text';
+            ">▶ Show raw OCR text</button>
+            <div class="sp-raw-block" id="${rawId}" style="display:none">${esc(ext.raw_text_from_chunks)}</div>`;
+        }
+
+        html += `</div>`; // sp-doc-card
+    }
+
+    html += `</div>`; // dr-wrap
+    return html;
+}
+
+function renderStepError(out) {
+    const stepName = out._step_name || `Step ${out._step_number}`;
+    const retries  = out._retries != null ? out._retries : '?';
+    const ts       = out._timestamp ? new Date(out._timestamp).toLocaleTimeString() : '';
+
+    // Colour-code log lines
+    const coloredLog = (out._log || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .split('\n').map(line => {
+            if (/error|failed|exception|traceback/i.test(line)) return `<span class="log-err">${line}</span>`;
+            if (/warn|retry|retrying/i.test(line))              return `<span class="log-warn">${line}</span>`;
+            if (/done|success|saved|pass/i.test(line))          return `<span class="log-ok">${line}</span>`;
+            return line;
+        }).join('\n');
+
+    return `<div class="err-wrap">
+        <div class="err-banner">
+            <span class="err-banner-icon">✖</span>
+            <div class="err-banner-body">
+                <div class="err-banner-title">${stepName} — Agent Failed</div>
+                <div class="err-banner-sub">All retries exhausted${ts ? ' · ' + ts : ''}. Check the execution log and retry the step.</div>
+            </div>
+        </div>
+        <div class="err-section">Execution Log</div>
+        <div class="err-log">${coloredLog || '(no log captured)'}</div>
+    </div>`;
+}
+
+function renderProcessingPlan(out) {
+    const plan  = out.processing_plan || [];
+    const total = out.total_documents || plan.length;
+    const needsConversion = plan.filter(e => e.conversion_required).length;
+    const needsChunking   = plan.filter(e => e.requires_chunking).length;
+
+    let html = `<div class="dr-wrap">`;
+    html += `<div class="dr-stat-bar">
+        <span class="dr-stat scanned">${total} document${total !== 1 ? 's' : ''} planned</span>
+        ${needsConversion ? `<span class="dr-stat" style="background:rgba(239,68,68,0.12);color:#ef4444;">${needsConversion} require${needsConversion === 1 ? 's' : ''} conversion</span>` : ''}
+        ${needsChunking   ? `<span class="dr-stat" style="background:rgba(245,158,11,0.12);color:#f59e0b;">${needsChunking} require${needsChunking === 1 ? 's' : ''} chunking</span>` : ''}
+    </div>`;
+
+    plan.forEach(entry => {
+        const cat          = (entry.document_category || '').toLowerCase().replace(/\s+/g, '-');
+        const isDesignBrief = cat === 'design-brief';
+        const isSitePlan    = cat === 'site-plan';
+        const isTAL         = cat === 'tal';
+        const cardClass     = isSitePlan ? 'site-plan' : (isTAL ? 'tal' : '');
+        const routeClass    = isDesignBrief ? 'design-brief' : (isSitePlan ? 'site-plan' : (isTAL ? 'tal' : 'step-badge'));
+
+        const catHtml  = `<span class="pp-route ${routeClass}">${entry.document_category || 'Unknown'}</span>`;
+        const routeHtml = entry.route_to_step != null ? `<span class="pp-route step-badge">→ Step ${entry.route_to_step}</span>` : '';
+
+        const ps           = entry.page_size || '';
+        const isLargePage  = ['A0', 'A1', 'A2', 'large-format'].includes(ps);
+        const pageSizeHtml = ps ? `<span class="pp-page-size ${isLargePage ? 'large' : 'normal'}">${ps}</span>` : '';
+
+        const convHtml = entry.conversion_required
+            ? `<span class="pp-convert">⇄ ${entry.conversion_type || 'conversion'}</span>` : '';
+
+        let chunkHtml = '';
+        if (entry.requires_chunking) {
+            chunkHtml = `<div class="pp-chunk-bar">
+                <span class="pp-chunk-label">⊞ Chunking</span>
+                <span class="pp-chunk-pill">${entry.chunk_strategy}</span>
+                <span class="pp-chunk-pill">${entry.estimated_chunks} chunk${entry.estimated_chunks !== 1 ? 's' : ''}/page</span>
+            </div>`;
+        }
+
+        let sheetsHtml = '';
+        if (isTAL && entry.worksheets && entry.worksheets.length) {
+            sheetsHtml = `<div class="pp-sheets">` +
+                entry.worksheets.map(ws =>
+                    `<span class="pp-sheet-tag" title="${ws.row_count} rows × ${ws.column_count} cols">${ws.sheet_name}</span>`
+                ).join('') + `</div>`;
+        }
+
+        const metaFields = [
+            ['Tool',   entry.processing_tool_id],
+            ['Method', entry.extraction_method],
+        ];
+        if (isTAL && entry.worksheet_count != null) {
+            metaFields.push(['Worksheets', `${entry.worksheets_to_analyse} of ${entry.worksheet_count} to analyse`]);
+        }
+        let metaHtml = `<div class="dr-meta">`;
+        metaFields.forEach(([key, val]) => {
+            if (val) metaHtml += `<div class="dr-meta-row"><span class="dr-meta-key">${key}</span><span class="dr-meta-val">${val}</span></div>`;
+        });
+        if (entry.processing_notes) {
+            metaHtml += `<div class="dr-quality-note">${entry.processing_notes}</div>`;
+        }
+        metaHtml += `</div>`;
+
+        html += `<div class="pp-card ${cardClass}">
+            <div class="dr-doc-name">${entry.filename}</div>
+            <div class="dr-doc-pills">
+                ${catHtml}
+                ${ctypePill(entry.content_type, entry.text_quality)}
+                ${pageSizeHtml}
+                ${readerPill(entry.recommended_reader)}
+                ${convHtml}
+                ${routeHtml}
+            </div>
+            ${chunkHtml}
+            ${sheetsHtml}
+            ${metaHtml}
+        </div>`;
+    });
+
+    html += `</div>`;
+    return html;
+}
+
 function showStepOutput() {
     const sel  = document.getElementById('outputStepSelect');
     const body = document.getElementById('outputBody');
     const idx  = parseInt(sel.value);
     if (isNaN(idx) || !stepOutputs[idx]) { body.innerHTML = '<div class="empty-msg">No output data for this step.</div>'; return; }
     const out = stepOutputs[idx];
-    if (out && typeof out === 'object' && Array.isArray(out.documents)) {
+    if (out && typeof out === 'object' && out._error) {
+        body.style.whiteSpace = 'normal';
+        body.innerHTML = renderStepError(out);
+    } else if (out && typeof out === 'object' && out.chunk_summary) {
+        body.style.whiteSpace = 'normal';
+        body.innerHTML = renderChunkSummary(out);
+    } else if (out && typeof out === 'object' && Array.isArray(out.extractions) && out.extractions.some(e => Object.values(e.sub_step_extractions||{}).some(v => v && 'sub_step_name' in v))) {
+        body.style.whiteSpace = 'normal';
+        body.innerHTML = renderSitePlanExtraction(out);
+    } else if (out && typeof out === 'object' && Array.isArray(out.extractions) && out.extractions.some(e => e.sub_step_extractions)) {
+        body.style.whiteSpace = 'normal';
+        body.innerHTML = renderDesignBriefExtraction(out);
+    } else if (out && typeof out === 'object' && Array.isArray(out.processing_plan)) {
+        body.style.whiteSpace = 'normal';
+        body.innerHTML = renderProcessingPlan(out);
+    } else if (out && typeof out === 'object' && Array.isArray(out.documents)) {
         body.style.whiteSpace = 'normal';
         body.innerHTML = renderDocumentReview(out);
     } else {
@@ -1711,7 +2565,83 @@ function onTaskChange() {
         badge.classList.remove('show');
     }
 }
-document.addEventListener('DOMContentLoaded', () => { loadTasks(); fetchAgentModels(); });
+document.addEventListener('DOMContentLoaded', () => { loadTasks(); fetchAgentModels(); initLog(); });
+
+// ═══════════════════════════════════════════
+//  EXEC LOG RENDERER
+// ═══════════════════════════════════════════
+function initLog() {
+    const clog = document.getElementById('consoleOutput');
+    clog.innerHTML = '';
+    _appendLogLine(clog, '[SYSTEM] Ready…', 'log-system');
+}
+
+function clearLog(firstLine) {
+    const clog = document.getElementById('consoleOutput');
+    clog.innerHTML = '';
+    if (firstLine) _appendLogLine(clog, firstLine, classifyLine(firstLine));
+}
+
+function appendLog(text) {
+    if (!text) return;
+    const clog = document.getElementById('consoleOutput');
+    const lines = text.split('\n');
+    for (const raw of lines) {
+        if (raw.trim() === '') { const s = document.createElement('span'); s.className = 'log-sep'; clog.appendChild(s); continue; }
+        _appendLogLine(clog, raw, classifyLine(raw));
+    }
+    clog.scrollTop = clog.scrollHeight;
+}
+
+function _appendLogLine(clog, raw, cls) {
+    const div = document.createElement('div');
+    div.className = 'log-line ' + cls;
+    div.innerHTML = formatLine(raw, cls);
+    clog.appendChild(div);
+}
+
+function classifyLine(line) {
+    const t = line.trimStart();
+    if (/^\[STEP\s+\d+\]\s+Action:/i.test(t))              return 'log-step-hdr';
+    if (/^\[Step\s+\d+\]/i.test(t))                        return 'log-sub-hdr';
+    if (/\[FAILED\]/i.test(t))                             return 'log-failed';
+    if (/Workflow Finished/i.test(t))                      return 'log-complete';
+    if (/^\[ERROR\]|^\[ERROR\s/i.test(t) || /ERROR:/i.test(t) || /Agent Error|Network Error|Step failed/i.test(t)) return 'log-err';
+    if (/WARNING:/i.test(t) || /Chunker failed/i.test(t)) return 'log-warn';
+    if (/Retrying in/i.test(t))                            return 'log-retry';
+    if (/^\[PAUSED\]/i.test(t))                            return 'log-paused';
+    if (/Parallel group/i.test(t))                         return 'log-parallel';
+    if (/^\[SYSTEM\]|^>\s/.test(t))                        return 'log-system';
+    if (/Routing to|Sending to|Forwarding/i.test(t))       return 'log-info';
+    if (/^\s*·/.test(line))                                return 'log-item';
+    if (/→\s*\d+\s*chunk/i.test(t))                       return 'log-chunk';
+    if (/\[✓\]|\[✗\]|\[⚠\]/.test(t) && /validation/i.test(t)) return _valClass(t);
+    if (/Extracted|Processing plan created|Scanned|identified|matched|complete\.|Consolidat/i.test(t)) return 'log-ok';
+    return 'log-default';
+}
+
+function _valClass(t) {
+    const m = t.match(/\((\d+)%\)/);
+    if (!m) return 'log-ok';
+    const s = parseInt(m[1]);
+    return s >= 80 ? 'log-ok' : s >= 50 ? 'log-warn' : 'log-err';
+}
+
+function formatLine(raw, cls) {
+    // Escape HTML entities
+    let s = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // Highlight score badge  (N%)
+    s = s.replace(/\((\d+)%\)/g, (_, n) => {
+        const v = parseInt(n);
+        const bc = v >= 80 ? 'log-score-hi' : v >= 50 ? 'log-score-mid' : 'log-score-lo';
+        return `<span class="${bc}">(${n}%)</span>`;
+    });
+    // Highlight → arrows
+    s = s.replace(/→/g, '<span style="color:#94a3b8">→</span>');
+    // Highlight file extensions
+    s = s.replace(/(\S+\.(pdf|json|xlsx?|xlsm|xlsb|png|jpg))/gi, '<span style="color:#e2e8f0;font-weight:600">$1</span>');
+    return s;
+}
 
 // ═══════════════════════════════════════════
 //  DECOMPOSE
@@ -1720,7 +2650,6 @@ async function submitTask() {
     const inp    = document.getElementById('taskInput');
     const btn    = document.getElementById('submitBtn');
     const runBtn = document.getElementById('runStepBtn');
-    const clog   = document.getElementById('consoleOutput');
     if (!inp.value) return;
     btn.disabled = true; runBtn.style.display = 'none';
     currentPlanId = null; currentStepIdx = 0;
@@ -1730,7 +2659,7 @@ async function submitTask() {
     document.getElementById('testBody').innerHTML     = '<div class="empty-msg">Execute a step to see test results here.</div>';
     document.getElementById('testStepSelect').innerHTML   = '<option value="" disabled selected>No tests executed</option>';
     renderWorkflow();
-    clog.innerText = `> Analysis started for: "${inp.value}"…\n`;
+    clearLog(`> Analysis started for: "${inp.value}"…`);
     try {
         const resp = await fetch('/api/decomposer/decompose', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -1742,25 +2671,25 @@ async function submitTask() {
         stepStatuses    = planSteps.map((_, i) => i === 0 ? 'active' : 'pending');
         stepOutputs     = planSteps.map(() => null);
         stepValidations = planSteps.map(() => null);
-        stepEnabled     = planSteps.map((_, i) => ![2, 3, 4].includes(i));  // steps 3,4,5 disabled by default (0-indexed)
+        stepEnabled     = planSteps.map(() => true);
         renderWorkflow();
         fitView();
-        clog.innerText += `> Plan generated with ${planSteps.length} steps.\n`;
+        appendLog(`> Plan generated with ${planSteps.length} steps.`);
         const st = document.getElementById('headerStatus');
         st.textContent = `${planSteps.length} steps generated`; st.className = 'live';
         if (data.orchestrator_data && data.orchestrator_data.plan_id) {
             currentPlanId = data.orchestrator_data.plan_id;
-            clog.innerText += `> Plan ID: ${currentPlanId}\n> Starting automatically...\n`;
+            appendLog(`> Plan ID: ${currentPlanId}\n> Starting automatically...`);
             runBtn.style.display = 'inline-flex';
             autoAdvance();
         } else {
             const reason = (data.execution_status) ? ` (${data.execution_status})` : '';
-            clog.innerText += `[ERROR] Orchestrator did not return a plan ID${reason}.\n> Check that all services are running and rebuild containers if needed.\n`;
+            appendLog(`[ERROR] Orchestrator did not return a plan ID${reason}.\n> Check that all services are running and rebuild containers if needed.`);
             const st = document.getElementById('headerStatus');
             st.textContent = 'Orchestrator unavailable'; st.className = '';
         }
     } catch(e) {
-        clog.innerText += `[ERROR] ${e.message}\n`;
+        appendLog(`[ERROR] ${e.message}`);
     } finally {
         btn.disabled = false;
     }
@@ -1888,7 +2817,6 @@ async function confirmFolder() {
 
 async function executeStep(file, folderPath) {
     const runBtn = document.getElementById('runStepBtn');
-    const clog   = document.getElementById('consoleOutput');
     const exIdx  = currentStepIdx;
     // Skip if this step is disabled
     if (stepEnabled[exIdx] === false) {
@@ -1925,18 +2853,39 @@ async function executeStep(file, folderPath) {
         opts = { method: 'POST', body: fd, signal: _stepAbortCtrl.signal };
         const resp = await fetch(url, opts);
         if (!resp.ok) throw new Error(`Execution Failed: ${resp.status}`);
-        const result = await resp.json();
+        const startResult = await resp.json();
+
+        // run_next now returns {status:'running'} immediately; poll until done
+        let result;
+        if (startResult.status === 'running') {
+            for (;;) {
+                await new Promise(r => setTimeout(r, 3000));
+                const pollResp = await fetch(`/api/orchestrator/step_result/${currentPlanId}`,
+                    { signal: _stepAbortCtrl.signal });
+                if (!pollResp.ok) throw new Error(`Poll failed: ${pollResp.status}`);
+                const pollData = await pollResp.json();
+                if (pollData.status !== 'running') { result = pollData; break; }
+            }
+        } else {
+            result = startResult;
+        }
 
         if (result.status === 'paused' && result.action === 'request_file_upload') {
-            clog.innerText += `\n[PAUSED] ${result.message}\n`;
+            appendLog(`[PAUSED] ${result.message}`);
             stepStatuses[exIdx] = 'active'; renderWorkflow();
             document.getElementById('uploadMsg').textContent = result.message;
             document.getElementById('uploadModal').classList.add('open');
             runBtn.innerText = 'Retry Step'; runBtn.disabled = false;
             return;
         }
-        clog.innerText += `\n${result.log}\n`;
-        if (result.step_output)  stepOutputs[exIdx]     = result.step_output;
+        appendLog(result.log || '');
+        if (result.step_output)  stepOutputs[exIdx] = result.step_output;
+        // Parallel steps: store each step's own output so the UI can display them individually
+        if (result.parallel_step_outputs) {
+            Object.entries(result.parallel_step_outputs).forEach(([i, out]) => {
+                if (out) stepOutputs[parseInt(i)] = out;
+            });
+        }
         if (result.parallel_step_validations) {
             Object.entries(result.parallel_step_validations).forEach(([i, v]) => { stepValidations[parseInt(i)] = v; });
         } else if (result.validation) {
@@ -1945,11 +2894,23 @@ async function executeStep(file, folderPath) {
 
         // Step agent returned an error (all server-side retries exhausted)
         if (result.status === 'error') {
-            stepStatuses[exIdx] = 'error'; renderWorkflow();
+            stepStatuses[exIdx] = 'error';
+            // Store error details so they render in the Step Output tab
+            stepOutputs[exIdx] = {
+                _error:       true,
+                _step_number: exIdx + 1,
+                _step_name:   planSteps[exIdx]?.name || `Step ${exIdx + 1}`,
+                _log:         result.log || '',
+                _timestamp:   new Date().toISOString(),
+            };
+            updateOutputSel();
+            document.getElementById('outputStepSelect').value = exIdx;
+            showStepOutput();
+            switchTab('output');
+            renderWorkflow();
             st.textContent = `Step ${exIdx + 1} failed`; st.className = '';
-            clog.innerText += `\n[FAILED] Step ${exIdx + 1} failed after server retries. Click Retry to try again.\n`;
+            appendLog(`[FAILED] Step ${exIdx + 1} failed after server retries. Click Retry to try again.`);
             runBtn.innerText = `↺ Retry Step ${exIdx + 1}`; runBtn.disabled = false;
-            clog.scrollTop = clog.scrollHeight;
             return;
         }
 
@@ -1967,7 +2928,7 @@ async function executeStep(file, folderPath) {
 
         _stepAbortCtrl = null;
         if (result.status === 'completed') {
-            clog.innerText += '\n[SYSTEM] Workflow Finished.\n';
+            appendLog('[SYSTEM] Workflow Finished.');
             runBtn.style.display = 'none';
             st.textContent = 'Workflow complete'; st.className = 'done';
         } else {
@@ -1977,12 +2938,11 @@ async function executeStep(file, folderPath) {
             st.textContent = `Step ${exIdx + 1} done`; st.className = 'live';
             autoAdvance();
         }
-        clog.scrollTop = clog.scrollHeight;
     } catch(e) {
         _stepAbortCtrl = null;
         // User cancelled by unticking — step was already skipped by toggleStepEnabled
         if (e.name === 'AbortError') return;
-        clog.innerText += `\n[ERROR] ${e.message}\n`;
+        appendLog(`[ERROR] ${e.message}`);
         stepStatuses[exIdx] = 'error'; renderWorkflow();
         st.textContent = `Step ${exIdx + 1} failed`; st.className = '';
         runBtn.innerText = `↺ Retry Step ${exIdx + 1}`; runBtn.disabled = false;

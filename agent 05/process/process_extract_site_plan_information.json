@@ -1,7 +1,7 @@
 {
   "process_id": "proc-extract-site-plan-info",
   "process_name": "Extract Information from Site Plans",
-  "version": "1.0",
+  "version": "2.0",
   "worker_id": "dw-junior-engineer",
   "worker_name": "Junior Engineer",
 
@@ -11,79 +11,112 @@
 
   "extraction_categories": [
     {
+      "id": "notes",
+      "name": "Drawing Notes and Annotations",
+      "keywords": ["NOTES", "NOTE:", "ATTENTION", "WARNING", "CAUTION", "NOTICE"],
+      "relevance_threshold": 0.3,
+      "behavior": "standard"
+    },
+    {
       "id": "substation",
-      "name": "Substation Asset Number",
-      "keywords": ["Substation Notes", "Sub Notes", "Asset Number", "Asset No", "substation number"],
-      "relevance_threshold": 0.5,
-      "behavior": "standard"
-    },
-    {
-      "id": "transformer",
-      "name": "Transformer Size",
-      "keywords": ["Transformer Size", "transformer", "kVA", "MVA", "1.5MVA", "500kVA"],
+      "name": "Substation Notes",
+      "keywords": ["Substation Notes", "Sub Notes", "Asset Number", "Asset No", "substation number", "kVA", "MVA", "Transformer Size", "HV Switchgear", "LV Switchgear", "Cubicle Size", "Earthing", "Voltage Level"],
       "relevance_threshold": 0.4,
       "behavior": "standard"
     },
     {
-      "id": "hv-switchgear",
-      "name": "HV Switchgear",
-      "keywords": ["HV Switchgear", "HV Switch", "HV breaker", "Siemens RLR", "ring main"],
+      "id": "field-check",
+      "name": "Assets Field Check",
+      "keywords": ["FIELD CHECKED", "ACCURATE AT THE TIME", "EXISTING ASSETS", "FIELD CHECK"],
       "relevance_threshold": 0.4,
       "behavior": "standard"
     },
     {
-      "id": "voltage",
-      "name": "Voltage Level",
-      "keywords": ["Voltage Level", "voltage", "11kV", "22kV", "33kV"],
+      "id": "easement-restriction",
+      "name": "Easement Restriction on Use of Land",
+      "keywords": ["RESTRICTION ON THE USE OF LAND", "SWIMMING POOL", "SUBSTATION EASEMENT", "5m FROM", "FAVOUR OF ENDEAVOUR ENERGY"],
       "relevance_threshold": 0.4,
       "behavior": "standard"
     },
     {
-      "id": "lv-switchgear",
-      "name": "LV Switchgear",
-      "keywords": ["LV Switchgear", "LV Switch", "LV breaker", "415V switchboard"],
+      "id": "easement-substation",
+      "name": "Padmount Substation Easement",
+      "keywords": ["EASEMENT FOR PADMOUNT SUBSTATION", "PADMOUNT SUBSTATION", "PROPOSED LOT", "CREATED IN FAVOUR OF ENDEAVOUR ENERGY"],
       "relevance_threshold": 0.4,
       "behavior": "standard"
     },
     {
-      "id": "cubicle",
-      "name": "Cubicle Size",
-      "keywords": ["Cubicle Size", "cubicle", "enclosure", "kiosk"],
-      "relevance_threshold": 0.4,
-      "behavior": "standard"
-    },
-    {
-      "id": "earthing",
-      "name": "Earthing",
-      "keywords": ["earthing", "earth electrode", "earth mat", "MEN", "neutral earthing"],
-      "relevance_threshold": 0.4,
+      "id": "legend",
+      "name": "Drawing Legend / Key",
+      "keywords": ["LEGEND", "KEY", "SYMBOL", "SYMBOLS", "NOTATION", "NOTES KEY"],
+      "relevance_threshold": 0.25,
       "behavior": "standard"
     }
   ],
 
   "validation_directives": [
     {
-      "id": "TC-SUBSTATION",
-      "name": "Substation asset number extraction",
+      "id": "TC-ALL-NOTES",
+      "name": "Complete notes extraction from every page",
       "trigger": "extraction",
-      "search_keywords": ["Substation Notes", "Sub Notes", "Asset Number", "substation", "padmount", "kVA", "MVA"],
+      "search_keywords": ["NOTES", "ATTENTION", "WARNING", "CAUTION", "NOTE:"],
+      "expected_category": "notes",
+      "description": "Verify that all numbered notes and standalone ATTENTION/WARNING/CAUTION/NOTICE callouts from every page are captured in the notes extraction. Notes are often split across quadrant chunks — confirm no note numbers are missing from the sequence."
+    },
+    {
+      "id": "TC-SUBSTATION",
+      "name": "Substation data extraction from Substation Notes",
+      "trigger": "extraction",
+      "search_keywords": ["Substation Notes", "Sub Notes", "Asset Number", "Transformer Size", "HV Switchgear", "LV Switchgear", "Cubicle", "Earthing"],
       "expected_category": "substation",
-      "description": "Verify substation asset numbers and transformer ratings are extracted from Substation Notes annotations."
+      "description": "Verify that the Substation Notes annotation block has been located and all seven structured data fields have been extracted: asset number, transformer size, HV switchgear (with conditional rule applied), voltage level, LV switchgear, cubicle size, and earthing. Each field should be sourced from the Substation Notes table, not inferred."
     },
     {
       "id": "TC-SIEMENS-RULE",
-      "name": "Conditional rule: 1.5MVA → Siemens RLR",
+      "name": "Conditional rule: 1.5MVA transformer requires Siemens RLR",
       "trigger": "extraction",
       "search_keywords": ["1.5MVA", "1500kVA"],
-      "expected_category": "hv-switchgear",
-      "description": "When transformer size is 1.5MVA, verify hv_switchgear is 'Siemens RLR' and hv_switchgear_override_applied is true."
+      "expected_category": "substation",
+      "description": "When transformer size is 1.5MVA, verify HV Switchgear is recorded as 'Siemens RLR' and the override note 'Overridden per 1.5MVA rule' is included in the substation data output."
+    },
+    {
+      "id": "TC-FIELD-CHECK",
+      "name": "Assets field-checked compliance note",
+      "trigger": "extraction",
+      "search_keywords": ["FIELD CHECKED", "ACCURATE AT THE TIME", "EXISTING ASSETS"],
+      "expected_category": "field-check",
+      "description": "Verify the note 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' is present on the drawing and answered 'YES'. If the note is present but answered 'NO', flag as non-compliant. If the note is absent entirely, flag as NOT FOUND."
+    },
+    {
+      "id": "TC-EASEMENT-RESTRICTION",
+      "name": "Restriction on use of land (swimming pool setback) note",
+      "trigger": "extraction",
+      "search_keywords": ["RESTRICTION ON THE USE OF LAND", "SWIMMING POOL", "5m FROM THE SUBSTATION EASEMENT"],
+      "expected_category": "easement-restriction",
+      "description": "Check whether the required restriction-on-use-of-land note is present: 'A RESTRICTION ON THE USE OF LAND, IN RELATION TO SWIMMING POOLS, MEASURED 5m FROM THE SUBSTATION EASEMENT IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxx]'. Extract the lot number(s) referenced. If not present, record as NOT REQUIRED (only required for projects with substation easements)."
+    },
+    {
+      "id": "TC-EASEMENT-SUBSTATION",
+      "name": "Padmount substation easement note",
+      "trigger": "extraction",
+      "search_keywords": ["EASEMENT FOR PADMOUNT SUBSTATION", "CREATED IN FAVOUR OF ENDEAVOUR ENERGY", "PROPOSED LOT"],
+      "expected_category": "easement-substation",
+      "description": "Check whether the required padmount substation easement note is present: 'AN EASEMENT FOR PADMOUNT SUBSTATION MINIMUM [x]m x [x]m IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxxx]'. Extract the easement dimensions and lot number(s). If not present, record as NOT REQUIRED (only required for projects involving padmount substations)."
+    },
+    {
+      "id": "TC-LEGEND",
+      "name": "Drawing legend completeness",
+      "trigger": "extraction",
+      "search_keywords": ["LEGEND", "KEY", "SYMBOL", "NOTATION"],
+      "expected_category": "legend",
+      "description": "Verify that the drawing legend has been fully extracted from every page that contains one. Each legend entry must include a clear description of the visual symbol or line style and its associated text label. Entries must be tagged to the correct page number. Symbols without labels and labels without symbols both indicate an incomplete extraction."
     }
   ],
 
   "conditional_rules": [
     {
       "id": "rule-siemens-rlr",
-      "description": "If transformer size is 1.5MVA, HV switchgear type must be recorded as Siemens RLR regardless of drawing annotation",
+      "description": "If transformer size is 1.5MVA, HV switchgear type must be recorded as Siemens RLR regardless of drawing annotation. This rule is applied within the Substation Data sub-step and must be noted explicitly in the output.",
       "condition": {
         "field": "transformer_size",
         "operator": "equals",
@@ -93,36 +126,37 @@
         "field": "hv_switchgear",
         "set_value": "Siemens RLR"
       },
-      "flag_field": "hv_switchgear_override_applied"
+      "flag_field": "hv_switchgear_override_applied",
+      "override_note": "Overridden per 1.5MVA rule — Siemens RLR required regardless of drawing annotation."
     }
   ],
 
-  "summary": "Review and extract key engineering data from a submitted site plan document package. The process identifies all relevant site plan drawings (electrical network diagrams, substation drawings, and site layout plans), reads each matched document, and extracts structured data from Substation Notes annotations covering: Substation Asset Number, Transformer Size, HV Switchgear (with a conditional override rule for 1.5MVA transformers), Voltage Level, LV Switchgear, Cubicle Size, and Earthing. A conditional rule is applied: if the transformer size is 1.5MVA, the HV Switchgear must be recorded as Siemens RLR regardless of what is annotated in the drawing. Produces a structured JSON output per document and a consolidated process output.",
-  "search_context": "Site plan drawings for an electrical network project submitted to Endeavour Energy. Target documents include: electrical network diagrams showing HV and LV infrastructure, substation layout drawings (pole substations, padmount substations, kiosk substations), site layout plans with electrical asset annotations, and engineering drawings containing a 'Substation Notes' or 'Sub Notes' callout table. Key filename indicators: documents with 'RETIC' (reticulation drawing), 'DWG' (engineering drawing), or a drawing number prefix (e.g. D followed by digits, A followed by digits) in the filename. Key content indicators: a Substation Notes annotation block containing fields for Transformer Size, HV Switchgear, Voltage Level, LV Switchgear, Cubicle Size, and Earthing. Engineering drawings produced to Endeavour Energy or similar network operator standards. Target file types: PDF engineering drawings, scanned drawing sets. Exclude: design brief documents identified by 'BRIEF' or 'DESIGN_BRIEF' in the filename — these are Design Brief documents and must be assigned document_category 'Design Brief'.",
+  "summary": "Review and extract key engineering data from a submitted site plan document package. The process runs in four steps: Steps 1–2 identify and plan document processing; Step 3 performs two-phase extraction of all drawing notes and annotations (Phase 1) and analyses those notes against four compliance checks — Substation Data, Assets Field Check, Easement Restriction, and Easement Substation (Phase 2); Step 4 extracts the drawing legend from every page using vision, producing a structured list of every symbol, icon, and line style alongside its associated label, tagged to the source page number so the legend can be used to identify assets shown on the drawing.",
+
+  "search_context": "Site plan drawings for an electrical network project submitted to Endeavour Energy. Target documents include: electrical network diagrams showing HV and LV infrastructure, substation layout drawings (pole substations, padmount substations, kiosk substations), site layout plans with electrical asset annotations, and engineering drawings containing a 'Substation Notes' or 'Sub Notes' callout table. Key filename indicators: documents with 'RETIC' (reticulation drawing), 'DWG' (engineering drawing), or a drawing number prefix (e.g. D followed by digits, A followed by digits) in the filename. Key content indicators: a Substation Notes annotation block, a NOTES section with numbered notes, ATTENTION/WARNING/CAUTION callouts, easement creation notes, and field check compliance notes. Engineering drawings produced to Endeavour Energy or similar network operator standards. Target file types: PDF engineering drawings, scanned drawing sets. Exclude: design brief documents identified by 'BRIEF' or 'DESIGN_BRIEF' in the filename.",
+
   "process_input": {
-    "description": "A folder containing the site plan document package for a project, including all relevant PDFs and engineering drawings (electrical network diagrams, substation layout drawings, and site plans) submitted for the project.",
+    "description": "A folder containing the site plan document package for a project, including all relevant PDFs and engineering drawings.",
     "format": "Folder path containing PDF or other supported document types",
     "example": "/documents/ARP4983-84/SitePlans/",
-    "required_fields": [
-      "folder_path"
-    ]
+    "required_fields": ["folder_path"]
   },
+
   "process_output": {
-    "description": "A structured JSON object containing the extracted substation and electrical asset data from the site plan Substation Notes, including all conditional rule outcomes, linked to the source document and drawing.",
+    "description": "Structured extraction output containing all drawing notes, four compliance and data checks, and a structured drawing legend.",
     "format": "JSON",
-    "required_fields": [
-      "substation_asset_number",
-      "transformer_size",
-      "hv_switchgear",
-      "hv_switchgear_override_applied",
-      "voltage_level",
-      "lv_switchgear",
-      "cubicle_size",
-      "earthing"
-    ]
+    "fields": {
+      "drawing_notes": "Complete numbered notes list and all ATTENTION/WARNING/CAUTION callouts from every page, in sequence order",
+      "substation_data": "Formatted string containing all Substation Notes fields: Asset Number, Transformer Size, HV Switchgear (with override notation if 1.5MVA rule applied), Voltage Level, LV Switchgear, Cubicle Size, Earthing",
+      "field_check_compliance": "'YES', 'NO', or 'NOT FOUND' — result of checking for the assets field-checked note",
+      "easement_restriction": "Extracted easement restriction note text with lot number, or 'NOT REQUIRED' if not applicable",
+      "easement_substation": "Extracted padmount substation easement note text with dimensions and lot number, or 'NOT REQUIRED' if not applicable",
+      "drawing_legend": "Array of legend entry objects extracted from all pages — each entry has: page (integer), symbol_description (string — visual geometry of the drawn symbol such as shape, fill, line weight, line pattern, e.g. 'Small open circle with radiating lines' or 'Hollow rectangle outline' — NOT a paraphrase of the label), label (string — verbatim label text), category (string). Entries are ordered by page number then by position in the legend."
+    }
   },
+
   "document_categorisation": {
-    "description": "Rules for identifying and categorising a document as a 'Site Plan' document. When Step 2 (Plan Document Processing Approach) assigns a 'document_category' field to each entry in the processing plan, it must apply these rules. A document must satisfy at least two positive indicators and must not satisfy any negative indicators to be categorised as 'Site Plan'.",
+    "description": "Rules for identifying and categorising a document as a 'Site Plan' document.",
     "category": "Site Plan",
     "positive_indicators": {
       "filename_patterns": [
@@ -146,23 +180,10 @@
         "Padmount Substation Drawing"
       ],
       "content_keywords": [
-        "Substation Notes",
-        "Sub Notes",
-        "Transformer Size",
-        "HV Switchgear",
-        "LV Switchgear",
-        "Cubicle Size",
-        "Voltage Level",
-        "Earthing",
-        "Asset Number",
-        "Pole Sub",
-        "Padmount",
-        "Kiosk Sub",
-        "Ring Main Unit",
-        "RMU",
-        "Feeder",
-        "HV Cable",
-        "LV Cable"
+        "Substation Notes", "Sub Notes", "Transformer Size", "HV Switchgear",
+        "LV Switchgear", "Cubicle Size", "Voltage Level", "Earthing",
+        "Asset Number", "Pole Sub", "Padmount", "Kiosk Sub", "Ring Main Unit",
+        "RMU", "Feeder", "HV Cable", "LV Cable"
       ],
       "structural_indicators": [
         "Contains a 'Substation Notes' or 'Sub Notes' callout table or annotation block",
@@ -176,15 +197,11 @@
       "description": "If any of these are present, the document must NOT be categorised as 'Site Plan' — classify it as 'Design Brief' instead.",
       "filename_patterns": [
         "Contains 'BRIEF' or 'brief' (e.g. DESIGN_BRIEF, Design_Brief)",
-        "Contains 'ARP' as a standalone prefix without a drawing number suffix (ARP numbers alone typically identify design brief documents)"
+        "Contains 'ARP' as a standalone prefix without a drawing number suffix"
       ],
       "document_type_values": [
-        "Design Brief",
-        "Architectural Brief",
-        "Services Brief",
-        "Town Planning Report",
-        "Connection Offer",
-        "Customer Connection Brief"
+        "Design Brief", "Architectural Brief", "Services Brief",
+        "Town Planning Report", "Connection Offer", "Customer Connection Brief"
       ],
       "content_keywords": [
         "Method of Supply Requirement (as a section heading — indicates a design brief)",
@@ -205,15 +222,14 @@
       "expected_input": {
         "description": "A folder path containing the site plan document package.",
         "fields": {
-          "folder_path": "Absolute path to the folder containing site plan documents (e.g. /documents/ARP4983-84/SitePlans/)",
-          "search_context": "Site plan drawings for an electrical network project, including: electrical network diagrams showing HV and LV infrastructure, substation layout drawings (pole substations, padmount substations, kiosk substations), site layout plans with electrical asset annotations, drawings containing 'Substation Notes' or 'Sub Notes' callout tables, and engineering drawings produced to Endeavour Energy or similar network operator standards. Target file types: PDF engineering drawings, scanned drawing sets."
+          "folder_path": "Absolute path to the folder containing site plan documents",
+          "search_context": "Site plan drawings for an electrical network project, including electrical network diagrams, substation layout drawings, and site layout plans with electrical asset annotations."
         }
       },
       "expected_output": {
         "description": "A DocumentReview JSON file listing all matched site plan documents with metadata and quality indicators.",
         "fields": {
-          "documents": "Array of matched document objects, each with filename, document_title, document_type, author, date, drawing_number, revision, confidence, content_type, text_quality, and recommended_reader",
-          "scan_results": "Full scan results for all files including those not matched",
+          "documents": "Array of matched document objects with filename, document_title, document_type, author, date, drawing_number, revision, confidence, content_type, text_quality, and recommended_reader",
           "matched_files": "Integer count of matched files",
           "total_files_scanned": "Integer count of all files scanned",
           "output_file": "Path to the saved DocumentReview_*.json file"
@@ -266,159 +282,122 @@
     {
       "step_number": 3,
       "step_id": "step-extract-site-plan-data",
-      "step_name": "Extract Site Plan Data",
-      "summary": "For each matched site plan document, extract all data fields from the Substation Notes annotations, applying the conditional HV Switchgear rule where required. Each extracted value is linked to its source drawing and annotation location.",
-      "details": "Using the processing plan from Step 2, each matched site plan document is read using the tool specified in processing_tool_id (e.g. tool-extract-pdf-content, or OCR if conversion was flagged). The extracted content is passed to an LLM which locates the Substation Notes table or callout on the drawing and extracts each required field as a dedicated sub-step. The conditional rule for HV Switchgear is evaluated during extraction: if transformer size is 1.5MVA, HV Switchgear is set to 'Siemens RLR' and the override flag is set to true. Each extracted field records the source drawing, annotation label, and extracted value.",
+      "step_name": "Extract Site Plan Information",
+      "summary": "Two-phase extraction from each matched site plan drawing. Phase 1 extracts all notes and annotations from every page. Phase 2 analyses those notes against four checks: Substation Data, Assets Field Check, Easement Restriction, and Easement Substation.",
+      "details": "Using the processing plan from Step 2, each matched site plan document is processed using the tool specified in processing_tool_id (OCR via chunk-based vision for image-based drawings). The extraction runs in two logical phases within a single pass: Phase 1 captures every note, annotation, and callout from every page in full — numbered notes (1., 2., 3., ...), ATTENTION: callouts, WARNING: callouts, CAUTION: callouts, and NOTICE: callouts. Phase 2 analyses those captured notes to produce four structured outputs: (1) Substation Data extracted from the Substation Notes annotation block, (2) verification of the assets field-check compliance note, (3) check for the swimming pool restriction-on-use-of-land easement note, and (4) check for the padmount substation easement note.",
+
       "sub_steps": [
         {
           "sub_step_number": 1,
-          "sub_step_id": "sub-step-extract-siteplan-substation",
-          "sub_step_name": "Extract Substation Asset Information",
-          "details": "Locate the Substation Notes annotation block on the site plan drawing and extract the Substation Asset Number and any associated asset type or location descriptor. The asset number is a unique identifier assigned by the network operator to the substation asset.",
+          "sub_step_id": "sub-step-extract-all-notes",
+          "sub_step_name": "Extract All Drawing Notes and Annotations",
+          "phase": 1,
+          "details": "Extract every textual note and annotation from every page of the drawing in full. This is a comprehensive raw extraction pass — do not filter or summarise. Capture: all numbered notes (1., 2., 3., ...) from the NOTES section with their complete text; all standalone ATTENTION:, WARNING:, CAUTION:, and NOTICE: callout blocks with their complete text; any inline hand-written or red-line markup annotations. Notes that span multiple drawing regions must be assembled into a single complete entry. This output is the source material for all Phase 2 sub-steps.",
           "instructional_sub_steps": [
             {
-              "title": "Locate Substation Notes",
-              "instructions": "Search the site plan for annotations labelled 'Substation Notes', 'Sub Notes', or similar. These are typically found in a table or callout box on the drawing, often positioned near the substation symbol or in the drawing title block area. Extract full sentences."
+              "title": "Locate and Extract Numbered Notes Block",
+              "instructions": "Scan every page of the drawing for a dedicated NOTES section or numbered annotation block. Extract ALL individual notes listed, in sequence order (1., 2., 3., ...). Each note must be captured in full — do not truncate. If a note is split across adjacent image regions (common in large-format drawings), assemble the complete text. Include every note number in the final output — missing numbers indicate an incomplete extraction."
             },
             {
-              "title": "Extract Asset Number",
-              "instructions": "Identify and extract the Substation Asset Number from the substation notes. This is a unique identifier for the substation asset, typically a numeric or alphanumeric code assigned by the network operator (e.g., S1234, 123456). Extract full sentences."
+              "title": "Extract Standalone Callout Annotations",
+              "instructions": "In addition to the numbered notes block, scan every page for standalone callout boxes or annotations with labels ATTENTION:, WARNING:, CAUTION:, or NOTICE:. These may appear anywhere on the drawing (not just in the NOTES block) and often contain critical safety, service, or access requirements. Extract each callout's label and its complete text. If the callout appears physically separate from the NOTES block, include it as an additional entry appended after the numbered notes (e.g. 'CAUTION: HIGH PRESSURE GAS MAINS IN VICINITY...')."
             },
             {
-              "title": "Note Asset Type and Location",
-              "instructions": "Record the substation type (e.g., Pole Sub, Padmount, Kiosk) and any reference number or location descriptor (e.g., street address, lot number, or pole reference) noted in or adjacent to the Substation Notes block. Extract full sentences."
+              "title": "Extract Red-line and Hand-written Markups",
+              "instructions": "Look for hand-written or red-line markup annotations that modify or supplement the printed notes — for example, specific cable types, removal or addition instructions, or project-specific notes. Capture these verbatim and identify them as markups (e.g. '[MARKUP] Remove span between...')."
             }
           ]
         },
         {
           "sub_step_number": 2,
-          "sub_step_id": "sub-step-extract-siteplan-transformer",
-          "sub_step_name": "Extract Transformer Specifications",
-          "details": "Extract the transformer rated capacity from the Substation Notes on the site plan. The transformer size is a critical input to the conditional HV Switchgear rule applied in sub-step 3: if the transformer size is 1.5MVA, HV Switchgear must be recorded as Siemens RLR regardless of the drawing annotation.",
+          "sub_step_id": "sub-step-substation-data",
+          "sub_step_name": "Substation Notes — Structured Data Extraction",
+          "phase": 2,
+          "details": "Using the notes extracted in Phase 1, locate the Substation Notes annotation block and extract the seven structured data fields. Apply the conditional HV Switchgear rule: if Transformer Size is 1.5MVA, HV Switchgear must be recorded as 'Siemens RLR' regardless of what is written in the drawing, and the override must be explicitly noted in the output. Return all seven fields as a formatted multi-line string.",
+          "output_format": "Multi-line formatted string:\nSubstation Asset Number: [value or NOT FOUND]\nTransformer Size: [value or NOT FOUND]\nHV Switchgear: [value — if 1.5MVA rule applied, append: OVERRIDDEN per 1.5MVA rule — Siemens RLR required]\nVoltage Level: [value or NOT FOUND]\nLV Switchgear: [value or NOT FOUND]\nCubicle Size: [value or NOT FOUND]\nEarthing: [value or NOT FOUND]",
           "instructional_sub_steps": [
             {
-              "title": "Locate Transformer Size",
-              "instructions": "Find the 'Transformer Size', 'TX Size', or 'Transformer Rating' field in the substation notes table. Extract the rated capacity (e.g., 1.5MVA, 500kVA, 1000kVA). Extract full sentences."
+              "title": "Locate Substation Notes Block",
+              "instructions": "Search the extracted notes and the drawing for annotations labelled 'Substation Notes', 'Sub Notes', or a similar heading. These are typically found in a table or callout box near the substation symbol or in the drawing title block area. Extract the heading and all fields within it."
             },
             {
-              "title": "Apply Conditional HV Switchgear Rule",
-              "instructions": "Note the transformer size carefully. If the transformer size is 1.5MVA, flag that HV Switchgear must be Siemens RLR (do not rely on what is written in the drawing for HV Switchgear in this case). Otherwise, extract HV Switchgear from the document as written. This flag will be applied during sub-step 3. Extract full sentences."
+              "title": "Extract the Seven Data Fields",
+              "instructions": "From the Substation Notes block, extract each of the following fields as labelled: Substation Asset Number (unique ID assigned by the network operator, e.g. S1234 or a 6-digit number), Transformer Size (rated capacity with units, e.g. 1.5MVA, 500kVA, 200kVA), HV Switchgear (make and model, e.g. Siemens RLR, ABB SafeRing, or as written), Voltage Level (in kV, e.g. 11kV, 22kV, 33kV), LV Switchgear (make, model, and rating), Cubicle Size (dimensions or type code), and Earthing (type and compliance standard)."
             },
             {
-              "title": "Record Rating Units",
-              "instructions": "Ensure the rating is captured with correct units (MVA or kVA). Convert if necessary to maintain consistency — note that 1.5MVA equals 1500kVA. The exact unit as written on the drawing should be recorded alongside any converted value. Extract full sentences."
+              "title": "Apply 1.5MVA Conditional HV Switchgear Rule",
+              "instructions": "Check the extracted Transformer Size. If it equals 1.5MVA (or equivalently 1500kVA), then regardless of what the drawing shows for HV Switchgear, record HV Switchgear as 'Siemens RLR' and append the note 'OVERRIDDEN per 1.5MVA rule — Siemens RLR required.' to that field. If the transformer size is not 1.5MVA, record HV Switchgear exactly as written in the Substation Notes."
             }
           ]
         },
         {
           "sub_step_number": 3,
-          "sub_step_id": "sub-step-extract-siteplan-hv-switchgear",
-          "sub_step_name": "Extract HV Switchgear Details",
-          "details": "Extract the HV Switchgear type and make from substation notes, applying the conditional rule: if transformer size is 1.5MVA, HV Switchgear must be Siemens RLR regardless of what is noted in the drawing.",
+          "sub_step_id": "sub-step-field-check",
+          "sub_step_name": "Assets Field Check Compliance",
+          "phase": 2,
+          "details": "Using the notes extracted in Phase 1, verify that the drawing includes the mandatory assets field-check compliance note. The exact note required is: 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' answered with 'YES'. Return one of three values: 'YES' (note present, answered YES), 'NO' (note present, answered NO — flag as non-compliant), or 'NOT FOUND' (note is absent from the drawing — flag for follow-up).",
+          "required_note_text": "HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING",
+          "required_answer": "YES",
+          "output_format": "One of: 'YES' | 'NO' | 'NOT FOUND'",
           "instructional_sub_steps": [
             {
-              "title": "Read HV Switchgear Field",
-              "instructions": "Locate the 'HV Switchgear', 'HV SW', or 'High Voltage Switchgear' field in the substation notes. Read the make and model recorded on the drawing. Extract full sentences."
+              "title": "Search for Field Check Note",
+              "instructions": "Search all extracted notes for the text 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' or a close paraphrase. This note is typically numbered within the NOTES section and followed by 'YES' or 'NO'. Note: in the drawing the word 'DRAWING' may appear as 'DESIGN' — treat both as equivalent."
             },
             {
-              "title": "Apply 1.5MVA Conditional Rule",
-              "instructions": "If the transformer size (from sub-step 2) is 1.5MVA, override the drawn HV Switchgear value and record 'Siemens RLR'. Set hv_switchgear_override_applied to true and add a note: 'Overridden per 1.5MVA rule — Siemens RLR required.' If transformer size is not 1.5MVA, extract the HV Switchgear exactly as written on the drawing and set hv_switchgear_override_applied to false. Extract full sentences."
-            },
-            {
-              "title": "Capture Switchgear Reference",
-              "instructions": "Record any switchgear reference numbers, cubicle numbers, or ring main unit (RMU) references associated with the HV switchgear noted on the drawing or in adjacent annotations. Extract full sentences."
+              "title": "Read and Return the Answer",
+              "instructions": "Once the note is located, read the answer that follows it ('YES' or 'NO'). Return 'YES' if the answer is YES. Return 'NO' if the answer is NO (and add a flag: 'NON-COMPLIANT — field check not confirmed'). If the note cannot be found anywhere in the drawing, return 'NOT FOUND' (and add a flag: 'MISSING — this compliance note is mandatory')."
             }
           ]
         },
         {
           "sub_step_number": 4,
-          "sub_step_id": "sub-step-extract-siteplan-voltage",
-          "sub_step_name": "Extract Voltage Level",
-          "details": "Extract the operating voltage level from substation notes on the site plan. The voltage level defines the HV network operating voltage at which the substation is connected and is typically expressed in kilovolts (kV). Extract full sentences.",
+          "sub_step_id": "sub-step-easement-restriction",
+          "sub_step_name": "Easement — Restriction on Use of Land (Swimming Pool Setback)",
+          "phase": 2,
+          "details": "Using the notes extracted in Phase 1, check whether the drawing includes the required restriction-on-use-of-land note relating to swimming pools within the substation easement setback. This note is required for any project that creates a substation easement. Extract the full note text including the lot number(s) referenced. If the note is absent, determine whether this is a padmount substation project — if so, flag as MISSING; if not, flag as NOT REQUIRED.",
+          "required_note_template": "A RESTRICTION ON THE USE OF LAND, IN RELATION TO SWIMMING POOLS, MEASURED 5m FROM THE SUBSTATION EASEMENT IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxx]",
+          "output_format": "Full extracted note text with lot number(s), or 'NOT REQUIRED' (not a substation easement project), or 'NOT FOUND — REQUIRED' (substation easement project but note is missing)",
           "instructional_sub_steps": [
             {
-              "title": "Locate Voltage Level Field",
-              "instructions": "Find the 'Voltage Level', 'Operating Voltage', or 'Nominal Voltage' field in the substation notes. This is typically expressed in kV (e.g., 11kV, 22kV, 33kV). Extract full sentences."
+              "title": "Search for Restriction Note",
+              "instructions": "Search all extracted notes for text containing 'RESTRICTION ON THE USE OF LAND', 'SWIMMING POOL', '5m FROM THE SUBSTATION EASEMENT', or 'IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT'. This note may appear within the numbered NOTES section or as a separate annotation."
             },
             {
-              "title": "Cross-reference with HV Network",
-              "instructions": "Verify the voltage level against any HV network markings on the drawing (e.g., '11kV feeder', '22kV ring main', feeder labels on HV cable routes). If a discrepancy exists between the substation notes and the network markings, record both values and flag for review."
+              "title": "Extract Note Text and Lot Number",
+              "instructions": "If found, extract the full note text verbatim. Identify and record the lot number(s) referenced after 'WITHIN PROPOSED LOT' — this is a critical compliance detail. Return the complete extracted text as the field value."
+            },
+            {
+              "title": "Determine Applicability if Not Found",
+              "instructions": "If the note is not found, check whether the project involves a padmount substation (look for 'padmount', 'PADMOUNT', or 'PAD MOUNT' in the Substation Notes or drawing annotations). If a padmount substation is involved, this note is mandatory — return 'NOT FOUND — REQUIRED (padmount substation project detected)'. If no padmount substation is present, return 'NOT REQUIRED'."
             }
           ]
         },
         {
           "sub_step_number": 5,
-          "sub_step_id": "sub-step-extract-siteplan-lv-switchgear",
-          "sub_step_name": "Extract LV Switchgear Details",
-          "details": "Extract the LV Switchgear type and specification from substation notes on the site plan. LV switchgear is the low voltage distribution switchboard or panel installed within the substation to distribute power to downstream LV circuits.",
+          "sub_step_id": "sub-step-easement-substation",
+          "sub_step_name": "Easement — Padmount Substation Easement Creation",
+          "phase": 2,
+          "details": "Using the notes extracted in Phase 1, check whether the drawing includes the required padmount substation easement creation note. This note is required for all projects involving a padmount substation. Extract the full note text including the easement dimensions and lot number(s) referenced. If the note is absent and the project involves a padmount substation, flag as MISSING.",
+          "required_note_template": "AN EASEMENT FOR PADMOUNT SUBSTATION MINIMUM [x]m x [x]m IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxxx]",
+          "output_format": "Full extracted note text with easement dimensions and lot number(s), or 'NOT REQUIRED' (not a padmount substation project), or 'NOT FOUND — REQUIRED' (padmount substation project but note is missing)",
           "instructional_sub_steps": [
             {
-              "title": "Locate LV Switchgear Field",
-              "instructions": "Find the 'LV Switchgear', 'LV SW', or 'Low Voltage Switchgear' field in the substation notes table."
+              "title": "Search for Padmount Easement Note",
+              "instructions": "Search all extracted notes for text containing 'EASEMENT FOR PADMOUNT SUBSTATION', 'PADMOUNT SUBSTATION MINIMUM', or 'CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT' alongside a dimension or measurement. This note may appear within the numbered NOTES section or as a standalone annotation."
             },
             {
-              "title": "Extract Make and Model",
-              "instructions": "Record the LV switchgear make, model, and any rating information (e.g., amps, number of poles, busbar rating). Note any manufacturer-specific designations or type codes as written on the drawing."
-            }
-          ]
-        },
-        {
-          "sub_step_number": 6,
-          "sub_step_id": "sub-step-extract-siteplan-cubicle",
-          "sub_step_name": "Extract Cubicle Size",
-          "details": "Extract the cubicle size specification from substation notes on the site plan. The cubicle size defines the physical enclosure dimensions or type code for the switchgear housing and is used to verify site space allocation and civil works requirements.",
-          "instructional_sub_steps": [
-            {
-              "title": "Locate Cubicle Size Field",
-              "instructions": "Find the 'Cubicle Size', 'Cubicle Dimensions', or 'Enclosure Size' field in the substation notes. This may be expressed as dimensions (e.g., 2400x600x2000mm) or as a type code or model designation."
+              "title": "Extract Easement Dimensions and Lot Number",
+              "instructions": "If found, extract the full note text verbatim. Specifically identify: (a) the easement dimensions stated after 'MINIMUM' (e.g. '3m x 4m', '4.5m x 6m') and (b) the lot number(s) referenced after 'WITHIN PROPOSED LOT'. Both details are critical — record them clearly in the output."
             },
             {
-              "title": "Note Cubicle Type",
-              "instructions": "Record whether the cubicle is indoor or outdoor rated, and any associated mounting, installation, or environmental protection notes (e.g., IP rating, weatherproof, pad-mounted). Note any civil base or plinth dimensions if stated alongside the cubicle size."
-            }
-          ]
-        },
-        {
-          "sub_step_number": 7,
-          "sub_step_id": "sub-step-extract-siteplan-earthing",
-          "sub_step_name": "Extract Earthing Information",
-          "details": "Extract earthing system details from substation notes and site plan markups. Earthing information captures the type and specification of the earthing system provided for the substation assets, including any compliance standards referenced.",
-          "instructional_sub_steps": [
-            {
-              "title": "Locate Earthing Field",
-              "instructions": "Find the 'Earthing', 'Earth', or 'Earthing System' field in the substation notes. Note any earthing type (e.g., earth rod, earth mat, earth grid) and resistance values or design criteria (e.g., <1 ohm, <10 ohm) if stated."
-            },
-            {
-              "title": "Check Site Plan Markups",
-              "instructions": "Look for earthing symbols (earth electrode symbol) on the site plan drawing to identify earthing locations for the substation and associated assets. Note the positions and any interconnection between earthing points."
-            },
-            {
-              "title": "Note Compliance Requirements",
-              "instructions": "Record any compliance standards referenced for earthing in the substation notes or drawing general notes (e.g., MDI0031, AS/NZS 3000, network operator earthing design guidelines). Flag if an earthing design report or test results are required."
-            }
-          ]
-        },
-        {
-          "sub_step_number": 8,
-          "sub_step_id": "sub-step-extract-siteplan-notes",
-          "sub_step_name": "Extract Design Drawing Notes",
-          "details": "Identify and capture all textual engineering notes and annotations present on the design drawing. These notes often contain critical compliance, safety, and construction specifications not found in the primary data fields[cite: 160].",
-          "instructional_sub_steps": [
-            {
-              "title": "Locate Notes on Design Drawing",
-              "instructions": "Scan the design drawing for a dedicated 'NOTES' section or block of technical annotations. Read and extract all individual notes listed under this heading to ensure no specific construction or regulatory requirements are overlooked."
-            },
-            {
-              "title": "Identify Compliance Standards",
-              "instructions": "Record all network standards referenced within the notes, specifically looking for compliance with MDI0031 and MCI0005. Note any requirements to adhere to the Connection Policy, Model Standing Offers, or the NSW Service and Installation Rules."
-            },
-            {
-              "title": "Extract Task-Specific Annotations",
-              "instructions": "Look for hand-written or red-line markups that modify or clarify the standard notes, such as specific cable types like 'NEW 240M XEE HV Cable' or 'New OH 7/4.5AMG'. Document any project-specific instructions such as 'Remove span between' or 'New Sub by ARP 4764'."
+              "title": "Determine Applicability if Not Found",
+              "instructions": "If the note is not found, check whether the project involves a padmount substation (look for 'padmount', 'PADMOUNT', or 'PAD MOUNT' in the Substation Notes or drawing annotations). If a padmount substation is involved, this note is mandatory — return 'NOT FOUND — REQUIRED (padmount substation project detected)'. If no padmount substation is present, return 'NOT REQUIRED'."
             }
           ]
         }
       ],
+
       "expected_input": {
         "description": "The ProcessingPlan from Step 2 indicating which tool to use per site plan document, and the document files themselves.",
         "fields": {
@@ -427,41 +406,101 @@
         }
       },
       "expected_output": {
-        "description": "Structured site plan data extracted from the substation notes of each matched site plan document, with conditional rule outcomes recorded.",
+        "description": "Five structured extraction outputs per document: complete drawing notes, substation structured data, field check compliance result, and two easement check results.",
         "fields": {
-          "site_plan_data": {
-            "substation_asset_number": "Unique identifier for the substation asset as extracted from the Substation Notes",
-            "transformer_size": "Transformer rated capacity with units as written (e.g., 1.5MVA, 500kVA)",
-            "hv_switchgear": "HV Switchgear make and model — set to 'Siemens RLR' if transformer size is 1.5MVA, otherwise extracted from drawing",
-            "hv_switchgear_override_applied": "Boolean — true if the 1.5MVA conditional rule was applied to override the drawn HV Switchgear value",
-            "voltage_level": "Operating voltage level in kV (e.g., 11kV, 22kV)",
-            "lv_switchgear": "LV Switchgear make, model, and rating as extracted from substation notes",
-            "cubicle_size": "Cubicle dimensions or type code as extracted from substation notes",
-            "earthing": "Earthing system type, resistance criteria, and compliance standards as extracted from substation notes"
-          },
-          "source_documents": "Array of document filenames that contributed to the extracted site plan data"
+          "sub-step-extract-all-notes": "Complete list of all numbered notes and standalone callouts from every page, in sequence order",
+          "sub-step-substation-data": "Formatted string with all seven Substation Notes fields, with 1.5MVA override notation where applicable",
+          "sub-step-field-check": "'YES', 'NO', or 'NOT FOUND' result for the assets field-check compliance note",
+          "sub-step-easement-restriction": "Extracted restriction-on-use-of-land note text with lot number, or 'NOT REQUIRED' / 'NOT FOUND — REQUIRED'",
+          "sub-step-easement-substation": "Extracted padmount substation easement note text with dimensions and lot number, or 'NOT REQUIRED' / 'NOT FOUND — REQUIRED'"
         }
       },
       "actual_input": {
-        "source": "Automatically passed from Step 2 processing_plan; documents read via tool-extract-pdf-content",
+        "source": "Automatically passed from Step 2 processing_plan; image-based documents processed via vision chunk pipeline",
         "agent_id": "agent-document-extractor",
         "tool_id": "tool-extract-pdf-content",
-        "endpoint": "Internal function: extract_pdf_content"
+        "endpoint": "POST http://document-extractor:8090/extract"
       },
       "actual_output": {
-        "stored_as": "state.results.site_plan_data",
-        "file_pattern": "OUTPUT/SitePlanExtract_<timestamp>.json"
+        "stored_as": "state.results.extraction",
+        "file_pattern": "OUTPUT/ExtractionReport_proc_extract_site_plan_info_<timestamp>.json"
+      }
+    },
+    {
+      "step_number": 4,
+      "step_id": "step-extract-drawing-legend",
+      "step_name": "Extract Drawing Legend",
+      "summary": "Extract the complete legend (key) from every page of each site plan drawing using vision. Produces a structured list of every symbol, icon, and line style paired with its associated label, tagged to the page it was extracted from. This output is used to identify assets shown on the drawing.",
+      "details": "For each image-based site plan document from Step 2, scan every page for a LEGEND, KEY, or NOTATION section. Legends on engineering drawings typically appear in the title block area, a dedicated key box, or a corner panel. Each entry in the legend consists of a visual element (an icon, symbol, filled shape, or line pattern) paired with a text label that names the asset or feature it represents. The extraction must capture both the visual description of the symbol and the exact text label, and tag each entry to the page number on which the legend appears. Symbols that appear in the legend but lack a label, and labels without a matching visual element, must both be recorded as incomplete entries for review.",
+
+      "sub_steps": [
+        {
+          "sub_step_number": 1,
+          "sub_step_id": "sub-step-extract-legend",
+          "sub_step_name": "Extract Legend Entries from All Pages",
+          "phase": 1,
+          "details": "Scan every image chunk of the drawing for a legend, key, notation, or symbol table. For each row in the legend, extract: (1) the VISUAL GEOMETRY of the drawn symbol — describe its exact shape, fill, line weight, line pattern, and any interior marks as you see them drawn; (2) the exact text label; (3) the page number. CRITICAL RULE: symbol_description must describe what the symbol LOOKS LIKE as a drawn graphic, NOT a paraphrase or echo of the label text. Each legend row has its own unique symbol — do not assign the same visual description to multiple rows. If you see the same description repeating for consecutive rows, you have misread the legend — look again at each row individually. WRONG examples (label paraphrases — never produce these): 'New lantern', 'Existing pole', 'New pillar', 'Remove conductor', 'Underground cable'. CORRECT examples (visual geometry): 'Small hollow circle with short lines radiating outward from the edge', 'Small solid black filled circle', 'Hollow rectangle outline with no fill', 'Solid thin line with evenly spaced short perpendicular tick marks'. REFERENCE TABLE — use these known symbol descriptions when you recognise the visual pattern next to the label: NEW LV TRENCH → Long dashed line; STRING NEW OH CABLE → Short dashed line; EXISTING UNDERGROUND MAINS → Alternating long-short dashed line; EXISTING OH CABLE → Solid thin line; REMOVE CONDUCTOR → Dotted line; EXISTING DUCTS → Thick heavy solid black line; NEW HV TRENCH → Solid line with two diagonal slash marks; EXISTING LANTERN → Small circle with internal cross (four-quadrant cross inside circle); REMOVE LANTERN → Circle with internal cross and starburst outer spikes radiating from edge; NEW LANTERN → Circle with starburst outer spikes and hollow centre; EXISTING POLE → Small solid black filled circle; REMOVE POLE → Small solid black filled circle with large X through it; REPLACE POLE → Circle split vertically half-black half-white; NEW POLE → Small hollow open circle; EXISTING COLUMN → Small solid black filled square; NEW COLUMN → Small hollow open square; EXISTING PILLAR → Solid black filled rectangle; NEW PILLAR → Hollow rectangle outline; PADMOUNT SUBSTATION → Rectangle containing two triangles touching at their points (bowtie shape); POLE SUBSTATION → Circle with triangle inside; LV LINK (N/O) → Small circle with short vertical ticks on top and bottom; HV ABS (N/C) → Circle with horizontal line through the centre; HV USL (N/C) → Semi-circle dome with horizontal base line; HIGH PRESSURE GAS → Solid line with GAS text centred along it; WATER MAIN → Solid line with W characters spaced evenly along it; LGA DEMARCATION → Thin solid line; NEW FREEWAY BOUNDARY → Faint light grey long dashed line; ENDEAVOUR ENERGY EASEMENT → Faint light grey medium dashed line. When you see a symbol that matches one of these, use the reference description exactly.",
+          "output_format": "JSON array of legend entry objects. Each object must have: 'page' (integer, 1-based), 'symbol_description' (string — visual geometry only: shape, fill, line weight, pattern, interior marks — never a label paraphrase), 'label' (string — verbatim label text from drawing), 'category' (string — one of: 'cable', 'equipment', 'substation', 'boundary', 'annotation', 'earthing', 'other'). Each row in the legend must produce a UNIQUE symbol_description — if two consecutive entries have identical symbol_descriptions you have made an error and must re-examine each row. Example output:\n[\n  { \"page\": 1, \"symbol_description\": \"Long dashed line\", \"label\": \"NEW LV TRENCH\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Solid thin line\", \"label\": \"EXISTING OH CABLE\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Dotted line\", \"label\": \"REMOVE CONDUCTOR\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Thick heavy solid black line\", \"label\": \"EXISTING DUCTS\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Small hollow open circle\", \"label\": \"NEW POLE\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Small solid black filled circle\", \"label\": \"EXISTING POLE\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Small solid black filled circle with large X through it\", \"label\": \"REMOVE POLE\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Circle with starburst outer spikes and hollow centre\", \"label\": \"NEW LANTERN\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Circle with internal cross and starburst outer spikes\", \"label\": \"REMOVE LANTERN\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Hollow rectangle outline\", \"label\": \"NEW PILLAR\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Rectangle containing two triangles touching at their points\", \"label\": \"PADMOUNT SUBSTATION\", \"category\": \"substation\" },\n  { \"page\": 1, \"symbol_description\": \"Thin solid line\", \"label\": \"LGA DEMARCATION\", \"category\": \"boundary\" },\n  { \"page\": 1, \"symbol_description\": \"Solid line with W characters spaced evenly along it\", \"label\": \"WATER MAIN\", \"category\": \"other\" }\n]",
+          "instructional_sub_steps": [
+            {
+              "title": "Locate the Legend Area",
+              "instructions": "Scan the drawing for a box, panel, or area labelled 'LEGEND', 'KEY', 'NOTATION', 'SYMBOL KEY', or 'DRAWING LEGEND'. This is typically found in the bottom-right or bottom-left corner of the drawing, within or adjacent to the title block. On multi-page drawings, the legend may appear only on page 1 — if so, note it as page 1. If no dedicated legend box is found, check for an unlabelled key or symbol table embedded in the drawing."
+            },
+            {
+              "title": "Describe Each Symbol Individually — Each Row Has Its Own Unique Symbol",
+              "instructions": "CRITICAL: Every row in the legend has its own distinct drawn symbol. Each symbol_description must be unique — if you find yourself writing the same description for two or more consecutive rows, you have misread the legend and must look again. For LINE symbols: describe the line pattern precisely — solid/dashed/dotted/chain-dashed, thin/thick/heavy, and any decorations spaced along it (tick marks, letters like W or GAS, diagonal slashes, arrows). For POINT/ICON symbols: describe the outer shape (circle/square/rectangle/triangle), fill (hollow/solid black/half-filled), and any interior marks (cross, X, diagonal line, triangle, bowtie). Use the REFERENCE TABLE in the details field when you recognise a known symbol — match it and use the reference description. Ask yourself before writing each entry: 'Is this description unique and geometric? Could a reader draw exactly this symbol from my words alone without reading the label?'"
+            },
+            {
+              "title": "Copy the Label Verbatim",
+              "instructions": "For the 'label' field, copy the exact text written next to the symbol on the drawing, preserving capitalisation and spacing. Do not paraphrase or abbreviate. If a symbol has no label, record label as '[UNLABELLED]'. If a label has no visible symbol, record symbol_description as '[NO SYMBOL]'."
+            },
+            {
+              "title": "Assign Category",
+              "instructions": "For each entry, assign a category based on the label text: 'cable' for any cable, conductor, trench, or service line; 'equipment' for poles, pillars, columns, lanterns, service points, switches, fuses, or meters; 'substation' for padmount, kiosk, or pole substation types; 'boundary' for lot boundaries, easement lines, LGA demarcation, or property lines; 'earthing' for earth conductors or earth electrodes; 'annotation' for text labels, callout arrows, or dimensions; 'other' for anything else."
+            },
+            {
+              "title": "Tag to Page Number",
+              "instructions": "Tag each entry with the page number from the chunk metadata. If the same legend appears on multiple pages, record it once tagged to page 1. If different pages have different or updated legends, record separate entries per page."
+            }
+          ]
+        }
+      ],
+
+      "expected_input": {
+        "description": "The processing plan from Step 2 and the actual document files (same as Step 3).",
+        "fields": {
+          "processing_plan": "Array of processing entries from Step 2 output",
+          "documents_folder": "Folder path containing the actual site plan document files"
+        }
+      },
+      "expected_output": {
+        "description": "A structured legend extraction per document: a JSON array of legend entries, each with symbol description, label, category, and page number.",
+        "fields": {
+          "sub-step-extract-legend": "JSON array of legend entry objects — each with 'page' (integer), 'symbol_description' (string — visual geometry description of the drawn symbol, e.g. 'Small open circle with lines radiating outward' NOT a label paraphrase like 'New lantern'), 'label' (string — verbatim label text from the drawing), 'category' (string)"
+        }
+      },
+      "actual_input": {
+        "source": "Automatically passed from Step 2 processing_plan; image-based documents processed via vision chunk pipeline",
+        "agent_id": "agent-document-extractor",
+        "tool_id": "tool-extract-pdf-content",
+        "endpoint": "POST http://document-extractor:8090/extract"
+      },
+      "actual_output": {
+        "stored_as": "state.results.legend_extraction",
+        "file_pattern": "OUTPUT/ExtractionReport_proc_extract_site_plan_legend_<timestamp>.json"
       }
     }
   ],
+
   "consolidated_output": {
-    "description": "A single consolidated JSON combining all site plan data extracted from the document package.",
+    "description": "A single consolidated JSON combining all site plan extraction outputs from the document package.",
     "file_pattern": "OUTPUT/SitePlanReport_<timestamp>.json",
     "structure": {
       "process_id": "proc-extract-site-plan-info",
       "run_timestamp": "ISO8601 datetime",
       "source_documents": [],
-      "site_plan_data": {
+      "drawing_notes": null,
+      "substation_data": {
         "substation_asset_number": null,
         "transformer_size": null,
         "hv_switchgear": null,
@@ -470,7 +509,18 @@
         "lv_switchgear": null,
         "cubicle_size": null,
         "earthing": null
-      }
+      },
+      "field_check_compliance": null,
+      "easement_restriction": null,
+      "easement_substation": null,
+      "drawing_legend": [
+        {
+          "page": 1,
+          "symbol_description": "Description of the visual symbol or line style",
+          "label": "Exact text label from the drawing",
+          "category": "cable | equipment | substation | boundary | earthing | annotation | other"
+        }
+      ]
     }
   }
 }

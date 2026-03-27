@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.responder
-    container_name: agent04-responder
+    container_name: agent05-responder
     ports:
       - "8000:8000"
     environment:
@@ -22,11 +22,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.orchestrator
-    container_name: agent04-orchestrator
+    container_name: agent05-orchestrator
     ports:
       - "8001:8001"
     environment:
       - CHUNKER_URL=http://document-chunker:8091/chunk
+      - ANALYTICS_URL=http://data-analytics:8092/analyse
     volumes:
       - .:/app
       - ./documents:/documents
@@ -34,6 +35,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - document-chunker
+      - data-analytics
     networks:
       - agent-network
 
@@ -42,7 +44,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.document_reviewer
-    container_name: agent04-document-reviewer
+    container_name: agent05-document-reviewer
     ports:
       - "8089:8089"
     environment:
@@ -59,7 +61,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.document_extractor
-    container_name: agent04-document-extractor
+    container_name: agent05-document-extractor
     ports:
       - "8090:8090"
     environment:
@@ -82,7 +84,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.step_validator
-    container_name: agent04-step-validator
+    container_name: agent05-step-validator
     ports:
       - "8088:8088"
     environment:
@@ -95,12 +97,29 @@ services:
     networks:
       - agent-network
 
+  # Data Analytics Agent
+  data-analytics:
+    build:
+      context: .
+      dockerfile: Dockerfile.data_analytics
+    container_name: agent05-data-analytics
+    ports:
+      - "8092:8092"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANALYTICS_MODEL=${ANALYTICS_MODEL:-gpt-4o}
+    volumes:
+      - .:/app
+    networks:
+      - agent-network
+
   # Document Chunker — renders PDF pages/regions to PNG chunks
   document-chunker:
     build:
       context: .
       dockerfile: Dockerfile.document_chunker
-    container_name: agent04-document-chunker
+    container_name: agent05-document-chunker
     ports:
       - "8091:8091"
     volumes:
@@ -115,12 +134,13 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.frontend
-    container_name: agent04-frontend
+    container_name: agent05-frontend
     ports:
       - "8080:80"
     depends_on:
       - responder
       - orchestrator
+      - data-analytics
     networks:
       - agent-network
 

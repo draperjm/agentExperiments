@@ -166,6 +166,55 @@
     .cat-contestable { background: #dcfce7; color: #166534; }
     .cat-other       { background: #f3f4f6; color: #374151; }
     .party-badge { font-size: 0.63rem; padding: 2px 7px; border-radius: 8px; background: #f3f4f6; color: #374151; }
+
+    /* ── STATUS PILLS ── */
+    .status-pill { display: inline-block; font-size: 0.78rem; font-weight: 600; padding: 5px 12px; border-radius: 20px; margin: 2px 0 6px; }
+    .status-notfound  { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .status-required  { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+    .status-yes  { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .status-no   { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+    /* ── NOTES BLOCK ── */
+    .notes-block { font-size: 0.78rem; color: #374151; line-height: 1.55; }
+    .note-line { padding: 3px 0 3px 6px; border-bottom: 1px solid #f0f0f0; }
+    .note-line:last-child { border-bottom: none; }
+
+    /* ── LEGEND TABLE ── */
+    .legend-wrap { display: flex; flex-direction: column; gap: 16px; }
+    .legend-group { border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }
+    .legend-group-hdr { padding: 7px 14px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+    .legend-group-count { opacity: 0.65; font-weight: 500; }
+    .legend-entry { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-items: center; padding: 7px 14px; border-bottom: 1px solid #f0f0f0; font-size: 0.78rem; }
+    .legend-entry:last-child { border-bottom: none; }
+    .legend-sym { color: #6b7280; font-style: italic; font-size: 0.72rem; line-height: 1.3; }
+    .legend-lbl { font-weight: 600; color: #1a1f36; }
+    .legend-full { grid-template-columns: 1fr; }
+    .legend-section-header { padding: 18px 22px 8px; font-size: 0.9rem; font-weight: 700; color: #1a1f36; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 8px; }
+
+    /* ── ASSET TABLE ── */
+    .asset-count-bar { font-size: 0.75rem; color: #6b7280; padding: 6px 0 10px; }
+    .asset-count-bar b { color: #1a1f36; }
+    .asset-table-wrap { overflow-x: auto; max-height: 400px; overflow-y: auto; border: 1px solid #e5e7eb; border-radius: 6px; }
+    .asset-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+    .asset-table th { position: sticky; top: 0; background: #f8fafc; text-align: left; padding: 6px 10px; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; border-bottom: 2px solid #e5e7eb; white-space: nowrap; z-index: 1; }
+    .asset-table td { padding: 6px 10px; border-bottom: 1px solid #f5f5f5; vertical-align: top; color: #374151; white-space: nowrap; }
+    .asset-table tr:last-child td { border-bottom: none; }
+    .asset-table tr:hover td { background: #f9fafb; }
+    .asset-id-cell { font-family: monospace; font-size: 0.7rem; color: #4338ca; }
+    .asset-section-full { background: white; border: 1px solid #e5e7eb; border-radius: 0 0 10px 10px; padding: 20px; }
+    .asset-match-table { width: 100%; border-collapse: collapse; font-size: 0.74rem; }
+    .asset-match-table th { background: #f8fafc; text-align: left; padding: 6px 10px; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; border-bottom: 2px solid #e5e7eb; white-space: nowrap; }
+    .asset-match-table td { padding: 5px 10px; border-bottom: 1px solid #f5f5f5; vertical-align: top; color: #374151; }
+    .asset-match-table tr:last-child td { border-bottom: none; }
+    .asset-match-table tr.match-found td { background: #f0fdf4; }
+    .asset-match-table tr.match-not-found td { background: #fff; }
+    .asset-match-table tr:hover td { filter: brightness(0.97); }
+    .asset-id-code { font-family: monospace; font-size: 0.72rem; background: #f1f5f9; padding: 1px 5px; border-radius: 3px; }
+    .match-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
+    .match-badge.match-found { background: #dcfce7; color: #166534; }
+    .match-badge.match-not-found { background: #fee2e2; color: #991b1b; }
+    .sheets-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .sheet-pill { background: #e0e7ff; color: #3730a3; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 12px; }
   </style>
 </head>
 <body>
@@ -331,6 +380,90 @@ function renderFundingTable(items) {
   </table>`;
 }
 
+// Render a status string as a coloured pill (NOT FOUND, YES, NOT REQUIRED, etc.)
+// Returns null if the string is not a known status value.
+function renderStatusPill(v) {
+  const u = v.trim().toUpperCase();
+  if (u.startsWith('NOT FOUND') || u.startsWith('NOT COMPLETED') || u === 'NONE')
+    return `<div class="status-pill status-notfound">${esc(v)}</div>`;
+  if (u === 'NOT REQUIRED' || u === 'N/A')
+    return `<div class="status-pill status-required">${esc(v)}</div>`;
+  if (/^YES\b/.test(u))
+    return `<div class="status-pill status-yes">${esc(v)}</div>`;
+  if (/^NO\b/.test(u) || /^NO —/.test(u))
+    return `<div class="status-pill status-no">${esc(v)}</div>`;
+  return null;
+}
+
+// Render multi-line text (notes / free-text extractions)
+function renderNotesBlock(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  return `<div class="notes-block">${lines.map(l => `<div class="note-line">${esc(l)}</div>`).join('')}</div>`;
+}
+
+// Render drawing legend entries grouped by category
+function renderLegendEntries(entries) {
+  if (!entries.length) return '<p class="substep-empty">No legend entries.</p>';
+  const CAT = {
+    cable:      { bg:'#dbeafe', color:'#1e40af', icon:'〰' },
+    equipment:  { bg:'#d1fae5', color:'#065f46', icon:'⚙' },
+    substation: { bg:'#ede9fe', color:'#5b21b6', icon:'⚡' },
+    boundary:   { bg:'#fef3c7', color:'#92400e', icon:'▭' },
+    annotation: { bg:'#fce7f3', color:'#831843', icon:'✏' },
+    earthing:   { bg:'#ecfdf5', color:'#064e3b', icon:'⏚' },
+    other:      { bg:'#f3f4f6', color:'#374151', icon:'•'  },
+  };
+  const ORDER = ['cable','equipment','substation','boundary','annotation','earthing','other'];
+  const grouped = {};
+  entries.forEach(e => {
+    const cat = ((e.category||'other').toLowerCase().trim());
+    const key = CAT[cat] ? cat : 'other';
+    (grouped[key] = grouped[key] || []).push(e);
+  });
+  const cats = ORDER.filter(c => grouped[c]);
+  return `<div class="legend-wrap">${cats.map(cat => {
+    const items = grouped[cat], s = CAT[cat];
+    return `<div class="legend-group">
+      <div class="legend-group-hdr" style="background:${s.bg};color:${s.color}">
+        ${s.icon} ${cat.charAt(0).toUpperCase()+cat.slice(1)}
+        <span class="legend-group-count">${items.length} symbol${items.length!==1?'s':''}</span>
+      </div>
+      <div class="legend-entry" style="font-size:0.63rem;font-weight:700;color:#9ca3af;padding-bottom:2px;border-bottom:2px solid #e5e7eb">
+        <span>Symbol Description</span><span>Label</span>
+      </div>
+      ${items.map(e => `<div class="legend-entry">
+        <div class="legend-sym">${esc(e.symbol_description||'—')}</div>
+        <div class="legend-lbl">${esc(e.label||'—')}</div>
+      </div>`).join('')}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+// Render asset records as a scrollable table
+function renderAssetTable(records, totalAssets, sheetsProcessed) {
+  const header = (totalAssets || records.length)
+    ? `<div class="asset-count-bar"><b>${totalAssets || records.length}</b> asset record${(totalAssets||records.length)!==1?'s':''} extracted
+       ${sheetsProcessed?.length ? ' from sheets: ' + sheetsProcessed.join(', ') : ''}</div>` : '';
+  if (!records.length) return header + '<p class="substep-empty">No asset records found.</p>';
+  const COLS = [
+    {key:'asset_id',      label:'Asset ID'},
+    {key:'asset_type',    label:'Type'},
+    {key:'description',   label:'Description'},
+    {key:'serial_number', label:'Serial No.'},
+    {key:'location',      label:'Location'},
+    {key:'address',       label:'Address'},
+  ];
+  const active = COLS.filter(c => records.some(r => r[c.key]));
+  return `${header}<div class="asset-table-wrap">
+    <table class="asset-table">
+      <thead><tr>${active.map(c => `<th>${esc(c.label)}</th>`).join('')}</tr></thead>
+      <tbody>${records.map(r => `<tr>${active.map(c =>
+        `<td${c.key==='asset_id'?' class="asset-id-cell"':''}>${esc(r[c.key]||'—')}</td>`
+      ).join('')}</tr>`).join('')}</tbody>
+    </table>
+  </div>`;
+}
+
 // Render a sub-step data value (handles arrays, objects, funding shapes)
 function renderSubStepBody(id, data, isFunding) {
   if (data === null || data === undefined)
@@ -348,14 +481,50 @@ function renderSubStepBody(id, data, isFunding) {
     return '';
   }
 
+  // ── Unwrap {value: ..., sub_step_name: ..., phase: ...} shape used by site-plan sub-steps ──
+  // These internal keys are display metadata, not content — skip them and render just `value`.
+  const INTERNAL_KEYS = new Set(['sub_step_name','phase','description_of_step','step_id']);
+  if (typeof data === 'object' && !Array.isArray(data) && 'value' in data) {
+    const v = data.value;
+    if (v === null || v === undefined || v === '')
+      return '<p class="substep-empty">No data extracted.</p>';
+    if (typeof v === 'string') {
+      const pill = renderStatusPill(v);
+      if (pill) return pill;
+      return v.includes('\n')
+        ? renderNotesBlock(v)
+        : `<div class="item-row"><div class="item-dot"></div><div class="item-desc">${esc(v)}</div></div>`;
+    }
+    if (Array.isArray(v)) {
+      if (!v.length) return '<p class="substep-empty">No items.</p>';
+      if (v[0]?.symbol_description !== undefined || (v[0]?.label !== undefined && v[0]?.page !== undefined))
+        return renderLegendEntries(v);
+      if (v[0]?.asset_id !== undefined) return renderAssetTable(v);
+      const hasFund = v.some(x => x?.funding_category);
+      return hasFund ? renderFundingTable(v) : renderItemList(v);
+    }
+    // value is an object — fall through to normal object rendering with the unwrapped value
+    data = v;
+  }
+
   if (Array.isArray(data)) {
     if (!data.length) return '<p class="substep-empty">No items found.</p>';
+    if (data[0]?.symbol_description !== undefined || (data[0]?.label !== undefined && data[0]?.page !== undefined))
+      return renderLegendEntries(data);
+    if (data[0]?.asset_id !== undefined) return renderAssetTable(data);
     const hasFundingFields = data.some(x => x?.funding_category);
     return hasFundingFields ? renderFundingTable(data) : renderItemList(data);
   }
 
   if (typeof data !== 'object') {
+    const pill = renderStatusPill(String(data));
+    if (pill) return pill;
     return `<div class="item-row"><div class="item-dot"></div><div class="item-desc">${esc(String(data))}</div></div>`;
+  }
+
+  // Asset spreadsheet shape: {asset_records: [...], total_assets: N, sheets_processed: [...]}
+  if (data.asset_records) {
+    return renderAssetTable(data.asset_records, data.total_assets, data.sheets_processed);
   }
 
   // Funding object with `items`
@@ -672,35 +841,231 @@ function buildDocumentIndex(data) {
   </div>`;
 }
 
+// ── Build a drawing legend section ────────────────────────────────────────────
+function buildLegendSection(extractions) {
+  let allEntries = [];
+  extractions.forEach(ex => {
+    const sse = ex.sub_step_extractions || {};
+    Object.values(sse).forEach(v => {
+      const arr = Array.isArray(v) ? v : (v?.value && Array.isArray(v.value) ? v.value : null);
+      if (arr) allEntries = allEntries.concat(arr);
+    });
+  });
+  const fileName = extractions[0]?.filename || '';
+  return `<div class="process-section">
+    <div class="process-hdr" style="background:#1e3a5f">
+      <span class="process-hdr-icon">🗺</span>
+      <div class="process-hdr-text">
+        <div class="process-hdr-title">Drawing Legend</div>
+        <div class="process-hdr-summary">${esc(fileName)}</div>
+      </div>
+      <span class="process-hdr-count">${allEntries.length} symbol${allEntries.length!==1?'s':''}</span>
+    </div>
+    <div style="background:white;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px;padding:20px;">
+      ${renderLegendEntries(allEntries)}
+    </div>
+  </div>`;
+}
+
+// ── Build an asset spreadsheet section ────────────────────────────────────────
+function buildAssetSection(extractions) {
+  const ex = extractions[0];
+  if (!ex) return '';
+  const se  = ex.step_extraction || ex.sub_step_extractions || {};
+  const records = se.asset_records || [];
+  const total   = se.total_assets;
+  const sheets  = se.sheets_processed || [];
+  return `<div class="process-section">
+    <div class="process-hdr" style="background:#166534">
+      <span class="process-hdr-icon">📊</span>
+      <div class="process-hdr-text">
+        <div class="process-hdr-title">Asset Register</div>
+        <div class="process-hdr-summary">${esc(ex.filename||'')} — ${esc(ex.document_type||'Spreadsheet')}</div>
+      </div>
+      <span class="process-hdr-count">${total||records.length} assets</span>
+    </div>
+    <div class="asset-section-full">
+      ${sheets.length ? `<div class="sheets-pills">${sheets.map(s => `<span class="sheet-pill">${esc(s)}</span>`).join('')}</div>` : ''}
+      ${renderAssetTable(records, total, sheets)}
+    </div>
+  </div>`;
+}
+
+// ── Collect legend entries from any extraction step ────────────────────────────
+function collectLegendEntries(data) {
+  const entries = [];
+  Object.values(data.source_extractions || {}).forEach(src => {
+    (src.extractions || []).forEach(ex => {
+      const sse = ex.sub_step_extractions || {};
+      Object.entries(sse).forEach(([k, v]) => {
+        if (!k.toLowerCase().includes('legend')) return;
+        const arr = Array.isArray(v) ? v
+                  : (v?.value && Array.isArray(v.value)) ? v.value
+                  : null;
+        if (arr) arr.forEach(e => entries.push(e));
+      });
+    });
+  });
+  return entries;
+}
+
+// ── Build asset drawing match section ─────────────────────────────────────────
+function buildAssetMatchSection(extractions, topLevel, legendEntries) {
+  // Collect updated_assets from top-level asset_drawing_match or sub_step data
+  let assets = [];
+  let summary = { total: 0, found: 0, not_found: 0 };
+
+  if (topLevel && topLevel.assets && topLevel.assets.length) {
+    assets  = topLevel.assets;
+    summary = { total: topLevel.total || 0, found: topLevel.found || 0, not_found: topLevel.not_found || 0 };
+  } else {
+    extractions.forEach(ex => {
+      const sse = ex.sub_step_extractions || {};
+      Object.values(sse).forEach(v => {
+        const ua = v?.updated_assets || (Array.isArray(v) ? v : null);
+        if (ua && ua.length) {
+          assets = assets.concat(ua.map(r => ({
+            asset_id:           r.asset_id,
+            asset_type:         r.asset_type,
+            description:        r.description,
+            label:              r.label,
+            symbol_description: r.symbol_description,
+            found:              r.match_status === 'found',
+          })));
+        }
+        if (v?.match_summary) {
+          summary = { total: v.match_summary.total || 0, found: v.match_summary.found || 0, not_found: v.match_summary.not_found || 0 };
+        }
+      });
+    });
+  }
+
+  if (!assets.length) return '';
+
+  const foundPct = summary.total ? Math.round((summary.found / summary.total) * 100) : 0;
+
+  // ── Legend reference panel ──────────────────────────────────────────────────
+  const legend = legendEntries || [];
+  const legendHtml = legend.length ? (() => {
+    const uid = 'leg-' + Math.random().toString(36).slice(2,7);
+    const legendRows = legend.map(e => {
+      const lbl  = e.label || e.legend_label || e.name || '—';
+      const desc = e.description || e.symbol_description || e.symbol || '—';
+      const cat  = e.category || e.legend_category || '';
+      return `<tr>
+        <td style="font-weight:600;color:#1e3a5f">${esc(lbl)}</td>
+        <td>${esc(desc)}</td>
+        ${cat ? `<td style="color:#6b7280;font-size:.7rem">${esc(cat)}</td>` : ''}
+      </tr>`;
+    }).join('');
+    const hasCat = legend.some(e => e.category || e.legend_category);
+    return `
+      <details id="${uid}" style="margin-bottom:14px;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;">
+        <summary style="padding:8px 14px;background:#f0f9ff;cursor:pointer;font-size:.8rem;font-weight:600;color:#0369a1;list-style:none;display:flex;align-items:center;gap:8px;">
+          🗺 Drawing Legend Reference <span style="font-weight:400;color:#64748b">(${legend.length} symbols)</span>
+        </summary>
+        <div style="padding:12px;overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:.75rem;">
+            <thead><tr style="background:#f8fafc;">
+              <th style="text-align:left;padding:5px 10px;border-bottom:1px solid #e5e7eb;">Label</th>
+              <th style="text-align:left;padding:5px 10px;border-bottom:1px solid #e5e7eb;">Symbol Description</th>
+              ${hasCat ? '<th style="text-align:left;padding:5px 10px;border-bottom:1px solid #e5e7eb;">Category</th>' : ''}
+            </tr></thead>
+            <tbody>${legendRows}</tbody>
+          </table>
+        </div>
+      </details>`;
+  })() : '';
+
+  // ── Asset rows ──────────────────────────────────────────────────────────────
+  const rows = assets.map(r => {
+    const foundCls = r.found ? 'match-found' : 'match-not-found';
+    const foundLbl = r.found ? '✓ Found' : '✗ Not found';
+    const labelVal  = r.label              || '<span style="color:#9ca3af">—</span>';
+    const symbolVal = r.symbol_description || '<span style="color:#9ca3af">—</span>';
+    return `<tr class="${foundCls}">
+      <td><code class="asset-id-code">${esc(r.asset_id||'—')}</code></td>
+      <td>${esc(r.asset_type||'—')}</td>
+      <td style="max-width:260px;white-space:normal">${esc(r.description||'—')}</td>
+      <td style="font-weight:${r.label?'600':'400'}">${r.label ? esc(r.label) : labelVal}</td>
+      <td style="max-width:200px;white-space:normal">${r.symbol_description ? esc(r.symbol_description) : symbolVal}</td>
+      <td><span class="match-badge ${foundCls}">${foundLbl}</span></td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="process-section">
+    <div class="process-hdr" style="background:#1c3a5e">
+      <span class="process-hdr-icon">📍</span>
+      <div class="process-hdr-text">
+        <div class="process-hdr-title">Asset Drawing Match</div>
+        <div class="process-hdr-summary">Site plan chunk review — ${summary.found} of ${summary.total} assets located on drawing</div>
+      </div>
+      <span class="process-hdr-count">${foundPct}% found</span>
+    </div>
+    <div style="background:white;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 10px 10px;padding:16px;overflow-x:auto;">
+      <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap;">
+        <span style="background:#dcfce7;color:#166534;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:600;">${summary.found} Found on drawing</span>
+        <span style="background:#fee2e2;color:#991b1b;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:600;">${summary.not_found} Not found</span>
+        <span style="background:#f1f5f9;color:#475569;padding:4px 12px;border-radius:20px;font-size:.8rem;font-weight:600;">${summary.total} Total assets</span>
+      </div>
+      ${legendHtml}
+      <table class="asset-match-table">
+        <thead><tr>
+          <th>Asset ID</th><th>Type</th><th>Description</th><th>Legend Label</th><th>Symbol Description</th><th>Status</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
 // ── Build full report ─────────────────────────────────────────────────────────
 function buildReport(data) {
   blockCounter = 0;
-  const dbDocs = [], spDocs = [];
+  const dbDocs = [], spDocs = [], legendDocs = [], assetDocs = [], assetMatchDocs = [];
 
   Object.values(data.source_extractions || {}).forEach(src => {
     (src.extractions || []).forEach(ex => {
-      const name = (ex.process_step_name || '').toLowerCase();
-      // Classify by process_step_name, or fall back to sub-step key heuristic
-      if (name.includes('design brief')) { dbDocs.push(ex); return; }
-      if (name.includes('site plan'))    { spDocs.push(ex); return; }
-      const keys = Object.keys(ex.sub_step_extractions || ex.step_extraction || {});
+      const name    = (ex.process_step_name || '').toLowerCase();
+      const docType = (ex.document_type || '').toLowerCase();
+      const sse     = ex.sub_step_extractions || ex.step_extraction || {};
+      // Detect asset symbol match step before generic site plan check
+      const isAssetMatch = docType.includes('asset symbol') ||
+                           (name.includes('match') && name.includes('symbol'));
+      const hasAssets = sse.asset_records || Object.values(sse).some(v => Array.isArray(v) && v[0]?.asset_id);
+      if (isAssetMatch)                                            { assetMatchDocs.push(ex); return; }
+      if (name.includes('legend'))                                 { legendDocs.push(ex); return; }
+      if (hasAssets || docType.includes('spreadsheet'))            { assetDocs.push(ex); return; }
+      if (name.includes('design brief'))                           { dbDocs.push(ex); return; }
+      if (name.includes('site plan'))                              { spDocs.push(ex); return; }
+      // Fallback: key heuristic
+      const keys = Object.keys(sse);
       if (keys.some(k => k.includes('siteplan'))) spDocs.push(ex);
       else dbDocs.push(ex);
     });
   });
 
-  const totalDocs = dbDocs.length + spDocs.length;
+  const totalDocs = dbDocs.length + spDocs.length + legendDocs.length + assetDocs.length;
 
   // Summary cards
+  const amData  = data.asset_drawing_match;
+  const amFound = amData ? amData.found : assetMatchDocs.length;
   const stats = `<div class="summary-grid">
     <div class="stat-card blue"><div class="stat-value">${totalDocs}</div><div class="stat-label">Documents</div></div>
     <div class="stat-card blue"><div class="stat-value">${dbDocs.length}</div><div class="stat-label">Design Brief</div></div>
     <div class="stat-card teal"><div class="stat-value">${spDocs.length}</div><div class="stat-label">Site Plan</div></div>
+    ${legendDocs.length   ? `<div class="stat-card violet"><div class="stat-value">${legendDocs.length}</div><div class="stat-label">Drawing</div></div>` : ''}
+    ${assetDocs.length    ? `<div class="stat-card teal"><div class="stat-value">${assetDocs.length}</div><div class="stat-label">Asset Register</div></div>` : ''}
+    ${(assetMatchDocs.length || amData) ? `<div class="stat-card blue"><div class="stat-value">${amFound}</div><div class="stat-label">On Drawing</div></div>` : ''}
   </div>`;
 
-  const dbSection = dbDocs.length ? buildProcessSection(dbDocs, 'db') : '';
-  const spSection = spDocs.length ? buildProcessSection(spDocs, 'sp') : '';
-  const docIndex  = buildDocumentIndex(data);
+  const dbSection       = dbDocs.length       ? buildProcessSection(dbDocs, 'db') : '';
+  const spSection       = spDocs.length       ? buildProcessSection(spDocs, 'sp') : '';
+  const legendSection   = legendDocs.length   ? buildLegendSection(legendDocs)    : '';
+  const assetSection    = assetDocs.length    ? buildAssetSection(assetDocs)      : '';
+  const assetMatchSection = (assetMatchDocs.length || amData)
+                            ? buildAssetMatchSection(assetMatchDocs, amData, collectLegendEntries(data)) : '';
+  const docIndex        = buildDocumentIndex(data);
 
   // Initialise first tab style after render
   setTimeout(() => {
@@ -710,7 +1075,7 @@ function buildReport(data) {
     });
   }, 0);
 
-  return stats + docIndex + dbSection + spSection;
+  return stats + docIndex + dbSection + spSection + legendSection + assetSection + assetMatchSection;
 }
 
 // ── API calls ─────────────────────────────────────────────────────────────────
@@ -726,13 +1091,14 @@ async function init() {
     if (!r.ok) throw new Error('Failed to fetch output file list');
     const d = await r.json();
     const files = (d.files||[])
-      .filter(f => f.filename.startsWith('ConsolidatedReport_'))
-      .sort((a,b) => b.filename.localeCompare(a.filename));
+      .filter(f => f.filename.includes('ConsolidatedReport_'))
+      .sort((a,b) => (b.modified_ts||0) - (a.modified_ts||0));
 
     if (!files.length) { sel.innerHTML = '<option value="">No consolidated reports found</option>'; return; }
 
     sel.innerHTML = files.map(f => {
-      const ts = f.filename.replace('ConsolidatedReport_','').replace('.json','');
+      const basename = f.filename.replace(/\\/g, '/').split('/').pop();
+      const ts = basename.replace('ConsolidatedReport_','').replace('.json','');
       let label = ts;
       if (ts.length >= 15) label = `${ts.slice(0,4)}-${ts.slice(4,6)}-${ts.slice(6,8)} ${ts.slice(9,11)}:${ts.slice(11,13)}:${ts.slice(13,15)}`;
       const kb = f.size_bytes ? ` (${(f.size_bytes/1024).toFixed(0)} KB)` : '';

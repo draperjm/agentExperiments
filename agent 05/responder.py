@@ -20,7 +20,7 @@ class TaskLibrary:
     def _load_tasks(self):
         if not os.path.exists(self.tasks_path): return []
         try:
-            with open(self.tasks_path, 'r') as f:
+            with open(self.tasks_path, 'r', encoding='utf-8') as f:
                 raw = json.load(f)
                 return raw.get("templates", raw) if isinstance(raw, dict) else raw
         except: return []
@@ -28,7 +28,7 @@ class TaskLibrary:
     def _load_workers(self):
         if not os.path.exists(self.tasks_path): return []
         try:
-            with open(self.tasks_path, 'r') as f:
+            with open(self.tasks_path, 'r', encoding='utf-8') as f:
                 raw = json.load(f)
                 return raw.get("digital_workers", []) if isinstance(raw, dict) else []
         except: return []

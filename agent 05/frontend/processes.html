@@ -877,6 +877,8 @@ async function executeStep(stepIdx, inputs) {
         if (inputs.folder_path) {
             fd.append('folder_path', inputs.folder_path);
         }
+        // Always send step_index so the orchestrator re-syncs on retry
+        fd.append('step_index', stepIdx);
 
         const runResp = await fetch(`/api/orchestrator/run_next/${procExec.planId}`, {
             method: 'POST',
@@ -887,7 +889,21 @@ async function executeStep(stepIdx, inputs) {
             throw new Error(`Step failed (${runResp.status}): ${errText.slice(0, 200)}`);
         }
 
-        const result = await runResp.json();
+        // Poll /step_result until the background task finishes
+        let result;
+        for (;;) {
+            await new Promise(r => setTimeout(r, 3000));
+            const pollResp = await fetch(`/api/orchestrator/step_result/${procExec.planId}`);
+            if (!pollResp.ok) {
+                const errText = await pollResp.text();
+                throw new Error(`Poll failed (${pollResp.status}): ${errText.slice(0, 200)}`);
+            }
+            const pollData = await pollResp.json();
+            if (pollData.status !== 'running') {
+                result = pollData;
+                break;
+            }
+        }
         procExec.outputs[stepIdx] = result;
 
         if (result.status === 'error' || result.failed) {
@@ -896,7 +912,11 @@ async function executeStep(stepIdx, inputs) {
             procExec.statuses[stepIdx] = 'done';
         }
     } catch (e) {
-        procExec.outputs[stepIdx] = { error: e.message };
+        const isNetworkError = e.message === 'Failed to fetch' || e.message.includes('NetworkError');
+        const msg = isNetworkError
+            ? 'Connection lost — the step may still be running. Retry to re-run the same step.'
+            : e.message;
+        procExec.outputs[stepIdx] = { error: msg };
         procExec.statuses[stepIdx] = 'error';
     }
 

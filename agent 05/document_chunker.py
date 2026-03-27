@@ -92,22 +92,25 @@ def _region_labels(cols: int, rows: int) -> List[str]:
     )
 
 
-def _split_image(img, cols: int, rows: int) -> List:
+def _split_image(img, cols: int, rows: int, overlap: float = 0.08) -> List:
     """
     Crop a PIL Image into a (cols × rows) grid, row-major order.
+    Each tile extends by `overlap` fraction into adjacent tiles so text
+    at tile boundaries is not split mid-character.
     Edge tiles absorb any remainder pixels so nothing is clipped.
     """
     from PIL import Image  # local import to keep startup fast
 
     w, h = img.size
     cw, ch = w // cols, h // rows
+    ox, oy = int(cw * overlap), int(ch * overlap)
     tiles = []
     for row in range(rows):
         for col in range(cols):
-            left  = col * cw
-            top   = row * ch
-            right = (col + 1) * cw if col < cols - 1 else w
-            bot   = (row + 1) * ch if row < rows - 1 else h
+            left  = max(col * cw - ox, 0)
+            top   = max(row * ch - oy, 0)
+            right = min((col + 1) * cw + ox, w) if col < cols - 1 else w
+            bot   = min((row + 1) * ch + oy, h) if row < rows - 1 else h
             tiles.append(img.crop((left, top, right, bot)))
     return tiles
 
