@@ -648,6 +648,12 @@ def _determine_processing_plan(doc: dict, scan: dict, registry: dict, categoriza
             result["requires_chunking"] = True
             result["chunk_strategy"]    = psi.get("chunk_strategy", "quadrant-split")
             result["estimated_chunks"]  = psi.get("estimated_chunks", 4)
+        # Image-only PDFs must always use the vision path regardless of page size
+        # text_quality comes from doc (Step 1 review), not from the LLM response (which doesn't return it)
+        if doc.get("text_quality") == "none" and not result.get("requires_chunking"):
+            result["requires_chunking"] = True
+            result["chunk_strategy"]    = "page-split"
+            result["estimated_chunks"]  = 1
         # RULE 0 enforced in code — spreadsheet extensions are always TAL, regardless of LLM output
         filename = doc.get("filename", "")
         if Path(filename).suffix.lower() in SPREADSHEET_EXTENSIONS:

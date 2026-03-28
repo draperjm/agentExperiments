@@ -1112,19 +1112,23 @@ async def _run_step_impl(
                             {
                                 "sub_step_id":   "sub-step-find-asset-ids",
                                 "sub_step_name": "Find Asset IDs in Drawing Chunk",
-                                "description": (
+                                # "details" (not "description") is read by _extract_chunked_file
+                                # for the schema instruction line in the per-chunk vision prompt.
+                                "details": (
                                     "Scan this drawing chunk image and extract EVERY numeric label you can see. "
                                     "Asset IDs are standalone multi-digit numbers (4-10 digits) positioned "
                                     "adjacent to drawing symbols (poles, lanterns, pillars, cables, etc.) "
                                     "on the reticulation site plan. "
-                                    "Do NOT filter by any expected list — report every number you can read. "
-                                    "Return a JSON array of all numeric strings found: "
-                                    "[\"302876\", \"2002180\", \"402679\", ...]"
+                                    "Do NOT filter by any expected list — report every number you can read."
                                 ),
-                                "output_type": "json",
-                                "output_fields": {
-                                    "found_ids": "array of numeric string labels visible in this chunk",
-                                },
+                                # output_format is used by _extract_chunked_file as the inline schema hint
+                                # in the vision prompt so the model knows to return a plain JSON array.
+                                # Must NOT start with "JSON array" — that would trigger legend-presence
+                                # filtering which is wrong for asset-ID scanning.
+                                "output_format": (
+                                    '[\"302876\", \"2002180\", \"402679\"]'
+                                    " — plain JSON array of numeric ID strings, no wrapper object"
+                                ),
                             }
                         ],
                     },
@@ -1140,18 +1144,24 @@ async def _run_step_impl(
                             # Aggregate found bare IDs across chunk_details (per-chunk results).
                             # The extractor returns a single top-level object with chunk_details[].
                             # Each chunk has extracted.data["sub-step-find-asset-ids"] which may be:
-                            #   - list of bare_id strings (e.g. ["302876", "302877"])
-                            #   - list of dicts with {bare_id, symbol_description, label}
+                            #   - list of bare_id strings    e.g. ["302876", "302877"]
+                            #   - list of dicts              e.g. [{bare_id, symbol_description, label}]
+                            #   - dict wrapper               e.g. {"found_ids": ["302876", ...]}
                             # First occurrence of a bare_id across chunks wins.
                             found_map: dict = {}
 
                             def _absorb_item(item):
                                 if isinstance(item, str):
-                                    bid = item.strip()
+                                    # Normalize: strip alpha prefix and leading zeros so
+                                    # "CLMN02002180" and "02002180" both resolve to "2002180"
+                                    bid = _compute_bare_id(item.strip()) or item.strip()
                                     if bid and bid not in found_map:
                                         found_map[bid] = {"symbol_description": None, "label": None}
                                 elif isinstance(item, dict):
-                                    bid = str(item.get("bare_id", "")).strip()
+                                    raw = str(
+                                        item.get("bare_id") or item.get("id") or item.get("asset_id") or ""
+                                    ).strip()
+                                    bid = _compute_bare_id(raw) if raw else ""
                                     if bid and bid not in found_map:
                                         found_map[bid] = {
                                             "symbol_description": item.get("symbol_description"),
@@ -1168,6 +1178,9 @@ async def _run_step_impl(
                                 for _cd in (_eo.get("chunk_details") or []):
                                     _chunk_data = (_cd.get("extracted") or {}).get("data") or {}
                                     for _cd_val in _chunk_data.values():
+                                        # Unwrap {"found_ids": [...]} if model returned a dict wrapper
+                                        if isinstance(_cd_val, dict) and "found_ids" in _cd_val:
+                                            _cd_val = _cd_val.get("found_ids") or []
                                         _items = _cd_val if isinstance(_cd_val, list) else [_cd_val]
                                         for _item in _items:
                                             _absorb_item(_item)

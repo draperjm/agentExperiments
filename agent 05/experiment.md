@@ -310,6 +310,8 @@ With 30 packages in the corpus this target is met. The human sample of 12 partic
 
 ## 10. Preliminary Observations (Pilot System)
 
+> **Experiment Results:** Post-pilot experimental run results (Runs 8–9, 2026-03-28) are documented in [experiment_results.md](experiment_results.md), including per-application match data, legend extraction quality, observed failure modes, and outstanding issues.
+
 The following observations derive from 7 runs of the agent system on a single anonymised application package (ARP4983-84, 2-page A1 reticulation drawing, 91–143 TAL assets across extraction variants) during system development. These are reported as contextual pilot data only and are not used in the power calculation without further validation.
 
 | Run | TAL Assets | Detected on Drawing | Recall |

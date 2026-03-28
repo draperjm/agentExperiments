@@ -480,9 +480,12 @@ def extract_documents(request: ExtractionRequest):
         else:
             result = _extract_file(fe, filepath, request.process_step)
 
-        # Save per-file output
+        # Save per-file output — include step slug so concurrent steps on the same file don't collide
         safe_name  = re.sub(r"[^\w]", "_", fe.filename)
-        out_path   = eff_output_dir / f"Extraction_{safe_name}_{timestamp}.json"
+        _step_id   = (request.process_step.step_id or request.process_step.step_name or "") if request.process_step else ""
+        _step_slug = re.sub(r"[^\w]", "_", _step_id)[:30] if _step_id else ""
+        _file_sfx  = f"_{_step_slug}" if _step_slug else ""
+        out_path   = eff_output_dir / f"Extraction_{safe_name}{_file_sfx}_{timestamp}.json"
         with open(out_path, "w") as f:
             json.dump(result, f, indent=2)
         result["output_file"] = str(out_path)
