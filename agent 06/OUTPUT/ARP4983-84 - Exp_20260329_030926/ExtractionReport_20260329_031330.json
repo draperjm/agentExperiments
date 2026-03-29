@@ -1,0 +1,86 @@
+{
+  "process_step": {
+    "step_id": "match-assets-to-drawing-symbols",
+    "step_name": "Match Assets to Site Plan Drawing Symbols",
+    "summary": null,
+    "details": "Extract ALL numeric labels visible in each drawing chunk. Asset IDs appear as standalone multi-digit numbers adjacent to drawing symbols. Legend entries for symbol matching: [{\"label\": \"NEW LV TRENCH\", \"description\": \"Long dashed line\"}, {\"label\": \"REMOVE LANTERN\", \"description\": \"Circle with internal cross and starburst outer spikes radiating from edge\"}, {\"label\": \"NEW PILLAR\", \"description\": \"Hollow rectangle outline\"}, {\"label\": \"STRING NEW OH CABLE\", \"description\": \"Short dashed line\"}, {\"label\": \"NEW LANTERN\", \"description\": \"Circle with starburst outer spikes and hollow centre\"}, {\"label\": \"LV LINK (N/O)\", \"description\": \"Small circle with short vertical ticks on top and bottom\"}, {\"label\": \"EXISTING POLE\", \"description\": \"Small solid black filled circle\"}, {\"label\": \"EXISTING UNDERGROUND MAINS\", \"description\": \"Alternating long-short dashed line\"}, {\"label\": \"NEW POLE\", \"description\": \"Small hollow open circle\"}, {\"label\": \"REMOVE POLE\", \"description\": \"Small solid black filled circle with large X through it\"}, {\"label\": \"EXISTING OH CABLE\", \"description\": \"Solid thin line\"}, {\"label\": \"NEW HV TRENCH\", \"description\": \"Solid line with two diagonal slash marks\"}, {\"label\": \"EXISTING COLUMN\", \"description\": \"Small solid black filled square\"}, {\"label\": \"REMOVE CONDUCTOR\", \"description\": \"Dotted line\"}, {\"label\": \"REPLACE POLE\", \"description\": \"Circle split vertically half-black half-white\"}, {\"label\": \"NEW COLUMN\", \"description\": \"Small hollow open square\"}, {\"label\": \"HV ABS (N/C)\", \"description\": \"Circle with horizontal line through the centre\"}, {\"label\": \"EXISTING DUCTS\", \"description\": \"Thick heavy solid black line\"}, {\"label\": \"EXISTING PILLAR\", \"description\": \"Solid black filled rectangle\"}, {\"label\": \"HV USL (N/C)\", \"description\": \"Semi-circle dome with horizontal base line\"}, {\"label\": \"LGA DEMARCATION\", \"description\": \"Thin solid line\"}, {\"label\": \"PADMOUNT SUBSTATION\", \"description\": \"Rectangle containing two triangles touching at their points\"}, {\"label\": \"HIGH PRESSURE GAS\", \"description\": \"Solid line with GAS text centred along it\"}, {\"label\": \"GAS\", \"description\": \"Star-like shape.\"}, {\"label\": \"EXISTING LANTERN\", \"description\": \"Small circle with internal cross (four-quadrant cross inside circle)\"}, {\"label\": \"POLE SUBSTATION\", \"description\": \"Circle with triangle inside\"}, {\"label\": \"WATER MAIN\", \"description\": \"Solid line with W characters spaced evenly along it\"}, {\"label\": \"NEW FREEWAY BOUNDARY\", \"description\": \"Faint light grey long dashed line\"}, {\"label\": \"ENDEAVOUR ENERGY EASEMENT\", \"description\": \"Faint light grey medium dashed line\"}]",
+    "expected_output": {
+      "description": "All numeric labels visible in this chunk with adjacent symbol info",
+      "fields": {
+        "found_ids": "array of all numeric label strings visible in this chunk"
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_id": "sub-step-find-asset-ids",
+        "sub_step_name": "Find Asset IDs in Drawing Chunk",
+        "details": "Scan this drawing chunk image and extract EVERY numeric label you can see. Asset IDs are standalone multi-digit numbers (4-10 digits) positioned adjacent to drawing symbols (poles, lanterns, pillars, cables, etc.) on the reticulation site plan. Do NOT filter by any expected list \u2014 report every number you can read.",
+        "output_format": "[\"302876\", \"2002180\", \"402679\"] \u2014 plain JSON array of numeric ID strings, no wrapper object"
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/ARP4983-84 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "D526458_ARP4983_RETIC_LEGEND.pdf",
+      "filepath": "",
+      "document_type": "Reticulation Drawing",
+      "document_category": "Site Plan",
+      "input_text_quality": "high",
+      "document_quality": "chunked-image",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "page-split",
+      "estimated_chunks": 1,
+      "actual_chunks_processed": 1,
+      "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+      "total_sections": 1,
+      "relevant_sections": 1,
+      "raw_text_from_chunks": "[full-page, p1, seq1] F\nC\nB\nA\nN\n2083\n2\n3\n4\n2065\n5\n7\n8\n9\n10\n11\n12\n620103\nINSTALL NEW HV UGOH AT POLE\nREF '21'.\n- LAY NEW UG HV 240mm2 AL 3C\nXLPE FROM NEW HV UGOH TO\nEXISTING PM SUB AT REF 'C'\nNEW FREEWAY\nBOUNDARY\n68.7m\n620089\nFAIRFIELD LGA\n2002193\n2005481\n306688\n306687\nS402679\n2005480\n5405788\n2006479\n96084\nPRIVATE ROAD\nCARRIAGEWAY\nEDGE\nLAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nCAMS File No.\nARP4983\nSIGNATURE\nDATE:\nAM PROJ. No.\n3284\nHV SWITCHING\nHOXTON PARK\nEE DEPOT\nEE REGION\nCENTRAL\nHV OP DIAG\nKEMPS CREEK 1 D11\nLOCAL GOV AREA\nLIVERPOOL\nINSPECTED BY:\nSIGNATURE:\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nBEFORE\nYOU DIG\nwww.byda.com.au\nOF:\nDATE\nASSET RECORDING\nCONTACT No.\nSIGNATURE\nDATE:\nEndeavour\nEnergy\nH\nA1 526458\nD\nSHEET No 2 OF 9 SHEETS\n12",
+      "chunk_details": [
+        {
+          "chunk_id": "chunk_0001",
+          "sequence": 1,
+          "page_number": 1,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "F\nC\nB\nA\nN\n2083\n2\n3\n4\n2065\n5\n7\n8\n9\n10\n11\n12\n620103\nINSTALL NEW HV UGOH AT POLE\nREF '21'.\n- LAY NEW UG HV 240mm2 AL 3C\nXLPE FROM NEW HV UGOH TO\nEXISTING PM SUB AT REF 'C'\nNEW FREEWAY\nBOUNDARY\n68.7m\n620089\nFAIRFIELD LGA\n2002193\n2005481\n306688\n306687\nS402679\n2005480\n5405788\n2006479\n96084\nPRIVATE ROAD\nCARRIAGEWAY\nEDGE\nLAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nCAMS File No.\nARP4983\nSIGNATURE\nDATE:\nAM PROJ. No.\n3284\nHV SWITCHING\nHOXTON PARK\nEE DEPOT\nEE REGION\nCENTRAL\nHV OP DIAG\nKEMPS CREEK 1 D11\nLOCAL GOV AREA\nLIVERPOOL\nINSPECTED BY:\nSIGNATURE:\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nBEFORE\nYOU DIG\nwww.byda.com.au\nOF:\nDATE\nASSET RECORDING\nCONTACT No.\nSIGNATURE\nDATE:\nEndeavour\nEnergy\nH\nA1 526458\nD\nSHEET No 2 OF 9 SHEETS\n12",
+            "data": {
+              "sub-step-find-asset-ids": [
+                "302876",
+                "2002180",
+                "402679"
+              ]
+            }
+          }
+        }
+      ],
+      "stitched_boundaries": [],
+      "sub_step_extractions": {
+        "sub-step-find-asset-ids": {
+          "value": [
+            "2083",
+            "2065",
+            "620103",
+            "620089",
+            "2002193",
+            "2005481",
+            "306688",
+            "306687",
+            "2005480",
+            "5405788",
+            "2006479",
+            "96084"
+          ],
+          "sub_step_name": "Find Asset IDs in Drawing Chunk",
+          "phase": 1
+        }
+      },
+      "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260329_030926/Extraction_D526458_ARP4983_RETIC_LEGEND_pdf_match_assets_to_drawing_symbol_20260329_031330.json"
+    }
+  ],
+  "timestamp": "20260329_031330",
+  "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260329_030926/ExtractionReport_20260329_031330.json"
+}

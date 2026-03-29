@@ -1,0 +1,332 @@
+{
+  "report_type": "Customer Connections Review Analysis Report",
+  "generated_at": "2026-03-29T02:43:54.602344Z",
+  "consolidated_report_path": "/app/OUTPUT/ARP4983-84 - Exp_20260329_023711/ConsolidatedReport_20260329T024213.json",
+  "analysis_report": {
+    "funding_details": {
+      "funding_details": {
+        "total_capital_contribution": null,
+        "contestable_works": [
+          {
+            "item": "All other works required",
+            "description": "Customer Funded Contestable Works: All other works required.",
+            "amount": null
+          }
+        ],
+        "non_contestable_works": [
+          {
+            "item": "Network switching, substation commissioning, contract inspection",
+            "description": "Customer Funded Non-Contestable Works: Network switching, substation commissioning, contract inspection",
+            "amount": null
+          }
+        ],
+        "ancillary_costs": [
+          {
+            "item": "Duct usage charge",
+            "description": "Reimbursements to be paid to Endeavour Energy by Customer: Duct usage charge as required",
+            "amount": null
+          }
+        ],
+        "other_funding_items": [
+          {
+            "item": "Spare HV duct as per Fact Sheet 11",
+            "description": "Reimbursement Paid by Endeavour Energy: Capital contribution for Spare HV duct as per Fact Sheet 11",
+            "amount": null
+          }
+        ],
+        "notes": [
+          "No explicit dollar amounts or formulas were stated for any funding item in the source document.",
+          "Total capital contribution amount was not specified in the data.",
+          "No ancillary fees or total amount payable were found in the sub-step-extract-funding-ancillary-fees section.",
+          "Funding determination sourced from 'Determination of Funding' section, page 4 of the Design Brief.",
+          "SL Works are classified under Customer Funded Contestable Works per sub-step-extract-sl.",
+          "Payment is to be made via EFT to BSB: 012-003, Account Number: 8376 89858, quoting reference ARP4983A2.",
+          "Remittance copies to be emailed to remittances@endeavourenergy.com.au. Credit cards and cheques are not accepted.",
+          "A formal Tax Invoice will be issued following receipt of payment."
+        ]
+      }
+    },
+    "method_of_supply_comparison": {
+      "method_of_supply_comparison": {
+        "design_brief_requirements": [
+          "Remove OH HV cables between specific pole references",
+          "Install new OH HV cable at new locations",
+          "Remove OH LV cable between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive",
+          "String new OH LV cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive",
+          "New OH road crossing service connection to maintain existing services",
+          "SL Works: Remove SL and Install new SL",
+          "Ensure HV design meets mandatory codes: MDI0031, MCI0005, and NSW Service and Installation Rules",
+          "Ensure all LV service works comply with NSW Service and Installation Rules and Endeavour Energy standards MDI0031 and MCI0005",
+          "Capital contribution for Spare HV duct as per Fact Sheet 11 (Endeavour Energy funded)",
+          "Duct usage charge as required (Customer reimbursement to Endeavour Energy)",
+          "Network switching, substation commissioning, contract inspection (Customer funded non-contestable)",
+          "All other works required (Customer funded contestable works)"
+        ],
+        "site_plan_scope_found": [
+          "STRING NEW OH CABLE - represented in Site Plan legend (short dashed line), consistent with stringing new OH LV cable between pole refs",
+          "REMOVE CONDUCTOR - represented in Site Plan legend (dotted line), consistent with removal of OH LV and/or OH HV cables",
+          "EXISTING OH CABLE - represented in Site Plan legend (solid thin line), provides baseline for existing OH infrastructure",
+          "EXISTING POLE - represented in Site Plan legend (small solid black filled circle), supports pole reference identification",
+          "NEW POLE - represented in Site Plan legend (small hollow open circle), supports new pole installations",
+          "REMOVE POLE - represented in Site Plan legend (small solid black filled circle with large X), supports pole removal works",
+          "NEW HV TRENCH - represented in Site Plan legend (solid line with two diagonal slash marks), supports HV underground duct/cable works",
+          "EXISTING DUCTS - represented in Site Plan legend (thick heavy solid black line), supports spare HV duct reference",
+          "NEW LV TRENCH - represented in Site Plan legend (long dashed line), supports LV underground works context",
+          "EXISTING UNDERGROUND MAINS - represented in Site Plan legend (alternating long-short dashed line), supports existing underground infrastructure context",
+          "PADMOUNT SUBSTATION - represented in Site Plan legend, supports substation commissioning context",
+          "POLE SUBSTATION - represented in Site Plan legend, supports substation context"
+        ],
+        "missing_from_site_plan": [
+          {
+            "item": "Remove OH HV cables between specific pole references",
+            "design_brief_reference": "Method Of Supply Requirement, Page 2 (sub-step-extract-hv)",
+            "note": "While REMOVE CONDUCTOR legend entry exists, no specific pole reference numbers or HV-specific removal annotation is confirmed in the Site Plan legend data. The legend does not explicitly distinguish HV conductor removal from LV conductor removal."
+          },
+          {
+            "item": "Install new OH HV cable at new locations",
+            "design_brief_reference": "Method Of Supply Requirement, Page 2 (sub-step-extract-hv)",
+            "note": "STRING NEW OH CABLE legend entry exists but does not explicitly differentiate between HV and LV overhead cable stringing. No dedicated 'STRING NEW OH HV CABLE' symbol is present in the legend, creating ambiguity."
+          },
+          {
+            "item": "Remove OH LV cable between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive",
+            "design_brief_reference": "Method Of Supply Requirement, Page 2 (sub-step-extract-lv)",
+            "note": "REMOVE CONDUCTOR legend entry is present but specific pole reference numbers ('23' and '20') and the location qualifier 'southern side of Elizabeth Drive' are not verifiable from the legend data alone. Granular location and pole reference detail is absent from the Site Plan reference data provided."
+          },
+          {
+            "item": "String new OH LV cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive",
+            "design_brief_reference": "Method Of Supply Requirement, Page 2 (sub-step-extract-lv)",
+            "note": "STRING NEW OH CABLE legend entry is present but specific pole reference numbers ('3' and '20') and the location qualifier 'northern side of Elizabeth Drive' are not verifiable from the legend data provided. Detailed routing and pole-to-pole specifics cannot be confirmed."
+          },
+          {
+            "item": "New OH road crossing service connection to maintain existing services",
+            "design_brief_reference": "Method Of Supply Requirement, Page 2 (sub-step-extract-lv)",
+            "note": "No specific legend symbol or label for an OH road crossing service connection is present in the Site Plan legend. This work item has no direct representation in the provided legend entries."
+          },
+          {
+            "item": "SL Works: Remove SL and Install new SL",
+            "design_brief_reference": "Method Of Supply Requirement, Page 2 (sub-step-extract-sl)",
+            "note": "No legend symbol or label specifically representing street lighting (SL) removal or installation is present in the Site Plan legend data. REMOVE LANTERN and NEW LANTERN entries exist which may partially represent SL works, but no explicit 'REMOVE SL' or 'INSTALL NEW SL' label is present, and street light column/lantern removal versus SL supply cable works are not fully captured."
+          },
+          {
+            "item": "Spare HV duct capital contribution as per Fact Sheet 11",
+            "design_brief_reference": "Determination of Funding, Page 4 (sub-step-extract-funding-determination)",
+            "note": "EXISTING DUCTS and NEW HV TRENCH legend entries exist, but no annotation or symbol specifically identifying a 'spare HV duct' or its association with Fact Sheet 11 is present in the Site Plan legend. The funding and asset designation detail is absent from the Site Plan."
+          },
+          {
+            "item": "Duct usage charge as required",
+            "design_brief_reference": "Determination of Funding, Page 4 (sub-step-extract-funding-determination)",
+            "note": "This is a financial/commercial obligation item. No corresponding symbol, label, or notation representing duct usage charges is present in the Site Plan legend. Commercial terms are not represented in drawing legend data."
+          },
+          {
+            "item": "Network switching, substation commissioning, contract inspection (Customer funded non-contestable)",
+            "design_brief_reference": "Determination of Funding, Page 4 (sub-step-extract-funding-determination)",
+            "note": "Substation symbols (PADMOUNT SUBSTATION, POLE SUBSTATION) are present in the legend but no symbols or labels representing network switching operations, commissioning activities, or contract inspection are present. These are procedural/commercial items with no direct Site Plan legend representation."
+          },
+          {
+            "item": "Compliance with MDI0031, MCI0005, and NSW Service and Installation Rules",
+            "design_brief_reference": "Method Of Supply Requirement, Page 2 (sub-step-extract-hv and sub-step-extract-lv)",
+            "note": "Compliance standards and mandatory codes are not represented in the Site Plan legend data. These are regulatory requirements referenced in the Design Brief with no corresponding drawing symbol or legend entry."
+          }
+        ],
+        "summary": "The Design Brief specifies 12 distinct method of supply requirements and work items spanning HV works, LV works, SL works, service connections, duct provisions, and associated funding obligations. The Site Plan legend provides partial representation for overhead cable stringing, conductor removal, pole-related works, HV and LV trenching, duct infrastructure, and substation assets through its symbol set. However, significant gaps exist: specific pole reference numbers and route locations cannot be verified from legend data alone; no dedicated SL removal or installation symbols are present beyond generic lantern entries; the new OH road crossing service connection has no legend representation; spare HV duct designation is not explicitly shown; and all commercial, financial, and compliance standard items from the Design Brief have no corresponding Site Plan legend entries. Overall, the Site Plan legend supports the general nature of the works but lacks the granular asset-level, location-specific, and commercial detail required to fully validate all Design Brief method of supply requirements."
+      }
+    },
+    "funding_arrangement_comparison": {
+      "funding_arrangement_comparison": {
+        "design_brief_funded_works": [
+          "Spare HV duct as per Fact Sheet 11 (Endeavour Energy capital contribution)",
+          "Duct usage charge as required (Customer reimbursement to Endeavour Energy)",
+          "Network switching (Customer funded non-contestable works)",
+          "Substation commissioning (Customer funded non-contestable works)",
+          "Contract inspection (Customer funded non-contestable works)",
+          "All other works required (Customer funded contestable works)",
+          "Remove OH LV cable between pole ref 23 and pole ref 20 (SL/LV works)",
+          "String new OH cable between pole ref 3 and pole ref 20 (SL/LV works)",
+          "New OH road crossing service connection (SL/LV works)",
+          "Remove OH HV cables between specific pole refs (HV works)",
+          "Install new OH HV cable locations (HV works)"
+        ],
+        "drawing_scope_found": [
+          "STRING NEW OH CABLE - legend entry present (Short dashed line); corresponds to 'String new OH cable between pole ref 3 and pole ref 20' and 'Install new OH HV cable locations'",
+          "REMOVE CONDUCTOR - legend entry present (Dotted line); corresponds to 'Remove OH LV cable between pole ref 23 and pole ref 20' and 'Remove OH HV cables between specific pole refs'",
+          "EXISTING OH CABLE - legend entry present (Solid thin line); provides context for existing OH infrastructure being removed or modified",
+          "EXISTING POLE - legend entry present (Small solid black filled circle); supports pole ref references in the Design Brief",
+          "NEW POLE - legend entry present (Small hollow open circle); supports new pole installations implied by new cable stringing works",
+          "REMOVE POLE - legend entry present (Small solid black filled circle with large X); supports potential pole removals associated with HV/LV removal works",
+          "EXISTING DUCTS - legend entry present (Thick heavy solid black line); corresponds to existing duct infrastructure relevant to spare HV duct and duct usage charge items",
+          "NEW HV TRENCH - legend entry present (Solid line with two diagonal slash marks); corresponds to new HV installation works",
+          "NEW LV TRENCH - legend entry present (Long dashed line); corresponds to new LV/SL works scope"
+        ],
+        "missing_from_drawing": [
+          {
+            "item": "Spare HV duct as per Fact Sheet 11 (Endeavour Energy capital contribution)",
+            "design_brief_reference": "Determination of Funding, page 4",
+            "note": "No specific drawing symbol or legend entry explicitly identifies a 'spare HV duct' or references Fact Sheet 11. While 'EXISTING DUCTS' and 'NEW HV TRENCH' are present in the legend, neither distinctly represents a spare duct allocation as a funded capital contribution item. The spare duct scope is not visually distinguishable in the drawing legend."
+          },
+          {
+            "item": "Duct usage charge as required (Customer reimbursement to Endeavour Energy)",
+            "design_brief_reference": "Determination of Funding, page 4",
+            "note": "No drawing symbol or legend entry represents a duct usage charge. This is a financial/administrative obligation with no corresponding visual depiction in the site plan or legend."
+          },
+          {
+            "item": "Network switching (Customer funded non-contestable works)",
+            "design_brief_reference": "Determination of Funding, page 4",
+            "note": "No legend entry or drawing symbol specifically represents network switching operations. While HV ABS (N/C) and HV USL (N/C) appear in the legend as switching-related equipment, no switching work action symbol (e.g. 'OPERATE SWITCH' or similar) is present. The funded switching activity is not explicitly scoped in the drawing."
+          },
+          {
+            "item": "Substation commissioning (Customer funded non-contestable works)",
+            "design_brief_reference": "Determination of Funding, page 4; Method of Supply Requirement, page 2",
+            "note": "Substation commissioning is identified as a funded non-contestable work in the Design Brief, but no corresponding substation element (e.g. PADMOUNT SUBSTATION or POLE SUBSTATION symbols) appears to be specifically called out in the site plan data as being commissioned or installed. The legend contains PADMOUNT SUBSTATION and POLE SUBSTATION symbols, but no 'NEW SUBSTATION' or 'COMMISSION SUBSTATION' action legend entry exists to confirm this scope is depicted."
+          },
+          {
+            "item": "Contract inspection (Customer funded non-contestable works)",
+            "design_brief_reference": "Determination of Funding, page 4",
+            "note": "Contract inspection is an administrative/procedural funded work item with no corresponding drawing symbol or legend entry. It cannot be visually represented or verified in the site plan."
+          },
+          {
+            "item": "All other works required (Customer funded contestable works)",
+            "design_brief_reference": "Determination of Funding, page 4",
+            "note": "This is an open-ended catch-all funding category with no specific scope definition in the Design Brief. Without further detail, it is not possible to verify whether all implied works are depicted in the drawing. The vague nature of this item means potential works may be unaccounted for in the drawing."
+          },
+          {
+            "item": "New OH road crossing service connection (SL/LV works)",
+            "design_brief_reference": "Method of Supply Requirement, page 2",
+            "note": "A new OH road crossing service connection is described in the LV works section, but no specific legend entry for 'ROAD CROSSING' or 'SERVICE CONNECTION' exists in the drawing legend. The closest applicable symbol is 'STRING NEW OH CABLE', but this does not explicitly identify a road crossing service connection as a distinct funded scope item."
+          }
+        ],
+        "summary": "Of the 11 distinct funded work items identified in the Design Brief, approximately 4 have reasonably corresponding legend entries or drawing symbols in the site plan (removal of OH conductors, stringing of new OH cables, HV trench works, LV trench works). However, 7 items are either missing from or not explicitly represented in the drawing: the spare HV duct capital contribution, the duct usage charge, network switching operations, substation commissioning, contract inspection, the catch-all contestable works category, and the new OH road crossing service connection. The drawing legend lacks action-specific symbols for commissioning, switching, inspection, and service crossing activities, and no symbol distinguishes a 'spare' duct from existing duct infrastructure. These gaps indicate that the drawing does not fully account for the complete funding arrangement scope described in the Design Brief."
+      }
+    },
+    "asset_register": {
+      "asset_register": [
+        {
+          "asset_id": "A001",
+          "asset_type": "cable",
+          "description": "Remove OH LV cable between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive",
+          "legend_label": "REMOVE CONDUCTOR",
+          "legend_category": "cable",
+          "action_status": "remove",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "A002",
+          "asset_type": "cable",
+          "description": "String new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive",
+          "legend_label": "STRING NEW OH CABLE",
+          "legend_category": "cable",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "A003",
+          "asset_type": "cable",
+          "description": "New OH road crossing service connection to maintain existing services",
+          "legend_label": "STRING NEW OH CABLE",
+          "legend_category": "cable",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "A004",
+          "asset_type": "cable",
+          "description": "Removal of OH HV cables between specific pole refs",
+          "legend_label": "REMOVE CONDUCTOR",
+          "legend_category": "cable",
+          "action_status": "remove",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "A005",
+          "asset_type": "cable",
+          "description": "Installation of new OH HV cable at new locations",
+          "legend_label": "STRING NEW OH CABLE",
+          "legend_category": "cable",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "A006",
+          "asset_type": "cable",
+          "description": "Spare HV duct as per Fact Sheet 11 - capital contribution by Endeavour Energy",
+          "legend_label": "EXISTING DUCTS",
+          "legend_category": "cable",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "A007",
+          "asset_type": "cable",
+          "description": "Duct usage charge as required - reimbursement to Endeavour Energy by Customer",
+          "legend_label": "EXISTING DUCTS",
+          "legend_category": "cable",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "A008",
+          "asset_type": "substation",
+          "description": "Substation commissioning - customer funded non-contestable works",
+          "legend_label": null,
+          "legend_category": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "A009",
+          "asset_type": "service",
+          "description": "Network switching - customer funded non-contestable works",
+          "legend_label": null,
+          "legend_category": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "A010",
+          "asset_type": "service",
+          "description": "Contract inspection - customer funded non-contestable works",
+          "legend_label": null,
+          "legend_category": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "A011",
+          "asset_type": "service",
+          "description": "All other works required - customer funded contestable works",
+          "legend_label": null,
+          "legend_category": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        }
+      ],
+      "register_summary": {
+        "total": 11,
+        "new": 3,
+        "remove": 2,
+        "replace": 0,
+        "existing": 2,
+        "unknown": 4,
+        "found_on_diagram": 7,
+        "not_found": 4
+      }
+    }
+  },
+  "summary": {
+    "total_assets": 11,
+    "found_on_diagram": 7,
+    "not_found": 4,
+    "supply_scope_gaps": 10,
+    "drawing_scope_gaps": 7
+  }
+}

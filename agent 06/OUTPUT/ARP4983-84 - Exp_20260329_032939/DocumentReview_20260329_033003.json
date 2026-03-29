@@ -1,0 +1,133 @@
+{
+  "search_context": "Scan the project document folder for all relevant documents. Use the search context and document categorisation rules from the process knowledge files (proc-extract-design-brief-info, proc-extract-site-plan-info, and proc-extract-asset-spreadsheet) to determine which files to include and how to classify each document type. For each file found, read the document content and classify it as one of: 'Design Brief', 'Architectural Brief', 'Services Brief', 'Town Planning Report', 'Reticulation Drawing', 'Site Plan Drawing', 'Substation Diagram', 'Network Diagram', or 'TAL'. Any Excel spreadsheet file (.xlsx or .xls) containing asset register, equipment schedule, or inventory data (columns for Asset ID, Asset Type, Location, Condition Rating, or similar) must be classified as 'TAL' (Technical Asset List). Classification must be based on document content \u2014 what the document actually contains \u2014 not its filename. Produce a structured document list with metadata for all matched files.\n\n=== Knowledge: Extract Information from Design Brief ===\nSearch Context: Design brief documents for a customer connections application submitted to Endeavour Energy. Target documents include: project design briefs (PDF documents containing a 'Method of Supply Requirement' section and a 'Determination of Funding Requirements' section), customer connection offer documents, and any associated architectural, services, or town planning reports. Key filename indicators: documents with 'DESIGN_BRIEF', 'BRIEF', or 'ARP' (Endeavour Energy project reference) in the filename. Key content indicators: structured sections covering HV Works, LV Works, SL Works, Earthing, Easements, Substation works, and a funding determination table listing items with responsible party and funding category. Exclude: reticulation drawings and engineering drawing files identified by 'RETIC' or 'DWG' in the filename \u2014 these are Site Plan documents and must be assigned document_category 'Site Plan'.\nDocument Category 'Design Brief': Positive filename patterns: [\"Contains 'BRIEF' or 'brief' (e.g. DESIGN_BRIEF, Design_Brief)\", \"Contains 'DB' as a standalone component of the filename\", \"Contains 'ARP' followed by a project number (typical Endeavour Energy design brief naming convention)\", \"Contains 'DESIGN' in conjunction with project or ARP references\", \"Contains 'architectural', 'services', 'structural', or 'town_planning'\"]. Document type values: ['Design Brief', 'Architectural Brief', 'Services Brief', 'Structural Brief', 'Town Planning Report', 'Connection Offer', 'Customer Connection Brief']. Negative filename patterns (exclude from this category): [\"Contains 'RETIC' or 'retic' (indicates a reticulation drawing)\", \"Contains 'DWG' (indicates an engineering drawing file)\", \"Contains 'SITEPLAN' or 'site_plan'\", \"Contains 'SUBSTATION' or 'substation' as the primary descriptor (not as a section heading within a brief)\"].\n\n=== Knowledge: Extract Information from Site Plans ===\nSearch Context: Site plan drawings for an electrical network project submitted to Endeavour Energy. Target documents include: electrical network diagrams showing HV and LV infrastructure, substation layout drawings (pole substations, padmount substations, kiosk substations), site layout plans with electrical asset annotations, and engineering drawings containing a 'Substation Notes' or 'Sub Notes' callout table. Key filename indicators: documents with 'RETIC' (reticulation drawing), 'DWG' (engineering drawing), or a drawing number prefix (e.g. D followed by digits, A followed by digits) in the filename. Key content indicators: a Substation Notes annotation block, a NOTES section with numbered notes, ATTENTION/WARNING/CAUTION callouts, easement creation notes, and field check compliance notes. Engineering drawings produced to Endeavour Energy or similar network operator standards. Target file types: PDF engineering drawings, scanned drawing sets. Exclude: design brief documents identified by 'BRIEF' or 'DESIGN_BRIEF' in the filename.\nDocument Category 'Site Plan': Positive filename patterns: [\"Contains 'RETIC' or 'retic' (e.g. ARP4983_RETIC, D526458_ARP4983_RETIC \u2014 indicates a reticulation drawing)\", \"Contains 'DWG' as part of the filename (indicates an engineering drawing)\", \"Contains 'SITEPLAN', 'SITE_PLAN', or 'site_plan'\", \"Contains 'SUBSTATION' or 'SUB' as the primary descriptor (not as a section heading within a brief)\", 'Drawing number prefix format (e.g. D followed by digits, A followed by digits) typical of network operator drawing numbering conventions', \"Contains 'ELEC', 'ELECTRICAL', or 'NETWORK' in conjunction with a drawing reference\"]. Document type values: ['Reticulation Drawing', 'Electrical Network Diagram', 'Site Plan Drawing', 'Substation Drawing', 'Network Diagram', 'Engineering Drawing', 'HV Network Diagram', 'LV Network Diagram', 'Pole Substation Drawing', 'Padmount Substation Drawing']. Negative filename patterns (exclude from this category): [\"Contains 'BRIEF' or 'brief' (e.g. DESIGN_BRIEF, Design_Brief)\", \"Contains 'ARP' as a standalone prefix without a drawing number suffix\"].\n\n=== Knowledge: Extract Information from Asset Spreadsheet ===\nSearch Context: Asset register or asset management spreadsheet files submitted as part of a project document package. Target documents include: Excel spreadsheets (.xlsx, .xls, .xlsm, .xlsb) containing lists of electrical network assets (transformers, switchgear, cables, poles, substations, meters), asset inventory registers, asset condition assessment spreadsheets, and equipment schedules. Key filename indicators: documents with 'ASSET', 'REGISTER', 'SCHEDULE', 'INVENTORY', 'EQUIPMENT', or 'PLANT' in the filename. Key content indicators: tabular data with columns for asset identifiers, asset types, locations, condition ratings, and technical specifications. Exclude: PDF documents and engineering drawings \u2014 these are covered by separate processes.\nDocument Category 'TAL': Positive filename patterns: [\"Contains 'ASSET' or 'asset' (e.g. ASSET_REGISTER, Asset_List)\", \"Contains 'REGISTER' or 'register'\", \"Contains 'SCHEDULE' or 'schedule' in the filename\", \"Contains 'INVENTORY' or 'inventory'\", \"Contains 'EQUIPMENT' or 'equipment'\", \"Contains 'PLANT' in conjunction with register or list\", 'Has file extension .xlsx, .xls, .xlsm, or .xlsb']. Document type values: ['Asset Register', 'Asset Schedule', 'Equipment Schedule', 'Plant Register', 'Asset Inventory', 'Asset Condition Assessment', 'Network Asset Register']. Negative filename patterns (exclude from this category): [\"Contains 'RETIC' or 'retic' (indicates a reticulation drawing)\", \"Contains 'DWG' (indicates an engineering drawing file)\", \"Contains 'BRIEF' or 'brief' (indicates a design brief)\"].",
+  "folder_path": "/documents/ARP4983-84 - Exp/",
+  "total_files_scanned": 3,
+  "matched_files": 3,
+  "documents": [
+    {
+      "filename": "ARP4983 _DESIGN_BRIEF_v1.0.pdf",
+      "document_title": "ARP4983 \u2013 LOT DP Asset Relocation Application: Package 3 Elizabeth Street, CECIL PARK",
+      "document_type": "Design Brief",
+      "author": "Endeavour Energy",
+      "date": "2022-04-26",
+      "project_name": "LOT DP Asset Relocation Application: Package 3 Elizabeth Street, CECIL PARK",
+      "project_number": "ARP4983",
+      "revision": "v1.0",
+      "confidence": 0.97,
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "pdfplumber",
+      "quality_note": "Text-based document. 4000 characters extracted. Reader: pdfplumber."
+    },
+    {
+      "filename": "ARP4983_TAL_20241112.XLSM",
+      "document_title": "ARP4983 TAL Document",
+      "document_type": "TAL",
+      "author": null,
+      "date": "2024-11-12",
+      "project_name": null,
+      "project_number": "ARP4983",
+      "revision": null,
+      "confidence": 0.97,
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "openpyxl",
+      "quality_note": "Text-based document. 4000 characters extracted. Reader: openpyxl."
+    },
+    {
+      "filename": "D526458_ARP4983_RETIC_LEGEND.pdf",
+      "document_title": "RETIC LEGEND",
+      "document_type": "Reticulation Drawing",
+      "author": null,
+      "date": null,
+      "project_name": null,
+      "project_number": "D526458",
+      "revision": "ARP4983",
+      "confidence": 0.9,
+      "content_type": "image",
+      "text_quality": "none",
+      "recommended_reader": "ocr-required",
+      "quality_note": "PDF appears to be a scanned image. OCR is required to extract text."
+    }
+  ],
+  "scan_results": [
+    {
+      "filename": "ARP4983 _DESIGN_BRIEF_v1.0.pdf",
+      "file_size_bytes": 267256,
+      "last_modified": "2026-03-07T15:05:15.444776",
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "pdfplumber",
+      "quality_note": "Text-based document. 4000 characters extracted. Reader: pdfplumber.",
+      "filename_match": true,
+      "filename_confidence": 0.9,
+      "filename_reasoning": "The filename 'ARP4983_DESIGN_BRIEF_v1.0.pdf' contains 'DESIGN_BRIEF', which is a positive indicator for a Design Brief document. Additionally, 'ARP' followed by a project number is a typical Endeavour Energy design brief naming convention. These elements strongly suggest that this file is a Design Brief document.",
+      "content_match": true,
+      "content_confidence": 1.0,
+      "content_reasoning": "The document contains key sections such as 'Method of Supply Requirement' and 'Determination of Funding Requirements', which are indicative of a Design Brief. Additionally, the filename includes 'DESIGN_BRIEF', and the content aligns with the structured sections expected in a Design Brief, such as HV Works, LV Works, and funding determination. These factors confirm it as a Design Brief with high confidence.",
+      "matched_document_type": "Design Brief",
+      "overall_confidence": 0.97,
+      "metadata": {
+        "document_title": "ARP4983 \u2013 LOT DP Asset Relocation Application: Package 3 Elizabeth Street, CECIL PARK",
+        "document_type": "Design Brief",
+        "author": "Endeavour Energy",
+        "date": "2022-04-26",
+        "project_name": "LOT DP Asset Relocation Application: Package 3 Elizabeth Street, CECIL PARK",
+        "project_number": "ARP4983",
+        "revision": "v1.0"
+      }
+    },
+    {
+      "filename": "ARP4983_TAL_20241112.XLSM",
+      "file_size_bytes": 21200,
+      "last_modified": "2026-03-27T23:37:10.289113",
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "openpyxl",
+      "quality_note": "Text-based document. 4000 characters extracted. Reader: openpyxl.",
+      "filename_match": true,
+      "filename_confidence": 0.9,
+      "filename_reasoning": "The filename 'ARP4983_TAL_20241112.XLSM' contains 'TAL', which is a common abbreviation for Technical Asset List, and has the file extension '.XLSM', indicating it is an Excel spreadsheet. This aligns with the positive filename patterns for the 'TAL' document category, which includes Excel spreadsheets with asset-related terms. The presence of 'ARP' suggests it may be related to a project reference, further supporting its relevance. However, without content verification, the confidence is not absolute.",
+      "content_match": true,
+      "content_confidence": 1.0,
+      "content_reasoning": "The file is an Excel spreadsheet (.XLSM) containing tabular data with columns for asset identifiers, asset types, locations, and other technical specifications. This matches the criteria for a Technical Asset List (TAL) as described in the process knowledge files. The presence of asset-related data such as 'Asset Type', 'Location', and 'Equipment Owner' confirms its classification as a TAL.",
+      "matched_document_type": "TAL",
+      "overall_confidence": 0.97,
+      "metadata": {
+        "document_title": "ARP4983 TAL Document",
+        "document_type": "TAL",
+        "author": null,
+        "date": "2024-11-12",
+        "project_name": null,
+        "project_number": "ARP4983",
+        "revision": null
+      }
+    },
+    {
+      "filename": "D526458_ARP4983_RETIC_LEGEND.pdf",
+      "file_size_bytes": 1081812,
+      "last_modified": "2026-03-27T23:29:28.658410",
+      "content_type": "image",
+      "text_quality": "none",
+      "recommended_reader": "ocr-required",
+      "quality_note": "PDF appears to be a scanned image. OCR is required to extract text.",
+      "filename_match": true,
+      "filename_confidence": 0.9,
+      "filename_reasoning": "The filename contains 'RETIC', which is a key indicator for a reticulation drawing, and it follows a drawing number prefix format typical of network operator drawing numbering conventions. These patterns align with the criteria for classifying a document as a 'Reticulation Drawing' under the 'Site Plan' category. The presence of 'ARP' suggests a project reference, further supporting the classification. However, without content verification, the confidence is not absolute.",
+      "content_match": true,
+      "content_confidence": 0.9,
+      "content_reasoning": "The filename contains 'RETIC', which is a key indicator for a reticulation drawing as per the Site Plan extraction rules. Although the PDF contained no extractable text, the filename pattern strongly suggests it is a reticulation drawing, which falls under the 'Site Plan' category. The absence of extractable text slightly reduces confidence, but the filename pattern is a strong indicator.",
+      "matched_document_type": "Reticulation Drawing",
+      "overall_confidence": 0.9,
+      "metadata": {
+        "document_title": "RETIC LEGEND",
+        "document_type": "Reticulation Drawing",
+        "author": null,
+        "date": null,
+        "project_name": null,
+        "project_number": "D526458",
+        "revision": "ARP4983"
+      }
+    }
+  ]
+}

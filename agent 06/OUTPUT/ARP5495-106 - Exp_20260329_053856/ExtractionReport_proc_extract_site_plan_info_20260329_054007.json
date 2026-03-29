@@ -1,0 +1,196 @@
+{
+  "process_step": {
+    "step_id": "Extract Site Plan Information",
+    "step_name": "Extract Site Plan Information",
+    "summary": null,
+    "details": "NOTE: Only process documents with route_to_step=5 (document_category=\"Site Plan\"). TAL spreadsheet files and Design Brief files must be excluded. Using the processing plan from Step 2, filter the document list to only those where 'document_category' is 'Site Plan'. Do not process any document tagged as 'Design Brief'. For each Site Plan document, run the two-phase extraction defined in proc-extract-site-plan-info. Phase 1 extracts all numbered notes and callout annotations (ATTENTION/WARNING/CAUTION/NOTICE) from every page of the drawing in full. Phase 2 analyses those extracted notes to produce four structured checks: (1) Substation Data \u2014 extract the seven Substation Notes fields (Substation Asset Number, Transformer Size, HV Switchgear with 1.5MVA Siemens RLR override rule, Voltage Level, LV Switchgear, Cubicle Size, Earthing); (2) Assets Field Check Compliance \u2014 verify note 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' is present and answered YES; (3) Easement Restriction \u2014 check for the swimming pool restriction-on-use-of-land easement note; (4) Easement Substation \u2014 check for the padmount substation easement note with dimensions and lot number.",
+    "expected_output": {
+      "description": "Step 3: Extract Site Plan Information \u2014 Five structured extraction outputs per document: complete drawing notes, substation structured data, field check compliance result, and two easement check results.",
+      "fields": {
+        "sub-step-extract-all-notes": "Complete list of all numbered notes and standalone callouts from every page, in sequence order",
+        "sub-step-substation-data": "Formatted string with all seven Substation Notes fields, with 1.5MVA override notation where applicable",
+        "sub-step-field-check": "'YES', 'NO', or 'NOT FOUND' result for the assets field-check compliance note",
+        "sub-step-easement-restriction": "Extracted restriction-on-use-of-land note text with lot number, or 'NOT REQUIRED' / 'NOT FOUND \u2014 REQUIRED'",
+        "sub-step-easement-substation": "Extracted padmount substation easement note text with dimensions and lot number, or 'NOT REQUIRED' / 'NOT FOUND \u2014 REQUIRED'"
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_number": 1,
+        "sub_step_id": "sub-step-extract-all-notes",
+        "sub_step_name": "Extract All Drawing Notes and Annotations",
+        "phase": 1,
+        "details": "Extract every textual note and annotation from every page of the drawing in full. This is a comprehensive raw extraction pass \u2014 do not filter or summarise. Capture: all numbered notes (1., 2., 3., ...) from the NOTES section with their complete text; all standalone ATTENTION:, WARNING:, CAUTION:, and NOTICE: callout blocks with their complete text; any inline hand-written or red-line markup annotations. Notes that span multiple drawing regions must be assembled into a single complete entry. This output is the source material for all Phase 2 sub-steps.",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate and Extract Numbered Notes Block",
+            "instructions": "Scan every page of the drawing for a dedicated NOTES section or numbered annotation block. Extract ALL individual notes listed, in sequence order (1., 2., 3., ...). Each note must be captured in full \u2014 do not truncate. If a note is split across adjacent image regions (common in large-format drawings), assemble the complete text. Include every note number in the final output \u2014 missing numbers indicate an incomplete extraction."
+          },
+          {
+            "title": "Extract Standalone Callout Annotations",
+            "instructions": "In addition to the numbered notes block, scan every page for standalone callout boxes or annotations with labels ATTENTION:, WARNING:, CAUTION:, or NOTICE:. These may appear anywhere on the drawing (not just in the NOTES block) and often contain critical safety, service, or access requirements. Extract each callout's label and its complete text. If the callout appears physically separate from the NOTES block, include it as an additional entry appended after the numbered notes (e.g. 'CAUTION: HIGH PRESSURE GAS MAINS IN VICINITY...')."
+          },
+          {
+            "title": "Extract Red-line and Hand-written Markups",
+            "instructions": "Look for hand-written or red-line markup annotations that modify or supplement the printed notes \u2014 for example, specific cable types, removal or addition instructions, or project-specific notes. Capture these verbatim and identify them as markups (e.g. '[MARKUP] Remove span between...')."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 2,
+        "sub_step_id": "sub-step-substation-data",
+        "sub_step_name": "Substation Notes \u2014 Structured Data Extraction",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, locate the Substation Notes annotation block and extract the seven structured data fields. Apply the conditional HV Switchgear rule: if Transformer Size is 1.5MVA, HV Switchgear must be recorded as 'Siemens RLR' regardless of what is written in the drawing, and the override must be explicitly noted in the output. Return all seven fields as a formatted multi-line string.",
+        "output_format": "Multi-line formatted string:\nSubstation Asset Number: [value or NOT FOUND]\nTransformer Size: [value or NOT FOUND]\nHV Switchgear: [value \u2014 if 1.5MVA rule applied, append: OVERRIDDEN per 1.5MVA rule \u2014 Siemens RLR required]\nVoltage Level: [value or NOT FOUND]\nLV Switchgear: [value or NOT FOUND]\nCubicle Size: [value or NOT FOUND]\nEarthing: [value or NOT FOUND]",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate Substation Notes Block",
+            "instructions": "Search the extracted notes and the drawing for annotations labelled 'Substation Notes', 'Sub Notes', or a similar heading. These are typically found in a table or callout box near the substation symbol or in the drawing title block area. Extract the heading and all fields within it."
+          },
+          {
+            "title": "Extract the Seven Data Fields",
+            "instructions": "From the Substation Notes block, extract each of the following fields as labelled: Substation Asset Number (unique ID assigned by the network operator, e.g. S1234 or a 6-digit number), Transformer Size (rated capacity with units, e.g. 1.5MVA, 500kVA, 200kVA), HV Switchgear (make and model, e.g. Siemens RLR, ABB SafeRing, or as written), Voltage Level (in kV, e.g. 11kV, 22kV, 33kV), LV Switchgear (make, model, and rating), Cubicle Size (dimensions or type code), and Earthing (type and compliance standard)."
+          },
+          {
+            "title": "Apply 1.5MVA Conditional HV Switchgear Rule",
+            "instructions": "Check the extracted Transformer Size. If it equals 1.5MVA (or equivalently 1500kVA), then regardless of what the drawing shows for HV Switchgear, record HV Switchgear as 'Siemens RLR' and append the note 'OVERRIDDEN per 1.5MVA rule \u2014 Siemens RLR required.' to that field. If the transformer size is not 1.5MVA, record HV Switchgear exactly as written in the Substation Notes."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 3,
+        "sub_step_id": "sub-step-field-check",
+        "sub_step_name": "Assets Field Check Compliance",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, verify that the drawing includes the mandatory assets field-check compliance note. The exact note required is: 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' answered with 'YES'. Return one of three values: 'YES' (note present, answered YES), 'NO' (note present, answered NO \u2014 flag as non-compliant), or 'NOT FOUND' (note is absent from the drawing \u2014 flag for follow-up).",
+        "required_note_text": "HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING",
+        "required_answer": "YES",
+        "output_format": "One of: 'YES' | 'NO' | 'NOT FOUND'",
+        "instructional_sub_steps": [
+          {
+            "title": "Search for Field Check Note",
+            "instructions": "Search all extracted notes for the text 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' or a close paraphrase. This note is typically numbered within the NOTES section and followed by 'YES' or 'NO'. Note: in the drawing the word 'DRAWING' may appear as 'DESIGN' \u2014 treat both as equivalent."
+          },
+          {
+            "title": "Read and Return the Answer",
+            "instructions": "Once the note is located, read the answer that follows it ('YES' or 'NO'). Return 'YES' if the answer is YES. Return 'NO' if the answer is NO (and add a flag: 'NON-COMPLIANT \u2014 field check not confirmed'). If the note cannot be found anywhere in the drawing, return 'NOT FOUND' (and add a flag: 'MISSING \u2014 this compliance note is mandatory')."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 4,
+        "sub_step_id": "sub-step-easement-restriction",
+        "sub_step_name": "Easement \u2014 Restriction on Use of Land (Swimming Pool Setback)",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, check whether the drawing includes the required restriction-on-use-of-land note relating to swimming pools within the substation easement setback. This note is required for any project that creates a substation easement. Extract the full note text including the lot number(s) referenced. If the note is absent, determine whether this is a padmount substation project \u2014 if so, flag as MISSING; if not, flag as NOT REQUIRED.",
+        "required_note_template": "A RESTRICTION ON THE USE OF LAND, IN RELATION TO SWIMMING POOLS, MEASURED 5m FROM THE SUBSTATION EASEMENT IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxx]",
+        "output_format": "Full extracted note text with lot number(s), or 'NOT REQUIRED' (not a substation easement project), or 'NOT FOUND \u2014 REQUIRED' (substation easement project but note is missing)",
+        "instructional_sub_steps": [
+          {
+            "title": "Search for Restriction Note",
+            "instructions": "Search all extracted notes for text containing 'RESTRICTION ON THE USE OF LAND', 'SWIMMING POOL', '5m FROM THE SUBSTATION EASEMENT', or 'IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT'. This note may appear within the numbered NOTES section or as a separate annotation."
+          },
+          {
+            "title": "Extract Note Text and Lot Number",
+            "instructions": "If found, extract the full note text verbatim. Identify and record the lot number(s) referenced after 'WITHIN PROPOSED LOT' \u2014 this is a critical compliance detail. Return the complete extracted text as the field value."
+          },
+          {
+            "title": "Determine Applicability if Not Found",
+            "instructions": "If the note is not found, check whether the project involves a padmount substation (look for 'padmount', 'PADMOUNT', or 'PAD MOUNT' in the Substation Notes or drawing annotations). If a padmount substation is involved, this note is mandatory \u2014 return 'NOT FOUND \u2014 REQUIRED (padmount substation project detected)'. If no padmount substation is present, return 'NOT REQUIRED'."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 5,
+        "sub_step_id": "sub-step-easement-substation",
+        "sub_step_name": "Easement \u2014 Padmount Substation Easement Creation",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, check whether the drawing includes the required padmount substation easement creation note. This note is required for all projects involving a padmount substation. Extract the full note text including the easement dimensions and lot number(s) referenced. If the note is absent and the project involves a padmount substation, flag as MISSING.",
+        "required_note_template": "AN EASEMENT FOR PADMOUNT SUBSTATION MINIMUM [x]m x [x]m IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxxx]",
+        "output_format": "Full extracted note text with easement dimensions and lot number(s), or 'NOT REQUIRED' (not a padmount substation project), or 'NOT FOUND \u2014 REQUIRED' (padmount substation project but note is missing)",
+        "instructional_sub_steps": [
+          {
+            "title": "Search for Padmount Easement Note",
+            "instructions": "Search all extracted notes for text containing 'EASEMENT FOR PADMOUNT SUBSTATION', 'PADMOUNT SUBSTATION MINIMUM', or 'CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT' alongside a dimension or measurement. This note may appear within the numbered NOTES section or as a standalone annotation."
+          },
+          {
+            "title": "Extract Easement Dimensions and Lot Number",
+            "instructions": "If found, extract the full note text verbatim. Specifically identify: (a) the easement dimensions stated after 'MINIMUM' (e.g. '3m x 4m', '4.5m x 6m') and (b) the lot number(s) referenced after 'WITHIN PROPOSED LOT'. Both details are critical \u2014 record them clearly in the output."
+          },
+          {
+            "title": "Determine Applicability if Not Found",
+            "instructions": "If the note is not found, check whether the project involves a padmount substation (look for 'padmount', 'PADMOUNT', or 'PAD MOUNT' in the Substation Notes or drawing annotations). If a padmount substation is involved, this note is mandatory \u2014 return 'NOT FOUND \u2014 REQUIRED (padmount substation project detected)'. If no padmount substation is present, return 'NOT REQUIRED'."
+          }
+        ]
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/ARP5495-106 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "A534927_ARP5495_RETIC.pdf",
+      "filepath": "",
+      "document_type": "Reticulation Drawing",
+      "document_category": "Site Plan",
+      "input_text_quality": "none",
+      "document_quality": "chunked-image",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "page-split",
+      "estimated_chunks": 1,
+      "actual_chunks_processed": 1,
+      "process_step_name": "Extract Site Plan Information",
+      "total_sections": 1,
+      "relevant_sections": 1,
+      "raw_text_from_chunks": "[full-page, p1, seq1] \u2190OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS\n\u2022 LIVE LINE WORK\n\u2022 DESIGN ALTERNATIVES\n\u2022 LOW VOLTAGE PARALLELS\n\u2022 WORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\n\nDUCT END LOCATION DETAIL\n\nGROUND LEVEL\n\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\n\nPOLE/COLUMN SETOUT\n\nPOLE/COLUMN\n\nEASTING\n\nNORTHING\n2013090\n299066.9420\n6278401.2810\n1011307\n299030.2480\n6278402.9470\n1011308\n299019.4864\n6278421.9126\n1011309\n299005.4736\n6278441.8105\n1011310\n298984.1739\n6278467.6767\n1011311\n299030.2480\n6278402.9470\n\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\n\nWORKS COMPLETED:\n\nSIGNATURE:\n\nDATE:\n\nINSPECTED BY:\n\nSIGNATURE:\n\nDATE:\nASSET RECORDING\nof:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG.2004.\nSIGNATURE:\n\nDATE:\n\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\n\nDESIGN COMPLIANCE AND INDEMNITY\n\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMX: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Instruction\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nIDI: Installation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\n\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards.\nSigned: 7/\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2025\n\nSITE PLAN LEGEND\nEXISTING OVERHEAD MAINS\nEXISTING UNDERGROUND CABLE\nREMOVE EXISTING OVERHEAD\nNEW UNDERGROUND MAINS\nNEW OVERHEAD CONDUCTOR\nNEW LV TRENCH\nEXISTING POLE\nREMOVE POLE\nNEW POLE\nREPLACE POLE\nEXISTING SL LANTERN\nREMOVE SL LANTERN\nNEW SL LANTERN\nNEW SL FLOOD\nEXISTING PILLAR\nNEW COLUMN\nEXISTING COLUMN\nUGOH\nJOINT\nEND SHACKLE\nEXISTING HV USL CLOSED\nEXISTING SL NIGHT WATCH\nEXISTING HV ABS CLOSE - REMOVE\nNEW HV ABS CLOSE\nNEW SLOP CELL\n\nEXISTING SLOP CELL - REMOVE\n\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\n\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\n\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\n\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\n\nN/A\n\nENDEAVOUR ENERGY\nFUNDED & CONSTRUCTED\n\nWorks Required Prior to\nCompletion of Customer-\nContestable Project\n\nN/A\n\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\n\nN/A\n\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\n\nINSPECTION AND ACCESS AUTHORITY (AS PER FEE SENT BY EE's\n- SYSTEM SWITCHING OWNER)\n\nCUSTOMER FUNDED\n\nINCLUDES BUT NOT LIMITED TO:\n- PEGGING OF PROPERTY BOUNDARIES AND\nINFRASTRUCTURE LOCATIONS\n- PROVIDING SITE ACCESS\n- CONFIRM FINISHED GROUND LEVELS\n\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\n\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01\nMONTH: 06\nYEAR: 2025\n\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP.\n\u2022 3 x TIMBER POLE\n\u2022 1 x HV ABS\n\n\n\nAPPROVAL TO CONNECT TO PUBLIC LIGHTING\nReviewers Name:\nDate Approved:\nReviewers:\nSignature:\nThis approval is issued subject to Endeavour Energy's General Terms &\nConditions for connection of Public Lighting Assets and is specifically for\nDrawing No:\nAmendment\n\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN\nTHIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TEL:\n1100 FOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\n\nKEY DOCUMENTS TABLE\n\nTHE CERTIFICATION OF THIS PROJECT IS SUPPORTED BY THE FOLLOWING KEY DOCUMENTS:\n\nDOCUMENT NAME\n\nSUMMARY OF ENVIRONMENTAL REPORT (SER) - FAT15235 PART OF EMS0003\nDESIGN SAFETY REPORT\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FR.65573\n\nNOTES\n1.\n\nTHIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECT ON POLICY.\nENDEAVOUR ENERGY CONTACT PHONE: 131 081.\nDESIGN CERTIFICATION SHALL LAPSE WHERE: -\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION.\n\n2.\n3.\n\nOR\n\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\nATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\nATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEASE CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\nATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\nOPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS;\n\u2022 LIVE LINE WORK;\n\u2022 DESIGN ALTERNATIVES;\n\u2022 LOW VOLTAGE PARALLELS;\n\u2022 WORK PRACTICES/STANDARDS;\nTHE COST IS TO BE FUNDED BY THE\nCUSTOMER/DEVELOPER.\nREIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED IN WRITING WITH\nENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF\nWORKS.\nHAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\nKEY NO:\nENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN.\n\n4.\n\n5.\n6.\n\n7.\n\n8.\n\n9.\n\n10.\n\n11.\n\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE/PILLAR REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- TRENCHING\n- DUCT INSTALLATION\n\nSAFETY IN DESIGN INFORMATION\nSAFETY IN DESIGN ISSUES HAVE BEEN\nASSESSED AS PART OF THIS DESIGN.\nPROCESSES & PRECAUTIONS HAVE\nBEEN TAKEN TO ENSURE HAZARDS AND RISKS\nNORMALLY ASSOCIATED WITH THIS TYPE OF\nDESIGN HAVE BEEN MITIGATED AND/OR\nCONTROLLED.\nRESIDUAL HAZARDS AND RISKS AND/OR\nHAZARDS AND RISKS NOT NORMALLY\nASSOCIATED WITH THIS TYPE OF WORK WHICH\nMAY REQUIRE SUBSEQUENT CONSIDERATION\nAND/OR ACTION ARE DESCRIBED IN: -\nARP5495 - Design Safety Report",
+      "chunk_details": [
+        {
+          "chunk_id": "chunk_0001",
+          "sequence": 1,
+          "page_number": 1,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "\u2190OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS\n\u2022 LIVE LINE WORK\n\u2022 DESIGN ALTERNATIVES\n\u2022 LOW VOLTAGE PARALLELS\n\u2022 WORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\n\nDUCT END LOCATION DETAIL\n\nGROUND LEVEL\n\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\n\nPOLE/COLUMN SETOUT\n\nPOLE/COLUMN\n\nEASTING\n\nNORTHING\n2013090\n299066.9420\n6278401.2810\n1011307\n299030.2480\n6278402.9470\n1011308\n299019.4864\n6278421.9126\n1011309\n299005.4736\n6278441.8105\n1011310\n298984.1739\n6278467.6767\n1011311\n299030.2480\n6278402.9470\n\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\n\nWORKS COMPLETED:\n\nSIGNATURE:\n\nDATE:\n\nINSPECTED BY:\n\nSIGNATURE:\n\nDATE:\nASSET RECORDING\nof:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG.2004.\nSIGNATURE:\n\nDATE:\n\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\n\nDESIGN COMPLIANCE AND INDEMNITY\n\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMX: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Instruction\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nIDI: Installation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\n\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards.\nSigned: 7/\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2025\n\nSITE PLAN LEGEND\nEXISTING OVERHEAD MAINS\nEXISTING UNDERGROUND CABLE\nREMOVE EXISTING OVERHEAD\nNEW UNDERGROUND MAINS\nNEW OVERHEAD CONDUCTOR\nNEW LV TRENCH\nEXISTING POLE\nREMOVE POLE\nNEW POLE\nREPLACE POLE\nEXISTING SL LANTERN\nREMOVE SL LANTERN\nNEW SL LANTERN\nNEW SL FLOOD\nEXISTING PILLAR\nNEW COLUMN\nEXISTING COLUMN\nUGOH\nJOINT\nEND SHACKLE\nEXISTING HV USL CLOSED\nEXISTING SL NIGHT WATCH\nEXISTING HV ABS CLOSE - REMOVE\nNEW HV ABS CLOSE\nNEW SLOP CELL\n\nEXISTING SLOP CELL - REMOVE\n\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\n\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\n\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\n\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\n\nN/A\n\nENDEAVOUR ENERGY\nFUNDED & CONSTRUCTED\n\nWorks Required Prior to\nCompletion of Customer-\nContestable Project\n\nN/A\n\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\n\nN/A\n\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\n\nINSPECTION AND ACCESS AUTHORITY (AS PER FEE SENT BY EE's\n- SYSTEM SWITCHING OWNER)\n\nCUSTOMER FUNDED\n\nINCLUDES BUT NOT LIMITED TO:\n- PEGGING OF PROPERTY BOUNDARIES AND\nINFRASTRUCTURE LOCATIONS\n- PROVIDING SITE ACCESS\n- CONFIRM FINISHED GROUND LEVELS\n\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\n\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01\nMONTH: 06\nYEAR: 2025\n\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP.\n\u2022 3 x TIMBER POLE\n\u2022 1 x HV ABS\n\n\n\nAPPROVAL TO CONNECT TO PUBLIC LIGHTING\nReviewers Name:\nDate Approved:\nReviewers:\nSignature:\nThis approval is issued subject to Endeavour Energy's General Terms &\nConditions for connection of Public Lighting Assets and is specifically for\nDrawing No:\nAmendment\n\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN\nTHIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TEL:\n1100 FOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\n\nKEY DOCUMENTS TABLE\n\nTHE CERTIFICATION OF THIS PROJECT IS SUPPORTED BY THE FOLLOWING KEY DOCUMENTS:\n\nDOCUMENT NAME\n\nSUMMARY OF ENVIRONMENTAL REPORT (SER) - FAT15235 PART OF EMS0003\nDESIGN SAFETY REPORT\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FR.65573\n\nNOTES\n1.\n\nTHIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECT ON POLICY.\nENDEAVOUR ENERGY CONTACT PHONE: 131 081.\nDESIGN CERTIFICATION SHALL LAPSE WHERE: -\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION.\n\n2.\n3.\n\nOR\n\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\nATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\nATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEASE CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\nATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\nOPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS;\n\u2022 LIVE LINE WORK;\n\u2022 DESIGN ALTERNATIVES;\n\u2022 LOW VOLTAGE PARALLELS;\n\u2022 WORK PRACTICES/STANDARDS;\nTHE COST IS TO BE FUNDED BY THE\nCUSTOMER/DEVELOPER.\nREIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED IN WRITING WITH\nENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF\nWORKS.\nHAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\nKEY NO:\nENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN.\n\n4.\n\n5.\n6.\n\n7.\n\n8.\n\n9.\n\n10.\n\n11.\n\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE/PILLAR REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- TRENCHING\n- DUCT INSTALLATION\n\nSAFETY IN DESIGN INFORMATION\nSAFETY IN DESIGN ISSUES HAVE BEEN\nASSESSED AS PART OF THIS DESIGN.\nPROCESSES & PRECAUTIONS HAVE\nBEEN TAKEN TO ENSURE HAZARDS AND RISKS\nNORMALLY ASSOCIATED WITH THIS TYPE OF\nDESIGN HAVE BEEN MITIGATED AND/OR\nCONTROLLED.\nRESIDUAL HAZARDS AND RISKS AND/OR\nHAZARDS AND RISKS NOT NORMALLY\nASSOCIATED WITH THIS TYPE OF WORK WHICH\nMAY REQUIRE SUBSEQUENT CONSIDERATION\nAND/OR ACTION ARE DESCRIBED IN: -\nARP5495 - Design Safety Report",
+            "data": {
+              "sub-step-extract-all-notes": "1. THIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECT ON POLICY.\n2. ENDEAVOUR ENERGY CONTACT PHONE: 131 081.\n3. DESIGN CERTIFICATION SHALL LAPSE WHERE: -\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION.\nOR\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\n4. ATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\n5. ATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\n6. WARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEASE CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\n7. ATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\n8. OPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS;\n\u2022 LIVE LINE WORK;\n\u2022 DESIGN ALTERNATIVES;\n\u2022 LOW VOLTAGE PARALLELS;\n\u2022 WORK PRACTICES/STANDARDS;\nTHE COST IS TO BE FUNDED BY THE\nCUSTOMER/DEVELOPER.\n9. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED IN WRITING WITH\nENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF\nWORKS.\n10. HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\nKEY NO:\n11. ENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN."
+            }
+          }
+        }
+      ],
+      "stitched_boundaries": [],
+      "sub_step_extractions": {
+        "sub-step-extract-all-notes": {
+          "value": "1. THIS DRAWING IS TO BE READ IN CONJUNCTION WITH THE RELEVANT ENDEAVOUR ENERGY NETWORK STANDARDS AND CONNECT ON POLICY. ENDEAVOUR ENERGY CONTACT PHONE: 131 081. DESIGN CERTIFICATION SHALL LAPSE WHERE: - (i) NOTICE OF INTENT HAS NOT BEEN RECEIVED WITHIN SIX (6) MONTHS OF THIS CERTIFICATION. OR (ii) WORKS COMPLETED CONSTRUCTION HAS BEEN INTERRUPTED FOR MORE THAN SIX (6) MONTHS WHERE DESIGN CERTIFICATION HAS LAPSED THE DESIGN MUST BE RESUBMITTED FOR CERTIFICATION BY THE ACCREDITED DESIGNER.\n2. ATTENTION PERMANENT SURVEY MARKS MAY EXIST IN THIS AREA. THESE MARKS ARE TO BE LOCATED BY A SURVEYOR PRIOR TO COMMENCEMENT OF ANY WORKS.\n3. ATTENTION ALL SERVICES SEARCHES MUST BE CHECKED BEFORE CONSTRUCTION.\n4. WARNING LIVE ENDEAVOUR ENERGY CABLES AND OTHER SERVICES IN THIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH TWO (2) DAYS PRIOR TO EXCAVATION.\n5. ATTENTION SERVICE PROVIDER TO NOTIFY ENDEAVOUR ENERGY'S ASSET DATA CUSTOMER DEPARTMENT DAILY WHEN CABLE WORKS IS IN PROGRESS. TELEPHONE: 131 081.\n6. OPERATIONAL LIMITS UNLESS APPROVED OTHERWISE, INTERRUPTION TO ANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:- \u2022 MOBILE GENERATOR AND SUBSTATIONS; \u2022 LIVE LINE WORK; \u2022 DESIGN ALTERNATIVES; \u2022 LOW VOLTAGE PARALLELS; \u2022 WORK PRACTICES/STANDARDS; THE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER.\n7. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED PARTY ON THE LETTER OF INTENT AFTER THE WORKS HAVE BEEN COMPLETED AND THE LETTER OF ACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED AMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS FOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE AMOUNT SHOULD BE RESOLVED IN WRITING WITH ENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n8. HAVE ALL THE EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DESIGN? KEY NO:\n9. ENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001 IS PART OF THE DESIGN.\nWARNING LIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN THIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TEL: 1100 FOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\nCAUTION: UNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED: \u2022 MOBILE GENERATOR AND SUBSTATIONS \u2022 LIVE LINE WORK \u2022 DESIGN ALTERNATIVES \u2022 LOW VOLTAGE PARALLELS \u2022 WORK PRACTICES/STANDARDS THE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER.",
+          "sub_step_name": "Extract All Drawing Notes and Annotations",
+          "phase": 1
+        },
+        "sub-step-substation-data": {
+          "value": "Substation Asset Number: NOT FOUND\nTransformer Size: NOT FOUND\nHV Switchgear: NOT FOUND\nVoltage Level: NOT FOUND\nLV Switchgear: NOT FOUND\nCubicle Size: NOT FOUND\nEarthing: NOT FOUND",
+          "sub_step_name": "Substation Notes \u2014 Structured Data Extraction",
+          "phase": 2
+        },
+        "sub-step-field-check": {
+          "value": "NOT FOUND \u2014 MISSING: this compliance note is mandatory",
+          "sub_step_name": "Assets Field Check Compliance",
+          "phase": 2
+        },
+        "sub-step-easement-restriction": {
+          "value": "NOT REQUIRED",
+          "sub_step_name": "Easement \u2014 Restriction on Use of Land (Swimming Pool Setback)",
+          "phase": 2
+        },
+        "sub-step-easement-substation": {
+          "value": "NOT REQUIRED",
+          "sub_step_name": "Easement \u2014 Padmount Substation Easement Creation",
+          "phase": 2
+        }
+      },
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/Extraction_A534927_ARP5495_RETIC_pdf_Extract_Site_Plan_Information_20260329_054007.json"
+    }
+  ],
+  "timestamp": "20260329_054007",
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/ExtractionReport_proc_extract_site_plan_info_20260329_054007.json"
+}

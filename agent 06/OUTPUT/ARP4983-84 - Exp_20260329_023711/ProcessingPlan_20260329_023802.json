@@ -1,0 +1,80 @@
+{
+  "step1_output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260329_023711/DocumentReview_20260329_023745.json",
+  "total_documents": 3,
+  "processing_plan": [
+    {
+      "filename": "ARP4983 _DESIGN_BRIEF_v1.0.pdf",
+      "document_type": "Design Brief",
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "pdfplumber",
+      "quality_note": "Text-based document. 4000 characters extracted. Reader: pdfplumber.",
+      "confidence": 0.97,
+      "processing_tool_id": "tool-extract-pdf-content",
+      "conversion_required": false,
+      "conversion_type": null,
+      "extraction_method": "Direct text extraction via pdfplumber",
+      "processing_notes": "The document is a text-based PDF with high text quality, suitable for extraction using pdfplumber.",
+      "document_category": "Design Brief",
+      "page_size": "A4",
+      "requires_chunking": false,
+      "chunk_strategy": "none",
+      "estimated_chunks": 1,
+      "route_to_step": 4
+    },
+    {
+      "filename": "ARP4983_TAL_20241112.XLSM",
+      "document_type": "TAL",
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "openpyxl",
+      "quality_note": "Text-based document. 4000 characters extracted. Reader: openpyxl.",
+      "confidence": 0.97,
+      "processing_tool_id": "tool-read-file-content",
+      "conversion_required": false,
+      "conversion_type": null,
+      "extraction_method": "Direct text extraction via openpyxl",
+      "processing_notes": "The document is an Excel macro-enabled workbook (.xlsm) with high text quality, suitable for direct extraction using openpyxl.",
+      "document_category": "TAL",
+      "page_size": "A4",
+      "requires_chunking": false,
+      "chunk_strategy": "none",
+      "estimated_chunks": 1,
+      "route_to_step": 6,
+      "worksheet_count": 2,
+      "worksheets_to_analyse": 2,
+      "worksheets": [
+        {
+          "sheet_name": "PROJECT",
+          "row_count": 25,
+          "column_count": 13
+        },
+        {
+          "sheet_name": "STREETLIGHT",
+          "row_count": 55,
+          "column_count": 24
+        }
+      ]
+    },
+    {
+      "filename": "D526458_ARP4983_RETIC_LEGEND.pdf",
+      "document_type": "Reticulation Drawing",
+      "content_type": "image",
+      "text_quality": "none",
+      "recommended_reader": "ocr-required",
+      "quality_note": "PDF appears to be a scanned image. OCR is required to extract text.",
+      "confidence": 0.9,
+      "processing_tool_id": "tool-extract-document-data",
+      "conversion_required": true,
+      "conversion_type": "pdf-to-png",
+      "extraction_method": "OCR after PDF-to-PNG conversion",
+      "processing_notes": "The document is a scanned image-based PDF with no extractable text, requiring OCR for content extraction.",
+      "document_category": "Site Plan",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "page-split",
+      "estimated_chunks": 1,
+      "route_to_step": 5
+    }
+  ]
+}

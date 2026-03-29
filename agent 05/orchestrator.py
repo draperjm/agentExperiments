@@ -995,6 +995,12 @@ async def _run_step_impl(
     elif "analytics" in resource_key:
         log_message += f"   Routing to Data Analytics Agent (Port 8092)...\n"
 
+        # Determine analytics sub-route from knowledge_id
+        _analytics_knowledge_id = ""
+        if step.required_resources and hasattr(step.required_resources, "knowledge_id"):
+            _analytics_knowledge_id = getattr(step.required_resources, "knowledge_id", "") or ""
+        _is_cc_review = "customer-connections" in _analytics_knowledge_id
+
         # ── Shared: pull legend entries from step 6 ───────────────────────────
         legend_extraction = (
             state["results"].get("extraction_proc_extract_site_plan_info_step_6")
@@ -1021,7 +1027,7 @@ async def _run_step_impl(
             recs = se.get("asset_records") or []
             asset_records.extend(recs)
 
-        if not asset_records:
+        if not asset_records and not _is_cc_review:
             log_message += "   WARNING: No asset records found in state — skipping.\n"
             step_failed = True
 
@@ -1393,6 +1399,275 @@ async def _run_step_impl(
                 state["results"][f"extraction_step_{step.step_number}"] = symbol_match_extraction
                 step_output_data      = step_output
                 step_output_file_path = str(out_path)
+
+        # ── G3. Customer Connections Review Analysis ──────────────────────────
+        elif not step_failed and _is_cc_review:
+            # Pull design brief extractions from step 4
+            db_extraction = (
+                state["results"].get("extraction_proc_extract_design_brief_info_step_4")
+                or state["results"].get("extraction_proc_extract_design_brief_info")
+                or state["results"].get("extraction_step_4")
+                or {}
+            )
+            design_brief_data: list = []
+            for ex in (db_extraction.get("extractions") or []):
+                sse = ex.get("sub_step_extractions") or {}
+                for sub_key, sub_val in sse.items():
+                    arr = sub_val if isinstance(sub_val, list) else (
+                        sub_val.get("value") if isinstance(sub_val, dict) else None
+                    )
+                    if isinstance(arr, list):
+                        design_brief_data.extend(arr)
+                    elif isinstance(sub_val, dict):
+                        design_brief_data.append({sub_key: sub_val})
+
+            # Pull site plan extractions from step 5
+            sp_extraction = (
+                state["results"].get("extraction_proc_extract_site_plan_info_step_5")
+                or state["results"].get("extraction_proc_extract_site_plan_info")
+                or state["results"].get("extraction_step_5")
+                or {}
+            )
+            site_plan_data: list = []
+            for ex in (sp_extraction.get("extractions") or []):
+                sse = ex.get("sub_step_extractions") or {}
+                for sub_key, sub_val in sse.items():
+                    arr = sub_val if isinstance(sub_val, list) else (
+                        sub_val.get("value") if isinstance(sub_val, dict) else None
+                    )
+                    if isinstance(arr, list):
+                        site_plan_data.extend(arr)
+                    elif isinstance(sub_val, dict):
+                        site_plan_data.append({sub_key: sub_val})
+
+            # Pull enriched assets from step 9
+            enriched_from_9 = state["results"].get("enriched_assets") or {}
+            enriched_assets_list: list = (
+                enriched_from_9.get("enriched_assets")
+                if isinstance(enriched_from_9, dict)
+                else []
+            ) or []
+            # Fallback: pull from updated_assets (step 8 output)
+            if not enriched_assets_list:
+                enriched_assets_list = state["results"].get("updated_assets") or []
+
+            # Pull consolidated report path from step 10
+            consolidated_report_path = state["results"].get("consolidated_report_path", "")
+
+            log_message += (
+                f"   CC Review: {len(design_brief_data)} design brief items, "
+                f"{len(site_plan_data)} site plan items, "
+                f"{len(enriched_assets_list)} enriched assets, "
+                f"{len(legend_entries)} legend entries...\n"
+            )
+            step_input_data = {
+                "design_brief_items": len(design_brief_data),
+                "site_plan_items":    len(site_plan_data),
+                "enriched_assets":    len(enriched_assets_list),
+                "legend_entries":     len(legend_entries),
+            }
+
+            payload = {
+                "context": (
+                    "Customer connections electricity network application review. "
+                    "Primary data contains extractions from the Design Brief document. "
+                    "site_plan contains extractions from the Site Plan/Reticulation Drawing. "
+                    "enriched_assets is the fully enriched asset register from the TAL spreadsheet, "
+                    "with each asset matched to its drawing symbol and legend label. "
+                    "legend_entries lists all symbols and labels from the drawing legend."
+                ),
+                "data": design_brief_data,
+                "site_plan": site_plan_data,
+                "enriched_assets": enriched_assets_list,
+                "reference_data": legend_entries,
+                "tasks": [
+                    {
+                        "task_id":   "task-funding-requirements",
+                        "task_name": "Funding Requirements Consolidation",
+                        "task_type": "extraction",
+                        "description": (
+                            "From the Design Brief data (primary data), consolidate ALL items under "
+                            "the 'Determination of Funding Requirements' section or any section "
+                            "related to funding, capital contribution, contestable/non-contestable "
+                            "works, or ancillary network costs. "
+                            "Group by category: contestable_works, non_contestable_works, "
+                            "ancillary_costs, other_funding_items. "
+                            "Capture total_capital_contribution if stated. "
+                            "Preserve any cost amounts or descriptions exactly as written."
+                        ),
+                        "output_format": (
+                            '{"funding_details": {'
+                            '  "total_capital_contribution": "string or null",'
+                            '  "contestable_works": [{"item": "string", "description": "string", "amount": "string or null"}],'
+                            '  "non_contestable_works": [{"item": "string", "description": "string", "amount": "string or null"}],'
+                            '  "ancillary_costs": [{"item": "string", "description": "string", "amount": "string or null"}],'
+                            '  "other_funding_items": [{"item": "string", "description": "string", "amount": "string or null"}],'
+                            '  "notes": ["string"]}}'
+                        ),
+                    },
+                    {
+                        "task_id":   "task-supply-scope-comparison",
+                        "task_name": "Method of Supply Scope Comparison",
+                        "task_type": "comparison",
+                        "description": (
+                            "Compare the method of supply requirements described in the Design Brief "
+                            "(primary data) against what is shown in the Site Plan (site_plan field). "
+                            "List every supply requirement or work item stated in the Design Brief. "
+                            "For each, check whether it is represented in the Site Plan data. "
+                            "Identify and list items that appear in the Design Brief but are "
+                            "absent or insufficiently represented in the Site Plan."
+                        ),
+                        "output_format": (
+                            '{"method_of_supply_comparison": {'
+                            '  "design_brief_requirements": ["string"],'
+                            '  "site_plan_scope_found": ["string"],'
+                            '  "missing_from_site_plan": [{"item": "string", "design_brief_reference": "string", "note": "string"}],'
+                            '  "summary": "string"}}'
+                        ),
+                    },
+                    {
+                        "task_id":   "task-funding-arrangement-comparison",
+                        "task_name": "Funding Arrangement Scope Comparison",
+                        "task_type": "comparison",
+                        "description": (
+                            "Compare the funding arrangement (scope of funded works) in the Design Brief "
+                            "(primary data) against the Design Drawing depictions in the Site Plan "
+                            "(site_plan field and legend_entries in reference_data). "
+                            "For each funded work item in the Design Brief, check whether a "
+                            "corresponding element is shown in the drawing or legend. "
+                            "List any items whose scope is missing or unaccounted for in the drawing."
+                        ),
+                        "output_format": (
+                            '{"funding_arrangement_comparison": {'
+                            '  "design_brief_funded_works": ["string"],'
+                            '  "drawing_scope_found": ["string"],'
+                            '  "missing_from_drawing": [{"item": "string", "design_brief_reference": "string", "note": "string"}],'
+                            '  "summary": "string"}}'
+                        ),
+                    },
+                    {
+                        "task_id":   "task-asset-register",
+                        "task_name": "Asset Register Summary",
+                        "task_type": "summary",
+                        "description": (
+                            "Using the enriched_assets list, produce a complete asset register table. "
+                            "For each asset record, include: asset_id, asset_type, description, "
+                            "legend_label (from enriched data), legend_category, match_confidence, "
+                            "and found_on_diagram (true if match_confidence is 'high' or 'medium'). "
+                            "Derive action_status from the legend_label: "
+                            "labels containing 'NEW' → 'new', "
+                            "'REMOVE' → 'remove', "
+                            "'REPLACE' → 'replace', "
+                            "'EXISTING' → 'existing', "
+                            "otherwise → 'unknown'. "
+                            "Include a register_summary with counts by action_status and found/not_found."
+                        ),
+                        "output_format": (
+                            '{"asset_register": ['
+                            '  {"asset_id": "string", "asset_type": "string", "description": "string",'
+                            '   "legend_label": "string or null", "legend_category": "string or null",'
+                            '   "action_status": "new|remove|replace|existing|unknown",'
+                            '   "match_confidence": "high|medium|low|none", "found_on_diagram": true}'
+                            '], "register_summary": {'
+                            '  "total": 0, "new": 0, "remove": 0, "replace": 0, "existing": 0,'
+                            '  "found_on_diagram": 0, "not_found": 0}}'
+                        ),
+                    },
+                ],
+            }
+
+            for _try in range(MAX_STEP_RETRIES + 1):
+                try:
+                    _cc_payload = payload
+                    resp = await asyncio.get_event_loop().run_in_executor(
+                        None,
+                        lambda: requests.post(ANALYTICS_URL, json=_cc_payload, timeout=300),
+                    )
+                    if resp.status_code == 200:
+                        res_json     = resp.json()
+                        task_results = res_json.get("analytics_results") or {}
+
+                        funding_details      = (task_results.get("task-funding-requirements") or {}).get("result") or {}
+                        supply_comparison    = (task_results.get("task-supply-scope-comparison") or {}).get("result") or {}
+                        funding_comparison   = (task_results.get("task-funding-arrangement-comparison") or {}).get("result") or {}
+                        asset_register_data  = (task_results.get("task-asset-register") or {}).get("result") or {}
+
+                        asset_register_list  = asset_register_data.get("asset_register") or []
+                        register_summary     = asset_register_data.get("register_summary") or {}
+                        missing_supply       = (supply_comparison.get("method_of_supply_comparison") or {}).get("missing_from_site_plan") or []
+                        missing_drawing      = (funding_comparison.get("funding_arrangement_comparison") or {}).get("missing_from_drawing") or []
+
+                        log_message += (
+                            f"   CC Review complete — "
+                            f"{len(asset_register_list)} assets in register, "
+                            f"{len(missing_supply)} supply scope gaps, "
+                            f"{len(missing_drawing)} drawing scope gaps.\n"
+                        )
+
+                        analysis_report = {
+                            "report_type":               "Customer Connections Review Analysis Report",
+                            "generated_at":              datetime.utcnow().isoformat() + "Z",
+                            "consolidated_report_path":  consolidated_report_path,
+                            "analysis_report": {
+                                "funding_details":               funding_details,
+                                "method_of_supply_comparison":   supply_comparison,
+                                "funding_arrangement_comparison": funding_comparison,
+                                "asset_register":                asset_register_data,
+                            },
+                            "summary": {
+                                "total_assets":                len(asset_register_list),
+                                "found_on_diagram":            register_summary.get("found_on_diagram", 0),
+                                "not_found":                   register_summary.get("not_found", 0),
+                                "supply_scope_gaps":           len(missing_supply),
+                                "drawing_scope_gaps":          len(missing_drawing),
+                            },
+                        }
+
+                        job_key  = state["results"].get("job_key", "")
+                        out_dir  = OUTPUT_DIR / job_key if job_key else OUTPUT_DIR
+                        out_dir.mkdir(parents=True, exist_ok=True)
+                        ts       = datetime.utcnow().strftime("%Y%m%dT%H%M%S")
+                        out_path = out_dir / f"AnalysisReport_{ts}.json"
+                        with open(out_path, "w", encoding="utf-8") as _f:
+                            json.dump(analysis_report, _f, indent=2, default=str)
+                        log_message += f"   Saved: {out_path.name}\n"
+
+                        cc_extraction = {
+                            "total_files": 1,
+                            "output_file": str(out_path),
+                            "extractions": [
+                                {
+                                    "filename":          out_path.name,
+                                    "document_type":     "Customer Connections Review Analysis Report",
+                                    "document_category": "Analysis",
+                                    "process_step_name": step.name or "Customer Connections Review Analysis",
+                                    "total_sections":    4,
+                                    "relevant_sections": sum(1 for t in [funding_details, supply_comparison, funding_comparison, asset_register_data] if t),
+                                    "sub_step_extractions": {
+                                        "task-funding-requirements":        {"value": funding_details},
+                                        "task-supply-scope-comparison":     {"value": supply_comparison},
+                                        "task-funding-arrangement-comparison": {"value": funding_comparison},
+                                        "task-asset-register":              {"value": asset_register_data},
+                                    },
+                                }
+                            ],
+                        }
+                        state["results"]["analysis_report"]                          = analysis_report
+                        state["results"]["analysis_report_path"]                     = str(out_path)
+                        state["results"][f"extraction_step_{step.step_number}"]      = cc_extraction
+                        step_output_data      = analysis_report
+                        step_output_file_path = str(out_path)
+                        break
+                    else:
+                        log_message += f"   Agent Error (attempt {_try+1}/{MAX_STEP_RETRIES+1}): {resp.text[:300]}\n"
+                except Exception as e:
+                    log_message += f"   Network Error (attempt {_try+1}/{MAX_STEP_RETRIES+1}): {e}\n"
+                if _try < MAX_STEP_RETRIES:
+                    log_message += f"   Retrying in {RETRY_DELAY_SECS}s...\n"
+                    await asyncio.sleep(RETRY_DELAY_SECS)
+                else:
+                    step_failed = True
+                    log_message += "   Step failed after all retries.\n"
 
         # ── G2. Asset-Legend Enrichment ───────────────────────────────────────
         elif not step_failed:

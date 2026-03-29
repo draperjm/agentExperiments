@@ -1,0 +1,533 @@
+{
+  "process_step": {
+    "step_id": "Extract Design Brief Information",
+    "step_name": "Extract Design Brief Information",
+    "summary": null,
+    "details": "NOTE: Only process documents with route_to_step=4 (document_category=\"Design Brief\"). TAL spreadsheet files and Site Plan files must be excluded. Using the processing plan from Step 2, filter the document list to only those documents that meet the search context of the 'Extract Information from Design Brief' process (proc-extract-design-brief-info). A document qualifies if its content matches the search context criteria: it must contain a 'Method of Supply Requirement' section and/or a 'Determination of Funding Requirements' section, or be an architectural, services, or town planning report. Do not process any document that does not meet this content criteria, even if it was tagged as 'Design Brief' in Step 2 \u2014 and do not process any Site Plan or drawing document. For each qualifying document, extract structured information using proc-extract-design-brief-info as the extraction guide. Extract supply requirements (HV, LV, Street Lighting, Earthing, Easements, Substation) and funding determination items.",
+    "expected_output": {
+      "description": "Step 1: Identify and Review Design Brief Documents \u2014 A DocumentReview JSON file listing all matched documents with metadata and quality indicators. | Step 2: Plan Document Processing Approach \u2014 A ProcessingPlan JSON file with a processing entry per matched document. | Step 3: Extract Supply Requirements from Design Brief \u2014 Structured supply requirements extracted from the design brief documents. | Step 4: Extract Determination of Funding Requirements \u2014 Structured funding determination items extracted from the design brief.",
+      "fields": {
+        "documents": "Array of matched document objects, each with filename, document_title, document_type, author, date, project_name, project_number, revision, confidence, content_type, text_quality, and recommended_reader",
+        "scan_results": "Full scan results for all files including those not matched",
+        "matched_files": "Integer count of matched files",
+        "total_files_scanned": "Integer count of all files scanned",
+        "output_file": "Path to the saved ProcessingPlan_*.json file",
+        "processing_plan": "Array of processing entries, each with: filename, document_type, content_type, text_quality, recommended_reader, processing_tool_id, conversion_required, conversion_type, extraction_method, processing_notes",
+        "total_documents": "Integer count of entries in processing_plan",
+        "supply_requirements": {
+          "hv": "Array of High Voltage requirement objects \u2014 each with section, page, and requirement text",
+          "lv": "Array of Low Voltage requirement objects",
+          "sl": "Array of Street Lighting requirement objects",
+          "earthing": "Array of Earthing requirement objects",
+          "easements": "Array of Easement requirement objects",
+          "substation": "Array of Substation requirement objects"
+        },
+        "source_documents": "Array of document filenames that contributed to the extracted requirements",
+        "funding_requirements": {
+          "items": "Array of funding requirement objects \u2014 each with: item_description, funding_category, responsible_party, amount_or_formula, source_section, source_page, source_document",
+          "total_items": "Integer count of extracted funding items"
+        }
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_number": 1,
+        "sub_step_id": "sub-step-extract-hv",
+        "sub_step_name": "Extract High Voltage (HV) Requirements",
+        "details": "Identify and consolidate all High Voltage (HV) information by navigating technical requirements, visual markups, and funding determinations.",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate Primary HV Method of Supply (MOS)",
+            "instructions": "Review the 'Method of Supply Requirement' section. Identify: 1) Removal of Assets (e.g., OH HV cables between specific pole refs). 2) Installation of Assets (e.g., new OH HV cable locations). 3) Voltage Specifics (verify line types as HV or LV, checking for mislabeled requirements in LV sections)."
+          },
+          {
+            "title": "Review Visual HV Markups and Annotations",
+            "instructions": "Examine the site sketch. Cross-reference text with visual data to identify: 1) Cable Specifications (e.g., 'NEW 240M XEE HV Cable' or 'New OH 7/4.5AMC'). 2) Connection Points (e.g., '2-UGOH Poles'). 3) Substation Context (e.g., 'New Sub' locations)."
+          },
+          {
+            "title": "Identify HV Infrastructure Funding and Materials",
+            "instructions": "Determine financial responsibilities. Identify: 1) Reimbursements (e.g., Spare HV duct capital contributions). 2) Customer Charges (e.g., Duct usage charges). 3) Contestability (e.g., Network switching or substation commissioning)."
+          },
+          {
+            "title": "Verify Compliance Standards",
+            "instructions": "Ensure HV design meets mandatory codes. Verify requirements for compliance with MDI0031, MCI0005, and NSW Service and Installation Rules."
+          },
+          {
+            "title": "Consolidate all High Voltage Information",
+            "instructions": "Group and format all information which relates to High Voltage actions, materials, standards, markups and methods of supply into a single category High Voltage (HV)."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 2,
+        "sub_step_id": "sub-step-extract-lv",
+        "sub_step_name": "Extract Low Voltage (LV) Requirements",
+        "details": "Based on the provided Design Brief (ARP4983), here are the instructions to locate all information specifically regarding Low Voltage (LV) works for the Elizabeth Street project:",
+        "instructional_sub_steps": [
+          {
+            "title": "Identify the LV Works Section",
+            "instructions": "Navigate to the section of the document under the heading Method of Supply Requirement. Locate the sub-heading LV Works to find the specific scope of electrical adjustments."
+          },
+          {
+            "title": "Review Removal and Installation Requirements",
+            "instructions": "Find the instruction to remove the Overhead (OH) LV cable currently located between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive. Note the requirement to string a new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive. Note: While the brief label for this specific bullet point mentions 'HV cable,' it is categorized strictly under the 'LV Works' section."
+          },
+          {
+            "title": "Consult the Visual Sketch",
+            "instructions": "Refer to the diagram to visualize the physical path of the LV asset relocation. Look for the legend or mark-ups indicating 'Remove OH' and 'New OH' to see how the LV lines interact with the northern and southern sides of the road."
+          },
+          {
+            "title": "Verify Compliance Standards",
+            "instructions": "Ensure all LV service works comply with the NSW Service and Installation Rules. Confirm the design adheres to Endeavour Energy standards MDI0031 and MCI0005."
+          },
+          {
+            "title": "Check Service Connections",
+            "instructions": "Locate the General section regarding the 'New OH road crossing service connection' intended to maintain existing services."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 3,
+        "sub_step_id": "sub-step-extract-sl",
+        "sub_step_name": "Extract Street Lighting (SL) Requirements",
+        "details": "Identify and extract all Street Lighting (SL) information by reviewing specialized work sections and visual indicators.",
+        "instructional_sub_steps": [
+          {
+            "title": "Identify the SL Works Section",
+            "instructions": "Locate the 'SL Works' sub-heading under the Method of Supply Requirement section. Identify specific tasks such as 'Remove SL' and 'Install new SL'."
+          },
+          {
+            "title": "Cross-reference with Visual Markups",
+            "instructions": "Examine the provided sketch for markers or annotations specifically relating to street lighting assets. Verify if SL locations are tied to specific pole references mentioned in HV or LV sections."
+          },
+          {
+            "title": "Check for SL Material Funding",
+            "instructions": "Review the funding determination section to see if Street Lighting materials are 'Endeavour Energy Supplied' or if they fall under 'Customer Funded Contestable Works'."
+          },
+          {
+            "title": "Verify SL Standard Compliance",
+            "instructions": "Ensure extraction captures any requirement for SL works to comply with specific public lighting standards or council requirements mentioned in the text."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 4,
+        "sub_step_id": "sub-step-extract-earthing",
+        "sub_step_name": "Extract Earthing Requirements",
+        "details": "Extract all technical requirements regarding grounding and earthing systems for the proposed electrical assets.",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate Earthing Technical Requirements",
+            "instructions": "Search the Design Brief for keywords 'Earthing', 'Grounding', or 'Earth Mat'. Identify requirements for earthing at new substation or switching station locations."
+          },
+          {
+            "title": "Identify Specific Earthing Standards",
+            "instructions": "Extract references to mandatory earthing standards (e.g., MDI or MCI series) that must be met during the detailed design phase."
+          },
+          {
+            "title": "Check Substation Specific Earthing",
+            "instructions": "Review the 'Substation & Switching Station Works' section to determine if specific earthing configurations are required for the new pole substation or padmount substation."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 5,
+        "sub_step_id": "sub-step-extract-easements",
+        "sub_step_name": "Extract Easement Requirements",
+        "details": "Identify and document all land interest, easement, and property access requirements specified in the brief.",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate Land Interest Guidelines",
+            "instructions": "Identify the 'Land Interests' section in the brief. Verify if the checkbox for 'NA' is selected or if land interests are required for the project."
+          },
+          {
+            "title": "Identify Required Easements",
+            "instructions": "Extract details regarding required easements for new HV/LV lines or substation sites. Note any reference to the 'Land Interest Guidelines (LIG)'."
+          },
+          {
+            "title": "Check for Property Access Conditions",
+            "instructions": "Document any specific conditions regarding access to private property or the creation of right-of-ways for Endeavour Energy assets."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 6,
+        "sub_step_id": "sub-step-extract-substation",
+        "sub_step_name": "Extract Substation Requirements",
+        "details": "Capture all specifications and requirements for the removal, installation, or modification of substation assets.",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate Substation Works Section",
+            "instructions": "Identify the 'Substation & Switching Station Works' sub-heading. Record specific actions like 'Remove Pole Sub' or 'Install New Pole Sub' at specific references."
+          },
+          {
+            "title": "Extract Technical Ratings and References",
+            "instructions": "Document any stated ratings (e.g., kVA) or specific equipment references (e.g., 'ref 9' or 'ref 29') for the substation assets."
+          },
+          {
+            "title": "Identify Substation Commissioning Responsibilities",
+            "instructions": "Review the funding section to determine if 'substation commissioning' is categorized as a 'Customer Funded Non-Contestable Work'."
+          },
+          {
+            "title": "Verify Substation Clearances and Standards",
+            "instructions": "Capture requirements for physical clearances or compliance with substation design standards like MDI0031 mentioned in the compliance section."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 1,
+        "sub_step_id": "sub-step-extract-funding-determination",
+        "sub_step_name": "Extract Determination of Funding Items",
+        "details": "Prompt the LLM to identify and extract all items listed under the 'Determination of Funding Requirements' section or equivalent heading. For each item record: item_description (verbatim or paraphrased), funding_category (e.g. capital contribution, non-contestable, contestable), responsible_party (e.g. applicant, network operator), amount_or_formula (monetary amount or formula if stated), source_section, and source_page."
+      },
+      {
+        "sub_step_number": 2,
+        "sub_step_id": "sub-step-extract-funding-ancillary-fees",
+        "sub_step_name": "Extract Ancillary Network Services Fees",
+        "details": "Prompt the LLM to identify and extract all line items listed under 'Ancillary Network Services Fees', 'Payment Advice', or 'Pro Forma Tax Invoice' sections. For each fee record: item_description (e.g. Standard Connection Offer Fee, Design Information Fee), date, amount (dollar value), and source_section and source_page. Also capture the total amount payable if stated."
+      },
+      {
+        "sub_step_number": 3,
+        "sub_step_id": "sub-step-extract-payment-instructions",
+        "sub_step_name": "Extract Payment Instructions and Methods",
+        "details": "Identify and consolidate all logistics required for the applicant to remit payment to Endeavour Energy. [cite: 93]",
+        "instructional_sub_steps": [
+          {
+            "title": "Identify Preferred Payment Method",
+            "instructions": "Locate the preferred payment channel, specifically identifying EFT as the primary method. [cite: 94]"
+          },
+          {
+            "title": "Extract Banking Details",
+            "instructions": "Capture the specific financial coordinates provided, including the BSB (012-003) and Account Number (8376 89858). [cite: 94]"
+          },
+          {
+            "title": "Identify Mandatory Transaction References",
+            "instructions": "Locate the unique alphanumeric reference code (e.g., ARP4983A2) that must be quoted in the EFT transaction field. [cite: 95]"
+          },
+          {
+            "title": "Document Remittance and Restriction Requirements",
+            "instructions": "Identify the email for remittance copies (remittances@endeavourenergy.com.au) and note that credit cards and cheques are not accepted. [cite: 95, 96]"
+          },
+          {
+            "title": "Capture Invoice Policy",
+            "instructions": "Note the condition for receiving a formal Tax Invoice following the receipt of payment. [cite: 97]"
+          }
+        ]
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/ARP5495-106 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "ARP5495 _DESIGN_BRIEF_v1.0.pdf",
+      "filepath": "/documents/ARP5495-106 - Exp/ARP5495 _DESIGN_BRIEF_v1.0.pdf",
+      "document_type": "Design Brief",
+      "document_category": "Design Brief",
+      "input_text_quality": "high",
+      "document_quality": "text",
+      "page_size": "A4",
+      "requires_chunking": false,
+      "chunk_strategy": "none",
+      "estimated_chunks": 1,
+      "process_step_name": "Extract Design Brief Information",
+      "total_sections": 6,
+      "relevant_sections": 3,
+      "sub_step_extractions": {
+        "sub-step-extract-earthing": {
+          "Earthing Technical Requirements": [
+            {
+              "description": "Install new Air break switch earthing as per EDI0006 & drawing B348252",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ],
+          "Specific Earthing Standards": [
+            {
+              "description": "All OH line design as per MDI0031 & MCI0005",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ],
+          "Substation Specific Earthing": []
+        },
+        "sub-step-extract-funding-ancillary-fees": {
+          "ancillary_network_services_fees": [],
+          "total_amount_payable": null
+        },
+        "sub-step-extract-substation": {
+          "substation_works": [
+            {
+              "description": "Substation commissioning categorized as Customer Funded Non-Contestable Work",
+              "source_section": "January 2025",
+              "source_page": 5
+            }
+          ],
+          "technical_ratings_and_references": [],
+          "commissioning_responsibilities": [
+            {
+              "description": "Substation commissioning is categorized as Customer Funded Non-Contestable Work",
+              "source_section": "January 2025",
+              "source_page": 5
+            }
+          ],
+          "clearances_and_standards": [
+            {
+              "description": "Compliance with MDI0031 requirements for substation works",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ]
+        },
+        "sub-step-extract-funding-determination": {
+          "items": [
+            {
+              "item_description": "Duct usage charge as required",
+              "funding_category": "Reimbursements to be paid to Endeavour Energy by Customer",
+              "responsible_party": "Customer",
+              "amount_or_formula": null,
+              "source_section": "January 2025",
+              "source_page": 5
+            },
+            {
+              "item_description": "Network switching, substation commissioning, contract inspection and ancillary fees",
+              "funding_category": "Customer Funded Non-Contestable Works",
+              "responsible_party": "Customer",
+              "amount_or_formula": null,
+              "source_section": "January 2025",
+              "source_page": 5
+            },
+            {
+              "item_description": "All other works required",
+              "funding_category": "Customer Funded Contestable Works",
+              "responsible_party": "Customer",
+              "amount_or_formula": null,
+              "source_section": "January 2025",
+              "source_page": 5
+            }
+          ]
+        },
+        "sub-step-extract-easements": {
+          "LandInterestGuidelines": {
+            "description": "No specific mention of 'Land Interests' section or checkbox for 'NA' in the provided sections.",
+            "source_section": "Not found",
+            "source_page": "Not found"
+          },
+          "RequiredEasements": {
+            "description": "No explicit details regarding required easements for new HV/LV lines or substation sites found in the provided sections.",
+            "source_section": "Not found",
+            "source_page": "Not found"
+          },
+          "PropertyAccessConditions": {
+            "description": "No specific conditions regarding access to private property or creation of right-of-ways for Endeavour Energy assets found in the provided sections.",
+            "source_section": "Not found",
+            "source_page": "Not found"
+          }
+        },
+        "sub-step-extract-payment-instructions": {
+          "Preferred Payment Method": {
+            "description": "EFT is the primary method",
+            "source_section": "MCGRATHS HILL",
+            "source_page": 1
+          },
+          "Banking Details": {
+            "description": "BSB: 012-003, Account Number: 8376 89858",
+            "source_section": "MCGRATHS HILL",
+            "source_page": 1
+          },
+          "Mandatory Transaction References": {
+            "description": "Unique alphanumeric reference code ARP4983A2 must be quoted",
+            "source_section": "January 2025",
+            "source_page": 3
+          },
+          "Document Remittance and Restriction Requirements": {
+            "description": "Email remittance copies to remittances@endeavourenergy.com.au; credit cards and cheques are not accepted",
+            "source_section": "MCGRATHS HILL",
+            "source_page": 1
+          },
+          "Invoice Policy": {
+            "description": "A formal Tax Invoice will be issued following the receipt of payment",
+            "source_section": "MCGRATHS HILL",
+            "source_page": 1
+          }
+        },
+        "sub-step-extract-sl": {
+          "SL_Works_Section": [
+            {
+              "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Remove existing OH SL conductor from pole 283062 to pole 426121 and from pole 283062 to pole 283063.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Remove existing SLCP 704 on pole 283062.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Existing OH SL conductor to be redirected from pole 426129 to new pole 1 & pole 2.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Install new SL conductor 25mm^2 2C from new pole 2 to pole 426121 and from new pole 2 to pole 3.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Remove all existing street lighting on poles 283061 & 283063.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Install new streetlighting on new poles 1 & 3 as per LDI0001 requirements.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Install new additional luminaires and light pole as per the lighting assessment.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ],
+          "SL_Material_Funding": [
+            {
+              "description": "Customer Funded Contestable Works: All other works required.",
+              "source_section": "January 2025",
+              "source_page": 5
+            }
+          ],
+          "SL_Standard_Compliance": [
+            {
+              "description": "Install new streetlighting on new poles 1 & 3 as per LDI0001 requirements.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ]
+        },
+        "sub-step-extract-hv": {
+          "Primary HV Method of Supply": [
+            {
+              "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Remove existing OH HV conductor from poles 283061 to 283063.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Remove existing OH HV conductor from pole 283062 to pole 426121.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Install new ABS on new pole 3. New Air break switch earthing as per EDI0006 & drawing B348252",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Install new OH HV conductor 19/3.25 AAC Neptune from new poles 1 to 3.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Install new OH HV conductor 7/4.50 AAC from new pole 2 to pole 426121.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ],
+          "Visual HV Markups and Annotations": [],
+          "HV Infrastructure Funding and Materials": [
+            {
+              "description": "Reimbursements to be paid to Endeavour Energy by Customer: Duct usage charge as required",
+              "source_section": "January 2025",
+              "source_page": 5
+            },
+            {
+              "description": "Customer Funded Non-Contestable Works: Network switching, substation commissioning, contract inspection and ancillary fees.",
+              "source_section": "January 2025",
+              "source_page": 5
+            },
+            {
+              "description": "Customer Funded Contestable Works: All other works required.",
+              "source_section": "January 2025",
+              "source_page": 5
+            }
+          ],
+          "Compliance Standards": [
+            {
+              "description": "All OH line design as per MDI0031 & MCI0005.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ]
+        },
+        "sub-step-extract-lv": {
+          "LV Works": [
+            {
+              "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Redirect the existing LV OH conductor to new poles 1 & 2. If the existing LV conductor length is insufficient, terminate existing LV conductor 7/4.50AAV on new pole 1 & install new span of LV bare 7/4.50AAC from new poles 1 to 2.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Remove existing OH LV conductor from pole 283062 to pole 426121.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Install new OH LV conductor 7/4.50AAC from new pole 2 to pole 426121.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ],
+          "Removal and Installation Requirements": [
+            {
+              "description": "Remove the Overhead (OH) LV cable currently located between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "String a new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ],
+          "Compliance Standards": [
+            {
+              "description": "Ensure all LV service works comply with the NSW Service and Installation Rules.",
+              "source_section": "January 2025",
+              "source_page": 3
+            },
+            {
+              "description": "Confirm the design adheres to Endeavour Energy standards MDI0031 and MCI0005.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ],
+          "Service Connections": [
+            {
+              "description": "Locate the General section regarding the 'New OH road crossing service connection' intended to maintain existing services.",
+              "source_section": "January 2025",
+              "source_page": 3
+            }
+          ]
+        }
+      },
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/Extraction_ARP5495__DESIGN_BRIEF_v1_0_pdf_Extract_Design_Brief_Informati_20260329_054007.json"
+    }
+  ],
+  "timestamp": "20260329_054007",
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/ExtractionReport_proc_extract_design_brief_info_20260329_054007.json"
+}

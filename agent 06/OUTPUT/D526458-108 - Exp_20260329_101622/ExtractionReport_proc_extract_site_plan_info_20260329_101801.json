@@ -1,0 +1,874 @@
+{
+  "process_step": {
+    "step_id": "Extract Drawing Legend",
+    "step_name": "Extract Drawing Legend",
+    "summary": null,
+    "details": "NOTE: Only process documents with route_to_step=5 (document_category=\"Site Plan\") \u2014 the same document set as step 5. For each Site Plan document processed in step 5, extract the complete drawing legend (key) from every page using the vision extraction pipeline defined in proc-extract-site-plan-info step 4. Scan every image chunk of each drawing for a LEGEND, KEY, NOTATION, or SYMBOL TABLE panel. For each visual element in the legend extract: a plain-English description of the symbol or line style, the exact text label as written on the drawing, a category (cable/equipment/substation/boundary/earthing/annotation/other), and the page number it was found on. Assemble all entries across all chunks and all pages into a single structured list per document.",
+    "expected_output": {
+      "description": "Step 4: Extract Drawing Legend \u2014 A structured legend extraction per document: a JSON array of legend entries, each with symbol description, label, category, and page number.",
+      "fields": {
+        "sub-step-extract-legend": "JSON array of legend entry objects \u2014 each with 'page' (integer), 'symbol_description' (string \u2014 visual geometry description of the drawn symbol, e.g. 'Small open circle with lines radiating outward' NOT a label paraphrase like 'New lantern'), 'label' (string \u2014 verbatim label text from the drawing), 'category' (string)"
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_number": 1,
+        "sub_step_id": "sub-step-extract-legend",
+        "sub_step_name": "Extract Legend Entries from All Pages",
+        "phase": 1,
+        "details": "Scan every image chunk of the drawing for a legend, key, notation, or symbol table. For each row in the legend, extract: (1) the VISUAL GEOMETRY of the drawn symbol \u2014 describe its exact shape, fill, line weight, line pattern, and any interior marks as you see them drawn; (2) the exact text label; (3) the page number. CRITICAL RULE: symbol_description must describe what the symbol LOOKS LIKE as a drawn graphic, NOT a paraphrase or echo of the label text. Each legend row has its own unique symbol \u2014 do not assign the same visual description to multiple rows. If you see the same description repeating for consecutive rows, you have misread the legend \u2014 look again at each row individually. WRONG examples (label paraphrases \u2014 never produce these): 'New lantern', 'Existing pole', 'New pillar', 'Remove conductor', 'Underground cable'. CORRECT examples (visual geometry): 'Small hollow circle with short lines radiating outward from the edge', 'Small solid black filled circle', 'Hollow rectangle outline with no fill', 'Solid thin line with evenly spaced short perpendicular tick marks'. REFERENCE TABLE \u2014 use these known symbol descriptions when you recognise the visual pattern next to the label: NEW LV TRENCH \u2192 Long dashed line; STRING NEW OH CABLE \u2192 Short dashed line; EXISTING UNDERGROUND MAINS \u2192 Alternating long-short dashed line; EXISTING OH CABLE \u2192 Solid thin line; REMOVE CONDUCTOR \u2192 Dotted line; EXISTING DUCTS \u2192 Thick heavy solid black line; NEW HV TRENCH \u2192 Solid line with two diagonal slash marks; EXISTING LANTERN \u2192 Small circle with internal cross (four-quadrant cross inside circle); REMOVE LANTERN \u2192 Circle with internal cross and starburst outer spikes radiating from edge; NEW LANTERN \u2192 Circle with starburst outer spikes and hollow centre; EXISTING POLE \u2192 Small solid black filled circle; REMOVE POLE \u2192 Small solid black filled circle with large X through it; REPLACE POLE \u2192 Circle split vertically half-black half-white; NEW POLE \u2192 Small hollow open circle; EXISTING COLUMN \u2192 Small solid black filled square; NEW COLUMN \u2192 Small hollow open square; EXISTING PILLAR \u2192 Solid black filled rectangle; NEW PILLAR \u2192 Hollow rectangle outline; PADMOUNT SUBSTATION \u2192 Rectangle containing two triangles touching at their points (bowtie shape); POLE SUBSTATION \u2192 Circle with triangle inside; LV LINK (N/O) \u2192 Small circle with short vertical ticks on top and bottom; HV ABS (N/C) \u2192 Circle with horizontal line through the centre; HV USL (N/C) \u2192 Semi-circle dome with horizontal base line; HIGH PRESSURE GAS \u2192 Solid line with GAS text centred along it; WATER MAIN \u2192 Solid line with W characters spaced evenly along it; LGA DEMARCATION \u2192 Thin solid line; NEW FREEWAY BOUNDARY \u2192 Faint light grey long dashed line; ENDEAVOUR ENERGY EASEMENT \u2192 Faint light grey medium dashed line. When you see a symbol that matches one of these, use the reference description exactly.",
+        "output_format": "JSON array of legend entry objects. Each object must have: 'page' (integer, 1-based), 'symbol_description' (string \u2014 visual geometry only: shape, fill, line weight, pattern, interior marks \u2014 never a label paraphrase), 'label' (string \u2014 verbatim label text from drawing), 'category' (string \u2014 one of: 'cable', 'equipment', 'substation', 'boundary', 'annotation', 'earthing', 'other'). Each row in the legend must produce a UNIQUE symbol_description \u2014 if two consecutive entries have identical symbol_descriptions you have made an error and must re-examine each row. Example output:\n[\n  { \"page\": 1, \"symbol_description\": \"Long dashed line\", \"label\": \"NEW LV TRENCH\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Solid thin line\", \"label\": \"EXISTING OH CABLE\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Dotted line\", \"label\": \"REMOVE CONDUCTOR\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Thick heavy solid black line\", \"label\": \"EXISTING DUCTS\", \"category\": \"cable\" },\n  { \"page\": 1, \"symbol_description\": \"Small hollow open circle\", \"label\": \"NEW POLE\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Small solid black filled circle\", \"label\": \"EXISTING POLE\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Small solid black filled circle with large X through it\", \"label\": \"REMOVE POLE\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Circle with starburst outer spikes and hollow centre\", \"label\": \"NEW LANTERN\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Circle with internal cross and starburst outer spikes\", \"label\": \"REMOVE LANTERN\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Hollow rectangle outline\", \"label\": \"NEW PILLAR\", \"category\": \"equipment\" },\n  { \"page\": 1, \"symbol_description\": \"Rectangle containing two triangles touching at their points\", \"label\": \"PADMOUNT SUBSTATION\", \"category\": \"substation\" },\n  { \"page\": 1, \"symbol_description\": \"Thin solid line\", \"label\": \"LGA DEMARCATION\", \"category\": \"boundary\" },\n  { \"page\": 1, \"symbol_description\": \"Solid line with W characters spaced evenly along it\", \"label\": \"WATER MAIN\", \"category\": \"other\" }\n]",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate the Legend Area",
+            "instructions": "Scan the drawing for a box, panel, or area labelled 'LEGEND', 'KEY', 'NOTATION', 'SYMBOL KEY', or 'DRAWING LEGEND'. This is typically found in the bottom-right or bottom-left corner of the drawing, within or adjacent to the title block. On multi-page drawings, the legend may appear only on page 1 \u2014 if so, note it as page 1. If no dedicated legend box is found, check for an unlabelled key or symbol table embedded in the drawing."
+          },
+          {
+            "title": "Describe Each Symbol Individually \u2014 Each Row Has Its Own Unique Symbol",
+            "instructions": "CRITICAL: Every row in the legend has its own distinct drawn symbol. Each symbol_description must be unique \u2014 if you find yourself writing the same description for two or more consecutive rows, you have misread the legend and must look again. For LINE symbols: describe the line pattern precisely \u2014 solid/dashed/dotted/chain-dashed, thin/thick/heavy, and any decorations spaced along it (tick marks, letters like W or GAS, diagonal slashes, arrows). For POINT/ICON symbols: describe the outer shape (circle/square/rectangle/triangle), fill (hollow/solid black/half-filled), and any interior marks (cross, X, diagonal line, triangle, bowtie). Use the REFERENCE TABLE in the details field when you recognise a known symbol \u2014 match it and use the reference description. Ask yourself before writing each entry: 'Is this description unique and geometric? Could a reader draw exactly this symbol from my words alone without reading the label?'"
+          },
+          {
+            "title": "Copy the Label Verbatim",
+            "instructions": "For the 'label' field, copy the exact text written next to the symbol on the drawing, preserving capitalisation and spacing. Do not paraphrase or abbreviate. If a symbol has no label, record label as '[UNLABELLED]'. If a label has no visible symbol, record symbol_description as '[NO SYMBOL]'."
+          },
+          {
+            "title": "Assign Category",
+            "instructions": "For each entry, assign a category based on the label text: 'cable' for any cable, conductor, trench, or service line; 'equipment' for poles, pillars, columns, lanterns, service points, switches, fuses, or meters; 'substation' for padmount, kiosk, or pole substation types; 'boundary' for lot boundaries, easement lines, LGA demarcation, or property lines; 'earthing' for earth conductors or earth electrodes; 'annotation' for text labels, callout arrows, or dimensions; 'other' for anything else."
+          },
+          {
+            "title": "Tag to Page Number",
+            "instructions": "Tag each entry with the page number from the chunk metadata. If the same legend appears on multiple pages, record it once tagged to page 1. If different pages have different or updated legends, record separate entries per page."
+          }
+        ]
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/D526458-108 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "D526458_ARP4983_RETIC.pdf",
+      "filepath": "",
+      "document_type": "Reticulation Drawing",
+      "document_category": "Site Plan",
+      "input_text_quality": "none",
+      "document_quality": "chunked-image",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "page-split",
+      "estimated_chunks": 3,
+      "actual_chunks_processed": 7,
+      "process_step_name": "Extract Drawing Legend",
+      "total_sections": 3,
+      "relevant_sections": 7,
+      "raw_text_from_chunks": "[full-page, p1, seq1] FAIRFIELD LGA\nLIVERPOOL LGA\nNEW FREEWAY\nBOUNDARY\n\u2190LAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\u2192\nSITE PLAN\nSHEET 2\n\n[quad-tl, p1, seq1.1] A\nB\nC\nD\nN\nGAS\n26294\n20553\n2089\n2305\nFAIRFIELD LGA\nEND OF SCOPE OF WORKS\n2415\nLIVERPOOL LGA\n1\n2\n3\n4\n5\n6\n2083\n2073\nELIZABETH DR\n1140\n2065\n96203\n1764\nW\n2055\nGAS\nW\n\u97f3\n\u97f3\n1183\nNEW FREEWAY\nBOUNDARY\n7519\nW\nS406107\nNEW ROAD\nNEW FREEWAY\nBOUNDARY\nW\n6402679\nLAND TO BE LEA:\nCONSTRUCTION\n\n[quad-tr, p1, seq1.1] NOTES\n1. THIS DRAWING IS TO BE READ IN CONJUNCTION WITH RELEVANT ENDEAVOUR ENERGY'S STANDARDS AND THE NETWORK CONNECTION\nPOLICY.\n2. ENDEAVOUR ENERGY CONTACT PHONE: 131081\n3. CERTIFICATION SHALL LAPSE WHERE:\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED WITHIN SIX (6) MONTHS OF THIS CERTIFICATION, OR\n(ii) CONSTRUCTION HAS BEEN INTERRUPTED FOR MORE THAN SIX (6) MONTHS.\nWHERE DESIGN CERTIFICATION HAS LAPSED THE DESIGN MUST BE RESUBMITTED FOR CERTIFICATION BY THE ACCREDITED DESIGNER.\n4. ATTENTION:\nPERMANENT SURVEY MARKS MAY EXIST IN THIS AREA. THESE ARE TO BE LOCATED BY A SURVEYOR PRIOR TO COMMENCEMENT OF\nWORK.\n5. ATTENTION:\nALL SERVICES SEARCHES MUST BE CHECKED BEFORE CONSTRUCTION.\n6. WARNING\nLIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN THIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TELEPHONE: 1100\nFOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\n7. ATTENTION:\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR ENERGY'S ASSET DATA CUSTOMER DEPT. DAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE 131081.\n8. OPERATION LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO ANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE FOLLOWING ALTERNATIVES\nSHOULD BE CONSIDERED:\n-MOBILE GENERATORS & SUBSTATIONS\n-LIVE LINE WORK\n-DESIGN ALTERNATIVES\n-LOW VOLTAGE PARALLELS\n-WORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\n9. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED PARTY ON THE LETTER OF INTENT AFTER THE WORKS HAVE BEEN COMPETED AND\nTHE LETTER OF ACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED AMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS FOR SCOPE\nOF WORK. ANY DISAGREEMENT WITH THE AMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT\nOF WORKS.\n10. AN EARTH CONNECTION WARNING LABEL MUST BE INSTALLED WHERE EARTH CONDUCTOR OR AN EXTENDED EARTH GRID IS TO BE\nCONNECTED TO LV STREET NEUTRAL TO ACHIEVE AN MEN SYSTEM AS PER EDI 0006. REFER TO DRAWING No.348245.\n11.HAVE ALL THE EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DESIGN? YES/NO\n12. QUANTITIES AND DIMENSIONS GIVEN ON THIS DRAWING ARE BASED ON DESIGN\nINFORMATION AND SITE CONDITIONS AT THE TIME OF\nDESIGN. AS THEY MIGHT CHANGE, THE BUILDER OF THIS PROJECT MUST CHECK ALL QUANTITIES AND DIMENSION ON SITE PRIOR TO\nTENDERING AND PRIOR TO CONSTRUCTION.\n13. ENVIRONMENTAL MANAGEMENT STANDARD EMS001 IS PART OF THE DESIGN.\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\n- Network switching, substation commissioning, contract inspection and\nancillary fees.\nCUSTOMER\nCUSTOMER FUNDED\nIncludes but not limited to;\n- Nil\n\n[quad-bl, p1, seq1.1] 40302010\nLOCATION PLAN\n0 40 80 120 160 200m\nSCALE 1:2000 @ A1\nKEY DOCUMENTS TABLE\nTHE CERTIFICATION OF THIS PROJECT IS SUPPORTED BY THE FOLL\nDOCUMENT NAME\nSUMMARY ENVIRONMENTAL REPORT (SER)\nAGREEMENT FOR ENTRY, GRANT and CREATION OF EASEMENT - FR\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FPJ4252\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FPJ4253\nTELECOMMUNICATION ASSET AGREEMENT - FPJ4184\nDESIGNER'S SAFETY REPORT\nLIST ANY KEY DOCUMENTS SUPPORTING THE CERTIFICATION:\n1. M12 EIS APPENDIX | ABORIGINAL CULTURAL HERITAGE ASSESSM\nREPORT\n2. APPROVED DISPENSATION FORM 0048 FOR INSTALLING 17M POL\n3. TfNSW SKETCH SR 5334 FILE NO.: SF'2019/158153\n4. TfNSW LETTER FOR CONFIRMATION OF ACCESS TO EE ASSETS\n\n[quad-br, p1, seq1.1] Pegging of property boundaries & infrastructure\nlocations\nProviding site access\nOwn service & service connection\nConfirm finished ground levels\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\nNil\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nThird Quarter of 2023\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP\n- 1 x 11kV 100kVA Pole Top Trf HD CU 7/2.00 LV CABLE\n(APPROX. 368m)\nALL REMOVED COPPER\nCONDUCTORS ARE TO BE\nRETURNED TO EE DEPOT.\n\n[full-page, p2, seq2] F\nC\nB\nA\nN\n2083\n2\n3\n4\n2073\n5\n7\n8\n9\n10\n11\n12\n2065\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '27'\n- STRING NEW 11 SPAN OF OH HV 7/4.50 AAC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30''31'-'14'\n- STRING NEW 11 SPAN OF OH LV 150mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n(27)\n8.4m.\n2056\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '26'\n58.8m\nSL\n8.4m\n49.4m\n13.1\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '25'\n- ESTABLISH NEW PILLAR REF 'A' FOR TINSW TCS\nSUPPLY.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM NEW\nPILLAR S406107 AT REF 'A' TO NEW PILLAR\nS402679 AT REF 'B'.\n- LAY NEW UG SL 16mm2 CU 4C XLPE FROM LV\nPILLAR S406107 AT REF 'A' TO COLUMN REF '48'.\n68.8m\n67.7m\n2002189\n2002190\n48m\nINSTALL NEW HV UGOH & LV UGOH\nLAY NEW UG HV 240mm2 AL 3C XLPE FROM\nNEW HV UGOH AT POLE REF '22' TO NEW\nHV UGOH AT POLE REF '61'.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM\nNEW LV UGOH AT POLE REF '22' TO NEW\nLV PILLAR AT REF 'A'.\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '22'\n11.1m\n620103\n-INSTALL NEW HV UGOH AT POLE\nREF '21'.\n- LAY NEW UG HV 240mm2 AL 3C\nXLPE FROM NEW HV UGOH TO\nEXISTING PM SUB AT REF 'C'\nNEW FREEWAY\nBOUNDARY\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '28'\nESTABLISH NEW POLE SUBSTATION No: 96203\nCONSTRUCTION TYPE\n: URBAN (DRW NO 249489)\nTRANSFORMER SIZE\n: 200KVA\nVOLTAGE (11kV/22kV)\n: 11kV\nHV FUSES\n20A\nLV FUSES\n2 x 200A\nNUMBER OF DISTRIBUTORS: 2\nEARTHING SYSTEM\nCOMMON EARTHING,\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '30'\nREMOVE EXISTING POLE AT\nREF '14',\nINSTALL NEW 12.5m/12kN\nTIMBER POLE AT REF '14', 7.1m\nFROM REMOVED POLE.\nCUT & TERMINATE EX OH HV\nPROJECT BOUNDARY\n6/1/3.00 ACSR/GZ CONDUCTOR\nFROM POLE 603255.\nREATTACH EX LV 95mm2 4C\nLVABC FROM POLE 603255 &\nD\n2305\n603255 IN NORMALLY OPEN STATUS.\nPOLE RE '13'.\nREATTACH EX SL 78401 TO\nNEW POLE.\nESTABLISHED NEW OH LV LINK\n(31)\n823246\nE\nFAIRFIELD\nLGA\n78401\nEND OF SCOPE OF WORKS\n68.6m\n78402\n8.3m\n12\nCOMPLY WITH EDI 100\n73.4m\n8.6\n11\n(29)\n58.4m\nELIZABETH\n$170412\nSTRING NEW OH HV 7/4.50\nAAC CONDUCTOR\nBETWEEN POLE REF '13' &\n'14'.\n-REPLACE EXISTING POLE WITH NEW 14m/12kN/\nTIMBER POLE AT REF '13'.\nLIVERPOOL 13\nCUT& TERMINATE EX OH HV 7/4.50 AAC\nCONDUCTOR FROM POLE 603241.\nLGA\nREATTACH EX LV 95mm2 4C LVABC FROM\nPOLE 603241 & POLE REF '14'.\nREMOVE EX LV USL.\n\u53ef\n-REATTACH EX SL 78402 TO NEW POLE.\n603241\n6/2415\nSITE PLAN LEGEND\n7.2m\n59.8m\n96203\nDR\n68.7m\n2002188\n2002187\n2002186\n-DECOMMISSION EXISTING POLE\nSUB 1764 AT POLE REF '9'.\n2002185\n2002184\n2002183\nREMOVE 11 SPAN OF EXISTING\nOH HV MAIN BETWEEN POLE\nREF '2'-3'-4'-'5'-'6'-'7'-'8'-\n'9'-'10'-'11'-'12'-'13'\nREMOVE 10 SPAN OF EXISTING\nOH LV MAIN BETWEEN POLE\nREF '3'-4'-'5''6'-'7''8'-'9'-\n'10'-'11'-'12'-'13'\n2002182\nLAY NEW TYPE 26 ROAD\nCROSSING DUCTS.\n-7519\n200219\n16\n48.1m\nAS406107\n620089\nFAIRFIELD LGA\n2002193\n2002181\n2002180\n306689\n-LIVERPOOL LGA\nB2\nARP4984 PACKAGE 4\n2005481\n306688\n306687\n$402679\n2005480\n5405788\n2006479\n96084\n- ESTABLISH NEW PILLAR REF 'B1' FOR TINSW SWITCH\nBOARD E1.\n- LAY NEW UG LV 240mm2 AL 4C XLPE CABLE FROM\nEXISTING PM SUB 96084 LV SWITCH AT REF 'C' TO\nNEW PILLAR S402679 AT REF 'B1', AS SHOWN ON THE\nFINAL LV CIRCUIT.\n- RUN NEW UG SL 16mm2 CU 4C XLPE FROM LV PILLAR\nS402679 AT REF 'B1' TO COLUMN REF '37'\n-TURN DOWN EXISTING HV UGOH AT POLE REF\n'2' ESTABLISH ON ARP4984 & REMOVE\nEXISTING UG HV 240mm2AL 3C XLPE CABLE\nRUNNING TO PM SUB REF 'C'.\nPRIVATE ROAD\n17\n-EXISTING PM SUB 96084-\nESTABLISHED ON\nARP4984\n1764\nSTRING NEW 1 SPAN OF OH LV 95mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '30' - '11'\n1140\nNEW LV TRENCH\nREMOVE LANTERN\nNEW PILLAR\nSTRING NEW OH CABLE\nNEW LANTERN\n\u00d6\nLV LINK (N/O)\nEXISTING POLE\nEXISTING UNDERGROUND MAINS\nNEW POLE\nREMOVE POLE\nEXISTING OH CABLE\n1\nNEW HV TRENCH\nG\nEXISTING COLUMN\nREMOVE CONDUCTOR\n0\nREPLACE POLE\n\u03a0\nNEW COLUMN\n\u04e8\nHV ABS (N/C)\nEXISTING DUCTS\nEXISTING PILLAR\nA\nHV USL (N/C)\nLGA DEMARCATION\nPADMOUNT SUBSTATION\nGAS\nHIGH PRESSURE GAS\nEXISTING LANTERN\nPOLE SUBSTATION\nH\nCadastre: Land and Property Information 2016\nA\nORIGINAL\nAMENDMENTS\nDRAFT No. 05\nISSUE\nB 11/03/2024\n92119\nP.P\nCHK'D\nDRWN\nD. S.\nMOVE POLE/PILLAR\nREPLACED POLE\nLOCATION AND\nC 8/04/2024\nCHK'D\nP. P\nMOVE POLE REF '61'\n& ESTABLISH STJ AT\nDRWN D. S.\nD 4/11/2024\nREF '60'\nCHK'D\nP. P.\nUPRATE POLE SUB AT\nREF 28 & REVISED\nEARTHING REF 61\nDRWN D. S.\n1\n2\nCLIENT:\nJOHN M7-M12\nHOLLAND Integration Project\nTransport\nNSW for NSW\nGOVERNMENT\n3\nWATER MAIN\nNEW FREEWAY BOUNDARY\nEXISTING 9,145m WIDTH\nENDEAVOUR ENERGY EASEMENT\n\u05e7\u05dc\u05d9\nLevel 27, Ernst & Young Centre\n680 George Street\nGPO BOX 5394\nSydney NSW 2000\nSydney NSW 2001 Australlia\nTelephone +61 2 9272 5100\nFacsimile +61 2 9272 5101\nEmail: sydney@wsp.com\nASP REF/ACCREDIATION NO.-5045\n4\nTEMPLATE VERSION No.5.20\nSITE PLAN\n0\n20\n201510 5\nTHIS DRAWING\nPYRIGH\nTHEREIN IS THE\nMAY NOT BE COPIED\nREPRODUCED\nSTRIBUTED, LOANED OR\nRED WITHOUT\nITTEN CONSENT OF\nULL 1937\nREFERENCE DRAWING'S\nCONNECTION OF LOAD\n5\n6\n40\n60\n80\n100m\nSCALE 1:1000 A1\nWORK ORDERS\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n7\nCARRIAGEWAY\nEDGE\n-NEW FREEWAY\nBOUNDARY\nNEW ROAD\n-INSTALL NEW 14m/8kN TIMBER POLE\nAT REF '61', 14m FROM REMOVED\nPOLE REF '60' AND 5m FROM\nCARRIAGEWAY EDGE\n- REATTACH THE EXISTING CABLE\nFROM POLE REF '60' TO NEW\nTERMINATION POLE REF '61'\n-INSTALL NEW HV UGOH.\nLAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\nPRIVATE ROAD\n603250\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE\nCAMS File No.\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nARP4983\n3284\nHOXTON PARK\nCENTRAL\nKEMPS CREEK 1 D11\nLIVERPOOL\n8\nBEFORE\nYOU DIG\nwww.byda.com.au\nORIGINAL\nSCALE\nDRAWN DARSHAN S\nDO NOT\nSCALE\nDIMENSIONS\nIN\nMETRES\nGDA94/MGA56\nASP LEVEL 2 TO RE-ESTABLISH\nEXISTING SERVICE CONNECTION.\nNOTE:\n- NEW SL LUMINARIES NUMBER ARE NOT SHOWN ON\nTHE DESIGN FOR CLARITY PURPOSE.\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nCOORDINATE SYSTEM\n12-11-2024\nAli Siddiqui\nAli Siddiqui\nThis Certification is issued subject to Endeavour Energy's Standard Certification Terms\nELIZABETH DRIVE\nCECIL PARK\nARP4983\nASSET RELOCATION\nINSPECTED BY:\nSIGNATURE:\nOF:\nCONTACT No.\nSIGNATURE:\nDATE:\nM12 EAST ELIZABETH DRIVE CONNECTION\nDATE 17/07/2023\nCH'D\nPRAMOD P\nDESIGN DARSHAN S\n9\n10\n11\nDATE\nEND OF SCOPE OF WORKS\n306690\n2005482\nG\nASSET RECORDING\nHEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED ASI NDEAVOR ENERGY STANDARD SAD 0004,\nEndeavour\nEnergy\nH\nA1 526458\nD\nSHEET No 2 OF 9 SHEETS\n12\nF\nE\nD\nC\nB\nA\n\n[full-page, p3, seq3] A\nN\nB\nFAIRFIELD\nLGA\n\u65e5\n41.5m\n2002188\n2002187.\nS\nLIVERPOOL\nLGA\n2\n3\n4\n5\n2002186\n44.3m\n35.3m\n2002185\n43m\nDUCT BREAKDOWN TABLE\n2002189\n55.4m\n68.2m\n55m\n\u03a0\n2002190\nELIZABETH\n200219\n2002184\n2002183\n2002182\n45.3m\n36.7m\n49.4m\n2002181\n52.3m\n2002180\nSL LOCATION\n(NTS)\n28.9m\n58.3m\n1000886\nDR\n306689\n2005481\n61.8m\nPRIVA\nRoute\nConfiguration\nRoute Length (m)\nReimbursement (m) x ($)\nExisting Duct Usage Charge (m) x ($)\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\n(Existing Road Underbore)\nRMS ROAD\n1-C\n1500\n56\nNIL\nNIL\n1\nLV\nHV\nC\n(New Duct)\nNATURAL STRIP\n1-21, B2-61\n750\n98\nNIL\nNIL\nPROPERTY BOUNDARY\nGROUND LEVEL\nCOMPACTED BACKFILL\nHV\n600mm\n(Existing Duct)\nFOOTPATH\nC-B3\n750\n81\nNIL\nNIL\nSLT\nLV\nHV\n(Existing Duct)\nNATURAL STRIP\nPOLYMERIC CABLE\nCOVER\nBEDDING\n+\n75mm\n50mm\n-50mm-50mm\n-50mm-\nB3-2\n750\n20\nNIL\nNIL\nTYPE 20 DUCT ARRANGEMENT\nHV\nD\nFOOTPATH\n(NTS)\n(New Duct)\nFOOTPATH\nB3-B2\n750\n28\nNIL\nNIL\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\nHV\n(New Road Crossing)\nCOUNCIL ROAD\nPROPERTY\nBOUNDARY\nB2 B\n37\nNIL\nNIL\nGROUND LEVEL\n(New Duct)\nNATURAL STRIP\nE\nB-37\n10\nSL\n$750\nNIL\nNIL\nCOMPACTED BACKFILL\nLV\nPOLYMERIC CABLE\nCOVER\n(Road Underbore)\nEXISTING RMS ROAD\nBEDDING\n37-A\n1500\n42\nNIL\nNIL\n(New Duct)\nFOOTPATH\nA-22\n75\n16\nNIL\nNIL\nT\nHV\n(New Duct)\nF\n37-38-39-40-41-42-\n43-44-45.\nA-50,A-48,\nFOOTPATH\n591\nNIL\nNIL\n600\n48-47-46\nSLT\n(New Duct)\nNATURAL STRIP\nB2-61\n750\n164\nNIL\nNIL\nG\nEarthing\n1123 m\nDUCT LEGEND\nNIL\n\u2610 NEW TRENCH SPARE DUCT DUCT WITH NEW DUCT WITH EXISTING REMOVE DUCT\nSPARE DUCT REQUIREMENT\nCABLE\nCABLE\nNIL\nREMOVE CABLE REMOVE DUCT\n& CABLE\n1. IN AREAS WHERE ADDITIONAL DUCTS ARE REQUIRED THE SPARE DUCT IS INCLUDED IN THE PVC DUCT SCHEDULE & THE SECTION SHOWN.\n2. SPARE SL DUCTS HAVE BEEN PROVIDED AND RESERVED FOR CLIENTS FUTURE USE.\nNOTE\n1. DUCT LENGTHS AND ARRANGEMENTS TO BE CONFIRMED ON SITE.\n2. ALL TRENCH SECTIONS ARE TO BE READ & VIEWED FROM NODE TO NODE AS NOMINATED.\n3. FOR ALL REQUIRED/SHOWN CROSSING DUCT WORK, REFER TO TYPICAL ARRANGEMENT INCLUDED ON THIS PAGE.\n*THE EXISTING 125mm SPARE CONDUIT IS USED TO LAY THE EARTHING CABLE DUE TO THE ABSENCE OF SPARE 50MM DUCT. THIS ADJUSTMENT IS\nREQUIRED FOLLOWING A CHANGE IN THE EARTHING DESIGN REQUESTED BY EE IN DESIGN AMENDMENT D.\n75mm\n750mm\n-50mm-\n-50mm-\n-50mm-\nTYPE 04 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\nPROPERTY\nBOUNDARY\nGROUND LEVEL\nCOMPACTED BACKFILL\nPOLYMERIC CABLE\nCOVER\n75mm\nA\nORIGINAL\nAMENDMENTS\nDRAFT No. 05\nISSUE\nB 11/03/2024\nCHK'D\nP.P\nMOVE POLE/PILLAR\nREPLACED POLE\nLOCATION AND\nC 8/04/2024\nCHK'D\nP. P\nMOVE POLE REF '61'\n& ESTABLISH STJ AT\nDRWN D. S.\nREF '60'\nD 4/11/2024\nCHK'D\nP. P.\nUPRATE POLE SUB AT\nREF 28 & REVISED\nEARTHING REF 61\nH\nCadastre: \u00a9 Land and Property Information 2016\nCLIENT:\nJOHN M7-M12\nHOLLAND Integration Project\nNSW for NSW\nGOVERNMENT\n\u05e4\u05d9\u05d9\nLevel 27, Ernst & Young Centre\nTelephone +61 2 9272 5100\nFacsimile +61 2 9272 5101\nEmail: sydney@wsp.com\n680 George Street\nSydney NSW 2000\nGPO BOX 5394\nSydney NSW 2001 Australlia\n3\nASP REF/ACCREDIATION NO.-5045\n4\nTEMPLATE VERSION No.5.20\nTHIS DRAWING\nPYRIGHT\nTHEREIN IS THE\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED\nREPRODUCED,\nSTRIBUTED, LOANED OR\nRED WITHOUT\nWRITTEN CONSENT OF\n7\n8\n9\n0.60m\n0.90m\nROAD CROSSING\nDUCT\n2002193\n(50\nFIRST\nFAIRFIELD LGA\nSPLAY\nPEG\nPROPERTY\nBOUNDARY\nSERVICE\nDUCT\n0.90m\n2005480\n306688\nLIVERPOOL LGA\n10\nDUCT END LOCATION DETAIL\nGROUND LEVEL\n0.60m\n0.90m\nPROPERTY\nBOUNDARY\n0.90m\nDUCT SPACING\nNTS\nFIRST\nSPLAY\nPEG\nROAD LEVEL\nTYPE 26 DUCT ARRANGEMENT\nEXISTING RMS ROAD UNDERBORE\n(NTS)\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\nPROPERTY\nBOUNDARY\n1500mm\nGROUND LEVEL\n750mm\nCOMPACTED BACKFILL\nPOLYMERIC CABLE\nCOVER\n75mm\nULL 1937\nBEDDING\nTYPE 24 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)\nROAD LEVEL\n750mm\nCOMPACTED BACKFILL\nPVC WARNING TAPE\n75mm\nMECHANICAL PROTECTION\n75mm-15MPa CONCRETE\n50mm\nBEDDING\n-50mm-\n-50mm-\n-50mm-\nTYPE 04 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)\nREFERENCE DRAWING'S\nCONNECTION OF LOAD\n6\nWORK ORDERS\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n7\n300mm\n00\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nOF\n11\nDUCT DECLARATION\nCONTACT NUMBER\nUCTS SHOWN ON THIS\nDRAWING HAVE BEEN INSTALLED IN ACCORDANCE WITH THIS\nDRAWING & ENDEAVOR ENERGY STANDARDS MD10028 &\nMC10006. THE\nTEACH END\nHAVE BEEN CORRECTLY MARKED ON\nENDEAVOR ENERGY STANDARD SAD0004.\nDEPTHS AND\nDRAWING A\nTHE INSTALLATION OF THE DUCTS WAS\nCOMMENCED ON\n& COMPLETED ON\nSIGNATURE\nLAND SURVEYOR REGISTERED UNDER\nSURVEYING AND SPATIAL INFORMATION ACT 2002\n12\nNOTE:\n- THIS PROJECT ASSUMES THE\nCOMPLETION OF ARP4984.\nASP LEVEL 2 TO RE-ESTABLISH\nEXISTING SERVICE CONNECTION.\nA\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nB\nC\nD\nBEFORE\nYOU DIG\nwww.byda.com.au\nE\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\n12-11-2024\nExaminer's Signature:\nAli Siddiqui\nPrint Name\nAli Siddiqui\nThis Certification is issued subject to Endeavour Energy's Standard Certification Terms\nWORKS COMPLETED/FIELD BOOK\nF\nCONSTRUCTED BY:\nWORKS COMPLETED:\n750mm\nSIGNATURE:\nINSPECTED BY:\nDATE\nSIGNATURE:\nDATE\nASSET RECORDING\n1:\nOF:\nCONTACT No.:\nHEREBY CERTIFY THAT ASSETS MARKED AS-BUILT ON THIS DRAWING HAVE BEEN\n100mm\nT\n-50mm-\n-50mm-\n-50mm-\n-50mm-\nTYPE 26 DUCT ARRANGEMENT\nCOUNCIL ROAD CROSSING\n(NTS)\nCAMS File No.\nAM PROJ., No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nARP4983\n3284\nHOXTON PARK\nCENTRAL\nKEMPS CREEK 1 D11\nLIVERPOOL\n8\nRECORDED AS PER ENDEAVOR ENERGY STANDARD 00004\nSIGNATURE\nDATE:\nELIZABETH DRIVE\nCECIL PARK\nARP4983\nASSET RELOCATION\nM12 EAST ELIZABETH DRIVE CONNECTION\nORIGINAL\nSCALE\nDO NOT\nSCALE\nDIMENSIONS\nIN\nDRAWN DARSHAN S\nMETRES\nGDA94/MGA56\nDATE 17/07/2023\nCOORDINATE SYSTEM\nCH'D\nPRAMOD P\nDESIGN DARSHAN S\n9\n10\n11\nG\nEndeavour\nH\nEnergy\nA1 526458\nD\nSHEET No 5 OF 9 SHEETS\n12",
+      "chunk_details": [
+        {
+          "chunk_id": "chunk_0001",
+          "sequence": 1,
+          "page_number": 1,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "FAIRFIELD LGA\nLIVERPOOL LGA\nNEW FREEWAY\nBOUNDARY\n\u2190LAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\u2192\nSITE PLAN\nSHEET 2",
+            "data": {
+              "sub-step-extract-legend": []
+            }
+          }
+        },
+        {
+          "chunk_id": "chunk_0002",
+          "sequence": 2,
+          "page_number": 2,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "F\nC\nB\nA\nN\n2083\n2\n3\n4\n2073\n5\n7\n8\n9\n10\n11\n12\n2065\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '27'\n- STRING NEW 11 SPAN OF OH HV 7/4.50 AAC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30''31'-'14'\n- STRING NEW 11 SPAN OF OH LV 150mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n(27)\n8.4m.\n2056\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '26'\n58.8m\nSL\n8.4m\n49.4m\n13.1\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '25'\n- ESTABLISH NEW PILLAR REF 'A' FOR TINSW TCS\nSUPPLY.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM NEW\nPILLAR S406107 AT REF 'A' TO NEW PILLAR\nS402679 AT REF 'B'.\n- LAY NEW UG SL 16mm2 CU 4C XLPE FROM LV\nPILLAR S406107 AT REF 'A' TO COLUMN REF '48'.\n68.8m\n67.7m\n2002189\n2002190\n48m\nINSTALL NEW HV UGOH & LV UGOH\nLAY NEW UG HV 240mm2 AL 3C XLPE FROM\nNEW HV UGOH AT POLE REF '22' TO NEW\nHV UGOH AT POLE REF '61'.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM\nNEW LV UGOH AT POLE REF '22' TO NEW\nLV PILLAR AT REF 'A'.\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '22'\n11.1m\n620103\n-INSTALL NEW HV UGOH AT POLE\nREF '21'.\n- LAY NEW UG HV 240mm2 AL 3C\nXLPE FROM NEW HV UGOH TO\nEXISTING PM SUB AT REF 'C'\nNEW FREEWAY\nBOUNDARY\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '28'\nESTABLISH NEW POLE SUBSTATION No: 96203\nCONSTRUCTION TYPE\n: URBAN (DRW NO 249489)\nTRANSFORMER SIZE\n: 200KVA\nVOLTAGE (11kV/22kV)\n: 11kV\nHV FUSES\n20A\nLV FUSES\n2 x 200A\nNUMBER OF DISTRIBUTORS: 2\nEARTHING SYSTEM\nCOMMON EARTHING,\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '30'\nREMOVE EXISTING POLE AT\nREF '14',\nINSTALL NEW 12.5m/12kN\nTIMBER POLE AT REF '14', 7.1m\nFROM REMOVED POLE.\nCUT & TERMINATE EX OH HV\nPROJECT BOUNDARY\n6/1/3.00 ACSR/GZ CONDUCTOR\nFROM POLE 603255.\nREATTACH EX LV 95mm2 4C\nLVABC FROM POLE 603255 &\nD\n2305\n603255 IN NORMALLY OPEN STATUS.\nPOLE RE '13'.\nREATTACH EX SL 78401 TO\nNEW POLE.\nESTABLISHED NEW OH LV LINK\n(31)\n823246\nE\nFAIRFIELD\nLGA\n78401\nEND OF SCOPE OF WORKS\n68.6m\n78402\n8.3m\n12\nCOMPLY WITH EDI 100\n73.4m\n8.6\n11\n(29)\n58.4m\nELIZABETH\n$170412\nSTRING NEW OH HV 7/4.50\nAAC CONDUCTOR\nBETWEEN POLE REF '13' &\n'14'.\n-REPLACE EXISTING POLE WITH NEW 14m/12kN/\nTIMBER POLE AT REF '13'.\nLIVERPOOL 13\nCUT& TERMINATE EX OH HV 7/4.50 AAC\nCONDUCTOR FROM POLE 603241.\nLGA\nREATTACH EX LV 95mm2 4C LVABC FROM\nPOLE 603241 & POLE REF '14'.\nREMOVE EX LV USL.\n\u53ef\n-REATTACH EX SL 78402 TO NEW POLE.\n603241\n6/2415\nSITE PLAN LEGEND\n7.2m\n59.8m\n96203\nDR\n68.7m\n2002188\n2002187\n2002186\n-DECOMMISSION EXISTING POLE\nSUB 1764 AT POLE REF '9'.\n2002185\n2002184\n2002183\nREMOVE 11 SPAN OF EXISTING\nOH HV MAIN BETWEEN POLE\nREF '2'-3'-4'-'5'-'6'-'7'-'8'-\n'9'-'10'-'11'-'12'-'13'\nREMOVE 10 SPAN OF EXISTING\nOH LV MAIN BETWEEN POLE\nREF '3'-4'-'5''6'-'7''8'-'9'-\n'10'-'11'-'12'-'13'\n2002182\nLAY NEW TYPE 26 ROAD\nCROSSING DUCTS.\n-7519\n200219\n16\n48.1m\nAS406107\n620089\nFAIRFIELD LGA\n2002193\n2002181\n2002180\n306689\n-LIVERPOOL LGA\nB2\nARP4984 PACKAGE 4\n2005481\n306688\n306687\n$402679\n2005480\n5405788\n2006479\n96084\n- ESTABLISH NEW PILLAR REF 'B1' FOR TINSW SWITCH\nBOARD E1.\n- LAY NEW UG LV 240mm2 AL 4C XLPE CABLE FROM\nEXISTING PM SUB 96084 LV SWITCH AT REF 'C' TO\nNEW PILLAR S402679 AT REF 'B1', AS SHOWN ON THE\nFINAL LV CIRCUIT.\n- RUN NEW UG SL 16mm2 CU 4C XLPE FROM LV PILLAR\nS402679 AT REF 'B1' TO COLUMN REF '37'\n-TURN DOWN EXISTING HV UGOH AT POLE REF\n'2' ESTABLISH ON ARP4984 & REMOVE\nEXISTING UG HV 240mm2AL 3C XLPE CABLE\nRUNNING TO PM SUB REF 'C'.\nPRIVATE ROAD\n17\n-EXISTING PM SUB 96084-\nESTABLISHED ON\nARP4984\n1764\nSTRING NEW 1 SPAN OF OH LV 95mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '30' - '11'\n1140\nNEW LV TRENCH\nREMOVE LANTERN\nNEW PILLAR\nSTRING NEW OH CABLE\nNEW LANTERN\n\u00d6\nLV LINK (N/O)\nEXISTING POLE\nEXISTING UNDERGROUND MAINS\nNEW POLE\nREMOVE POLE\nEXISTING OH CABLE\n1\nNEW HV TRENCH\nG\nEXISTING COLUMN\nREMOVE CONDUCTOR\n0\nREPLACE POLE\n\u03a0\nNEW COLUMN\n\u04e8\nHV ABS (N/C)\nEXISTING DUCTS\nEXISTING PILLAR\nA\nHV USL (N/C)\nLGA DEMARCATION\nPADMOUNT SUBSTATION\nGAS\nHIGH PRESSURE GAS\nEXISTING LANTERN\nPOLE SUBSTATION\nH\nCadastre: Land and Property Information 2016\nA\nORIGINAL\nAMENDMENTS\nDRAFT No. 05\nISSUE\nB 11/03/2024\n92119\nP.P\nCHK'D\nDRWN\nD. S.\nMOVE POLE/PILLAR\nREPLACED POLE\nLOCATION AND\nC 8/04/2024\nCHK'D\nP. P\nMOVE POLE REF '61'\n& ESTABLISH STJ AT\nDRWN D. S.\nD 4/11/2024\nREF '60'\nCHK'D\nP. P.\nUPRATE POLE SUB AT\nREF 28 & REVISED\nEARTHING REF 61\nDRWN D. S.\n1\n2\nCLIENT:\nJOHN M7-M12\nHOLLAND Integration Project\nTransport\nNSW for NSW\nGOVERNMENT\n3\nWATER MAIN\nNEW FREEWAY BOUNDARY\nEXISTING 9,145m WIDTH\nENDEAVOUR ENERGY EASEMENT\n\u05e7\u05dc\u05d9\nLevel 27, Ernst & Young Centre\n680 George Street\nGPO BOX 5394\nSydney NSW 2000\nSydney NSW 2001 Australlia\nTelephone +61 2 9272 5100\nFacsimile +61 2 9272 5101\nEmail: sydney@wsp.com\nASP REF/ACCREDIATION NO.-5045\n4\nTEMPLATE VERSION No.5.20\nSITE PLAN\n0\n20\n201510 5\nTHIS DRAWING\nPYRIGH\nTHEREIN IS THE\nMAY NOT BE COPIED\nREPRODUCED\nSTRIBUTED, LOANED OR\nRED WITHOUT\nITTEN CONSENT OF\nULL 1937\nREFERENCE DRAWING'S\nCONNECTION OF LOAD\n5\n6\n40\n60\n80\n100m\nSCALE 1:1000 A1\nWORK ORDERS\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n7\nCARRIAGEWAY\nEDGE\n-NEW FREEWAY\nBOUNDARY\nNEW ROAD\n-INSTALL NEW 14m/8kN TIMBER POLE\nAT REF '61', 14m FROM REMOVED\nPOLE REF '60' AND 5m FROM\nCARRIAGEWAY EDGE\n- REATTACH THE EXISTING CABLE\nFROM POLE REF '60' TO NEW\nTERMINATION POLE REF '61'\n-INSTALL NEW HV UGOH.\nLAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\nPRIVATE ROAD\n603250\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE\nCAMS File No.\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nARP4983\n3284\nHOXTON PARK\nCENTRAL\nKEMPS CREEK 1 D11\nLIVERPOOL\n8\nBEFORE\nYOU DIG\nwww.byda.com.au\nORIGINAL\nSCALE\nDRAWN DARSHAN S\nDO NOT\nSCALE\nDIMENSIONS\nIN\nMETRES\nGDA94/MGA56\nASP LEVEL 2 TO RE-ESTABLISH\nEXISTING SERVICE CONNECTION.\nNOTE:\n- NEW SL LUMINARIES NUMBER ARE NOT SHOWN ON\nTHE DESIGN FOR CLARITY PURPOSE.\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nCOORDINATE SYSTEM\n12-11-2024\nAli Siddiqui\nAli Siddiqui\nThis Certification is issued subject to Endeavour Energy's Standard Certification Terms\nELIZABETH DRIVE\nCECIL PARK\nARP4983\nASSET RELOCATION\nINSPECTED BY:\nSIGNATURE:\nOF:\nCONTACT No.\nSIGNATURE:\nDATE:\nM12 EAST ELIZABETH DRIVE CONNECTION\nDATE 17/07/2023\nCH'D\nPRAMOD P\nDESIGN DARSHAN S\n9\n10\n11\nDATE\nEND OF SCOPE OF WORKS\n306690\n2005482\nG\nASSET RECORDING\nHEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED ASI NDEAVOR ENERGY STANDARD SAD 0004,\nEndeavour\nEnergy\nH\nA1 526458\nD\nSHEET No 2 OF 9 SHEETS\n12\nF\nE\nD\nC\nB\nA",
+            "data": {
+              "sub-step-extract-legend": [
+                {
+                  "page": 2,
+                  "symbol_description": "Long dashed line",
+                  "label_text": "NEW LV TRENCH",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "NEW LV TRENCH",
+                  "category": "cable"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Circle with internal cross and starburst outer spikes radiating from edge",
+                  "label_text": "REMOVE LANTERN",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "REMOVE LANTERN",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Hollow rectangle outline",
+                  "label_text": "NEW PILLAR",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "NEW PILLAR",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Short dashed line",
+                  "label_text": "STRING NEW OH CABLE",
+                  "line_pattern": "dashed",
+                  "fill_pattern": null,
+                  "label": "STRING NEW OH CABLE",
+                  "category": "cable"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Circle with starburst outer spikes and hollow centre",
+                  "label_text": "NEW LANTERN",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "NEW LANTERN",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Small circle with short vertical ticks on top and bottom",
+                  "label_text": "LV LINK (N/O)",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "LV LINK (N/O)",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Small solid black filled circle",
+                  "label_text": "EXISTING POLE",
+                  "line_pattern": null,
+                  "fill_pattern": "solid",
+                  "label": "EXISTING POLE",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Alternating long-short dashed line",
+                  "label_text": "EXISTING UNDERGROUND MAINS",
+                  "line_pattern": "dotted",
+                  "fill_pattern": null,
+                  "label": "EXISTING UNDERGROUND MAINS",
+                  "category": "cable"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Small hollow open circle",
+                  "label_text": "NEW POLE",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "NEW POLE",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Solid thin line",
+                  "label_text": "EXISTING OH CABLE",
+                  "line_pattern": null,
+                  "fill_pattern": "solid",
+                  "label": "EXISTING OH CABLE",
+                  "category": "cable"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Small solid black filled circle with large X through it",
+                  "label_text": "REMOVE POLE",
+                  "line_pattern": null,
+                  "fill_pattern": "hollow",
+                  "label": "REMOVE POLE",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Solid line with two diagonal slash marks",
+                  "label_text": "NEW HV TRENCH",
+                  "line_pattern": "dashed",
+                  "fill_pattern": null,
+                  "label": "NEW HV TRENCH",
+                  "category": "cable"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Dotted line",
+                  "label_text": "REMOVE CONDUCTOR",
+                  "line_pattern": null,
+                  "fill_pattern": "solid",
+                  "label": "REMOVE CONDUCTOR",
+                  "category": "cable"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Circle split vertically half-black half-white",
+                  "label_text": "REPLACE POLE",
+                  "line_pattern": null,
+                  "fill_pattern": "half-solid",
+                  "label": "REPLACE POLE",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Small solid black filled square",
+                  "label_text": "EXISTING COLUMN",
+                  "line_pattern": null,
+                  "fill_pattern": "hollow",
+                  "label": "EXISTING COLUMN",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Circle with horizontal line through the centre",
+                  "label_text": "HV ABS (N/C)",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "HV ABS (N/C)",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Small hollow open square",
+                  "label_text": "NEW COLUMN",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "NEW COLUMN",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Solid black filled rectangle",
+                  "label_text": "EXISTING PILLAR",
+                  "line_pattern": null,
+                  "fill_pattern": "solid",
+                  "label": "EXISTING PILLAR",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Semi-circle dome with horizontal base line",
+                  "label_text": "HV USL (N/C)",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "HV USL (N/C)",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Thick heavy solid black line",
+                  "label_text": "EXISTING DUCTS",
+                  "line_pattern": "dashed",
+                  "fill_pattern": null,
+                  "label": "EXISTING DUCTS",
+                  "category": "cable"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Thin solid line",
+                  "label_text": "LGA DEMARCATION",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "LGA DEMARCATION",
+                  "category": "boundary"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Rectangle containing two triangles touching at their points",
+                  "label_text": "PADMOUNT SUBSTATION",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "PADMOUNT SUBSTATION",
+                  "category": "substation"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Solid line with GAS text centred along it",
+                  "label_text": "HIGH PRESSURE GAS",
+                  "line_pattern": "solid",
+                  "fill_pattern": null,
+                  "label": "HIGH PRESSURE GAS",
+                  "category": "other"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Small circle with internal cross (four-quadrant cross inside circle)",
+                  "label_text": "EXISTING LANTERN",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "EXISTING LANTERN",
+                  "category": "equipment"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Circle with triangle inside",
+                  "label_text": "POLE SUBSTATION",
+                  "line_pattern": null,
+                  "fill_pattern": null,
+                  "label": "POLE SUBSTATION",
+                  "category": "substation"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Solid line with W characters spaced evenly along it",
+                  "label_text": "WATER MAIN",
+                  "line_pattern": "dashed",
+                  "fill_pattern": null,
+                  "label": "WATER MAIN",
+                  "category": "other"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Faint light grey long dashed line",
+                  "label_text": "NEW FREEWAY BOUNDARY",
+                  "line_pattern": "dashed",
+                  "fill_pattern": null,
+                  "label": "NEW FREEWAY BOUNDARY",
+                  "category": "boundary"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Faint light grey medium dashed line",
+                  "label_text": "EXISTING 9,145m WIDTH\nENDEAVOUR ENERGY EASEMENT",
+                  "line_pattern": "solid",
+                  "fill_pattern": null,
+                  "label": "ENDEAVOUR ENERGY EASEMENT",
+                  "category": "boundary"
+                },
+                {
+                  "page": 2,
+                  "symbol_description": "Faint light grey medium dashed line",
+                  "label": "ENDEAVOUR ENERGY EASEMENT",
+                  "category": "boundary"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "chunk_id": "chunk_0003",
+          "sequence": 3,
+          "page_number": 3,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "A\nN\nB\nFAIRFIELD\nLGA\n\u65e5\n41.5m\n2002188\n2002187.\nS\nLIVERPOOL\nLGA\n2\n3\n4\n5\n2002186\n44.3m\n35.3m\n2002185\n43m\nDUCT BREAKDOWN TABLE\n2002189\n55.4m\n68.2m\n55m\n\u03a0\n2002190\nELIZABETH\n200219\n2002184\n2002183\n2002182\n45.3m\n36.7m\n49.4m\n2002181\n52.3m\n2002180\nSL LOCATION\n(NTS)\n28.9m\n58.3m\n1000886\nDR\n306689\n2005481\n61.8m\nPRIVA\nRoute\nConfiguration\nRoute Length (m)\nReimbursement (m) x ($)\nExisting Duct Usage Charge (m) x ($)\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\n(Existing Road Underbore)\nRMS ROAD\n1-C\n1500\n56\nNIL\nNIL\n1\nLV\nHV\nC\n(New Duct)\nNATURAL STRIP\n1-21, B2-61\n750\n98\nNIL\nNIL\nPROPERTY BOUNDARY\nGROUND LEVEL\nCOMPACTED BACKFILL\nHV\n600mm\n(Existing Duct)\nFOOTPATH\nC-B3\n750\n81\nNIL\nNIL\nSLT\nLV\nHV\n(Existing Duct)\nNATURAL STRIP\nPOLYMERIC CABLE\nCOVER\nBEDDING\n+\n75mm\n50mm\n-50mm-50mm\n-50mm-\nB3-2\n750\n20\nNIL\nNIL\nTYPE 20 DUCT ARRANGEMENT\nHV\nD\nFOOTPATH\n(NTS)\n(New Duct)\nFOOTPATH\nB3-B2\n750\n28\nNIL\nNIL\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\nHV\n(New Road Crossing)\nCOUNCIL ROAD\nPROPERTY\nBOUNDARY\nB2 B\n37\nNIL\nNIL\nGROUND LEVEL\n(New Duct)\nNATURAL STRIP\nE\nB-37\n10\nSL\n$750\nNIL\nNIL\nCOMPACTED BACKFILL\nLV\nPOLYMERIC CABLE\nCOVER\n(Road Underbore)\nEXISTING RMS ROAD\nBEDDING\n37-A\n1500\n42\nNIL\nNIL\n(New Duct)\nFOOTPATH\nA-22\n75\n16\nNIL\nNIL\nT\nHV\n(New Duct)\nF\n37-38-39-40-41-42-\n43-44-45.\nA-50,A-48,\nFOOTPATH\n591\nNIL\nNIL\n600\n48-47-46\nSLT\n(New Duct)\nNATURAL STRIP\nB2-61\n750\n164\nNIL\nNIL\nG\nEarthing\n1123 m\nDUCT LEGEND\nNIL\n\u2610 NEW TRENCH SPARE DUCT DUCT WITH NEW DUCT WITH EXISTING REMOVE DUCT\nSPARE DUCT REQUIREMENT\nCABLE\nCABLE\nNIL\nREMOVE CABLE REMOVE DUCT\n& CABLE\n1. IN AREAS WHERE ADDITIONAL DUCTS ARE REQUIRED THE SPARE DUCT IS INCLUDED IN THE PVC DUCT SCHEDULE & THE SECTION SHOWN.\n2. SPARE SL DUCTS HAVE BEEN PROVIDED AND RESERVED FOR CLIENTS FUTURE USE.\nNOTE\n1. DUCT LENGTHS AND ARRANGEMENTS TO BE CONFIRMED ON SITE.\n2. ALL TRENCH SECTIONS ARE TO BE READ & VIEWED FROM NODE TO NODE AS NOMINATED.\n3. FOR ALL REQUIRED/SHOWN CROSSING DUCT WORK, REFER TO TYPICAL ARRANGEMENT INCLUDED ON THIS PAGE.\n*THE EXISTING 125mm SPARE CONDUIT IS USED TO LAY THE EARTHING CABLE DUE TO THE ABSENCE OF SPARE 50MM DUCT. THIS ADJUSTMENT IS\nREQUIRED FOLLOWING A CHANGE IN THE EARTHING DESIGN REQUESTED BY EE IN DESIGN AMENDMENT D.\n75mm\n750mm\n-50mm-\n-50mm-\n-50mm-\nTYPE 04 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\nPROPERTY\nBOUNDARY\nGROUND LEVEL\nCOMPACTED BACKFILL\nPOLYMERIC CABLE\nCOVER\n75mm\nA\nORIGINAL\nAMENDMENTS\nDRAFT No. 05\nISSUE\nB 11/03/2024\nCHK'D\nP.P\nMOVE POLE/PILLAR\nREPLACED POLE\nLOCATION AND\nC 8/04/2024\nCHK'D\nP. P\nMOVE POLE REF '61'\n& ESTABLISH STJ AT\nDRWN D. S.\nREF '60'\nD 4/11/2024\nCHK'D\nP. P.\nUPRATE POLE SUB AT\nREF 28 & REVISED\nEARTHING REF 61\nH\nCadastre: \u00a9 Land and Property Information 2016\nCLIENT:\nJOHN M7-M12\nHOLLAND Integration Project\nNSW for NSW\nGOVERNMENT\n\u05e4\u05d9\u05d9\nLevel 27, Ernst & Young Centre\nTelephone +61 2 9272 5100\nFacsimile +61 2 9272 5101\nEmail: sydney@wsp.com\n680 George Street\nSydney NSW 2000\nGPO BOX 5394\nSydney NSW 2001 Australlia\n3\nASP REF/ACCREDIATION NO.-5045\n4\nTEMPLATE VERSION No.5.20\nTHIS DRAWING\nPYRIGHT\nTHEREIN IS THE\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED\nREPRODUCED,\nSTRIBUTED, LOANED OR\nRED WITHOUT\nWRITTEN CONSENT OF\n7\n8\n9\n0.60m\n0.90m\nROAD CROSSING\nDUCT\n2002193\n(50\nFIRST\nFAIRFIELD LGA\nSPLAY\nPEG\nPROPERTY\nBOUNDARY\nSERVICE\nDUCT\n0.90m\n2005480\n306688\nLIVERPOOL LGA\n10\nDUCT END LOCATION DETAIL\nGROUND LEVEL\n0.60m\n0.90m\nPROPERTY\nBOUNDARY\n0.90m\nDUCT SPACING\nNTS\nFIRST\nSPLAY\nPEG\nROAD LEVEL\nTYPE 26 DUCT ARRANGEMENT\nEXISTING RMS ROAD UNDERBORE\n(NTS)\n300mm MINIMUM CLEARANCE FROM NEW PROPERTY BOUNDARY\nPROPERTY\nBOUNDARY\n1500mm\nGROUND LEVEL\n750mm\nCOMPACTED BACKFILL\nPOLYMERIC CABLE\nCOVER\n75mm\nULL 1937\nBEDDING\nTYPE 24 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)\nROAD LEVEL\n750mm\nCOMPACTED BACKFILL\nPVC WARNING TAPE\n75mm\nMECHANICAL PROTECTION\n75mm-15MPa CONCRETE\n50mm\nBEDDING\n-50mm-\n-50mm-\n-50mm-\nTYPE 04 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)\nREFERENCE DRAWING'S\nCONNECTION OF LOAD\n6\nWORK ORDERS\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n7\n300mm\n00\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nOF\n11\nDUCT DECLARATION\nCONTACT NUMBER\nUCTS SHOWN ON THIS\nDRAWING HAVE BEEN INSTALLED IN ACCORDANCE WITH THIS\nDRAWING & ENDEAVOR ENERGY STANDARDS MD10028 &\nMC10006. THE\nTEACH END\nHAVE BEEN CORRECTLY MARKED ON\nENDEAVOR ENERGY STANDARD SAD0004.\nDEPTHS AND\nDRAWING A\nTHE INSTALLATION OF THE DUCTS WAS\nCOMMENCED ON\n& COMPLETED ON\nSIGNATURE\nLAND SURVEYOR REGISTERED UNDER\nSURVEYING AND SPATIAL INFORMATION ACT 2002\n12\nNOTE:\n- THIS PROJECT ASSUMES THE\nCOMPLETION OF ARP4984.\nASP LEVEL 2 TO RE-ESTABLISH\nEXISTING SERVICE CONNECTION.\nA\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nB\nC\nD\nBEFORE\nYOU DIG\nwww.byda.com.au\nE\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\n12-11-2024\nExaminer's Signature:\nAli Siddiqui\nPrint Name\nAli Siddiqui\nThis Certification is issued subject to Endeavour Energy's Standard Certification Terms\nWORKS COMPLETED/FIELD BOOK\nF\nCONSTRUCTED BY:\nWORKS COMPLETED:\n750mm\nSIGNATURE:\nINSPECTED BY:\nDATE\nSIGNATURE:\nDATE\nASSET RECORDING\n1:\nOF:\nCONTACT No.:\nHEREBY CERTIFY THAT ASSETS MARKED AS-BUILT ON THIS DRAWING HAVE BEEN\n100mm\nT\n-50mm-\n-50mm-\n-50mm-\n-50mm-\nTYPE 26 DUCT ARRANGEMENT\nCOUNCIL ROAD CROSSING\n(NTS)\nCAMS File No.\nAM PROJ., No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nARP4983\n3284\nHOXTON PARK\nCENTRAL\nKEMPS CREEK 1 D11\nLIVERPOOL\n8\nRECORDED AS PER ENDEAVOR ENERGY STANDARD 00004\nSIGNATURE\nDATE:\nELIZABETH DRIVE\nCECIL PARK\nARP4983\nASSET RELOCATION\nM12 EAST ELIZABETH DRIVE CONNECTION\nORIGINAL\nSCALE\nDO NOT\nSCALE\nDIMENSIONS\nIN\nDRAWN DARSHAN S\nMETRES\nGDA94/MGA56\nDATE 17/07/2023\nCOORDINATE SYSTEM\nCH'D\nPRAMOD P\nDESIGN DARSHAN S\n9\n10\n11\nG\nEndeavour\nH\nEnergy\nA1 526458\nD\nSHEET No 5 OF 9 SHEETS\n12",
+            "data": {
+              "sub-step-extract-legend": [
+                {
+                  "page": 3,
+                  "symbol_description": "Square, filled with white.",
+                  "label_text": "NEW TRENCH",
+                  "symbol_bounds": null,
+                  "label": "NEW TRENCH"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Square, filled with white.",
+                  "label_text": "SPARE DUCT",
+                  "symbol_bounds": null,
+                  "label": "SPARE DUCT"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Circle with thick black outline, filled with black, and with white circle inside.",
+                  "label_text": "DUCT WITH NEW\nCABLE",
+                  "symbol_bounds": null,
+                  "label": "DUCT WITH NEW CABLE"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Circle with thick black outline, filled with white, and with black line inside.",
+                  "label_text": "DUCT WITH EXISTING\nCABLE",
+                  "symbol_bounds": null,
+                  "label": "DUCT WITH EXISTING CABLE"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Box with X across it, filled with white.",
+                  "label_text": "REMOVE DUCT",
+                  "symbol_bounds": null,
+                  "label": "REMOVE DUCT"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Crossed-out cable, filled with white.",
+                  "label_text": "REMOVE CABLE",
+                  "symbol_bounds": null,
+                  "label": "REMOVE CABLE"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Box with X across it and crossed-out cable, filled with white.",
+                  "label_text": "REMOVE DUCT\n& CABLE",
+                  "symbol_bounds": null,
+                  "label": "REMOVE DUCT & CABLE"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Vertical line with horizontal tick at the top and bottom, small filled circle in between.",
+                  "label_text": "PROPERTY BOUNDARY",
+                  "symbol_bounds": null,
+                  "label": "PROPERTY BOUNDARY"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Rectangle.",
+                  "label_text": "GROUND LEVEL",
+                  "symbol_bounds": null,
+                  "label": "GROUND LEVEL"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Stack of horizontal rectangles with solid fill.",
+                  "label_text": "COMPACTED BACKFILL",
+                  "symbol_bounds": null,
+                  "label": "COMPACTED BACKFILL"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Stack of horizontal rectangles with solid fill.",
+                  "label_text": "POLYMERIC CABLE\nCOVER",
+                  "symbol_bounds": null,
+                  "label": "POLYMERIC CABLE COVER"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Stack of horizontal rectangles with solid fill.",
+                  "label_text": "BEDDING",
+                  "symbol_bounds": null,
+                  "label": "BEDDING"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Cluster of small circles.",
+                  "label_text": "TYPE 20 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)",
+                  "symbol_bounds": null,
+                  "label": "TYPE 20 DUCT ARRANGEMENT FOOTPATH (NTS)"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Cluster of small circles.",
+                  "label_text": "TYPE 04 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)",
+                  "symbol_bounds": null,
+                  "label": "TYPE 04 DUCT ARRANGEMENT FOOTPATH (NTS)"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Cluster of small circles with labels 'LV' and 'HV'.",
+                  "label_text": "TYPE 26 DUCT ARRANGEMENT\nEXISTING RMS ROAD UNDERBORE\n(NTS)",
+                  "symbol_bounds": null,
+                  "label": "TYPE 26 DUCT ARRANGEMENT EXISTING RMS ROAD UNDERBORE (NTS)"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Cluster of small circles.",
+                  "label_text": "TYPE 24 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)",
+                  "symbol_bounds": null,
+                  "label": "TYPE 24 DUCT ARRANGEMENT FOOTPATH (NTS)"
+                },
+                {
+                  "page": 3,
+                  "symbol_description": "Cluster of small circles with labels 'LV' and 'HV'.",
+                  "label_text": "TYPE 26 DUCT ARRANGEMENT\nCOUNCIL ROAD CROSSING\n(NTS)",
+                  "symbol_bounds": null,
+                  "label": "TYPE 26 DUCT ARRANGEMENT COUNCIL ROAD CROSSING (NTS)"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "chunk_id": "chunk_0001-quad-tl",
+          "sequence": 1.1,
+          "page_number": 1,
+          "region": "quad-tl",
+          "extracted": {
+            "raw_text": "A\nB\nC\nD\nN\nGAS\n26294\n20553\n2089\n2305\nFAIRFIELD LGA\nEND OF SCOPE OF WORKS\n2415\nLIVERPOOL LGA\n1\n2\n3\n4\n5\n6\n2083\n2073\nELIZABETH DR\n1140\n2065\n96203\n1764\nW\n2055\nGAS\nW\n\u97f3\n\u97f3\n1183\nNEW FREEWAY\nBOUNDARY\n7519\nW\nS406107\nNEW ROAD\nNEW FREEWAY\nBOUNDARY\nW\n6402679\nLAND TO BE LEA:\nCONSTRUCTION",
+            "data": {
+              "sub-step-extract-legend": []
+            }
+          }
+        },
+        {
+          "chunk_id": "chunk_0001-quad-tr",
+          "sequence": 1.1,
+          "page_number": 1,
+          "region": "quad-tr",
+          "extracted": {
+            "raw_text": "NOTES\n1. THIS DRAWING IS TO BE READ IN CONJUNCTION WITH RELEVANT ENDEAVOUR ENERGY'S STANDARDS AND THE NETWORK CONNECTION\nPOLICY.\n2. ENDEAVOUR ENERGY CONTACT PHONE: 131081\n3. CERTIFICATION SHALL LAPSE WHERE:\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED WITHIN SIX (6) MONTHS OF THIS CERTIFICATION, OR\n(ii) CONSTRUCTION HAS BEEN INTERRUPTED FOR MORE THAN SIX (6) MONTHS.\nWHERE DESIGN CERTIFICATION HAS LAPSED THE DESIGN MUST BE RESUBMITTED FOR CERTIFICATION BY THE ACCREDITED DESIGNER.\n4. ATTENTION:\nPERMANENT SURVEY MARKS MAY EXIST IN THIS AREA. THESE ARE TO BE LOCATED BY A SURVEYOR PRIOR TO COMMENCEMENT OF\nWORK.\n5. ATTENTION:\nALL SERVICES SEARCHES MUST BE CHECKED BEFORE CONSTRUCTION.\n6. WARNING\nLIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN THIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TELEPHONE: 1100\nFOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\n7. ATTENTION:\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR ENERGY'S ASSET DATA CUSTOMER DEPT. DAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE 131081.\n8. OPERATION LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO ANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE FOLLOWING ALTERNATIVES\nSHOULD BE CONSIDERED:\n-MOBILE GENERATORS & SUBSTATIONS\n-LIVE LINE WORK\n-DESIGN ALTERNATIVES\n-LOW VOLTAGE PARALLELS\n-WORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\n9. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED PARTY ON THE LETTER OF INTENT AFTER THE WORKS HAVE BEEN COMPETED AND\nTHE LETTER OF ACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED AMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS FOR SCOPE\nOF WORK. ANY DISAGREEMENT WITH THE AMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT\nOF WORKS.\n10. AN EARTH CONNECTION WARNING LABEL MUST BE INSTALLED WHERE EARTH CONDUCTOR OR AN EXTENDED EARTH GRID IS TO BE\nCONNECTED TO LV STREET NEUTRAL TO ACHIEVE AN MEN SYSTEM AS PER EDI 0006. REFER TO DRAWING No.348245.\n11.HAVE ALL THE EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DESIGN? YES/NO\n12. QUANTITIES AND DIMENSIONS GIVEN ON THIS DRAWING ARE BASED ON DESIGN\nINFORMATION AND SITE CONDITIONS AT THE TIME OF\nDESIGN. AS THEY MIGHT CHANGE, THE BUILDER OF THIS PROJECT MUST CHECK ALL QUANTITIES AND DIMENSION ON SITE PRIOR TO\nTENDERING AND PRIOR TO CONSTRUCTION.\n13. ENVIRONMENTAL MANAGEMENT STANDARD EMS001 IS PART OF THE DESIGN.\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\n- Network switching, substation commissioning, contract inspection and\nancillary fees.\nCUSTOMER\nCUSTOMER FUNDED\nIncludes but not limited to;\n- Nil",
+            "data": {
+              "sub-step-extract-legend": []
+            }
+          }
+        },
+        {
+          "chunk_id": "chunk_0001-quad-bl",
+          "sequence": 1.1,
+          "page_number": 1,
+          "region": "quad-bl",
+          "extracted": {
+            "raw_text": "40302010\nLOCATION PLAN\n0 40 80 120 160 200m\nSCALE 1:2000 @ A1\nKEY DOCUMENTS TABLE\nTHE CERTIFICATION OF THIS PROJECT IS SUPPORTED BY THE FOLL\nDOCUMENT NAME\nSUMMARY ENVIRONMENTAL REPORT (SER)\nAGREEMENT FOR ENTRY, GRANT and CREATION OF EASEMENT - FR\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FPJ4252\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FPJ4253\nTELECOMMUNICATION ASSET AGREEMENT - FPJ4184\nDESIGNER'S SAFETY REPORT\nLIST ANY KEY DOCUMENTS SUPPORTING THE CERTIFICATION:\n1. M12 EIS APPENDIX | ABORIGINAL CULTURAL HERITAGE ASSESSM\nREPORT\n2. APPROVED DISPENSATION FORM 0048 FOR INSTALLING 17M POL\n3. TfNSW SKETCH SR 5334 FILE NO.: SF'2019/158153\n4. TfNSW LETTER FOR CONFIRMATION OF ACCESS TO EE ASSETS",
+            "data": {
+              "sub-step-extract-legend": []
+            }
+          }
+        },
+        {
+          "chunk_id": "chunk_0001-quad-br",
+          "sequence": 1.1,
+          "page_number": 1,
+          "region": "quad-br",
+          "extracted": {
+            "raw_text": "Pegging of property boundaries & infrastructure\nlocations\nProviding site access\nOwn service & service connection\nConfirm finished ground levels\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\nNil\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nThird Quarter of 2023\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP\n- 1 x 11kV 100kVA Pole Top Trf HD CU 7/2.00 LV CABLE\n(APPROX. 368m)\nALL REMOVED COPPER\nCONDUCTORS ARE TO BE\nRETURNED TO EE DEPOT.",
+            "data": {
+              "sub-step-extract-legend": []
+            }
+          }
+        }
+      ],
+      "stitched_boundaries": [],
+      "sub_step_extractions": {
+        "sub-step-extract-legend": {
+          "value": [
+            {
+              "page": 2,
+              "symbol_description": "Long dashed line",
+              "label_text": "NEW LV TRENCH",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "NEW LV TRENCH",
+              "category": "cable"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Circle with internal cross and starburst outer spikes radiating from edge",
+              "label_text": "REMOVE LANTERN",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "REMOVE LANTERN",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Hollow rectangle outline",
+              "label_text": "NEW PILLAR",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "NEW PILLAR",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Short dashed line",
+              "label_text": "STRING NEW OH CABLE",
+              "line_pattern": "dashed",
+              "fill_pattern": null,
+              "label": "STRING NEW OH CABLE",
+              "category": "cable"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Circle with starburst outer spikes and hollow centre",
+              "label_text": "NEW LANTERN",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "NEW LANTERN",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Small circle with short vertical ticks on top and bottom",
+              "label_text": "LV LINK (N/O)",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "LV LINK (N/O)",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Small solid black filled circle",
+              "label_text": "EXISTING POLE",
+              "line_pattern": null,
+              "fill_pattern": "solid",
+              "label": "EXISTING POLE",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Alternating long-short dashed line",
+              "label_text": "EXISTING UNDERGROUND MAINS",
+              "line_pattern": "dotted",
+              "fill_pattern": null,
+              "label": "EXISTING UNDERGROUND MAINS",
+              "category": "cable"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Small hollow open circle",
+              "label_text": "NEW POLE",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "NEW POLE",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Solid thin line",
+              "label_text": "EXISTING OH CABLE",
+              "line_pattern": null,
+              "fill_pattern": "solid",
+              "label": "EXISTING OH CABLE",
+              "category": "cable"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Small solid black filled circle with large X through it",
+              "label_text": "REMOVE POLE",
+              "line_pattern": null,
+              "fill_pattern": "hollow",
+              "label": "REMOVE POLE",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Solid line with two diagonal slash marks",
+              "label_text": "NEW HV TRENCH",
+              "line_pattern": "dashed",
+              "fill_pattern": null,
+              "label": "NEW HV TRENCH",
+              "category": "cable"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Dotted line",
+              "label_text": "REMOVE CONDUCTOR",
+              "line_pattern": null,
+              "fill_pattern": "solid",
+              "label": "REMOVE CONDUCTOR",
+              "category": "cable"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Circle split vertically half-black half-white",
+              "label_text": "REPLACE POLE",
+              "line_pattern": null,
+              "fill_pattern": "half-solid",
+              "label": "REPLACE POLE",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Small solid black filled square",
+              "label_text": "EXISTING COLUMN",
+              "line_pattern": null,
+              "fill_pattern": "hollow",
+              "label": "EXISTING COLUMN",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Circle with horizontal line through the centre",
+              "label_text": "HV ABS (N/C)",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "HV ABS (N/C)",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Small hollow open square",
+              "label_text": "NEW COLUMN",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "NEW COLUMN",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Solid black filled rectangle",
+              "label_text": "EXISTING PILLAR",
+              "line_pattern": null,
+              "fill_pattern": "solid",
+              "label": "EXISTING PILLAR",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Semi-circle dome with horizontal base line",
+              "label_text": "HV USL (N/C)",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "HV USL (N/C)",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Thick heavy solid black line",
+              "label_text": "EXISTING DUCTS",
+              "line_pattern": "dashed",
+              "fill_pattern": null,
+              "label": "EXISTING DUCTS",
+              "category": "cable"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Thin solid line",
+              "label_text": "LGA DEMARCATION",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "LGA DEMARCATION",
+              "category": "boundary"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Rectangle containing two triangles touching at their points",
+              "label_text": "PADMOUNT SUBSTATION",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "PADMOUNT SUBSTATION",
+              "category": "substation"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Solid line with GAS text centred along it",
+              "label_text": "HIGH PRESSURE GAS",
+              "line_pattern": "solid",
+              "fill_pattern": null,
+              "label": "HIGH PRESSURE GAS",
+              "category": "other"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Small circle with internal cross (four-quadrant cross inside circle)",
+              "label_text": "EXISTING LANTERN",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "EXISTING LANTERN",
+              "category": "equipment"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Circle with triangle inside",
+              "label_text": "POLE SUBSTATION",
+              "line_pattern": null,
+              "fill_pattern": null,
+              "label": "POLE SUBSTATION",
+              "category": "substation"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Solid line with W characters spaced evenly along it",
+              "label_text": "WATER MAIN",
+              "line_pattern": "dashed",
+              "fill_pattern": null,
+              "label": "WATER MAIN",
+              "category": "other"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Faint light grey long dashed line",
+              "label_text": "NEW FREEWAY BOUNDARY",
+              "line_pattern": "dashed",
+              "fill_pattern": null,
+              "label": "NEW FREEWAY BOUNDARY",
+              "category": "boundary"
+            },
+            {
+              "page": 2,
+              "symbol_description": "Faint light grey medium dashed line",
+              "label_text": "EXISTING 9,145m WIDTH\nENDEAVOUR ENERGY EASEMENT",
+              "line_pattern": "solid",
+              "fill_pattern": null,
+              "label": "ENDEAVOUR ENERGY EASEMENT",
+              "category": "boundary"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Square, filled with white.",
+              "label_text": "NEW TRENCH",
+              "symbol_bounds": null,
+              "label": "NEW TRENCH"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Circle with thick black outline, filled with black, and with white circle inside.",
+              "label_text": "DUCT WITH NEW\nCABLE",
+              "symbol_bounds": null,
+              "label": "DUCT WITH NEW CABLE"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Circle with thick black outline, filled with white, and with black line inside.",
+              "label_text": "DUCT WITH EXISTING\nCABLE",
+              "symbol_bounds": null,
+              "label": "DUCT WITH EXISTING CABLE"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Box with X across it, filled with white.",
+              "label_text": "REMOVE DUCT",
+              "symbol_bounds": null,
+              "label": "REMOVE DUCT"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Crossed-out cable, filled with white.",
+              "label_text": "REMOVE CABLE",
+              "symbol_bounds": null,
+              "label": "REMOVE CABLE"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Box with X across it and crossed-out cable, filled with white.",
+              "label_text": "REMOVE DUCT\n& CABLE",
+              "symbol_bounds": null,
+              "label": "REMOVE DUCT & CABLE"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Vertical line with horizontal tick at the top and bottom, small filled circle in between.",
+              "label_text": "PROPERTY BOUNDARY",
+              "symbol_bounds": null,
+              "label": "PROPERTY BOUNDARY"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Rectangle.",
+              "label_text": "GROUND LEVEL",
+              "symbol_bounds": null,
+              "label": "GROUND LEVEL"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Stack of horizontal rectangles with solid fill.",
+              "label_text": "COMPACTED BACKFILL",
+              "symbol_bounds": null,
+              "label": "COMPACTED BACKFILL"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Cluster of small circles.",
+              "label_text": "TYPE 20 DUCT ARRANGEMENT\nFOOTPATH\n(NTS)",
+              "symbol_bounds": null,
+              "label": "TYPE 20 DUCT ARRANGEMENT FOOTPATH (NTS)"
+            },
+            {
+              "page": 3,
+              "symbol_description": "Cluster of small circles with labels 'LV' and 'HV'.",
+              "label_text": "TYPE 26 DUCT ARRANGEMENT\nEXISTING RMS ROAD UNDERBORE\n(NTS)",
+              "symbol_bounds": null,
+              "label": "TYPE 26 DUCT ARRANGEMENT EXISTING RMS ROAD UNDERBORE (NTS)"
+            }
+          ],
+          "sub_step_name": "Extract Legend Entries from All Pages",
+          "phase": 1
+        }
+      },
+      "output_file": "/app/OUTPUT/D526458-108 - Exp_20260329_101622/Extraction_D526458_ARP4983_RETIC_pdf_Extract_Drawing_Legend_20260329_101801.json"
+    }
+  ],
+  "timestamp": "20260329_101801",
+  "output_file": "/app/OUTPUT/D526458-108 - Exp_20260329_101622/ExtractionReport_proc_extract_site_plan_info_20260329_101801.json"
+}

@@ -1,0 +1,52 @@
+{
+  "job_id": "12d47d25-d06e-42ed-98e6-90ca8e6ffd23",
+  "source_file": "D526458_ARP4983_RETIC.pdf",
+  "chunk_strategy": "page-split",
+  "page_size": "A3",
+  "dpi": 300,
+  "total_pages": 3,
+  "total_chunks": 3,
+  "generated_at": "2026-03-29T10:17:48.393811+00:00",
+  "output_directory": "/app/OUTPUT/D526458-108 - Exp_20260329_101622/chunks/12d47d25-d06e-42ed-98e6-90ca8e6ffd23",
+  "chunks": [
+    {
+      "chunk_id": "chunk_0001",
+      "sequence": 1,
+      "page_number": 1,
+      "region": "full-page",
+      "grid": "1x1",
+      "col": 1,
+      "row": 1,
+      "filename": "chunk_0001.png",
+      "filepath": "/app/OUTPUT/D526458-108 - Exp_20260329_101622/chunks/12d47d25-d06e-42ed-98e6-90ca8e6ffd23/chunk_0001.png",
+      "width_px": 4961,
+      "height_px": 3509
+    },
+    {
+      "chunk_id": "chunk_0002",
+      "sequence": 2,
+      "page_number": 2,
+      "region": "full-page",
+      "grid": "1x1",
+      "col": 1,
+      "row": 1,
+      "filename": "chunk_0002.png",
+      "filepath": "/app/OUTPUT/D526458-108 - Exp_20260329_101622/chunks/12d47d25-d06e-42ed-98e6-90ca8e6ffd23/chunk_0002.png",
+      "width_px": 4961,
+      "height_px": 3509
+    },
+    {
+      "chunk_id": "chunk_0003",
+      "sequence": 3,
+      "page_number": 3,
+      "region": "full-page",
+      "grid": "1x1",
+      "col": 1,
+      "row": 1,
+      "filename": "chunk_0003.png",
+      "filepath": "/app/OUTPUT/D526458-108 - Exp_20260329_101622/chunks/12d47d25-d06e-42ed-98e6-90ca8e6ffd23/chunk_0003.png",
+      "width_px": 4961,
+      "height_px": 3509
+    }
+  ]
+}

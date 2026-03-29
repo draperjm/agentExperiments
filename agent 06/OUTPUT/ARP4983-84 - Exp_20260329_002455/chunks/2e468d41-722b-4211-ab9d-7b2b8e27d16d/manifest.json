@@ -1,0 +1,26 @@
+{
+  "job_id": "2e468d41-722b-4211-ab9d-7b2b8e27d16d",
+  "source_file": "D526458_ARP4983_RETIC_LEGEND.pdf",
+  "chunk_strategy": "page-split",
+  "page_size": "A3",
+  "dpi": 300,
+  "total_pages": 1,
+  "total_chunks": 1,
+  "generated_at": "2026-03-29T00:25:58.338764+00:00",
+  "output_directory": "/app/OUTPUT/ARP4983-84 - Exp_20260329_002455/chunks/2e468d41-722b-4211-ab9d-7b2b8e27d16d",
+  "chunks": [
+    {
+      "chunk_id": "chunk_0001",
+      "sequence": 1,
+      "page_number": 1,
+      "region": "full-page",
+      "grid": "1x1",
+      "col": 1,
+      "row": 1,
+      "filename": "chunk_0001.png",
+      "filepath": "/app/OUTPUT/ARP4983-84 - Exp_20260329_002455/chunks/2e468d41-722b-4211-ab9d-7b2b8e27d16d/chunk_0001.png",
+      "width_px": 4961,
+      "height_px": 3509
+    }
+  ]
+}

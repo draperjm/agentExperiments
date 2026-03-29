@@ -1,0 +1,56 @@
+{
+  "filename": "A534927_ARP5495_RETIC.pdf",
+  "filepath": "",
+  "document_type": "Reticulation Drawing",
+  "document_category": "Site Plan",
+  "input_text_quality": "high",
+  "document_quality": "chunked-image",
+  "page_size": "A3",
+  "requires_chunking": true,
+  "chunk_strategy": "page-split",
+  "estimated_chunks": 1,
+  "actual_chunks_processed": 1,
+  "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+  "total_sections": 1,
+  "relevant_sections": 1,
+  "raw_text_from_chunks": "[full-page, p1, seq1] \u2190426131\n1011311\n288985\n426121\n426129\n1011310 283062\n1011309\n283062\n1011308 283061\n1011307",
+  "chunk_details": [
+    {
+      "chunk_id": "chunk_0001",
+      "sequence": 1,
+      "page_number": 1,
+      "region": "full-page",
+      "extracted": {
+        "raw_text": "\u2190426131\n1011311\n288985\n426121\n426129\n1011310 283062\n1011309\n283062\n1011308 283061\n1011307",
+        "data": {
+          "sub-step-find-asset-ids": [
+            "288985",
+            "426121",
+            "426129",
+            "283062",
+            "283061"
+          ]
+        }
+      }
+    }
+  ],
+  "stitched_boundaries": [],
+  "sub_step_extractions": {
+    "sub-step-find-asset-ids": {
+      "value": [
+        "1011311",
+        "288985",
+        "426121",
+        "426129",
+        "1011310",
+        "283062",
+        "1011309",
+        "1011308",
+        "283061",
+        "1011307"
+      ],
+      "sub_step_name": "Find Asset IDs in Drawing Chunk",
+      "phase": 1
+    }
+  }
+}

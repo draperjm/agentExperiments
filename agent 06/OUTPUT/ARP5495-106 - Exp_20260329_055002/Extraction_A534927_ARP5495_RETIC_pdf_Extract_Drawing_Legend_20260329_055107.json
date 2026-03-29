@@ -1,0 +1,39 @@
+{
+  "filename": "A534927_ARP5495_RETIC.pdf",
+  "filepath": "",
+  "document_type": "Reticulation Drawing",
+  "document_category": "Site Plan",
+  "input_text_quality": "none",
+  "document_quality": "chunked-image",
+  "page_size": "A3",
+  "requires_chunking": true,
+  "chunk_strategy": "page-split",
+  "estimated_chunks": 1,
+  "actual_chunks_processed": 1,
+  "process_step_name": "Extract Drawing Legend",
+  "total_sections": 1,
+  "relevant_sections": 1,
+  "raw_text_from_chunks": "[full-page, p1, seq1] OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED\nMOBILE GENERATORS OR SUBSTATIONS\nLIVE LINE WORK\nDESIGN ALTERNATIVES\nLOW VOLTAGE PARALLELS\nWORK PRACTICES/ STANDARDS\nDESIGN CERTIFICATION.\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER.\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKING TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n1006985 299066.0652 6278416.7073\n1011307 299066.9420 6278401.2810\n1011309 299030.2480 6278402.9470\n1011310 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY\nWORKS COMPLETED\nSIGNATURE\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMC: Mains Construction Instruction\nMDI: Mains Design Instruction\nPES: Protection Design Instruction\nPID: Protection Installation Instruction\nSDS: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nPMI: Public lighting Maintenance instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign: Detailed Procedures\" published by The Australian Standards.\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m",
+  "chunk_details": [
+    {
+      "chunk_id": "chunk_0001",
+      "sequence": 1,
+      "page_number": 1,
+      "region": "full-page",
+      "extracted": {
+        "raw_text": "OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED\nMOBILE GENERATORS OR SUBSTATIONS\nLIVE LINE WORK\nDESIGN ALTERNATIVES\nLOW VOLTAGE PARALLELS\nWORK PRACTICES/ STANDARDS\nDESIGN CERTIFICATION.\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER.\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKING TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n1006985 299066.0652 6278416.7073\n1011307 299066.9420 6278401.2810\n1011309 299030.2480 6278402.9470\n1011310 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY\nWORKS COMPLETED\nSIGNATURE\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMC: Mains Construction Instruction\nMDI: Mains Design Instruction\nPES: Protection Design Instruction\nPID: Protection Installation Instruction\nSDS: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nPMI: Public lighting Maintenance instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign: Detailed Procedures\" published by The Australian Standards.\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m",
+        "data": {
+          "sub-step-extract-legend": []
+        }
+      }
+    }
+  ],
+  "stitched_boundaries": [],
+  "sub_step_extractions": {
+    "sub-step-extract-legend": {
+      "value": [],
+      "sub_step_name": "Extract Legend Entries from All Pages",
+      "phase": 1
+    }
+  }
+}

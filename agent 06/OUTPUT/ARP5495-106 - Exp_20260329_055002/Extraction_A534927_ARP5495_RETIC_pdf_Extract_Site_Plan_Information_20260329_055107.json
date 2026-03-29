@@ -1,0 +1,59 @@
+{
+  "filename": "A534927_ARP5495_RETIC.pdf",
+  "filepath": "",
+  "document_type": "Reticulation Drawing",
+  "document_category": "Site Plan",
+  "input_text_quality": "none",
+  "document_quality": "chunked-image",
+  "page_size": "A3",
+  "requires_chunking": true,
+  "chunk_strategy": "page-split",
+  "estimated_chunks": 1,
+  "actual_chunks_processed": 1,
+  "process_step_name": "Extract Site Plan Information",
+  "total_sections": 1,
+  "relevant_sections": 1,
+  "raw_text_from_chunks": "[full-page, p1, seq1] OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\n\u2022 MOBILE GENERATOR AND SUBSTATIONS\n\u2022 LIVE LINE WORK\n\u2022 DESIGN ALTERNATIVES\n\u2022 LOW VOLTAGE PARALLELS\n\u2022 WORK PRACTICES/STANDARDS.\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END.\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n10113090\n299066.9420\n6278401.2810\n1011307\n299030.2480\n6278402.9470\n1011308\n299019.4864\n6278421.9126\n1011309\n299005.4736\n6278441.8105\n1011310\n298984.1739\n6278467.6767\n1011311\n299030.2480\n6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE:\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nOF:\nCONTACT NO.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2004.\nSIGNATURE:\nDATE:\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\nN/A\nINSPECTION AND ACCESS AUTHORITY\n- SYSTEM SWITCHING\n-PROVISION OF ACCESS AUTHORITY (AS PER FEE SENT BY SEPARATE\u2190\nOWNER)\nENDEAVOUR ENERGY\nFUNDED & CONSTRUCTED\nWorks Required Prior to\nCompletion of Customer\nContestable Project\nWorks Required in\nAssociation of Customer\nContestable Project\nN/A\nN/A\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLES REMOVAL AND INSTALLATION\n-STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n-OVERHEAD INSTALLATION\n- UNDERBORING\n- DUCT INSTALLATION\nN/A\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMCI: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Instruction\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nSUI: Substation Undergound Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\nAECOM AUSTRALIA PTY LTD Indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards\nSigned:\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2023",
+  "chunk_details": [
+    {
+      "chunk_id": "chunk_0001",
+      "sequence": 1,
+      "page_number": 1,
+      "region": "full-page",
+      "extracted": {
+        "raw_text": "OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\n\u2022 MOBILE GENERATOR AND SUBSTATIONS\n\u2022 LIVE LINE WORK\n\u2022 DESIGN ALTERNATIVES\n\u2022 LOW VOLTAGE PARALLELS\n\u2022 WORK PRACTICES/STANDARDS.\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END.\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n10113090\n299066.9420\n6278401.2810\n1011307\n299030.2480\n6278402.9470\n1011308\n299019.4864\n6278421.9126\n1011309\n299005.4736\n6278441.8105\n1011310\n298984.1739\n6278467.6767\n1011311\n299030.2480\n6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE:\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nOF:\nCONTACT NO.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2004.\nSIGNATURE:\nDATE:\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\nN/A\nINSPECTION AND ACCESS AUTHORITY\n- SYSTEM SWITCHING\n-PROVISION OF ACCESS AUTHORITY (AS PER FEE SENT BY SEPARATE\u2190\nOWNER)\nENDEAVOUR ENERGY\nFUNDED & CONSTRUCTED\nWorks Required Prior to\nCompletion of Customer\nContestable Project\nWorks Required in\nAssociation of Customer\nContestable Project\nN/A\nN/A\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLES REMOVAL AND INSTALLATION\n-STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n-OVERHEAD INSTALLATION\n- UNDERBORING\n- DUCT INSTALLATION\nN/A\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMCI: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Instruction\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nSUI: Substation Undergound Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\nAECOM AUSTRALIA PTY LTD Indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards\nSigned:\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2023",
+        "data": {
+          "sub-step-extract-all-notes": null
+        }
+      }
+    }
+  ],
+  "stitched_boundaries": [],
+  "sub_step_extractions": {
+    "sub-step-extract-all-notes": {
+      "value": "OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S SUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\n\u2022 MOBILE GENERATOR AND SUBSTATIONS\n\u2022 LIVE LINE WORK\n\u2022 DESIGN ALTERNATIVES\n\u2022 LOW VOLTAGE PARALLELS\n\u2022 WORK PRACTICES/STANDARDS.\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH PVC MARKER TAPE TO DUCT END.\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n10113090\n299066.9420\n6278401.2810\n1011307\n299030.2480\n6278402.9470\n1011308\n299019.4864\n6278421.9126\n1011309\n299005.4736\n6278441.8105\n1011310\n298984.1739\n6278467.6767\n1011311\n299030.2480\n6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE:\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nOF:\nCONTACT NO.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN RECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2004.\nSIGNATURE:\nDATE:\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY SUPPLIED MATERIALS\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\nN/A\nINSPECTION AND ACCESS AUTHORITY\n- SYSTEM SWITCHING\n- PROVISION OF ACCESS AUTHORITY (AS PER FEE SENT BY SEPARATE OWNER)\nENDEAVOUR ENERGY FUNDED & CONSTRUCTED\nWorks Required Prior to Completion of Customer Contestable Project\nWorks Required in Association of Customer Contestable Project\nN/A\nN/A\nENDEAVOUR ENERGY FUNDED & ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\nCUSTOMER FUNDED CONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING BUT NOT LIMITED TO\n- POLES REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- UNDERBORING\n- DUCT INSTALLATION\nN/A\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this time and as listed on the Endeavour Energy Accredited Service Provider's Internet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMCI: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Instruction\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nSUI: Substation Underground Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line Design - Detailed Procedures\" published by The Australian Standards.\nAECOM AUSTRALIA PTY LTD Indemnifies Endeavour Energy for any loss or damage resulting from non-compliance of the design with the above standards\nSigned:\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2023",
+      "sub_step_name": "Extract All Drawing Notes and Annotations",
+      "phase": 1
+    },
+    "sub-step-substation-data": {
+      "value": "Substation Asset Number: NOT FOUND\nTransformer Size: NOT FOUND\nHV Switchgear: NOT FOUND\nVoltage Level: NOT FOUND\nLV Switchgear: NOT FOUND\nCubicle Size: NOT FOUND\nEarthing: NOT FOUND",
+      "sub_step_name": "Substation Notes \u2014 Structured Data Extraction",
+      "phase": 2
+    },
+    "sub-step-field-check": {
+      "value": "NOT FOUND \u2014 MISSING: this compliance note is mandatory",
+      "sub_step_name": "Assets Field Check Compliance",
+      "phase": 2
+    },
+    "sub-step-easement-restriction": {
+      "value": "NOT REQUIRED",
+      "sub_step_name": "Easement \u2014 Restriction on Use of Land (Swimming Pool Setback)",
+      "phase": 2
+    },
+    "sub-step-easement-substation": {
+      "value": "NOT REQUIRED",
+      "sub_step_name": "Easement \u2014 Padmount Substation Easement Creation",
+      "phase": 2
+    }
+  }
+}

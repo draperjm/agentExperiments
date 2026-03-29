@@ -1,0 +1,306 @@
+{
+  "filename": "ARP5495 _DESIGN_BRIEF_v1.0.pdf",
+  "filepath": "/documents/ARP5495-106 - Exp/ARP5495 _DESIGN_BRIEF_v1.0.pdf",
+  "document_type": "Design Brief",
+  "document_category": "Design Brief",
+  "input_text_quality": "high",
+  "document_quality": "text",
+  "page_size": "A4",
+  "requires_chunking": false,
+  "chunk_strategy": "none",
+  "estimated_chunks": 1,
+  "process_step_name": "Extract Design Brief Information",
+  "total_sections": 6,
+  "relevant_sections": 3,
+  "sub_step_extractions": {
+    "sub-step-extract-earthing": {
+      "Earthing Technical Requirements": [
+        {
+          "description": "Install new Air break switch earthing as per EDI0006 & drawing B348252",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ],
+      "Specific Earthing Standards": [
+        {
+          "description": "All OH line design as per MDI0031 & MCI0005",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ],
+      "Substation Specific Earthing": []
+    },
+    "sub-step-extract-funding-ancillary-fees": {
+      "ancillary_network_services_fees": [],
+      "total_amount_payable": null
+    },
+    "sub-step-extract-substation": {
+      "substation_works": [
+        {
+          "description": "Substation commissioning categorized as Customer Funded Non-Contestable Work",
+          "source_section": "January 2025",
+          "source_page": 5
+        }
+      ],
+      "technical_ratings_and_references": [],
+      "commissioning_responsibilities": [
+        {
+          "description": "Substation commissioning is categorized as Customer Funded Non-Contestable Work",
+          "source_section": "January 2025",
+          "source_page": 5
+        }
+      ],
+      "clearances_and_standards": [
+        {
+          "description": "Compliance with MDI0031 requirements for substation works",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ]
+    },
+    "sub-step-extract-funding-determination": {
+      "items": [
+        {
+          "item_description": "Duct usage charge as required",
+          "funding_category": "Reimbursements to be paid to Endeavour Energy by Customer",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "January 2025",
+          "source_page": 5
+        },
+        {
+          "item_description": "Network switching, substation commissioning, contract inspection and ancillary fees",
+          "funding_category": "Customer Funded Non-Contestable Works",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "January 2025",
+          "source_page": 5
+        },
+        {
+          "item_description": "All other works required",
+          "funding_category": "Customer Funded Contestable Works",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "January 2025",
+          "source_page": 5
+        }
+      ]
+    },
+    "sub-step-extract-easements": {
+      "LandInterestGuidelines": {
+        "description": "No specific mention of 'Land Interests' section or checkbox for 'NA' in the provided sections.",
+        "source_section": "Not found",
+        "source_page": "Not found"
+      },
+      "RequiredEasements": {
+        "description": "No explicit details regarding required easements for new HV/LV lines or substation sites found in the provided sections.",
+        "source_section": "Not found",
+        "source_page": "Not found"
+      },
+      "PropertyAccessConditions": {
+        "description": "No specific conditions regarding access to private property or creation of right-of-ways for Endeavour Energy assets found in the provided sections.",
+        "source_section": "Not found",
+        "source_page": "Not found"
+      }
+    },
+    "sub-step-extract-payment-instructions": {
+      "Preferred Payment Method": {
+        "description": "EFT is the primary method",
+        "source_section": "MCGRATHS HILL",
+        "source_page": 1
+      },
+      "Banking Details": {
+        "description": "BSB: 012-003, Account Number: 8376 89858",
+        "source_section": "MCGRATHS HILL",
+        "source_page": 1
+      },
+      "Mandatory Transaction References": {
+        "description": "Unique alphanumeric reference code ARP4983A2 must be quoted",
+        "source_section": "January 2025",
+        "source_page": 3
+      },
+      "Document Remittance and Restriction Requirements": {
+        "description": "Email remittance copies to remittances@endeavourenergy.com.au; credit cards and cheques are not accepted",
+        "source_section": "MCGRATHS HILL",
+        "source_page": 1
+      },
+      "Invoice Policy": {
+        "description": "A formal Tax Invoice will be issued following the receipt of payment",
+        "source_section": "MCGRATHS HILL",
+        "source_page": 1
+      }
+    },
+    "sub-step-extract-sl": {
+      "SL_Works_Section": [
+        {
+          "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Remove existing OH SL conductor from pole 283062 to pole 426121 and from pole 283062 to pole 283063.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Remove existing SLCP 704 on pole 283062.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Existing OH SL conductor to be redirected from pole 426129 to new pole 1 & pole 2.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Install new SL conductor 25mm^2 2C from new pole 2 to pole 426121 and from new pole 2 to pole 3.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Remove all existing street lighting on poles 283061 & 283063.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Install new streetlighting on new poles 1 & 3 as per LDI0001 requirements.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Install new additional luminaires and light pole as per the lighting assessment.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ],
+      "SL_Material_Funding": [
+        {
+          "description": "Customer Funded Contestable Works: All other works required.",
+          "source_section": "January 2025",
+          "source_page": 5
+        }
+      ],
+      "SL_Standard_Compliance": [
+        {
+          "description": "Install new streetlighting on new poles 1 & 3 as per LDI0001 requirements.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ]
+    },
+    "sub-step-extract-hv": {
+      "Primary HV Method of Supply": [
+        {
+          "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Remove existing OH HV conductor from poles 283061 to 283063.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Remove existing OH HV conductor from pole 283062 to pole 426121.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Install new ABS on new pole 3. New Air break switch earthing as per EDI0006 & drawing B348252",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Install new OH HV conductor 19/3.25 AAC Neptune from new poles 1 to 3.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Install new OH HV conductor 7/4.50 AAC from new pole 2 to pole 426121.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ],
+      "Visual HV Markups and Annotations": [],
+      "HV Infrastructure Funding and Materials": [
+        {
+          "description": "Reimbursements to be paid to Endeavour Energy by Customer: Duct usage charge as required",
+          "source_section": "January 2025",
+          "source_page": 5
+        },
+        {
+          "description": "Customer Funded Non-Contestable Works: Network switching, substation commissioning, contract inspection and ancillary fees.",
+          "source_section": "January 2025",
+          "source_page": 5
+        },
+        {
+          "description": "Customer Funded Contestable Works: All other works required.",
+          "source_section": "January 2025",
+          "source_page": 5
+        }
+      ],
+      "Compliance Standards": [
+        {
+          "description": "All OH line design as per MDI0031 & MCI0005.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ]
+    },
+    "sub-step-extract-lv": {
+      "LV Works": [
+        {
+          "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Redirect the existing LV OH conductor to new poles 1 & 2. If the existing LV conductor length is insufficient, terminate existing LV conductor 7/4.50AAV on new pole 1 & install new span of LV bare 7/4.50AAC from new poles 1 to 2.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Remove existing OH LV conductor from pole 283062 to pole 426121.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Install new OH LV conductor 7/4.50AAC from new pole 2 to pole 426121.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ],
+      "Removal and Installation Requirements": [
+        {
+          "description": "Remove the Overhead (OH) LV cable currently located between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "String a new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ],
+      "Compliance Standards": [
+        {
+          "description": "Ensure all LV service works comply with the NSW Service and Installation Rules.",
+          "source_section": "January 2025",
+          "source_page": 3
+        },
+        {
+          "description": "Confirm the design adheres to Endeavour Energy standards MDI0031 and MCI0005.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ],
+      "Service Connections": [
+        {
+          "description": "Locate the General section regarding the 'New OH road crossing service connection' intended to maintain existing services.",
+          "source_section": "January 2025",
+          "source_page": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "process_step": {
+    "step_id": "Extract Site Plan Information",
+    "step_name": "Extract Site Plan Information",
+    "summary": null,
+    "details": "NOTE: Only process documents with route_to_step=5 (document_category=\"Site Plan\"). TAL spreadsheet files and Design Brief files must be excluded. Using the processing plan from Step 2, filter the document list to only those where 'document_category' is 'Site Plan'. Do not process any document tagged as 'Design Brief'. For each Site Plan document, run the two-phase extraction defined in proc-extract-site-plan-info. Phase 1 extracts all numbered notes and callout annotations (ATTENTION/WARNING/CAUTION/NOTICE) from every page of the drawing in full. Phase 2 analyses those extracted notes to produce four structured checks: (1) Substation Data \u2014 extract the seven Substation Notes fields (Substation Asset Number, Transformer Size, HV Switchgear with 1.5MVA Siemens RLR override rule, Voltage Level, LV Switchgear, Cubicle Size, Earthing); (2) Assets Field Check Compliance \u2014 verify note 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' is present and answered YES; (3) Easement Restriction \u2014 check for the swimming pool restriction-on-use-of-land easement note; (4) Easement Substation \u2014 check for the padmount substation easement note with dimensions and lot number.",
+    "expected_output": {
+      "description": "Step 3: Extract Site Plan Information \u2014 Five structured extraction outputs per document: complete drawing notes, substation structured data, field check compliance result, and two easement check results.",
+      "fields": {
+        "sub-step-extract-all-notes": "Complete list of all numbered notes and standalone callouts from every page, in sequence order",
+        "sub-step-substation-data": "Formatted string with all seven Substation Notes fields, with 1.5MVA override notation where applicable",
+        "sub-step-field-check": "'YES', 'NO', or 'NOT FOUND' result for the assets field-check compliance note",
+        "sub-step-easement-restriction": "Extracted restriction-on-use-of-land note text with lot number, or 'NOT REQUIRED' / 'NOT FOUND \u2014 REQUIRED'",
+        "sub-step-easement-substation": "Extracted padmount substation easement note text with dimensions and lot number, or 'NOT REQUIRED' / 'NOT FOUND \u2014 REQUIRED'"
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_number": 1,
+        "sub_step_id": "sub-step-extract-all-notes",
+        "sub_step_name": "Extract All Drawing Notes and Annotations",
+        "phase": 1,
+        "details": "Extract every textual note and annotation from every page of the drawing in full. This is a comprehensive raw extraction pass \u2014 do not filter or summarise. Capture: all numbered notes (1., 2., 3., ...) from the NOTES section with their complete text; all standalone ATTENTION:, WARNING:, CAUTION:, and NOTICE: callout blocks with their complete text; any inline hand-written or red-line markup annotations. Notes that span multiple drawing regions must be assembled into a single complete entry. This output is the source material for all Phase 2 sub-steps.",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate and Extract Numbered Notes Block",
+            "instructions": "Scan every page of the drawing for a dedicated NOTES section or numbered annotation block. Extract ALL individual notes listed, in sequence order (1., 2., 3., ...). Each note must be captured in full \u2014 do not truncate. If a note is split across adjacent image regions (common in large-format drawings), assemble the complete text. Include every note number in the final output \u2014 missing numbers indicate an incomplete extraction."
+          },
+          {
+            "title": "Extract Standalone Callout Annotations",
+            "instructions": "In addition to the numbered notes block, scan every page for standalone callout boxes or annotations with labels ATTENTION:, WARNING:, CAUTION:, or NOTICE:. These may appear anywhere on the drawing (not just in the NOTES block) and often contain critical safety, service, or access requirements. Extract each callout's label and its complete text. If the callout appears physically separate from the NOTES block, include it as an additional entry appended after the numbered notes (e.g. 'CAUTION: HIGH PRESSURE GAS MAINS IN VICINITY...')."
+          },
+          {
+            "title": "Extract Red-line and Hand-written Markups",
+            "instructions": "Look for hand-written or red-line markup annotations that modify or supplement the printed notes \u2014 for example, specific cable types, removal or addition instructions, or project-specific notes. Capture these verbatim and identify them as markups (e.g. '[MARKUP] Remove span between...')."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 2,
+        "sub_step_id": "sub-step-substation-data",
+        "sub_step_name": "Substation Notes \u2014 Structured Data Extraction",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, locate the Substation Notes annotation block and extract the seven structured data fields. Apply the conditional HV Switchgear rule: if Transformer Size is 1.5MVA, HV Switchgear must be recorded as 'Siemens RLR' regardless of what is written in the drawing, and the override must be explicitly noted in the output. Return all seven fields as a formatted multi-line string.",
+        "output_format": "Multi-line formatted string:\nSubstation Asset Number: [value or NOT FOUND]\nTransformer Size: [value or NOT FOUND]\nHV Switchgear: [value \u2014 if 1.5MVA rule applied, append: OVERRIDDEN per 1.5MVA rule \u2014 Siemens RLR required]\nVoltage Level: [value or NOT FOUND]\nLV Switchgear: [value or NOT FOUND]\nCubicle Size: [value or NOT FOUND]\nEarthing: [value or NOT FOUND]",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate Substation Notes Block",
+            "instructions": "Search the extracted notes and the drawing for annotations labelled 'Substation Notes', 'Sub Notes', or a similar heading. These are typically found in a table or callout box near the substation symbol or in the drawing title block area. Extract the heading and all fields within it."
+          },
+          {
+            "title": "Extract the Seven Data Fields",
+            "instructions": "From the Substation Notes block, extract each of the following fields as labelled: Substation Asset Number (unique ID assigned by the network operator, e.g. S1234 or a 6-digit number), Transformer Size (rated capacity with units, e.g. 1.5MVA, 500kVA, 200kVA), HV Switchgear (make and model, e.g. Siemens RLR, ABB SafeRing, or as written), Voltage Level (in kV, e.g. 11kV, 22kV, 33kV), LV Switchgear (make, model, and rating), Cubicle Size (dimensions or type code), and Earthing (type and compliance standard)."
+          },
+          {
+            "title": "Apply 1.5MVA Conditional HV Switchgear Rule",
+            "instructions": "Check the extracted Transformer Size. If it equals 1.5MVA (or equivalently 1500kVA), then regardless of what the drawing shows for HV Switchgear, record HV Switchgear as 'Siemens RLR' and append the note 'OVERRIDDEN per 1.5MVA rule \u2014 Siemens RLR required.' to that field. If the transformer size is not 1.5MVA, record HV Switchgear exactly as written in the Substation Notes."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 3,
+        "sub_step_id": "sub-step-field-check",
+        "sub_step_name": "Assets Field Check Compliance",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, verify that the drawing includes the mandatory assets field-check compliance note. The exact note required is: 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' answered with 'YES'. Return one of three values: 'YES' (note present, answered YES), 'NO' (note present, answered NO \u2014 flag as non-compliant), or 'NOT FOUND' (note is absent from the drawing \u2014 flag for follow-up).",
+        "required_note_text": "HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING",
+        "required_answer": "YES",
+        "output_format": "One of: 'YES' | 'NO' | 'NOT FOUND'",
+        "instructional_sub_steps": [
+          {
+            "title": "Search for Field Check Note",
+            "instructions": "Search all extracted notes for the text 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' or a close paraphrase. This note is typically numbered within the NOTES section and followed by 'YES' or 'NO'. Note: in the drawing the word 'DRAWING' may appear as 'DESIGN' \u2014 treat both as equivalent."
+          },
+          {
+            "title": "Read and Return the Answer",
+            "instructions": "Once the note is located, read the answer that follows it ('YES' or 'NO'). Return 'YES' if the answer is YES. Return 'NO' if the answer is NO (and add a flag: 'NON-COMPLIANT \u2014 field check not confirmed'). If the note cannot be found anywhere in the drawing, return 'NOT FOUND' (and add a flag: 'MISSING \u2014 this compliance note is mandatory')."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 4,
+        "sub_step_id": "sub-step-easement-restriction",
+        "sub_step_name": "Easement \u2014 Restriction on Use of Land (Swimming Pool Setback)",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, check whether the drawing includes the required restriction-on-use-of-land note relating to swimming pools within the substation easement setback. This note is required for any project that creates a substation easement. Extract the full note text including the lot number(s) referenced. If the note is absent, determine whether this is a padmount substation project \u2014 if so, flag as MISSING; if not, flag as NOT REQUIRED.",
+        "required_note_template": "A RESTRICTION ON THE USE OF LAND, IN RELATION TO SWIMMING POOLS, MEASURED 5m FROM THE SUBSTATION EASEMENT IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxx]",
+        "output_format": "Full extracted note text with lot number(s), or 'NOT REQUIRED' (not a substation easement project), or 'NOT FOUND \u2014 REQUIRED' (substation easement project but note is missing)",
+        "instructional_sub_steps": [
+          {
+            "title": "Search for Restriction Note",
+            "instructions": "Search all extracted notes for text containing 'RESTRICTION ON THE USE OF LAND', 'SWIMMING POOL', '5m FROM THE SUBSTATION EASEMENT', or 'IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT'. This note may appear within the numbered NOTES section or as a separate annotation."
+          },
+          {
+            "title": "Extract Note Text and Lot Number",
+            "instructions": "If found, extract the full note text verbatim. Identify and record the lot number(s) referenced after 'WITHIN PROPOSED LOT' \u2014 this is a critical compliance detail. Return the complete extracted text as the field value."
+          },
+          {
+            "title": "Determine Applicability if Not Found",
+            "instructions": "If the note is not found, check whether the project involves a padmount substation (look for 'padmount', 'PADMOUNT', or 'PAD MOUNT' in the Substation Notes or drawing annotations). If a padmount substation is involved, this note is mandatory \u2014 return 'NOT FOUND \u2014 REQUIRED (padmount substation project detected)'. If no padmount substation is present, return 'NOT REQUIRED'."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 5,
+        "sub_step_id": "sub-step-easement-substation",
+        "sub_step_name": "Easement \u2014 Padmount Substation Easement Creation",
+        "phase": 2,
+        "details": "Using the notes extracted in Phase 1, check whether the drawing includes the required padmount substation easement creation note. This note is required for all projects involving a padmount substation. Extract the full note text including the easement dimensions and lot number(s) referenced. If the note is absent and the project involves a padmount substation, flag as MISSING.",
+        "required_note_template": "AN EASEMENT FOR PADMOUNT SUBSTATION MINIMUM [x]m x [x]m IS TO BE CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT [xxxx]",
+        "output_format": "Full extracted note text with easement dimensions and lot number(s), or 'NOT REQUIRED' (not a padmount substation project), or 'NOT FOUND \u2014 REQUIRED' (padmount substation project but note is missing)",
+        "instructional_sub_steps": [
+          {
+            "title": "Search for Padmount Easement Note",
+            "instructions": "Search all extracted notes for text containing 'EASEMENT FOR PADMOUNT SUBSTATION', 'PADMOUNT SUBSTATION MINIMUM', or 'CREATED IN FAVOUR OF ENDEAVOUR ENERGY WITHIN PROPOSED LOT' alongside a dimension or measurement. This note may appear within the numbered NOTES section or as a standalone annotation."
+          },
+          {
+            "title": "Extract Easement Dimensions and Lot Number",
+            "instructions": "If found, extract the full note text verbatim. Specifically identify: (a) the easement dimensions stated after 'MINIMUM' (e.g. '3m x 4m', '4.5m x 6m') and (b) the lot number(s) referenced after 'WITHIN PROPOSED LOT'. Both details are critical \u2014 record them clearly in the output."
+          },
+          {
+            "title": "Determine Applicability if Not Found",
+            "instructions": "If the note is not found, check whether the project involves a padmount substation (look for 'padmount', 'PADMOUNT', or 'PAD MOUNT' in the Substation Notes or drawing annotations). If a padmount substation is involved, this note is mandatory \u2014 return 'NOT FOUND \u2014 REQUIRED (padmount substation project detected)'. If no padmount substation is present, return 'NOT REQUIRED'."
+          }
+        ]
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/ARP4983-84 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "D526458_ARP4983_RETIC_LEGEND.pdf",
+      "filepath": "",
+      "document_type": "Reticulation Drawing",
+      "document_category": "Site Plan",
+      "input_text_quality": "none",
+      "document_quality": "chunked-image",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "page-split",
+      "estimated_chunks": 1,
+      "actual_chunks_processed": 1,
+      "process_step_name": "Extract Site Plan Information",
+      "total_sections": 1,
+      "relevant_sections": 1,
+      "raw_text_from_chunks": "[full-page, p1, seq1] F\nC\nB\nA\nN\n2083\n2\n3\n4\n2073\n5\n7\n8\n9\n10\n2065\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '27'\n- STRING NEW 11 SPAN OF OH HV 7/4.50 AAC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n- STRING NEW 11 SPAN OF OH LV 150mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n(27)\n8.4m\n2056\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '26'\n58.8m\n8.4m\n49.4m\n13.1\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '25'\n- ESTABLISH NEW PILLAR REF 'A' FOR TINSW TCS\nSUPPLY.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM NEW\nPILLAR S406107 AT REF 'A' TO NEW PILLAR\nS402679 AT REF 'B'.\n- LAY NEW UG SL 16mm2 CU 4C XLPE FROM LV\nPILLAR S406107 AT REF 'A' TO COLUMN REF '48'.\n68.8m\n67.7m\n2002189\n2002190\n48m\n- INSTALL NEW HV UGOH & LV UGOH\n- LAY NEW UG HV 240mm2 AL 3C XLPE FROM\nNEW HV UGOH AT POLE REF '22' TO NEW\nHV UGOH AT POLE REF '61'.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM\nNEW LV UGOH AT POLE REF '22' TO NEW\nLV PILLAR AT REF 'A'.\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '22'\n11.1m\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '28'\n- ESTABLISH NEW POLE SUBSTATION No: 96203\nCONSTRUCTION TYPE\n: URBAN (DRW NO 249489)\nTRANSFORMER SIZE\n: 200KVA\nVOLTAGE (11kV/22kV)\n: 11kV\nHV FUSES\n: 20A\nLV FUSES\n: 2 x 200A\nNUMBER OF DISTRIBUTORS: 2\nEARTHING SYSTEM\nCOMMON EARTHING,\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '30'\nCOMPLY WITH EDI 100\n-\n- REMOVE EXISTING POLE AT\nREF '14',\n- INSTALL NEW 12.5m/12kN\nTIMBER POLE AT REF '14', 7.1m\nFROM REMOVED POLE.\n- CUT & TERMINATE EX OH HV\nPROJECT BOUNDARY\n6/1/3.00 ACSR/GZ CONDUCTOR\nFROM POLE 603255.\n- REATTACH EX LV 95mm2 4C\nLVABC FROM POLE 603255 &\nPOLE RE '13'.\n- REATTACH EX SL 78401 TO\nNEW POLE.\n- ESTABLISHED NEW OH LV LINK\nIN NORMALLY OPEN STATUS.\nD\n2305\n603255\n(31)\n823246\nE\nFAIRFIELD\nLGA\n78401\nEND OF SCOPE OF WORKS\n68.6m\n78402\n8.3m\n12\n(29)\n58.4m\nELIZABETH\n$170412\nSTRING NEW OH HV 7/4.50\nAAC CONDUCTOR\nBETWEEN POLE REF '13' &\n'14'.\nREPLACE EXISTING POLE WITH NEW 14m/12kN/\nTIMBER POLE AT REF '13'.\nLIVERPOOL 13\nLGA\n- CUT& TERMINATE EX OH HV 7/4.50 AAC\nCONDUCTOR FROM POLE 603241.\nREATTACH EX LV 95mm2 4C LVABC FROM\nPOLE 603241 & POLE REF '14'.\nREMOVE EX LV USL.\n\u53ef\n-REATTACH EX SL 78402 TO NEW POLE.\n603241\n6/2415\nSITE PLAN LEGEND\n7.2m\n59.8m\n96203\nDR\n11\n12\n620103\nINSTALL NEW HV UGOH AT POLE\nREF '21'.\n- LAY NEW UG HV 240mm2 AL 3C\nXLPE FROM NEW HV UGOH TO\nEXISTING PM SUB AT REF 'C'\nNEW FREEWAY\nBOUNDARY\n68.7m\n2002187\n2002188\n2002186\n2002185\n-DECOMMISSION EXISTING POLE\nSUB 1764 AT POLE REF '9'.\n2002184\n2002183\nT\n- REMOVE 11 SPAN OF EXISTING\nOH HV MAIN BETWEEN POLE\nREF '2'-3'-4'-'5'-'6'-'7'-'8'-\n'9'-'10'-'11'-'12'-'13'\n- REMOVE 10 SPAN OF EXISTING\nOH LV MAIN BETWEEN POLE\nREF '3'-4'-'5''6'-'7''8'-'9'-\n'10'-'11'-'12'-'13'\n2002182\nLAY NEW TYPE 26 ROAD\nCROSSING DUCTS.\n-7519\n200219\n16\n48.1m\nAS406107\n620089\n-FAIRFIELD LGA\n2002193\n2002181\n2002180\n306689\nLIVERPOOL LGA\nB2\nARP4984 PACKAGE 4\n2005481\n306688\n306687\n$402679\n2005480\n5405788\n2006479\n96084\n- ESTABLISH NEW PILLAR REF 'B1' FOR TINSW SWITCH\nBOARD E1.\n- LAY NEW UG LV 240mm2 AL 4C XLPE CABLE FROM\nEXISTING PM SUB 96084 LV SWITCH AT REF 'C' TO\nNEW PILLAR S402679 AT REF 'B1', AS SHOWN ON THE\nFINAL LV CIRCUIT.\n- RUN NEW UG SL 16mm2 CU 4C XLPE FROM LV PILLAR\nS402679 AT REF 'B1' TO COLUMN REF '37'\n-TURN DOWN EXISTING HV UGOH AT POLE REF\n'2' ESTABLISH ON ARP4984 & REMOVE\nEXISTING UG HV 240mm2AL 3C XLPE CABLE\nRUNNING TO PM SUB REF 'C'.\n-STRING NEW 1 SPAN OF OH LV 95mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '30'-'11'\n1140\nNEW LV TRENCH\nREMOVE LANTERN\nNEW PILLAR\nSTRING NEW OH CABLE\nNEW LANTERN\n\u00d6\nLV LINK (N/O)\nEXISTING POLE\nEXISTING UNDERGROUND MAINS\nNEW POLE\nREMOVE POLE\nEXISTING OH CABLE\n1\nNEW HV TRENCH\nG\nEXISTING COLUMN\nREMOVE CONDUCTOR\n0\nREPLACE POLE\n\u03a0\nNEW COLUMN\n\u04e8\nHV ABS (N/C)\nEXISTING DUCTS\nEXISTING PILLAR\nA\nHV USL (N/C)\nLGA DEMARCATION\nPADMOUNT SUBSTATION\nGAS\nHIGH PRESSURE GAS\nEXISTING LANTERN\nPOLE SUBSTATION\nH\nCadastre: Land and Property Information 2016\nA\nORIGINAL\nAMENDMENTS\nDRAFT No. 05\nISSUE\nB 11/03/2024\n92119\nP.P\nCHK'D\nDRWN D. S.\nMOVE POLE/PILLAR\nREPLACED POLE\nLOCATION AND\nC 8/04/2024\nCHK'D\nP. P\nMOVE POLE REF '61'\n& ESTABLISH STJ AT\nDRWN D. S.\nREF '60'\nD 4/11/2024\nCHK'D\nP. P\nUPRATE POLE SUB AT\nREF 28 & REVISED\nEARTHING REF 61\nDRWN D. S.\n1\nWATER MAIN\nNEW FREEWAY BOUNDARY\nEXISTING 9,145m WIDTH\nENDEAVOUR ENERGY EASEMENT\n\u0642\u0644\u064a\nLevel 27, Ernst & Young Centre\n680 George Street\nSydney NSW 2000\nGPO BOX 5394\nSydney NSW 2001 Australlia\nTelephone +61 2 9272 5100\nFacsimile +61 2 9272 5101\nEmail: sydney@wsp.com\nASP REF/ACCREDIATION NO.-5045\n2\nCLIENT:\nJOHN M7-M12\nHOLLAND Integration Project\nTransport\nNSW for NSW\nGOVERNMENT\n3\nTEMPLATE VERSION No.5.20\nTHIS DRAWING,\nPYRIGH\nTHEREIN IS THE\nPROPERTY OF\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED\nREPRODUCED,\nSTRIBUTED, LOANED OR\nRED WITHOUT HHE\nRITTEN CONSENT OF\nENDEAVOUR ENERGY\n5\nULL 1937\nSITE PLAN\n0\n20\n201510 5\nREFERENCE DRAWING'S\nCONNECTION OF LOAD\n6\n40\n60\n80\n100m\nSCALE 1:1000 A1\nWORK ORDERS\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n7\nCARRIAGEWAY\nEDGE\nNEW FREEWAY\nBOUNDARY\nNEW ROAD\nINSTALL NEW 14m/8kN TIMBER POLE\nAT REF '61', 14m FROM REMOVED\nPOLE REF '60' AND 5m FROM\nCARRIAGEWAY EDGE\n- REATTACH THE EXISTING CABLE\nFROM POLE REF '60' TO NEW\nTERMINATION POLE REF '61'\n-INSTALL NEW HV UGOH.\nLAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\n61\nPRIVATE ROAD\n603250\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE\nDATE\nINSPECTED BY:\nSIGNATURE\nOF:\nCONTACT No.\nSIGNATURE\nDATE\nG\nASSET RECORDING\nHEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS F NDEAVOR ENERGY STANDARD SAD 0004,\nEndeavour\nEnergy\nH\nA1 526458\nD\nSHEET No 2 OF 9 SHEETS\nCAMS File No.\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nARP4983\n3284\nHOXTON PARK\nCENTRAL\nKEMPS CREEK 1 D11\nLIVERPOOL\n8\nBEFORE\nYOU DIG\nwww.byda.com.au\nORIGINAL\nSCALE\nDRAWN DARSHAN S\nDO NOT\nSCALE\nDIMENSIONS\nIN\nMETRES\nGDA94/MGA56\nCOORDINATE SYSTEM\nASP LEVEL 2 TO RE-ESTABLISH\nEXISTING SERVICE CONNECTION.\nNOTE:\n- NEW SL LUMINARIES NUMBER ARE NOT SHOWN ON\nTHE DESIGN FOR CLARITY PURPOSE.\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\n12-11-2024\nAli Siddiqui\nAli Siddiqui\nThis Certification is issued subject to Endeavour Energy's Standard Certification Terms\nELIZABETH DRIVE\nCECIL PARK\nARP4983\nASSET RELOCATION\nM12 EAST ELIZABETH DRIVE CONNECTION\nDATE:\nDATE 17/07/2023\nCH'D PRAMOD P\nDESIGN DARSHAN S\n9\n10\n11\n12\nF\nE",
+      "chunk_details": [
+        {
+          "chunk_id": "chunk_0001",
+          "sequence": 1,
+          "page_number": 1,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "F\nC\nB\nA\nN\n2083\n2\n3\n4\n2073\n5\n7\n8\n9\n10\n2065\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '27'\n- STRING NEW 11 SPAN OF OH HV 7/4.50 AAC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n- STRING NEW 11 SPAN OF OH LV 150mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n(27)\n8.4m\n2056\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '26'\n58.8m\n8.4m\n49.4m\n13.1\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '25'\n- ESTABLISH NEW PILLAR REF 'A' FOR TINSW TCS\nSUPPLY.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM NEW\nPILLAR S406107 AT REF 'A' TO NEW PILLAR\nS402679 AT REF 'B'.\n- LAY NEW UG SL 16mm2 CU 4C XLPE FROM LV\nPILLAR S406107 AT REF 'A' TO COLUMN REF '48'.\n68.8m\n67.7m\n2002189\n2002190\n48m\n- INSTALL NEW HV UGOH & LV UGOH\n- LAY NEW UG HV 240mm2 AL 3C XLPE FROM\nNEW HV UGOH AT POLE REF '22' TO NEW\nHV UGOH AT POLE REF '61'.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM\nNEW LV UGOH AT POLE REF '22' TO NEW\nLV PILLAR AT REF 'A'.\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '22'\n11.1m\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '28'\n- ESTABLISH NEW POLE SUBSTATION No: 96203\nCONSTRUCTION TYPE\n: URBAN (DRW NO 249489)\nTRANSFORMER SIZE\n: 200KVA\nVOLTAGE (11kV/22kV)\n: 11kV\nHV FUSES\n: 20A\nLV FUSES\n: 2 x 200A\nNUMBER OF DISTRIBUTORS: 2\nEARTHING SYSTEM\nCOMMON EARTHING,\nASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '30'\nCOMPLY WITH EDI 100\n-\n- REMOVE EXISTING POLE AT\nREF '14',\n- INSTALL NEW 12.5m/12kN\nTIMBER POLE AT REF '14', 7.1m\nFROM REMOVED POLE.\n- CUT & TERMINATE EX OH HV\nPROJECT BOUNDARY\n6/1/3.00 ACSR/GZ CONDUCTOR\nFROM POLE 603255.\n- REATTACH EX LV 95mm2 4C\nLVABC FROM POLE 603255 &\nPOLE RE '13'.\n- REATTACH EX SL 78401 TO\nNEW POLE.\n- ESTABLISHED NEW OH LV LINK\nIN NORMALLY OPEN STATUS.\nD\n2305\n603255\n(31)\n823246\nE\nFAIRFIELD\nLGA\n78401\nEND OF SCOPE OF WORKS\n68.6m\n78402\n8.3m\n12\n(29)\n58.4m\nELIZABETH\n$170412\nSTRING NEW OH HV 7/4.50\nAAC CONDUCTOR\nBETWEEN POLE REF '13' &\n'14'.\nREPLACE EXISTING POLE WITH NEW 14m/12kN/\nTIMBER POLE AT REF '13'.\nLIVERPOOL 13\nLGA\n- CUT& TERMINATE EX OH HV 7/4.50 AAC\nCONDUCTOR FROM POLE 603241.\nREATTACH EX LV 95mm2 4C LVABC FROM\nPOLE 603241 & POLE REF '14'.\nREMOVE EX LV USL.\n\u53ef\n-REATTACH EX SL 78402 TO NEW POLE.\n603241\n6/2415\nSITE PLAN LEGEND\n7.2m\n59.8m\n96203\nDR\n11\n12\n620103\nINSTALL NEW HV UGOH AT POLE\nREF '21'.\n- LAY NEW UG HV 240mm2 AL 3C\nXLPE FROM NEW HV UGOH TO\nEXISTING PM SUB AT REF 'C'\nNEW FREEWAY\nBOUNDARY\n68.7m\n2002187\n2002188\n2002186\n2002185\n-DECOMMISSION EXISTING POLE\nSUB 1764 AT POLE REF '9'.\n2002184\n2002183\nT\n- REMOVE 11 SPAN OF EXISTING\nOH HV MAIN BETWEEN POLE\nREF '2'-3'-4'-'5'-'6'-'7'-'8'-\n'9'-'10'-'11'-'12'-'13'\n- REMOVE 10 SPAN OF EXISTING\nOH LV MAIN BETWEEN POLE\nREF '3'-4'-'5''6'-'7''8'-'9'-\n'10'-'11'-'12'-'13'\n2002182\nLAY NEW TYPE 26 ROAD\nCROSSING DUCTS.\n-7519\n200219\n16\n48.1m\nAS406107\n620089\n-FAIRFIELD LGA\n2002193\n2002181\n2002180\n306689\nLIVERPOOL LGA\nB2\nARP4984 PACKAGE 4\n2005481\n306688\n306687\n$402679\n2005480\n5405788\n2006479\n96084\n- ESTABLISH NEW PILLAR REF 'B1' FOR TINSW SWITCH\nBOARD E1.\n- LAY NEW UG LV 240mm2 AL 4C XLPE CABLE FROM\nEXISTING PM SUB 96084 LV SWITCH AT REF 'C' TO\nNEW PILLAR S402679 AT REF 'B1', AS SHOWN ON THE\nFINAL LV CIRCUIT.\n- RUN NEW UG SL 16mm2 CU 4C XLPE FROM LV PILLAR\nS402679 AT REF 'B1' TO COLUMN REF '37'\n-TURN DOWN EXISTING HV UGOH AT POLE REF\n'2' ESTABLISH ON ARP4984 & REMOVE\nEXISTING UG HV 240mm2AL 3C XLPE CABLE\nRUNNING TO PM SUB REF 'C'.\n-STRING NEW 1 SPAN OF OH LV 95mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '30'-'11'\n1140\nNEW LV TRENCH\nREMOVE LANTERN\nNEW PILLAR\nSTRING NEW OH CABLE\nNEW LANTERN\n\u00d6\nLV LINK (N/O)\nEXISTING POLE\nEXISTING UNDERGROUND MAINS\nNEW POLE\nREMOVE POLE\nEXISTING OH CABLE\n1\nNEW HV TRENCH\nG\nEXISTING COLUMN\nREMOVE CONDUCTOR\n0\nREPLACE POLE\n\u03a0\nNEW COLUMN\n\u04e8\nHV ABS (N/C)\nEXISTING DUCTS\nEXISTING PILLAR\nA\nHV USL (N/C)\nLGA DEMARCATION\nPADMOUNT SUBSTATION\nGAS\nHIGH PRESSURE GAS\nEXISTING LANTERN\nPOLE SUBSTATION\nH\nCadastre: Land and Property Information 2016\nA\nORIGINAL\nAMENDMENTS\nDRAFT No. 05\nISSUE\nB 11/03/2024\n92119\nP.P\nCHK'D\nDRWN D. S.\nMOVE POLE/PILLAR\nREPLACED POLE\nLOCATION AND\nC 8/04/2024\nCHK'D\nP. P\nMOVE POLE REF '61'\n& ESTABLISH STJ AT\nDRWN D. S.\nREF '60'\nD 4/11/2024\nCHK'D\nP. P\nUPRATE POLE SUB AT\nREF 28 & REVISED\nEARTHING REF 61\nDRWN D. S.\n1\nWATER MAIN\nNEW FREEWAY BOUNDARY\nEXISTING 9,145m WIDTH\nENDEAVOUR ENERGY EASEMENT\n\u0642\u0644\u064a\nLevel 27, Ernst & Young Centre\n680 George Street\nSydney NSW 2000\nGPO BOX 5394\nSydney NSW 2001 Australlia\nTelephone +61 2 9272 5100\nFacsimile +61 2 9272 5101\nEmail: sydney@wsp.com\nASP REF/ACCREDIATION NO.-5045\n2\nCLIENT:\nJOHN M7-M12\nHOLLAND Integration Project\nTransport\nNSW for NSW\nGOVERNMENT\n3\nTEMPLATE VERSION No.5.20\nTHIS DRAWING,\nPYRIGH\nTHEREIN IS THE\nPROPERTY OF\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED\nREPRODUCED,\nSTRIBUTED, LOANED OR\nRED WITHOUT HHE\nRITTEN CONSENT OF\nENDEAVOUR ENERGY\n5\nULL 1937\nSITE PLAN\n0\n20\n201510 5\nREFERENCE DRAWING'S\nCONNECTION OF LOAD\n6\n40\n60\n80\n100m\nSCALE 1:1000 A1\nWORK ORDERS\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n7\nCARRIAGEWAY\nEDGE\nNEW FREEWAY\nBOUNDARY\nNEW ROAD\nINSTALL NEW 14m/8kN TIMBER POLE\nAT REF '61', 14m FROM REMOVED\nPOLE REF '60' AND 5m FROM\nCARRIAGEWAY EDGE\n- REATTACH THE EXISTING CABLE\nFROM POLE REF '60' TO NEW\nTERMINATION POLE REF '61'\n-INSTALL NEW HV UGOH.\nLAND TO BE LEASED FOR\nCONSTRUCTION PURPOSES\n61\nPRIVATE ROAD\n603250\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE\nDATE\nINSPECTED BY:\nSIGNATURE\nOF:\nCONTACT No.\nSIGNATURE\nDATE\nG\nASSET RECORDING\nHEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS F NDEAVOR ENERGY STANDARD SAD 0004,\nEndeavour\nEnergy\nH\nA1 526458\nD\nSHEET No 2 OF 9 SHEETS\nCAMS File No.\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION.\nARP4983\n3284\nHOXTON PARK\nCENTRAL\nKEMPS CREEK 1 D11\nLIVERPOOL\n8\nBEFORE\nYOU DIG\nwww.byda.com.au\nORIGINAL\nSCALE\nDRAWN DARSHAN S\nDO NOT\nSCALE\nDIMENSIONS\nIN\nMETRES\nGDA94/MGA56\nCOORDINATE SYSTEM\nASP LEVEL 2 TO RE-ESTABLISH\nEXISTING SERVICE CONNECTION.\nNOTE:\n- NEW SL LUMINARIES NUMBER ARE NOT SHOWN ON\nTHE DESIGN FOR CLARITY PURPOSE.\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\n12-11-2024\nAli Siddiqui\nAli Siddiqui\nThis Certification is issued subject to Endeavour Energy's Standard Certification Terms\nELIZABETH DRIVE\nCECIL PARK\nARP4983\nASSET RELOCATION\nM12 EAST ELIZABETH DRIVE CONNECTION\nDATE:\nDATE 17/07/2023\nCH'D PRAMOD P\nDESIGN DARSHAN S\n9\n10\n11\n12\nF\nE",
+            "data": {
+              "sub-step-extract-all-notes": "- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '27'\n- STRING NEW 11 SPAN OF OH HV 7/4.50 AAC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n- STRING NEW 11 SPAN OF OH LV 150mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '21'-'22'-\n'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '26'\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '25'\n- ESTABLISH NEW PILLAR REF 'A' FOR TINSW TCS\nSUPPLY.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM NEW\nPILLAR S406107 AT REF 'A' TO NEW PILLAR\nS402679 AT REF 'B'.\n- LAY NEW UG SL 16mm2 CU 4C XLPE FROM LV\nPILLAR S406107 AT REF 'A' TO COLUMN REF '48'.\n- INSTALL NEW HV UGOH & LV UGOH\n- LAY NEW UG HV 240mm2 AL 3C XLPE FROM\nNEW HV UGOH AT POLE REF '22' TO NEW\nHV UGOH AT POLE REF '61'.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM\nNEW LV UGOH AT POLE REF '22' TO NEW\nLV PILLAR AT REF 'A'.\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '22'\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '28'\n- ESTABLISH NEW POLE SUBSTATION No: 96203\nCONSTRUCTION TYPE\n: URBAN (DRW NO 249489)\nTRANSFORMER SIZE\n: 200KVA\nVOLTAGE (11kV/22kV)\n: 11kV\nHV FUSES\n: 20A\nLV FUSES\n: 2 x 200A\nNUMBER OF DISTRIBUTORS: 2\nEARTHING SYSTEM\nCOMMON EARTHING,\nCOMPLY WITH EDI 100\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN\nEXISTING SERVICE CONNECTION FROM\nNEW POLE AT REF '30'\n-\n- REMOVE EXISTING POLE AT\nREF '14',\n- INSTALL NEW 12.5m/12kN\nTIMBER POLE AT REF '14', 7.1m\nFROM REMOVED POLE.\n- CUT & TERMINATE EX OH HV\n6/1/3.00 ACSR/GZ CONDUCTOR\nFROM POLE 603255.\n- REATTACH EX LV 95mm2 4C\nLVABC FROM POLE 603255 &\nPOLE RE '13'.\n- REATTACH EX SL 78401 TO\nNEW POLE.\n- ESTABLISHED NEW OH LV LINK\nIN NORMALLY OPEN STATUS.\nSTRING NEW OH HV 7/4.50\nAAC CONDUCTOR\nBETWEEN POLE REF '13' &\n'14'.\n-REPLACE EXISTING POLE WITH NEW 14m/12kN/\nTIMBER POLE AT REF '13'.\n- CUT& TERMINATE EX OH HV 7/4.50 AAC\nCONDUCTOR FROM POLE 603241.\nREATTACH EX LV 95mm2 4C LVABC FROM\nPOLE 603241 & POLE REF '14'.\n- REMOVE EX LV USL.\n\u53ef\n-REATTACH EX SL 78402 TO NEW POLE.\n- INSTALL NEW HV UGOH AT POLE\nREF '21'.\n- LAY NEW UG HV 240mm2 AL 3C\nXLPE FROM NEW HV UGOH TO\nEXISTING PM SUB AT REF 'C'\n-DECOMMISSION EXISTING POLE\nSUB 1764 AT POLE REF '9'.\n- REMOVE 11 SPAN OF EXISTING\nOH HV MAIN BETWEEN POLE\nREF '2'-3'-4'-'5'-'6'-'7'-'8'-\n'9'-'10'-'11'-'12'-'13'\n- REMOVE 10 SPAN OF EXISTING\nOH LV MAIN BETWEEN POLE\nREF '3'-4'-'5''6'-'7''8'-'9'-\n'10'-'11'-'12'-'13'\n- ESTABLISH NEW PILLAR REF 'B1' FOR TINSW SWITCH\nBOARD E1.\n- LAY NEW UG LV 240mm2 AL 4C XLPE CABLE FROM\nEXISTING PM SUB 96084 LV SWITCH AT REF 'C' TO\nNEW PILLAR S402679 AT REF 'B1', AS SHOWN ON THE\nFINAL LV CIRCUIT.\n- RUN NEW UG SL 16mm2 CU 4C XLPE FROM LV PILLAR\nS402679 AT REF 'B1' TO COLUMN REF '37'\n-TURN DOWN EXISTING HV UGOH AT POLE REF\n'2' ESTABLISH ON ARP4984 & REMOVE\nEXISTING UG HV 240mm2AL 3C XLPE CABLE\nRUNNING TO PM SUB REF 'C'.\n-STRING NEW 1 SPAN OF OH LV 95mm2 4C LVABC\nCONDUCTOR BETWEEN NEW POLE REF '30'-'11'\n-INSTALL NEW 14m/8kN TIMBER POLE\nAT REF '61', 14m FROM REMOVED\nPOLE REF '60' AND 5m FROM\nCARRIAGEWAY EDGE\n- REATTACH THE EXISTING CABLE\nFROM POLE REF '60' TO NEW\nTERMINATION POLE REF '61'\n-INSTALL NEW HV UGOH.\nASP LEVEL 2 TO RE-ESTABLISH\nEXISTING SERVICE CONNECTION.\nNOTE:\n- NEW SL LUMINARIES NUMBER ARE NOT SHOWN ON\nTHE DESIGN FOR CLARITY PURPOSE.\n"
+            }
+          }
+        }
+      ],
+      "stitched_boundaries": [],
+      "sub_step_extractions": {
+        "sub-step-extract-all-notes": {
+          "value": "- ASP LEVEL 2/CONTRACTOR TO MAINTAIN EXISTING SERVICE CONNECTION FROM NEW POLE AT REF '27'\n- STRING NEW 11 SPAN OF OH HV 7/4.50 AAC CONDUCTOR BETWEEN NEW POLE REF '21'-'22'-'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n- STRING NEW 11 SPAN OF OH LV 150mm2 4C LVABC CONDUCTOR BETWEEN NEW POLE REF '21'-'22'-'23'-'24'-'25''26''27''28''29''30'-'31'-'14'\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN EXISTING SERVICE CONNECTION FROM NEW POLE AT REF '26'\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN EXISTING SERVICE CONNECTION FROM NEW POLE AT REF '25'\n- ESTABLISH NEW PILLAR REF 'A' FOR TINSW TCS SUPPLY.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM NEW PILLAR S406107 AT REF 'A' TO NEW PILLAR S402679 AT REF 'B'.\n- LAY NEW UG SL 16mm2 CU 4C XLPE FROM LV PILLAR S406107 AT REF 'A' TO COLUMN REF '48'.\n- INSTALL NEW HV UGOH & LV UGOH\n- LAY NEW UG HV 240mm2 AL 3C XLPE FROM NEW HV UGOH AT POLE REF '22' TO NEW HV UGOH AT POLE REF '61'.\n- LAY NEW UG LV 240mm2 AL 4C XLPE FROM NEW LV UGOH AT POLE REF '22' TO NEW LV PILLAR AT REF 'A'.\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN EXISTING SERVICE CONNECTION FROM NEW POLE AT REF '22'\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN EXISTING SERVICE CONNECTION FROM NEW POLE AT REF '28'\n- ESTABLISH NEW POLE SUBSTATION No: 96203\n  CONSTRUCTION TYPE: URBAN (DRW NO 249489)\n  TRANSFORMER SIZE: 200KVA\n  VOLTAGE (11kV/22kV): 11kV\n  HV FUSES: 20A\n  LV FUSES: 2 x 200A\n  NUMBER OF DISTRIBUTORS: 2\n  EARTHING SYSTEM: COMMON EARTHING,\n  COMPLY WITH EDI 100\n- ASP LEVEL 2/CONTRACTOR TO MAINTAIN EXISTING SERVICE CONNECTION FROM NEW POLE AT REF '30'\n- REMOVE EXISTING POLE AT REF '14',\n- INSTALL NEW 12.5m/12kN TIMBER POLE AT REF '14', 7.1m FROM REMOVED POLE.\n- CUT & TERMINATE EX OH HV 6/1/3.00 ACSR/GZ CONDUCTOR FROM POLE 603255.\n- REATTACH EX LV 95mm2 4C LVABC FROM POLE 603255 & POLE RE '13'.\n- REATTACH EX SL 78401 TO NEW POLE.\n- ESTABLISHED NEW OH LV LINK IN NORMALLY OPEN STATUS.\n- STRING NEW OH HV 7/4.50 AAC CONDUCTOR BETWEEN POLE REF '13' & '14'.\n- REPLACE EXISTING POLE WITH NEW 14m/12kN/ TIMBER POLE AT REF '13'.\n- CUT & TERMINATE EX OH HV 7/4.50 AAC CONDUCTOR FROM POLE 603241.\n- REATTACH EX LV 95mm2 4C LVABC FROM POLE 603241 & POLE REF '14'.\n- REMOVE EX LV USL.\n- REATTACH EX SL 78402 TO NEW POLE.\n- INSTALL NEW HV UGOH AT POLE REF '21'.\n- LAY NEW UG HV 240mm2 AL 3C XLPE FROM NEW HV UGOH TO EXISTING PM SUB AT REF 'C'\n- DECOMMISSION EXISTING POLE SUB 1764 AT POLE REF '9'.\n- REMOVE 11 SPAN OF EXISTING OH HV MAIN BETWEEN POLE REF '2'-3'-4'-'5'-'6'-'7'-'8'-'9'-'10'-'11'-'12'-'13'\n- REMOVE 10 SPAN OF EXISTING OH LV MAIN BETWEEN POLE REF '3'-4'-'5''6'-'7''8'-'9'-'10'-'11'-'12'-'13'\n- ESTABLISH NEW PILLAR REF 'B1' FOR TINSW SWITCH BOARD E1.\n- LAY NEW UG LV 240mm2 AL 4C XLPE CABLE FROM EXISTING PM SUB 96084 LV SWITCH AT REF 'C' TO NEW PILLAR S402679 AT REF 'B1', AS SHOWN ON THE FINAL LV CIRCUIT.\n- RUN NEW UG SL 16mm2 CU 4C XLPE FROM LV PILLAR S402679 AT REF 'B1' TO COLUMN REF '37'\n- TURN DOWN EXISTING HV UGOH AT POLE REF '2' ESTABLISH ON ARP4984 & REMOVE EXISTING UG HV 240mm2 AL 3C XLPE CABLE RUNNING TO PM SUB REF 'C'.\n- STRING NEW 1 SPAN OF OH LV 95mm2 4C LVABC CONDUCTOR BETWEEN NEW POLE REF '30'-'11'\n- INSTALL NEW 14m/8kN TIMBER POLE AT REF '61', 14m FROM REMOVED POLE REF '60' AND 5m FROM CARRIAGEWAY EDGE\n- REATTACH THE EXISTING CABLE FROM POLE REF '60' TO NEW TERMINATION POLE REF '61'\n- INSTALL NEW HV UGOH.\nATTENTION: ALL SERVICES SEARCHES MUST BE CHECKED BEFORE CONSTRUCTION.",
+          "sub_step_name": "Extract All Drawing Notes and Annotations",
+          "phase": 1
+        },
+        "sub-step-substation-data": {
+          "value": "Substation Asset Number: 96203\nTransformer Size: 200KVA\nHV Switchgear: NOT FOUND\nVoltage Level: 11kV\nLV Switchgear: NOT FOUND\nCubicle Size: NOT FOUND\nEarthing: COMMON EARTHING",
+          "sub_step_name": "Substation Notes \u2014 Structured Data Extraction",
+          "phase": 2
+        },
+        "sub-step-field-check": {
+          "value": "NOT FOUND",
+          "sub_step_name": "Assets Field Check Compliance",
+          "phase": 2
+        },
+        "sub-step-easement-restriction": {
+          "value": "NOT REQUIRED",
+          "sub_step_name": "Easement \u2014 Restriction on Use of Land (Swimming Pool Setback)",
+          "phase": 2
+        },
+        "sub-step-easement-substation": {
+          "value": "NOT REQUIRED",
+          "sub_step_name": "Easement \u2014 Padmount Substation Easement Creation",
+          "phase": 2
+        }
+      },
+      "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260329_030926/Extraction_D526458_ARP4983_RETIC_LEGEND_pdf_Extract_Site_Plan_Information_20260329_031034.json"
+    }
+  ],
+  "timestamp": "20260329_031034",
+  "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260329_030926/ExtractionReport_proc_extract_site_plan_info_20260329_031034.json"
+}

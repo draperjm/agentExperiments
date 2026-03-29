@@ -1,0 +1,1735 @@
+{
+  "report_type": "Customer Connections Application Review",
+  "generated_at": "2026-03-29T05:43:03.510189Z",
+  "source_extractions": {
+    "extraction_step_4": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/ExtractionReport_proc_extract_design_brief_info_20260329_054007.json",
+      "extractions": [
+        {
+          "filename": "ARP5495 _DESIGN_BRIEF_v1.0.pdf",
+          "filepath": "/documents/ARP5495-106 - Exp/ARP5495 _DESIGN_BRIEF_v1.0.pdf",
+          "document_type": "Design Brief",
+          "document_category": "Design Brief",
+          "input_text_quality": "high",
+          "document_quality": "text",
+          "page_size": "A4",
+          "requires_chunking": false,
+          "chunk_strategy": "none",
+          "estimated_chunks": 1,
+          "process_step_name": "Extract Design Brief Information",
+          "total_sections": 6,
+          "relevant_sections": 3,
+          "sub_step_extractions": {
+            "sub-step-extract-earthing": {
+              "Earthing Technical Requirements": [
+                {
+                  "description": "Install new Air break switch earthing as per EDI0006 & drawing B348252",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ],
+              "Specific Earthing Standards": [
+                {
+                  "description": "All OH line design as per MDI0031 & MCI0005",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ],
+              "Substation Specific Earthing": []
+            },
+            "sub-step-extract-funding-ancillary-fees": {
+              "ancillary_network_services_fees": [],
+              "total_amount_payable": null
+            },
+            "sub-step-extract-substation": {
+              "substation_works": [
+                {
+                  "description": "Substation commissioning categorized as Customer Funded Non-Contestable Work",
+                  "source_section": "January 2025",
+                  "source_page": 5
+                }
+              ],
+              "technical_ratings_and_references": [],
+              "commissioning_responsibilities": [
+                {
+                  "description": "Substation commissioning is categorized as Customer Funded Non-Contestable Work",
+                  "source_section": "January 2025",
+                  "source_page": 5
+                }
+              ],
+              "clearances_and_standards": [
+                {
+                  "description": "Compliance with MDI0031 requirements for substation works",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ]
+            },
+            "sub-step-extract-funding-determination": {
+              "items": [
+                {
+                  "item_description": "Duct usage charge as required",
+                  "funding_category": "Reimbursements to be paid to Endeavour Energy by Customer",
+                  "responsible_party": "Customer",
+                  "amount_or_formula": null,
+                  "source_section": "January 2025",
+                  "source_page": 5
+                },
+                {
+                  "item_description": "Network switching, substation commissioning, contract inspection and ancillary fees",
+                  "funding_category": "Customer Funded Non-Contestable Works",
+                  "responsible_party": "Customer",
+                  "amount_or_formula": null,
+                  "source_section": "January 2025",
+                  "source_page": 5
+                },
+                {
+                  "item_description": "All other works required",
+                  "funding_category": "Customer Funded Contestable Works",
+                  "responsible_party": "Customer",
+                  "amount_or_formula": null,
+                  "source_section": "January 2025",
+                  "source_page": 5
+                }
+              ]
+            },
+            "sub-step-extract-easements": {
+              "LandInterestGuidelines": {
+                "description": "No specific mention of 'Land Interests' section or checkbox for 'NA' in the provided sections.",
+                "source_section": "Not found",
+                "source_page": "Not found"
+              },
+              "RequiredEasements": {
+                "description": "No explicit details regarding required easements for new HV/LV lines or substation sites found in the provided sections.",
+                "source_section": "Not found",
+                "source_page": "Not found"
+              },
+              "PropertyAccessConditions": {
+                "description": "No specific conditions regarding access to private property or creation of right-of-ways for Endeavour Energy assets found in the provided sections.",
+                "source_section": "Not found",
+                "source_page": "Not found"
+              }
+            },
+            "sub-step-extract-payment-instructions": {
+              "Preferred Payment Method": {
+                "description": "EFT is the primary method",
+                "source_section": "MCGRATHS HILL",
+                "source_page": 1
+              },
+              "Banking Details": {
+                "description": "BSB: 012-003, Account Number: 8376 89858",
+                "source_section": "MCGRATHS HILL",
+                "source_page": 1
+              },
+              "Mandatory Transaction References": {
+                "description": "Unique alphanumeric reference code ARP4983A2 must be quoted",
+                "source_section": "January 2025",
+                "source_page": 3
+              },
+              "Document Remittance and Restriction Requirements": {
+                "description": "Email remittance copies to remittances@endeavourenergy.com.au; credit cards and cheques are not accepted",
+                "source_section": "MCGRATHS HILL",
+                "source_page": 1
+              },
+              "Invoice Policy": {
+                "description": "A formal Tax Invoice will be issued following the receipt of payment",
+                "source_section": "MCGRATHS HILL",
+                "source_page": 1
+              }
+            },
+            "sub-step-extract-sl": {
+              "SL_Works_Section": [
+                {
+                  "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Remove existing OH SL conductor from pole 283062 to pole 426121 and from pole 283062 to pole 283063.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Remove existing SLCP 704 on pole 283062.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Existing OH SL conductor to be redirected from pole 426129 to new pole 1 & pole 2.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Install new SL conductor 25mm^2 2C from new pole 2 to pole 426121 and from new pole 2 to pole 3.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Remove all existing street lighting on poles 283061 & 283063.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Install new streetlighting on new poles 1 & 3 as per LDI0001 requirements.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Install new additional luminaires and light pole as per the lighting assessment.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ],
+              "SL_Material_Funding": [
+                {
+                  "description": "Customer Funded Contestable Works: All other works required.",
+                  "source_section": "January 2025",
+                  "source_page": 5
+                }
+              ],
+              "SL_Standard_Compliance": [
+                {
+                  "description": "Install new streetlighting on new poles 1 & 3 as per LDI0001 requirements.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ]
+            },
+            "sub-step-extract-hv": {
+              "Primary HV Method of Supply": [
+                {
+                  "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Remove existing OH HV conductor from poles 283061 to 283063.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Remove existing OH HV conductor from pole 283062 to pole 426121.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Install new ABS on new pole 3. New Air break switch earthing as per EDI0006 & drawing B348252",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Install new OH HV conductor 19/3.25 AAC Neptune from new poles 1 to 3.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Install new OH HV conductor 7/4.50 AAC from new pole 2 to pole 426121.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ],
+              "Visual HV Markups and Annotations": [],
+              "HV Infrastructure Funding and Materials": [
+                {
+                  "description": "Reimbursements to be paid to Endeavour Energy by Customer: Duct usage charge as required",
+                  "source_section": "January 2025",
+                  "source_page": 5
+                },
+                {
+                  "description": "Customer Funded Non-Contestable Works: Network switching, substation commissioning, contract inspection and ancillary fees.",
+                  "source_section": "January 2025",
+                  "source_page": 5
+                },
+                {
+                  "description": "Customer Funded Contestable Works: All other works required.",
+                  "source_section": "January 2025",
+                  "source_page": 5
+                }
+              ],
+              "Compliance Standards": [
+                {
+                  "description": "All OH line design as per MDI0031 & MCI0005.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ]
+            },
+            "sub-step-extract-lv": {
+              "LV Works": [
+                {
+                  "description": "Relocate existing pole 283061, 283062 & 283063 to the new road alignment as per MDI0031 requirements.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Redirect the existing LV OH conductor to new poles 1 & 2. If the existing LV conductor length is insufficient, terminate existing LV conductor 7/4.50AAV on new pole 1 & install new span of LV bare 7/4.50AAC from new poles 1 to 2.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Remove existing OH LV conductor from pole 283062 to pole 426121.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Install new OH LV conductor 7/4.50AAC from new pole 2 to pole 426121.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ],
+              "Removal and Installation Requirements": [
+                {
+                  "description": "Remove the Overhead (OH) LV cable currently located between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "String a new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ],
+              "Compliance Standards": [
+                {
+                  "description": "Ensure all LV service works comply with the NSW Service and Installation Rules.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                },
+                {
+                  "description": "Confirm the design adheres to Endeavour Energy standards MDI0031 and MCI0005.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ],
+              "Service Connections": [
+                {
+                  "description": "Locate the General section regarding the 'New OH road crossing service connection' intended to maintain existing services.",
+                  "source_section": "January 2025",
+                  "source_page": 3
+                }
+              ]
+            }
+          },
+          "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/Extraction_ARP5495__DESIGN_BRIEF_v1_0_pdf_Extract_Design_Brief_Informati_20260329_054007.json"
+        }
+      ]
+    },
+    "extraction_step_5": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/ExtractionReport_proc_extract_site_plan_info_20260329_054007.json",
+      "extractions": [
+        {
+          "filename": "A534927_ARP5495_RETIC.pdf",
+          "filepath": "",
+          "document_type": "Reticulation Drawing",
+          "document_category": "Site Plan",
+          "input_text_quality": "none",
+          "document_quality": "chunked-image",
+          "page_size": "A3",
+          "requires_chunking": true,
+          "chunk_strategy": "page-split",
+          "estimated_chunks": 1,
+          "actual_chunks_processed": 1,
+          "process_step_name": "Extract Site Plan Information",
+          "total_sections": 1,
+          "relevant_sections": 1,
+          "raw_text_from_chunks": "[full-page, p1, seq1] \u2190OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS\n\u2022 LIVE LINE WORK\n\u2022 DESIGN ALTERNATIVES\n\u2022 LOW VOLTAGE PARALLELS\n\u2022 WORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\n\nDUCT END LOCATION DETAIL\n\nGROUND LEVEL\n\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\n\nPOLE/COLUMN SETOUT\n\nPOLE/COLUMN\n\nEASTING\n\nNORTHING\n2013090\n299066.9420\n6278401.2810\n1011307\n299030.2480\n6278402.9470\n1011308\n299019.4864\n6278421.9126\n1011309\n299005.4736\n6278441.8105\n1011310\n298984.1739\n6278467.6767\n1011311\n299030.2480\n6278402.9470\n\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\n\nWORKS COMPLETED:\n\nSIGNATURE:\n\nDATE:\n\nINSPECTED BY:\n\nSIGNATURE:\n\nDATE:\nASSET RECORDING\nof:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG.2004.\nSIGNATURE:\n\nDATE:\n\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\n\nDESIGN COMPLIANCE AND INDEMNITY\n\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMX: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Instruction\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nIDI: Installation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\n\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards.\nSigned: 7/\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2025\n\nSITE PLAN LEGEND\nEXISTING OVERHEAD MAINS\nEXISTING UNDERGROUND CABLE\nREMOVE EXISTING OVERHEAD\nNEW UNDERGROUND MAINS\nNEW OVERHEAD CONDUCTOR\nNEW LV TRENCH\nEXISTING POLE\nREMOVE POLE\nNEW POLE\nREPLACE POLE\nEXISTING SL LANTERN\nREMOVE SL LANTERN\nNEW SL LANTERN\nNEW SL FLOOD\nEXISTING PILLAR\nNEW COLUMN\nEXISTING COLUMN\nUGOH\nJOINT\nEND SHACKLE\nEXISTING HV USL CLOSED\nEXISTING SL NIGHT WATCH\nEXISTING HV ABS CLOSE - REMOVE\nNEW HV ABS CLOSE\nNEW SLOP CELL\n\nEXISTING SLOP CELL - REMOVE\n\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\n\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\n\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\n\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\n\nN/A\n\nENDEAVOUR ENERGY\nFUNDED & CONSTRUCTED\n\nWorks Required Prior to\nCompletion of Customer-\nContestable Project\n\nN/A\n\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\n\nN/A\n\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\n\nINSPECTION AND ACCESS AUTHORITY (AS PER FEE SENT BY EE's\n- SYSTEM SWITCHING OWNER)\n\nCUSTOMER FUNDED\n\nINCLUDES BUT NOT LIMITED TO:\n- PEGGING OF PROPERTY BOUNDARIES AND\nINFRASTRUCTURE LOCATIONS\n- PROVIDING SITE ACCESS\n- CONFIRM FINISHED GROUND LEVELS\n\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\n\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01\nMONTH: 06\nYEAR: 2025\n\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP.\n\u2022 3 x TIMBER POLE\n\u2022 1 x HV ABS\n\n\n\nAPPROVAL TO CONNECT TO PUBLIC LIGHTING\nReviewers Name:\nDate Approved:\nReviewers:\nSignature:\nThis approval is issued subject to Endeavour Energy's General Terms &\nConditions for connection of Public Lighting Assets and is specifically for\nDrawing No:\nAmendment\n\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN\nTHIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TEL:\n1100 FOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\n\nKEY DOCUMENTS TABLE\n\nTHE CERTIFICATION OF THIS PROJECT IS SUPPORTED BY THE FOLLOWING KEY DOCUMENTS:\n\nDOCUMENT NAME\n\nSUMMARY OF ENVIRONMENTAL REPORT (SER) - FAT15235 PART OF EMS0003\nDESIGN SAFETY REPORT\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FR.65573\n\nNOTES\n1.\n\nTHIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECT ON POLICY.\nENDEAVOUR ENERGY CONTACT PHONE: 131 081.\nDESIGN CERTIFICATION SHALL LAPSE WHERE: -\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION.\n\n2.\n3.\n\nOR\n\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\nATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\nATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEASE CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\nATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\nOPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS;\n\u2022 LIVE LINE WORK;\n\u2022 DESIGN ALTERNATIVES;\n\u2022 LOW VOLTAGE PARALLELS;\n\u2022 WORK PRACTICES/STANDARDS;\nTHE COST IS TO BE FUNDED BY THE\nCUSTOMER/DEVELOPER.\nREIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED IN WRITING WITH\nENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF\nWORKS.\nHAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\nKEY NO:\nENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN.\n\n4.\n\n5.\n6.\n\n7.\n\n8.\n\n9.\n\n10.\n\n11.\n\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE/PILLAR REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- TRENCHING\n- DUCT INSTALLATION\n\nSAFETY IN DESIGN INFORMATION\nSAFETY IN DESIGN ISSUES HAVE BEEN\nASSESSED AS PART OF THIS DESIGN.\nPROCESSES & PRECAUTIONS HAVE\nBEEN TAKEN TO ENSURE HAZARDS AND RISKS\nNORMALLY ASSOCIATED WITH THIS TYPE OF\nDESIGN HAVE BEEN MITIGATED AND/OR\nCONTROLLED.\nRESIDUAL HAZARDS AND RISKS AND/OR\nHAZARDS AND RISKS NOT NORMALLY\nASSOCIATED WITH THIS TYPE OF WORK WHICH\nMAY REQUIRE SUBSEQUENT CONSIDERATION\nAND/OR ACTION ARE DESCRIBED IN: -\nARP5495 - Design Safety Report",
+          "chunk_details": [
+            {
+              "chunk_id": "chunk_0001",
+              "sequence": 1,
+              "page_number": 1,
+              "region": "full-page",
+              "extracted": {
+                "raw_text": "\u2190OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS\n\u2022 LIVE LINE WORK\n\u2022 DESIGN ALTERNATIVES\n\u2022 LOW VOLTAGE PARALLELS\n\u2022 WORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\n\nDUCT END LOCATION DETAIL\n\nGROUND LEVEL\n\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\n\nPOLE/COLUMN SETOUT\n\nPOLE/COLUMN\n\nEASTING\n\nNORTHING\n2013090\n299066.9420\n6278401.2810\n1011307\n299030.2480\n6278402.9470\n1011308\n299019.4864\n6278421.9126\n1011309\n299005.4736\n6278441.8105\n1011310\n298984.1739\n6278467.6767\n1011311\n299030.2480\n6278402.9470\n\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\n\nWORKS COMPLETED:\n\nSIGNATURE:\n\nDATE:\n\nINSPECTED BY:\n\nSIGNATURE:\n\nDATE:\nASSET RECORDING\nof:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG.2004.\nSIGNATURE:\n\nDATE:\n\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\n\nDESIGN COMPLIANCE AND INDEMNITY\n\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nMX: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Instruction\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nIDI: Installation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\n\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards.\nSigned: 7/\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2025\n\nSITE PLAN LEGEND\nEXISTING OVERHEAD MAINS\nEXISTING UNDERGROUND CABLE\nREMOVE EXISTING OVERHEAD\nNEW UNDERGROUND MAINS\nNEW OVERHEAD CONDUCTOR\nNEW LV TRENCH\nEXISTING POLE\nREMOVE POLE\nNEW POLE\nREPLACE POLE\nEXISTING SL LANTERN\nREMOVE SL LANTERN\nNEW SL LANTERN\nNEW SL FLOOD\nEXISTING PILLAR\nNEW COLUMN\nEXISTING COLUMN\nUGOH\nJOINT\nEND SHACKLE\nEXISTING HV USL CLOSED\nEXISTING SL NIGHT WATCH\nEXISTING HV ABS CLOSE - REMOVE\nNEW HV ABS CLOSE\nNEW SLOP CELL\n\nEXISTING SLOP CELL - REMOVE\n\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\n\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\n\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\n\nENDEAVOUR ENERGY\nSUPPLIED MATERIALS\n\nN/A\n\nENDEAVOUR ENERGY\nFUNDED & CONSTRUCTED\n\nWorks Required Prior to\nCompletion of Customer-\nContestable Project\n\nN/A\n\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\n\nN/A\n\nCUSTOMER FUNDED\nNON-CONTESTABLE WORKS\n\nINSPECTION AND ACCESS AUTHORITY (AS PER FEE SENT BY EE's\n- SYSTEM SWITCHING OWNER)\n\nCUSTOMER FUNDED\n\nINCLUDES BUT NOT LIMITED TO:\n- PEGGING OF PROPERTY BOUNDARIES AND\nINFRASTRUCTURE LOCATIONS\n- PROVIDING SITE ACCESS\n- CONFIRM FINISHED GROUND LEVELS\n\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\n\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01\nMONTH: 06\nYEAR: 2025\n\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP.\n\u2022 3 x TIMBER POLE\n\u2022 1 x HV ABS\n\n\n\nAPPROVAL TO CONNECT TO PUBLIC LIGHTING\nReviewers Name:\nDate Approved:\nReviewers:\nSignature:\nThis approval is issued subject to Endeavour Energy's General Terms &\nConditions for connection of Public Lighting Assets and is specifically for\nDrawing No:\nAmendment\n\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN\nTHIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TEL:\n1100 FOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\n\nKEY DOCUMENTS TABLE\n\nTHE CERTIFICATION OF THIS PROJECT IS SUPPORTED BY THE FOLLOWING KEY DOCUMENTS:\n\nDOCUMENT NAME\n\nSUMMARY OF ENVIRONMENTAL REPORT (SER) - FAT15235 PART OF EMS0003\nDESIGN SAFETY REPORT\nEQUIPMENT TO BE RETURNED TO ENDEAVOUR ENERGY - FR.65573\n\nNOTES\n1.\n\nTHIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECT ON POLICY.\nENDEAVOUR ENERGY CONTACT PHONE: 131 081.\nDESIGN CERTIFICATION SHALL LAPSE WHERE: -\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION.\n\n2.\n3.\n\nOR\n\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\nATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\nATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\nWARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEASE CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\nATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\nOPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS;\n\u2022 LIVE LINE WORK;\n\u2022 DESIGN ALTERNATIVES;\n\u2022 LOW VOLTAGE PARALLELS;\n\u2022 WORK PRACTICES/STANDARDS;\nTHE COST IS TO BE FUNDED BY THE\nCUSTOMER/DEVELOPER.\nREIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED IN WRITING WITH\nENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF\nWORKS.\nHAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\nKEY NO:\nENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN.\n\n4.\n\n5.\n6.\n\n7.\n\n8.\n\n9.\n\n10.\n\n11.\n\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE/PILLAR REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- TRENCHING\n- DUCT INSTALLATION\n\nSAFETY IN DESIGN INFORMATION\nSAFETY IN DESIGN ISSUES HAVE BEEN\nASSESSED AS PART OF THIS DESIGN.\nPROCESSES & PRECAUTIONS HAVE\nBEEN TAKEN TO ENSURE HAZARDS AND RISKS\nNORMALLY ASSOCIATED WITH THIS TYPE OF\nDESIGN HAVE BEEN MITIGATED AND/OR\nCONTROLLED.\nRESIDUAL HAZARDS AND RISKS AND/OR\nHAZARDS AND RISKS NOT NORMALLY\nASSOCIATED WITH THIS TYPE OF WORK WHICH\nMAY REQUIRE SUBSEQUENT CONSIDERATION\nAND/OR ACTION ARE DESCRIBED IN: -\nARP5495 - Design Safety Report",
+                "data": {
+                  "sub-step-extract-all-notes": "1. THIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECT ON POLICY.\n2. ENDEAVOUR ENERGY CONTACT PHONE: 131 081.\n3. DESIGN CERTIFICATION SHALL LAPSE WHERE: -\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION.\nOR\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\n4. ATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\n5. ATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\n6. WARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEASE CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\n7. ATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\n8. OPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:-\n\u2022 MOBILE GENERATOR AND SUBSTATIONS;\n\u2022 LIVE LINE WORK;\n\u2022 DESIGN ALTERNATIVES;\n\u2022 LOW VOLTAGE PARALLELS;\n\u2022 WORK PRACTICES/STANDARDS;\nTHE COST IS TO BE FUNDED BY THE\nCUSTOMER/DEVELOPER.\n9. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED IN WRITING WITH\nENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF\nWORKS.\n10. HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\nKEY NO:\n11. ENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN."
+                }
+              }
+            }
+          ],
+          "stitched_boundaries": [],
+          "sub_step_extractions": {
+            "sub-step-extract-all-notes": {
+              "value": "1. THIS DRAWING IS TO BE READ IN CONJUNCTION WITH THE RELEVANT ENDEAVOUR ENERGY NETWORK STANDARDS AND CONNECT ON POLICY. ENDEAVOUR ENERGY CONTACT PHONE: 131 081. DESIGN CERTIFICATION SHALL LAPSE WHERE: - (i) NOTICE OF INTENT HAS NOT BEEN RECEIVED WITHIN SIX (6) MONTHS OF THIS CERTIFICATION. OR (ii) WORKS COMPLETED CONSTRUCTION HAS BEEN INTERRUPTED FOR MORE THAN SIX (6) MONTHS WHERE DESIGN CERTIFICATION HAS LAPSED THE DESIGN MUST BE RESUBMITTED FOR CERTIFICATION BY THE ACCREDITED DESIGNER.\n2. ATTENTION PERMANENT SURVEY MARKS MAY EXIST IN THIS AREA. THESE MARKS ARE TO BE LOCATED BY A SURVEYOR PRIOR TO COMMENCEMENT OF ANY WORKS.\n3. ATTENTION ALL SERVICES SEARCHES MUST BE CHECKED BEFORE CONSTRUCTION.\n4. WARNING LIVE ENDEAVOUR ENERGY CABLES AND OTHER SERVICES IN THIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TELEPHONE 1100 FOR SEARCH TWO (2) DAYS PRIOR TO EXCAVATION.\n5. ATTENTION SERVICE PROVIDER TO NOTIFY ENDEAVOUR ENERGY'S ASSET DATA CUSTOMER DEPARTMENT DAILY WHEN CABLE WORKS IS IN PROGRESS. TELEPHONE: 131 081.\n6. OPERATIONAL LIMITS UNLESS APPROVED OTHERWISE, INTERRUPTION TO ANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:- \u2022 MOBILE GENERATOR AND SUBSTATIONS; \u2022 LIVE LINE WORK; \u2022 DESIGN ALTERNATIVES; \u2022 LOW VOLTAGE PARALLELS; \u2022 WORK PRACTICES/STANDARDS; THE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER.\n7. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED PARTY ON THE LETTER OF INTENT AFTER THE WORKS HAVE BEEN COMPLETED AND THE LETTER OF ACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED AMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS FOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE AMOUNT SHOULD BE RESOLVED IN WRITING WITH ENDEAVOUR ENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n8. HAVE ALL THE EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DESIGN? KEY NO:\n9. ENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001 IS PART OF THE DESIGN.\nWARNING LIVE ENDEAVOUR ENERGY CABLES & OTHER SERVICES IN THIS AREA. PLEASE CONTACT DIAL BEFORE YOU DIG ON TEL: 1100 FOR SEARCHES TWO DAYS PRIOR TO EXCAVATION.\nCAUTION: UNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED: \u2022 MOBILE GENERATOR AND SUBSTATIONS \u2022 LIVE LINE WORK \u2022 DESIGN ALTERNATIVES \u2022 LOW VOLTAGE PARALLELS \u2022 WORK PRACTICES/STANDARDS THE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER.",
+              "sub_step_name": "Extract All Drawing Notes and Annotations",
+              "phase": 1
+            },
+            "sub-step-substation-data": {
+              "value": "Substation Asset Number: NOT FOUND\nTransformer Size: NOT FOUND\nHV Switchgear: NOT FOUND\nVoltage Level: NOT FOUND\nLV Switchgear: NOT FOUND\nCubicle Size: NOT FOUND\nEarthing: NOT FOUND",
+              "sub_step_name": "Substation Notes \u2014 Structured Data Extraction",
+              "phase": 2
+            },
+            "sub-step-field-check": {
+              "value": "NOT FOUND \u2014 MISSING: this compliance note is mandatory",
+              "sub_step_name": "Assets Field Check Compliance",
+              "phase": 2
+            },
+            "sub-step-easement-restriction": {
+              "value": "NOT REQUIRED",
+              "sub_step_name": "Easement \u2014 Restriction on Use of Land (Swimming Pool Setback)",
+              "phase": 2
+            },
+            "sub-step-easement-substation": {
+              "value": "NOT REQUIRED",
+              "sub_step_name": "Easement \u2014 Padmount Substation Easement Creation",
+              "phase": 2
+            }
+          },
+          "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/Extraction_A534927_ARP5495_RETIC_pdf_Extract_Site_Plan_Information_20260329_054007.json"
+        }
+      ]
+    },
+    "extraction_step_6": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/ExtractionReport_proc_extract_site_plan_info_20260329_054007.json",
+      "extractions": [
+        {
+          "filename": "A534927_ARP5495_RETIC.pdf",
+          "filepath": "",
+          "document_type": "Reticulation Drawing",
+          "document_category": "Site Plan",
+          "input_text_quality": "none",
+          "document_quality": "chunked-image",
+          "page_size": "A3",
+          "requires_chunking": true,
+          "chunk_strategy": "page-split",
+          "estimated_chunks": 1,
+          "actual_chunks_processed": 1,
+          "process_step_name": "Extract Drawing Legend",
+          "total_sections": 1,
+          "relevant_sections": 1,
+          "raw_text_from_chunks": "[full-page, p1, seq1] OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nMUST BE AVOIDED\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\n- MOBILE GENERATOR AND SUBSTATIONS\n- LIVE LINE WORK\n- DESIGN ALTERNATIVES\n- LOW VOLTAGE PARALLELS\n- WORK PRACTICE/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER / DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n2013090 299066.9420 6278401.2810\n1011307 299030.2480 6278402.9470\n171147 299019.4864 6278421.9126\n1011309 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED\nSIGNATURE:\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nOF:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2054\nSIGNATURE:\nDATE:\nATTENTION\nSERVICE PROVIDER TO NOTIFY\nENDEAVOUR ENERGY'S NETWORK DATA\nBRANCH DAILY WHEN CABLE/ DUCT\nWORK IS IN PROGRESS. PHONE: 9853\n4161\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP:\nConnection Policy\nEMS: Environmental Management Standard\nMIS: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Installation\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nSDI: Substation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards\nSigned:\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2023\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY CUSTOMER FUNDED\nSUPPLIED MATERIALS NON-CONTESTABLE WORKS\nN/A\nWorks Required Prior to Works Required in\nCompletion of Customer- Association of Customer\nContestable Project Contestable Project\nN/A\nN/A\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\nN/A\nINSPECTION AND ACCESS AUTHORITY\n- SYSTEM SWITCHING\n- PROVISION OF ACCESS AUTHORITY (AS PER FEE SENT BY EE'S\nOWN)\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01 MONTH: 06 YEAR: 2025\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP\n3 x TIMBER POLE\n+ 1 x HV ABS\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- UNDERBORING\n- DUCT INSTALLATION",
+          "chunk_details": [
+            {
+              "chunk_id": "chunk_0001",
+              "sequence": 1,
+              "page_number": 1,
+              "region": "full-page",
+              "extracted": {
+                "raw_text": "OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nMUST BE AVOIDED\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\n- MOBILE GENERATOR AND SUBSTATIONS\n- LIVE LINE WORK\n- DESIGN ALTERNATIVES\n- LOW VOLTAGE PARALLELS\n- WORK PRACTICE/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER / DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n2013090 299066.9420 6278401.2810\n1011307 299030.2480 6278402.9470\n171147 299019.4864 6278421.9126\n1011309 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED\nSIGNATURE:\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nOF:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2054\nSIGNATURE:\nDATE:\nATTENTION\nSERVICE PROVIDER TO NOTIFY\nENDEAVOUR ENERGY'S NETWORK DATA\nBRANCH DAILY WHEN CABLE/ DUCT\nWORK IS IN PROGRESS. PHONE: 9853\n4161\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP:\nConnection Policy\nEMS: Environmental Management Standard\nMIS: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Installation\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nSDI: Substation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards\nSigned:\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2023\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY CUSTOMER FUNDED\nSUPPLIED MATERIALS NON-CONTESTABLE WORKS\nN/A\nWorks Required Prior to Works Required in\nCompletion of Customer- Association of Customer\nContestable Project Contestable Project\nN/A\nN/A\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\nN/A\nINSPECTION AND ACCESS AUTHORITY\n- SYSTEM SWITCHING\n- PROVISION OF ACCESS AUTHORITY (AS PER FEE SENT BY EE'S\nOWN)\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01 MONTH: 06 YEAR: 2025\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP\n3 x TIMBER POLE\n+ 1 x HV ABS\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- UNDERBORING\n- DUCT INSTALLATION",
+                "data": {
+                  "sub-step-extract-legend": []
+                }
+              }
+            }
+          ],
+          "stitched_boundaries": [],
+          "sub_step_extractions": {
+            "sub-step-extract-legend": {
+              "value": [],
+              "sub_step_name": "Extract Legend Entries from All Pages",
+              "phase": 1
+            }
+          },
+          "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/Extraction_A534927_ARP5495_RETIC_pdf_Extract_Drawing_Legend_20260329_054007.json"
+        }
+      ]
+    },
+    "extraction_step_7": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/ExtractionReport_proc_extract_asset_spreadsheet_20260329_054113.json",
+      "extractions": [
+        {
+          "filename": "ARP5495_TAL_202503141.XLSM",
+          "filepath": "/documents/ARP5495-106 - Exp/ARP5495_TAL_202503141.XLSM",
+          "document_type": "TAL",
+          "document_category": "TAL",
+          "document_quality": "spreadsheet",
+          "sheets_processed": [
+            "STREETLIGHT"
+          ],
+          "sheets_skipped": [
+            "PROJECT"
+          ],
+          "step_extraction": {
+            "asset_records": [
+              {
+                "asset_id": "POLE01011307",
+                "serial_number": "SLGT00316949",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Bracket",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "61W LED 3K ROADLED MIDI STD Vi",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "POLE01011308",
+                "serial_number": "SLGT00316950",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Bracket",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "61W LED 3K ROADLED MIDI STD Vi",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "POLE01011309",
+                "serial_number": "SLGT00316951",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Bracket",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "61W LED 3K ROADLED MIDI STD Vi",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "POLE01011310",
+                "serial_number": "SLGT00316952",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Bracket",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "61W LED 3K ROADLED MIDI STD Vi",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "POLE01011311",
+                "serial_number": "SLGT00316953",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Bracket",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "Flagged for Deletion",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "POLE01011312",
+                "serial_number": "SLGT00316954",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Bracket",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "Flagged for Deletion",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "CLMN02013090",
+                "serial_number": "SLGT00316955",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "120W LED 4K ROADLED MIDI Aeros",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "CLMN02013090",
+                "serial_number": "SLGT00316956",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Windsor Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "175W LED SLED Maximus Pedstran",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "CLMN02002188",
+                "serial_number": "SLGT00302884",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Hoxton Park FieldServiceCentre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "165W LED RoadLED Midi",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "CLMN02002189",
+                "serial_number": "SLGT00302885",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Hoxton Park FieldServiceCentre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "165W LED RoadLED Midi",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "CLMN02002190",
+                "serial_number": "SLGT00302886",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Hoxton Park FieldServiceCentre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "165W LED RoadLED Midi",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "CLMN02002191",
+                "serial_number": "SLGT00302887",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Hoxton Park FieldServiceCentre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "275W LED ROADLED S-S",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "POLE01000886",
+                "serial_number": "SLGT00302888",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Hoxton Park FieldServiceCentre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "275W LED ROADLED S-S",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": "CLMN02002193",
+                "serial_number": "SLGT00302889",
+                "asset_type": "Street Lighting",
+                "description": "Gen, Streetlight Outreach",
+                "location": "Hoxton Park FieldServiceCentre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": "275W LED ROADLED S-S",
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": null,
+                "serial_number": null,
+                "asset_type": "EQ02",
+                "description": "Proposed Removed",
+                "location": null,
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "PRO_REMV_STS",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": null,
+                "serial_number": null,
+                "asset_type": "EQ02",
+                "description": "Proposed Removed Equipment Number",
+                "location": null,
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "PRO_REMV_EQ_NO",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": null,
+                "serial_number": null,
+                "asset_type": null,
+                "description": null,
+                "location": null,
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              },
+              {
+                "asset_id": null,
+                "serial_number": null,
+                "asset_type": null,
+                "description": "Comments",
+                "location": null,
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "STREETLIGHT",
+                "source_document": "ARP5495_TAL_202503141.XLSM"
+              }
+            ],
+            "total_assets": 18,
+            "sheets_processed": [
+              "STREETLIGHT"
+            ]
+          },
+          "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/Extraction_ARP5495_TAL_202503141_XLSM_Extract_Asset_Spreadsheet_Data_20260329_054113.json"
+        }
+      ],
+      "asset_extract_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/AssetExtract_20260329_054113.json",
+      "asset_extract": {
+        "total_assets": 18,
+        "source_documents": [
+          "ARP5495_TAL_202503141.XLSM"
+        ],
+        "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/AssetExtract_20260329_054113.json"
+      }
+    },
+    "extraction_step_8": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/AssetSymbolMatches_20260329T054206.json",
+      "extractions": [
+        {
+          "filename": "AssetSymbolMatches_20260329T054206.json",
+          "document_type": "Asset Symbol Matches",
+          "document_category": "TAL",
+          "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+          "total_sections": 18,
+          "relevant_sections": 7,
+          "sub_step_extractions": {
+            "sub-step-asset-symbol-match": {
+              "updated_assets": [
+                {
+                  "asset_id": "POLE01011307",
+                  "serial_number": "SLGT00316949",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011307",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "found"
+                },
+                {
+                  "asset_id": "POLE01011308",
+                  "serial_number": "SLGT00316950",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011308",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "found"
+                },
+                {
+                  "asset_id": "POLE01011309",
+                  "serial_number": "SLGT00316951",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011309",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "found"
+                },
+                {
+                  "asset_id": "POLE01011310",
+                  "serial_number": "SLGT00316952",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011310",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "found"
+                },
+                {
+                  "asset_id": "POLE01011311",
+                  "serial_number": "SLGT00316953",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Flagged for Deletion",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011311",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "found"
+                },
+                {
+                  "asset_id": "POLE01011312",
+                  "serial_number": "SLGT00316954",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Flagged for Deletion",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011312",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": "CLMN02013090",
+                  "serial_number": "SLGT00316955",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "120W LED 4K ROADLED MIDI Aeros",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2013090",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "found"
+                },
+                {
+                  "asset_id": "CLMN02013090",
+                  "serial_number": "SLGT00316956",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "175W LED SLED Maximus Pedstran",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2013090",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "found"
+                },
+                {
+                  "asset_id": "CLMN02002188",
+                  "serial_number": "SLGT00302884",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "165W LED RoadLED Midi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002188",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": "CLMN02002189",
+                  "serial_number": "SLGT00302885",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "165W LED RoadLED Midi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002189",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": "CLMN02002190",
+                  "serial_number": "SLGT00302886",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "165W LED RoadLED Midi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002190",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": "CLMN02002191",
+                  "serial_number": "SLGT00302887",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "275W LED ROADLED S-S",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002191",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": "POLE01000886",
+                  "serial_number": "SLGT00302888",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "275W LED ROADLED S-S",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1000886",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": "CLMN02002193",
+                  "serial_number": "SLGT00302889",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "275W LED ROADLED S-S",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002193",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": "EQ02",
+                  "description": "Proposed Removed",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "PRO_REMV_STS",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": "EQ02",
+                  "description": "Proposed Removed Equipment Number",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "PRO_REMV_EQ_NO",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": null,
+                  "description": null,
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": null,
+                  "description": "Comments",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found"
+                }
+              ],
+              "match_summary": {
+                "total": 18,
+                "found": 7,
+                "not_found": 11
+              }
+            }
+          }
+        }
+      ]
+    },
+    "extraction_step_9": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/AssetLegendEnrichment_20260329T054253.json",
+      "extractions": [
+        {
+          "filename": "AssetLegendEnrichment_20260329T054253.json",
+          "document_type": "Asset-Legend Enrichment",
+          "document_category": "Site Plan",
+          "process_step_name": "Enrich Assets with Legend Data",
+          "total_sections": 18,
+          "relevant_sections": 18,
+          "sub_step_extractions": {
+            "sub-step-asset-legend-enrichment": {
+              "value": [
+                {
+                  "asset_id": "POLE01011307",
+                  "serial_number": "SLGT00316949",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011307",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "high"
+                },
+                {
+                  "asset_id": "POLE01011308",
+                  "serial_number": "SLGT00316950",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011308",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "high"
+                },
+                {
+                  "asset_id": "POLE01011309",
+                  "serial_number": "SLGT00316951",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011309",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "high"
+                },
+                {
+                  "asset_id": "POLE01011310",
+                  "serial_number": "SLGT00316952",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "61W LED 3K ROADLED MIDI STD Vi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011310",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "high"
+                },
+                {
+                  "asset_id": "POLE01011311",
+                  "serial_number": "SLGT00316953",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Flagged for Deletion",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011311",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "high"
+                },
+                {
+                  "asset_id": "POLE01011312",
+                  "serial_number": "SLGT00316954",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Bracket",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Flagged for Deletion",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1011312",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": "CLMN02013090",
+                  "serial_number": "SLGT00316955",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "120W LED 4K ROADLED MIDI Aeros",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2013090",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "high"
+                },
+                {
+                  "asset_id": "CLMN02013090",
+                  "serial_number": "SLGT00316956",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Windsor Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "175W LED SLED Maximus Pedstran",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2013090",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "high"
+                },
+                {
+                  "asset_id": "CLMN02002188",
+                  "serial_number": "SLGT00302884",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "165W LED RoadLED Midi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002188",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": "CLMN02002189",
+                  "serial_number": "SLGT00302885",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "165W LED RoadLED Midi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002189",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": "CLMN02002190",
+                  "serial_number": "SLGT00302886",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "165W LED RoadLED Midi",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002190",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": "CLMN02002191",
+                  "serial_number": "SLGT00302887",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "275W LED ROADLED S-S",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002191",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": "POLE01000886",
+                  "serial_number": "SLGT00302888",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "275W LED ROADLED S-S",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "1000886",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": "CLMN02002193",
+                  "serial_number": "SLGT00302889",
+                  "asset_type": "Street Lighting",
+                  "description": "Gen, Streetlight Outreach",
+                  "location": "Hoxton Park FieldServiceCentre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": "275W LED ROADLED S-S",
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "2002193",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": "EQ02",
+                  "description": "Proposed Removed",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "PRO_REMV_STS",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": "EQ02",
+                  "description": "Proposed Removed Equipment Number",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "PRO_REMV_EQ_NO",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": null,
+                  "description": null,
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                },
+                {
+                  "asset_id": null,
+                  "serial_number": null,
+                  "asset_type": null,
+                  "description": "Comments",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "STREETLIGHT",
+                  "source_document": "ARP5495_TAL_202503141.XLSM",
+                  "bare_id": "",
+                  "symbol_description": null,
+                  "label": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none"
+                }
+              ],
+              "match_summary": {
+                "total": 18,
+                "found_on_drawing": 8,
+                "inferred": 0,
+                "not_found": 10
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_documents_processed": 6,
+    "extraction_keys": [
+      "extraction_step_4",
+      "extraction_step_5",
+      "extraction_step_6",
+      "extraction_step_7",
+      "extraction_step_8",
+      "extraction_step_9"
+    ]
+  }
+}

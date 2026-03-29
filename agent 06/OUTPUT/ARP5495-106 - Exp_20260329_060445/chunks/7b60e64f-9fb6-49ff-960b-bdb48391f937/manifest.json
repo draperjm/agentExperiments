@@ -1,0 +1,26 @@
+{
+  "job_id": "7b60e64f-9fb6-49ff-960b-bdb48391f937",
+  "source_file": "A534927_ARP5495_RETIC.pdf",
+  "chunk_strategy": "page-split",
+  "page_size": "A3",
+  "dpi": 300,
+  "total_pages": 1,
+  "total_chunks": 1,
+  "generated_at": "2026-03-29T06:05:49.041407+00:00",
+  "output_directory": "/app/OUTPUT/ARP5495-106 - Exp_20260329_060445/chunks/7b60e64f-9fb6-49ff-960b-bdb48391f937",
+  "chunks": [
+    {
+      "chunk_id": "chunk_0001",
+      "sequence": 1,
+      "page_number": 1,
+      "region": "full-page",
+      "grid": "1x1",
+      "col": 1,
+      "row": 1,
+      "filename": "chunk_0001.png",
+      "filepath": "/app/OUTPUT/ARP5495-106 - Exp_20260329_060445/chunks/7b60e64f-9fb6-49ff-960b-bdb48391f937/chunk_0001.png",
+      "width_px": 4961,
+      "height_px": 3509
+    }
+  ]
+}

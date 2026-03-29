@@ -1,0 +1,39 @@
+{
+  "filename": "A534927_ARP5495_RETIC.pdf",
+  "filepath": "",
+  "document_type": "Reticulation Drawing",
+  "document_category": "Site Plan",
+  "input_text_quality": "none",
+  "document_quality": "chunked-image",
+  "page_size": "A3",
+  "requires_chunking": true,
+  "chunk_strategy": "page-split",
+  "estimated_chunks": 1,
+  "actual_chunks_processed": 1,
+  "process_step_name": "Extract Drawing Legend",
+  "total_sections": 1,
+  "relevant_sections": 1,
+  "raw_text_from_chunks": "[full-page, p1, seq1] OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nMUST BE AVOIDED\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\n- MOBILE GENERATOR AND SUBSTATIONS\n- LIVE LINE WORK\n- DESIGN ALTERNATIVES\n- LOW VOLTAGE PARALLELS\n- WORK PRACTICE/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER / DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n2013090 299066.9420 6278401.2810\n1011307 299030.2480 6278402.9470\n171147 299019.4864 6278421.9126\n1011309 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED\nSIGNATURE:\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nOF:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2054\nSIGNATURE:\nDATE:\nATTENTION\nSERVICE PROVIDER TO NOTIFY\nENDEAVOUR ENERGY'S NETWORK DATA\nBRANCH DAILY WHEN CABLE/ DUCT\nWORK IS IN PROGRESS. PHONE: 9853\n4161\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP:\nConnection Policy\nEMS: Environmental Management Standard\nMIS: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Installation\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nSDI: Substation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards\nSigned:\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2023\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY CUSTOMER FUNDED\nSUPPLIED MATERIALS NON-CONTESTABLE WORKS\nN/A\nWorks Required Prior to Works Required in\nCompletion of Customer- Association of Customer\nContestable Project Contestable Project\nN/A\nN/A\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\nN/A\nINSPECTION AND ACCESS AUTHORITY\n- SYSTEM SWITCHING\n- PROVISION OF ACCESS AUTHORITY (AS PER FEE SENT BY EE'S\nOWN)\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01 MONTH: 06 YEAR: 2025\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP\n3 x TIMBER POLE\n+ 1 x HV ABS\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- UNDERBORING\n- DUCT INSTALLATION",
+  "chunk_details": [
+    {
+      "chunk_id": "chunk_0001",
+      "sequence": 1,
+      "page_number": 1,
+      "region": "full-page",
+      "extracted": {
+        "raw_text": "OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nMUST BE AVOIDED\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\n- MOBILE GENERATOR AND SUBSTATIONS\n- LIVE LINE WORK\n- DESIGN ALTERNATIVES\n- LOW VOLTAGE PARALLELS\n- WORK PRACTICE/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER / DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n2013090 299066.9420 6278401.2810\n1011307 299030.2480 6278402.9470\n171147 299019.4864 6278421.9126\n1011309 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED\nSIGNATURE:\nDATE:\nINSPECTED BY:\nSIGNATURE:\nDATE:\nASSET RECORDING\nOF:\nCONTACT No.:\nI HEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2054\nSIGNATURE:\nDATE:\nATTENTION\nSERVICE PROVIDER TO NOTIFY\nENDEAVOUR ENERGY'S NETWORK DATA\nBRANCH DAILY WHEN CABLE/ DUCT\nWORK IS IN PROGRESS. PHONE: 9853\n4161\nATTENTION\nALL SERVICES SEARCHES MUST BE\nCHECKED BEFORE CONSTRUCTION\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP:\nConnection Policy\nEMS: Environmental Management Standard\nMIS: Mains Construction Instruction\nMD: Mains Design Instruction\nPEI: Protection Equipment Installation\nPD: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nSDI: Substation Design Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards\nSigned:\nNAME: HENRY LIEN\nService Provider Number: 2367\nDate: 07/03/2023\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nDate Approved:\nExaminer's Signature:\nPrint Name:\nThis Certification is issued subject to\nEndeavour Energy's\nStandard Certification Terms\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nASP LEVEL 1 ELECTRICAL WORKS\nENDEAVOUR ENERGY CUSTOMER FUNDED\nSUPPLIED MATERIALS NON-CONTESTABLE WORKS\nN/A\nWorks Required Prior to Works Required in\nCompletion of Customer- Association of Customer\nContestable Project Contestable Project\nN/A\nN/A\nENDEAVOUR ENERGY FUNDED\n& ASP L1 CONSTRUCTED\n- REIMBURSEMENT (exc GST)\nN/A\nINSPECTION AND ACCESS AUTHORITY\n- SYSTEM SWITCHING\n- PROVISION OF ACCESS AUTHORITY (AS PER FEE SENT BY EE'S\nOWN)\nEXISTING DUCT\nUSAGE CHARGES (exc GST)\n$170\nCO-ORDINATION\nSUPPLY REQUIRED DATE\n(TO BE CONFIRMED BY THE CUSTOMER)\nDAY: 01 MONTH: 06 YEAR: 2025\nASSET TO BE RETURNED TO\nNEAREST ENDEAVOUR ENERGY\nDEPOT BY L1 ASP\n3 x TIMBER POLE\n+ 1 x HV ABS\nCUSTOMER FUNDED\nCONTESTABLE WORKS\nALL OTHER WORKS AND MATERIALS INCLUDING\nBUT NOT LIMITED TO\n- POLE REMOVAL AND INSTALLATION\n- STREET LIGHTING ASSETS (REMOVAL AND INSTALLATION)\n- OVERHEAD INSTALLATION\n- UNDERBORING\n- DUCT INSTALLATION",
+        "data": {
+          "sub-step-extract-legend": []
+        }
+      }
+    }
+  ],
+  "stitched_boundaries": [],
+  "sub_step_extractions": {
+    "sub-step-extract-legend": {
+      "value": [],
+      "sub_step_name": "Extract Legend Entries from All Pages",
+      "phase": 1
+    }
+  }
+}

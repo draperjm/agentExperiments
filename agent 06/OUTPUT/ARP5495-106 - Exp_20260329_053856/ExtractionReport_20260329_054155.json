@@ -1,0 +1,83 @@
+{
+  "process_step": {
+    "step_id": "match-assets-to-drawing-symbols",
+    "step_name": "Match Assets to Site Plan Drawing Symbols",
+    "summary": null,
+    "details": "Extract ALL numeric labels visible in each drawing chunk. Asset IDs appear as standalone multi-digit numbers adjacent to drawing symbols. Legend entries for symbol matching: []",
+    "expected_output": {
+      "description": "All numeric labels visible in this chunk with adjacent symbol info",
+      "fields": {
+        "found_ids": "array of all numeric label strings visible in this chunk"
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_id": "sub-step-find-asset-ids",
+        "sub_step_name": "Find Asset IDs in Drawing Chunk",
+        "details": "Scan this drawing chunk image and extract EVERY numeric label you can see. Asset IDs are standalone multi-digit numbers (4-10 digits) positioned adjacent to drawing symbols (poles, lanterns, pillars, cables, etc.) on the reticulation site plan. Do NOT filter by any expected list \u2014 report every number you can read.",
+        "output_format": "[\"302876\", \"2002180\", \"402679\"] \u2014 plain JSON array of numeric ID strings, no wrapper object"
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/ARP5495-106 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "A534927_ARP5495_RETIC.pdf",
+      "filepath": "",
+      "document_type": "Reticulation Drawing",
+      "document_category": "Site Plan",
+      "input_text_quality": "high",
+      "document_quality": "chunked-image",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "page-split",
+      "estimated_chunks": 1,
+      "actual_chunks_processed": 1,
+      "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+      "total_sections": 1,
+      "relevant_sections": 1,
+      "raw_text_from_chunks": "[full-page, p1, seq1] OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\nMOBILE GENERATORS OR SUBSTATIONS\nLIVE LINE WORK\nDESIGN ALTERNATIVES\nLOW VOLTAGE PARALLELS\nWORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n2013090 299066.9420 6278401.2810\n1011307 299030.2480 6278402.9470\n1011308 299019.4864 6278421.9126\n1011309 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE: DATE:\nINSPECTED BY:\nSIGNATURE: DATE:\nASSET RECORDING\nof:\nCONTACT No:\nHEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2004\nSIGNATURE:\nDATE:\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nIMS: Mains Construction Instruction\nMD: Mains Design Instruction\nPES: Protection Design Instruction\nPDI: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nPMI: Public Lighting Maintenance Instruction\nLDI 0001: Public Lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards.\nSigned: \nNAME: HENRY LIEN\nService Provider Number: 2387 Date: 07/03/2023",
+      "chunk_details": [
+        {
+          "chunk_id": "chunk_0001",
+          "sequence": 1,
+          "page_number": 1,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "OPERATIONAL LIMITATIONS\nUNLESS APPROVED OTHERWISE, INTERRUPTIONS TO ANY CUSTOMERS\nSUPPLY MUST BE AVOIDED.\nTHE FOLLOWING ALTERNATIVES SHOULD BE CONSIDERED:\nMOBILE GENERATORS OR SUBSTATIONS\nLIVE LINE WORK\nDESIGN ALTERNATIVES\nLOW VOLTAGE PARALLELS\nWORK PRACTICES/STANDARDS\nTHE COST IS TO BE FUNDED BY THE CUSTOMER/DEVELOPER\nDUCT END LOCATION DETAIL\nGROUND LEVEL\nDEVELOPER TO ATTACH\nPVC MARKER TAPE\nTO DUCT END\nPOLE/COLUMN SETOUT\nPOLE/COLUMN EASTING NORTHING\n2013090 299066.9420 6278401.2810\n1011307 299030.2480 6278402.9470\n1011308 299019.4864 6278421.9126\n1011309 299005.4736 6278441.8105\n1011310 298984.1739 6278467.6767\n1011311 299030.2480 6278402.9470\nWORKS COMPLETED/FIELD BOOK\nCONSTRUCTED BY:\nWORKS COMPLETED:\nSIGNATURE: DATE:\nINSPECTED BY:\nSIGNATURE: DATE:\nASSET RECORDING\nof:\nCONTACT No:\nHEREBY CERTIFY THAT ASSETS MARKED AS BUILT ON THIS DRAWING HAVE BEEN\nRECORDED AS PER ENDEAVOUR ENERGY STANDARD SAG 2004\nSIGNATURE:\nDATE:\nHV TRENCH LENGTH: NIL\nLV TRENCH LENGTH: 98.7m\nTOTAL TRENCH LENGTH: 98.7m\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime and as listed on the Endeavour Energy Accredited Service Provider's\nInternet site. These standards include, but are not limited to:\nCP: Connection Policy\nEMS: Environmental Management Standard\nIMS: Mains Construction Instruction\nMD: Mains Design Instruction\nPES: Protection Design Instruction\nPDI: Protection Design Instruction\nSAD 0001: Design Drawing Standard\nMMI: Mains Maintenance Instruction\nPMI: Public Lighting Maintenance Instruction\nLDI 0001: Public Lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS/NZS 7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards\nAECOM AUSTRALIA PTY LTD indemnifies Endeavour Energy\nfor any loss or damage resulting from non-compliance\nof the design with the above standards.\nSigned: \nNAME: HENRY LIEN\nService Provider Number: 2387 Date: 07/03/2023",
+            "data": {
+              "sub-step-find-asset-ids": [
+                "2013090",
+                "1011307",
+                "1011308",
+                "1011309",
+                "1011310",
+                "1011311"
+              ]
+            }
+          }
+        }
+      ],
+      "stitched_boundaries": [],
+      "sub_step_extractions": {
+        "sub-step-find-asset-ids": {
+          "value": [
+            "2013090",
+            "1011307",
+            "1011308",
+            "1011309",
+            "1011310",
+            "1011311"
+          ],
+          "sub_step_name": "Find Asset IDs in Drawing Chunk",
+          "phase": 1
+        }
+      },
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/Extraction_A534927_ARP5495_RETIC_pdf_match_assets_to_drawing_symbol_20260329_054155.json"
+    }
+  ],
+  "timestamp": "20260329_054155",
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_053856/ExtractionReport_20260329_054155.json"
+}

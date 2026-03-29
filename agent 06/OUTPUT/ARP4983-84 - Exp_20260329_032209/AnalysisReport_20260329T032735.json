@@ -1,0 +1,432 @@
+{
+  "report_type": "Customer Connections Review Analysis Report",
+  "generated_at": "2026-03-29T03:27:35.325414Z",
+  "consolidated_report_path": "/app/OUTPUT/ARP4983-84 - Exp_20260329_032209/ConsolidatedReport_20260329T032706.json",
+  "data_sources": {
+    "funding_items": "4 items \u2014 Design Brief sub-step-extract-funding-determination (step 4)",
+    "supply_requirements": "10 items \u2014 Design Brief LV/HV/SL sub-steps (step 4)",
+    "legend_symbols": "28 symbols \u2014 Drawing legend extraction (step 6)",
+    "asset_register": "18 assets \u2014 Enriched TAL spreadsheet (step 9, Python-built)"
+  },
+  "analysis_report": {
+    "funding_details": {
+      "funding_details": {
+        "total_capital_contribution": null,
+        "contestable_works": [
+          {
+            "item": "All other works required.",
+            "description": "All other works required.",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "non_contestable_works": [
+          {
+            "item": "Network switching, substation commissioning, contract inspection",
+            "description": "Network switching, substation commissioning, contract inspection",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "ancillary_costs": [],
+        "other_funding_items": [
+          {
+            "item": "Spare HV duct as per Fact Sheet 11",
+            "description": "Spare HV duct as per Fact Sheet 11",
+            "amount": null,
+            "responsible_party": "Endeavour Energy"
+          },
+          {
+            "item": "Duct usage charge as required",
+            "description": "Duct usage charge as required",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "payment_instructions": {
+          "method": null,
+          "bsb": null,
+          "account": null,
+          "reference": null
+        },
+        "notes": [
+          "Spare HV duct as per Fact Sheet 11 is categorised as a capital contribution and is the responsibility of Endeavour Energy.",
+          "Duct usage charge as required is categorised as a reimbursement to be paid to Endeavour Energy by the Customer.",
+          "No amount or formula values were provided for any funding line items.",
+          "No payment instructions were available in the provided data.",
+          "No items were identified as ancillary costs in the funding_items data."
+        ]
+      }
+    },
+    "method_of_supply_comparison": {
+      "method_of_supply_comparison": {
+        "design_brief_requirements": [],
+        "site_plan_scope_found": [],
+        "missing_from_site_plan": [],
+        "summary": "No supply_requirements data was provided in the input. The DATA records supplied contain only funding_items fields (item_description, funding_category, responsible_party, amount_or_formula, source_section, source_page) and do not include any supply_requirements entries from the Design Brief LV, HV or SL sections. Therefore, no comparison against reference_data legend symbols could be performed. Please supply the supply_requirements dataset to enable this analysis."
+      }
+    },
+    "funding_arrangement_comparison": {
+      "funding_arrangement_comparison": {
+        "design_brief_funded_works": [
+          "Spare HV duct as per Fact Sheet 11",
+          "Duct usage charge as required",
+          "Network switching, substation commissioning, contract inspection",
+          "All other works required."
+        ],
+        "drawing_scope_found": [
+          "Spare HV duct as per Fact Sheet 11: NEW HV TRENCH",
+          "Duct usage charge as required: EXISTING DUCTS",
+          "Network switching, substation commissioning, contract inspection: PADMOUNT SUBSTATION"
+        ],
+        "missing_from_drawing": [
+          {
+            "item": "All other works required.",
+            "design_brief_reference": "Determination of Funding, Page 4",
+            "note": "The description 'All other works required.' is a catch-all funding item with no specific or identifiable corresponding symbol or label in the drawing legend. No single legend entry can be matched to this broadly scoped item."
+          }
+        ],
+        "summary": "Of the 4 funding items extracted from the Design Brief Determination of Funding section, 3 have plausible corresponding legend symbols in the drawing: 'Spare HV duct as per Fact Sheet 11' maps to the NEW HV TRENCH symbol; 'Duct usage charge as required' maps to the EXISTING DUCTS symbol; and 'Network switching, substation commissioning, contract inspection' maps to the PADMOUNT SUBSTATION symbol (the closest representation of substation-related works in the legend). The fourth item, 'All other works required.', is a broad catch-all description and cannot be matched to any specific legend entry in the drawing, and is therefore flagged as missing from the drawing scope. Note that none of the funding items carry an amount or formula, limiting quantitative comparison."
+      }
+    },
+    "asset_register": {
+      "asset_register": [
+        {
+          "asset_id": "CLMN02002180",
+          "tal_asset_id": "CLMN02002180",
+          "bare_id": "2002180",
+          "serial_number": "1005338257",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002181",
+          "tal_asset_id": "CLMN02002181",
+          "bare_id": "2002181",
+          "serial_number": "1005338259",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002182",
+          "tal_asset_id": "CLMN02002182",
+          "bare_id": "2002182",
+          "serial_number": "1005338261",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002183",
+          "tal_asset_id": "CLMN02002183",
+          "bare_id": "2002183",
+          "serial_number": "1005338263",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002184",
+          "tal_asset_id": "CLMN02002184",
+          "bare_id": "2002184",
+          "serial_number": "1005338265",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002185",
+          "tal_asset_id": "CLMN02002185",
+          "bare_id": "2002185",
+          "serial_number": "1005338267",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002186",
+          "tal_asset_id": "CLMN02002186",
+          "bare_id": "2002186",
+          "serial_number": "1005338269",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002187",
+          "tal_asset_id": "CLMN02002187",
+          "bare_id": "2002187",
+          "serial_number": "1005338271",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002188",
+          "tal_asset_id": "CLMN02002188",
+          "bare_id": "2002188",
+          "serial_number": "1005338273",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002189",
+          "tal_asset_id": "CLMN02002189",
+          "bare_id": "2002189",
+          "serial_number": "1005338275",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "CLMN02002190",
+          "tal_asset_id": "CLMN02002190",
+          "bare_id": "2002190",
+          "serial_number": "1005338277",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "CLMN02002191",
+          "tal_asset_id": "CLMN02002191",
+          "bare_id": "2002191",
+          "serial_number": "1005338279",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "POLE01000886",
+          "tal_asset_id": "POLE01000886",
+          "bare_id": "1000886",
+          "serial_number": "1005338281",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "CLMN02002193",
+          "tal_asset_id": "CLMN02002193",
+          "bare_id": "2002193",
+          "serial_number": "1005338283",
+          "asset_type": "Street Lighting",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": null,
+          "tal_asset_id": null,
+          "bare_id": "",
+          "serial_number": null,
+          "asset_type": "EQ02",
+          "description": "Proposed Removed",
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "REMOVE POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle with large X through it",
+          "action_status": "remove",
+          "match_confidence": "low",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": null,
+          "tal_asset_id": null,
+          "bare_id": "",
+          "serial_number": null,
+          "asset_type": "EQ02",
+          "description": "Proposed Removed Equipment Number",
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": "REMOVE POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle with large X through it",
+          "action_status": "remove",
+          "match_confidence": "low",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": null,
+          "tal_asset_id": null,
+          "bare_id": "",
+          "serial_number": null,
+          "asset_type": null,
+          "description": null,
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": null,
+          "tal_asset_id": null,
+          "bare_id": "",
+          "serial_number": null,
+          "asset_type": null,
+          "description": "Comments",
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP4983_TAL_20241112.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        }
+      ],
+      "register_summary": {
+        "total": 18,
+        "new": 12,
+        "remove": 2,
+        "replace": 0,
+        "existing": 0,
+        "unknown": 4,
+        "found_on_diagram": 12,
+        "not_found": 6
+      },
+      "_source": "enriched_assets_step_9_python_built"
+    }
+  },
+  "summary": {
+    "total_assets": 18,
+    "found_on_diagram": 12,
+    "not_found": 6,
+    "supply_scope_gaps": 0,
+    "drawing_scope_gaps": 1
+  },
+  "_content_review": {
+    "reviewed_at": "2026-03-29T03:27:35.325663Z",
+    "issues": [],
+    "section_status": {
+      "funding": "ok",
+      "supply_comparison": "ok",
+      "funding_comparison": "ok",
+      "asset_register": "ok"
+    },
+    "style_complete": true
+  }
+}

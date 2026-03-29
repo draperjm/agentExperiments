@@ -1,0 +1,82 @@
+{
+  "process_step": {
+    "step_id": "match-assets-to-drawing-symbols",
+    "step_name": "Match Assets to Site Plan Drawing Symbols",
+    "summary": null,
+    "details": "Extract ALL numeric labels visible in each drawing chunk. Asset IDs appear as standalone multi-digit numbers adjacent to drawing symbols. Legend entries for symbol matching: []",
+    "expected_output": {
+      "description": "All numeric labels visible in this chunk with adjacent symbol info",
+      "fields": {
+        "found_ids": "array of all numeric label strings visible in this chunk"
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_id": "sub-step-find-asset-ids",
+        "sub_step_name": "Find Asset IDs in Drawing Chunk",
+        "details": "Scan this drawing chunk image and extract EVERY numeric label you can see. Asset IDs are standalone multi-digit numbers (4-10 digits) positioned adjacent to drawing symbols (poles, lanterns, pillars, cables, etc.) on the reticulation site plan. Do NOT filter by any expected list \u2014 report every number you can read.",
+        "output_format": "[\"302876\", \"2002180\", \"402679\"] \u2014 plain JSON array of numeric ID strings, no wrapper object"
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/ARP5495-106 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "A534927_ARP5495_RETIC.pdf",
+      "filepath": "",
+      "document_type": "Reticulation Drawing",
+      "document_category": "Site Plan",
+      "input_text_quality": "high",
+      "document_quality": "chunked-image",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "page-split",
+      "estimated_chunks": 1,
+      "actual_chunks_processed": 1,
+      "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+      "total_sections": 1,
+      "relevant_sections": 1,
+      "raw_text_from_chunks": "[full-page, p1, seq1] \u2190426152\n7736\n\n250834\n426122\n8406\n426134\n8407\n426126\n8592\n426131\n2730",
+      "chunk_details": [
+        {
+          "chunk_id": "chunk_0001",
+          "sequence": 1,
+          "page_number": 1,
+          "region": "full-page",
+          "extracted": {
+            "raw_text": "\u2190426152\n7736\n\n250834\n426122\n8406\n426134\n8407\n426126\n8592\n426131\n2730",
+            "data": {
+              "sub-step-find-asset-ids": [
+                "250834"
+              ]
+            }
+          }
+        }
+      ],
+      "stitched_boundaries": [],
+      "sub_step_extractions": {
+        "sub-step-find-asset-ids": {
+          "value": [
+            "250834",
+            "426152",
+            "426122",
+            "8406",
+            "426134",
+            "8407",
+            "426126",
+            "8592",
+            "426131",
+            "2730"
+          ],
+          "sub_step_name": "Find Asset IDs in Drawing Chunk",
+          "phase": 1
+        }
+      },
+      "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_055002/Extraction_A534927_ARP5495_RETIC_pdf_match_assets_to_drawing_symbol_20260329_055251.json"
+    }
+  ],
+  "timestamp": "20260329_055251",
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260329_055002/ExtractionReport_20260329_055251.json"
+}

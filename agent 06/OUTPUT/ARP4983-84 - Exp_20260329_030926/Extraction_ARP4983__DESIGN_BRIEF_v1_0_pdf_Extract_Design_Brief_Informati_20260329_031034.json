@@ -1,0 +1,185 @@
+{
+  "filename": "ARP4983 _DESIGN_BRIEF_v1.0.pdf",
+  "filepath": "/documents/ARP4983-84 - Exp/ARP4983 _DESIGN_BRIEF_v1.0.pdf",
+  "document_type": "Design Brief",
+  "document_category": "Design Brief",
+  "input_text_quality": "high",
+  "document_quality": "text",
+  "page_size": "A4",
+  "requires_chunking": false,
+  "chunk_strategy": "none",
+  "estimated_chunks": 1,
+  "process_step_name": "Extract Design Brief Information",
+  "total_sections": 5,
+  "relevant_sections": 2,
+  "sub_step_extractions": {
+    "sub-step-extract-funding-ancillary-fees": {
+      "ancillary_network_services_fees": [],
+      "total_amount_payable": null
+    },
+    "sub-step-extract-earthing": {
+      "EarthingTechnicalRequirements": [],
+      "SpecificEarthingStandards": [],
+      "SubstationSpecificEarthing": []
+    },
+    "sub-step-extract-substation": {
+      "Substation Works": [],
+      "Technical Ratings and References": [],
+      "Substation Commissioning Responsibilities": [
+        {
+          "description": "Substation commissioning is categorized as a Customer Funded Non-Contestable Work.",
+          "source_section": "Determination of Funding",
+          "source_page": 4
+        }
+      ],
+      "Substation Clearances and Standards": []
+    },
+    "sub-step-extract-sl": {
+      "SL_Works_Section": {
+        "description": "Locate the 'SL Works' sub-heading under the Method of Supply Requirement section. Identify specific tasks such as 'Remove SL' and 'Install new SL'.",
+        "source_section": "Method Of Supply Requirement",
+        "source_page": 2
+      },
+      "SL_Material_Funding": {
+        "description": "Customer Funded Contestable Works: All other works required.",
+        "source_section": "Determination of Funding",
+        "source_page": 4
+      }
+    },
+    "sub-step-extract-hv": {
+      "Primary HV Method of Supply": {
+        "description": "Removal of OH HV cables between specific pole refs and installation of new OH HV cable locations.",
+        "source_section": "Method Of Supply Requirement",
+        "source_page": 2
+      },
+      "Visual HV Markups and Annotations": {
+        "description": "Cable Specifications include 'NEW 240M XEE HV Cable' and 'New OH 7/4.5AMC'. Connection Points include '2-UGOH Poles'.",
+        "source_section": "Method Of Supply Requirement",
+        "source_page": 2
+      },
+      "HV Infrastructure Funding and Materials": {
+        "description": "Reimbursement for Spare HV duct as per Fact Sheet 11. Duct usage charge required. Customer funded non-contestable works include network switching and substation commissioning.",
+        "source_section": "Determination of Funding",
+        "source_page": 4
+      },
+      "Compliance Standards": {
+        "description": "Ensure HV design meets mandatory codes MDI0031, MCI0005, and NSW Service and Installation Rules.",
+        "source_section": "Method Of Supply Requirement",
+        "source_page": 2
+      }
+    },
+    "sub-step-extract-easements": {
+      "LandInterestGuidelines": {
+        "description": "No specific mention of 'Land Interests' section or checkbox for 'NA' in the provided sections.",
+        "source_section": "Not found",
+        "source_page": "Not found"
+      },
+      "RequiredEasements": {
+        "description": "No explicit details regarding required easements for new HV/LV lines or substation sites found in the provided sections.",
+        "source_section": "Not found",
+        "source_page": "Not found"
+      },
+      "PropertyAccessConditions": {
+        "description": "No specific conditions regarding access to private property or creation of right-of-ways for Endeavour Energy assets found in the provided sections.",
+        "source_section": "Not found",
+        "source_page": "Not found"
+      }
+    },
+    "sub-step-extract-lv": {
+      "LV Works": [
+        {
+          "description": "Remove the Overhead (OH) LV cable currently located between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        },
+        {
+          "description": "String a new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        }
+      ],
+      "Compliance Standards": [
+        {
+          "description": "Ensure all LV service works comply with the NSW Service and Installation Rules.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        },
+        {
+          "description": "Confirm the design adheres to Endeavour Energy standards MDI0031 and MCI0005.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        }
+      ],
+      "Service Connections": [
+        {
+          "description": "New OH road crossing service connection intended to maintain existing services.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        }
+      ]
+    },
+    "sub-step-extract-funding-determination": {
+      "items": [
+        {
+          "item_description": "Spare HV duct as per Fact Sheet 11",
+          "funding_category": "capital contribution",
+          "responsible_party": "Endeavour Energy",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 4
+        },
+        {
+          "item_description": "Duct usage charge as required",
+          "funding_category": "reimbursements to be paid to Endeavour Energy by Customer",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 4
+        },
+        {
+          "item_description": "Network switching, substation commissioning, contract inspection",
+          "funding_category": "customer funded non-contestable works",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 4
+        },
+        {
+          "item_description": "All other works required.",
+          "funding_category": "customer funded contestable works",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 4
+        }
+      ]
+    },
+    "sub-step-extract-payment-instructions": {
+      "Preferred Payment Method": {
+        "description": "EFT is the primary method.",
+        "source_section": "Determination of Funding",
+        "source_page": 4
+      },
+      "Banking Details": {
+        "description": "BSB: 012-003, Account Number: 8376 89858",
+        "source_section": "Determination of Funding",
+        "source_page": 4
+      },
+      "Mandatory Transaction References": {
+        "description": "Unique alphanumeric reference code ARP4983A2 must be quoted in the EFT transaction field.",
+        "source_section": "April 2022",
+        "source_page": 2
+      },
+      "Document Remittance and Restriction Requirements": {
+        "description": "Email for remittance copies: remittances@endeavourenergy.com.au. Credit cards and cheques are not accepted.",
+        "source_section": "Determination of Funding",
+        "source_page": 4
+      },
+      "Invoice Policy": {
+        "description": "A formal Tax Invoice will be provided following the receipt of payment.",
+        "source_section": "Determination of Funding",
+        "source_page": 4
+      }
+    }
+  }
+}

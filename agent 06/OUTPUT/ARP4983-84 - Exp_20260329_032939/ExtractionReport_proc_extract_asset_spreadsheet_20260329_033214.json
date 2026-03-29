@@ -1,0 +1,548 @@
+{
+  "process_step": {
+    "step_id": "Extract Asset Spreadsheet Data",
+    "step_name": "Extract Asset Spreadsheet Data",
+    "summary": null,
+    "details": "NOTE: Only process documents with route_to_step=6 (document_category=\"TAL\"). TAL files do not require chunking \u2014 run this step directly after Step 2 without needing Steps 3, 4, or 5. Using the processing plan from Step 2, filter the document list to only those entries with document_category of exactly \"TAL\" (Technical Asset List). These are the spreadsheet files (.xlsx, .xls, .xlsm, .xlsb) identified in Step 1. For each TAL document, use the proc-extract-asset-spreadsheet process as the extraction guide. Each spreadsheet entry from Step 2 includes worksheet_count (total sheets), worksheets_to_analyse (non-empty sheets), and a worksheets array listing each sheet name with its row_count and column_count \u2014 use these to plan how many extraction passes are needed. For each non-empty worksheet: identify the header row, map column names to standard asset fields (Asset ID, Serial Number, Asset Type, Description, Location, Address, Feeder, Voltage Level, Capacity Rating, Manufacturer, Model, Condition Rating, Status, Installation Date, Last Inspection Date), and extract every data row as a structured asset record. Include source_sheet and source_document in every record. Produce a consolidated output with all asset_records across all sheets and all TAL files. OUTPUT FILE: The agent saves a dedicated AssetExtract_{timestamp}.json file to the job output directory. This file contains: process_id, timestamp, source_documents (list of spreadsheet filenames), total_assets (integer), and asset_records (flat array of all extracted asset records across all sheets and all TAL files). This file is stored in state as asset_extraction and is available for use by Step 7 (report consolidation) and any subsequent steps.",
+    "expected_output": {
+      "description": "Step 1: Identify and Review Asset Spreadsheet Files \u2014 A DocumentReview JSON file listing all matched spreadsheet files with metadata and quality indicators. | Step 2: Plan Document Processing Approach \u2014 A ProcessingPlan JSON file with a processing entry per matched spreadsheet file. | Step 3: Extract Asset Records from Spreadsheet \u2014 Structured asset records extracted from the spreadsheet, with each record containing all available identification, classification, location, technical, and condition fields. | Step 4: POLE Worksheet Audit and Validation \u2014 A validation report for Pole assets highlighting missing fields, ID mismatches, and hierarchy errors.",
+      "fields": {
+        "documents": "Array of matched document objects, each with filename, document_title, document_type, author, date, confidence, content_type, text_quality, and recommended_reader",
+        "scan_results": "Full scan results for all files including those not matched",
+        "matched_files": "Integer count of matched files",
+        "total_files_scanned": "Integer count of all files scanned",
+        "output_file": "Path to the saved ProcessingPlan_*.json file",
+        "processing_plan": "Array of processing entries, each with: filename, document_type, content_type, text_quality, recommended_reader, processing_tool_id, conversion_required, conversion_type, extraction_method, processing_notes",
+        "total_documents": "Integer count of entries in processing_plan",
+        "asset_records": "Array of asset record objects \u2014 each with: asset_id, serial_number, asset_type, description, location, address, feeder, voltage_level, capacity_rating, manufacturer, model, condition_rating, status, installation_date, last_inspection_date, source_sheet, source_row",
+        "total_assets": "Integer count of extracted asset records",
+        "sheets_processed": "Array of sheet names that were read from the spreadsheet",
+        "source_documents": "Array of spreadsheet filenames that contributed to the extracted asset records",
+        "validation_status": "Pass/Fail/No Data",
+        "cleaned_floc_ids": "Array of numeric-only IDs",
+        "validation_errors": "List of missing mandatory fields or hierarchy mismatches"
+      }
+    },
+    "sub_steps": [
+      {
+        "sub_step_number": 1,
+        "sub_step_id": "sub-step-extract-asset-identification",
+        "sub_step_name": "Extract Asset Identification",
+        "details": "Extract the unique identifiers for each asset record, including Asset ID, Asset Number, Serial Number, and any network operator assigned reference codes.",
+        "instructional_sub_steps": [
+          {
+            "title": "Locate Asset ID Columns",
+            "instructions": "Identify the column(s) in the spreadsheet header row that serve as unique identifiers for each asset. Look for column names such as 'Asset ID', 'Asset Number', 'Asset Ref', 'ID', 'Tag Number', or 'Equipment Number'. Extract the value from each row."
+          },
+          {
+            "title": "Extract Serial Number",
+            "instructions": "Locate the 'Serial Number', 'Serial No', or 'S/N' column. Extract the manufacturer's serial number for each asset record. If no serial number column exists, record as null."
+          },
+          {
+            "title": "Record Network Operator References",
+            "instructions": "Identify any network operator specific reference codes (e.g., SAP asset number, MAXIMO work order, or network operator asset tag). These are typically in columns labelled 'SAP ID', 'Network Ref', or 'Operator Ref'."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 2,
+        "sub_step_id": "sub-step-extract-asset-classification",
+        "sub_step_name": "Extract Asset Type and Classification",
+        "details": "Extract the asset type, category, and classification from each record. This includes the primary asset class (e.g., Transformer, Switchgear, Cable, Pole) and any sub-classification or asset group.",
+        "instructional_sub_steps": [
+          {
+            "title": "Identify Asset Type Column",
+            "instructions": "Locate the column(s) labelled 'Asset Type', 'Asset Category', 'Equipment Type', 'Asset Class', or 'Description'. Extract the asset type value for each row."
+          },
+          {
+            "title": "Extract Asset Description",
+            "instructions": "Find the 'Description', 'Asset Description', or 'Equipment Description' column. Extract the full descriptive text for each asset record including make, model, and rated specification if combined in the description field."
+          },
+          {
+            "title": "Note Asset Group or Hierarchy",
+            "instructions": "If the spreadsheet contains parent-child asset relationships or asset group columns (e.g., 'Parent Asset', 'Asset Group', 'Functional Location'), extract these to preserve the asset hierarchy context."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 3,
+        "sub_step_id": "sub-step-extract-asset-location",
+        "sub_step_name": "Extract Asset Location Data",
+        "details": "Extract all location and site information for each asset record, including physical address, substation reference, feeder reference, or geographic coordinates.",
+        "instructional_sub_steps": [
+          {
+            "title": "Extract Address and Site",
+            "instructions": "Locate columns labelled 'Location', 'Address', 'Site', 'Site Name', or 'Suburb'. Extract the physical location for each asset including street address, suburb, or site identifier."
+          },
+          {
+            "title": "Extract Network Location References",
+            "instructions": "Find columns for 'Feeder', 'Feeder ID', 'Substation', 'Zone Substation', 'Pole Reference', 'Span Reference', or 'Circuit'. These define where the asset sits within the electrical network topology."
+          },
+          {
+            "title": "Record GPS or Grid Coordinates",
+            "instructions": "If geographic coordinate columns exist (e.g., 'Latitude', 'Longitude', 'Easting', 'Northing', 'MGA', 'GDA'), extract the coordinate values for each asset."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 4,
+        "sub_step_id": "sub-step-extract-technical-specifications",
+        "sub_step_name": "Extract Technical Specifications",
+        "details": "Extract the technical rating and specification data for each asset including capacity, voltage level, manufacturer, model, and any rated parameters.",
+        "instructional_sub_steps": [
+          {
+            "title": "Extract Capacity and Ratings",
+            "instructions": "Locate columns for 'Capacity', 'Rating', 'kVA', 'MVA', 'Amps', 'Current Rating', or 'Rated Capacity'. Extract the rated capacity with units for each asset. For transformers, capture both primary and secondary voltage ratings if available."
+          },
+          {
+            "title": "Extract Voltage Level",
+            "instructions": "Find the 'Voltage Level', 'Voltage', 'kV', 'HV Voltage', or 'LV Voltage' column. Extract the operating voltage level for each asset expressed in kV or V."
+          },
+          {
+            "title": "Extract Manufacturer and Model",
+            "instructions": "Locate 'Manufacturer', 'Make', 'Brand', 'Model', 'Model Number', or 'Type Number' columns. Extract the manufacturer name and model designation for each asset."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 5,
+        "sub_step_id": "sub-step-extract-condition-status",
+        "sub_step_name": "Extract Condition Ratings and Status",
+        "details": "Extract the current condition rating, asset status (active, retired, proposed), and any maintenance or inspection flags for each asset record.",
+        "instructional_sub_steps": [
+          {
+            "title": "Extract Condition Rating",
+            "instructions": "Locate the 'Condition', 'Condition Rating', 'Condition Score', or 'Asset Health' column. Extract the condition rating for each asset. Condition is often expressed as a numeric score (1\u20135), a text grade (Good, Fair, Poor), or a percentage health index."
+          },
+          {
+            "title": "Extract Asset Status",
+            "instructions": "Find the 'Status', 'Asset Status', 'Operational Status', or 'Active/Retired' column. Extract the current operational status for each asset (e.g., Active, In-Service, Retired, Proposed, Decommissioned)."
+          },
+          {
+            "title": "Extract Inspection and Maintenance Dates",
+            "instructions": "Locate date columns such as 'Installation Date', 'Commissioned Date', 'Last Inspection', 'Next Inspection', 'Last Maintenance', or 'Replacement Due'. Extract these dates for each asset record."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 1,
+        "sub_step_id": "sub-step-pole-initial-audit",
+        "sub_step_name": "Initial Worksheet Audit",
+        "details": "Verify the presence of the POLE tab and confirm it contains data before proceeding.",
+        "instructional_sub_steps": [
+          {
+            "title": "Worksheet Presence & Data Scan",
+            "instructions": "Locate the tab labeled 'POLE'. If the tab is missing or contains no data records, mark as 'No Data' and terminate the POLE validation process. If data is present, proceed."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 2,
+        "sub_step_id": "sub-step-pole-id-extraction",
+        "sub_step_name": "Functional Location & Asset ID Extraction",
+        "details": "Extract and clean identifiers for cross-referencing with Design Drawings.",
+        "instructional_sub_steps": [
+          {
+            "title": "FLOC Cleaning Rule",
+            "instructions": "Extract Functional Location Numbers. Remove all leading letters and zeros for comparison (e.g., convert 'POLE00165863' to '165863')."
+          },
+          {
+            "title": "Substation Superior Function Validation",
+            "instructions": "For entries identified as 'Pole Substations', verify the 'Superior Function' field matches the mask 'POLEXXXXXXXXX'."
+          },
+          {
+            "title": "Schedule Consistency Check",
+            "instructions": "Extract asset numbers from the 'POLE SCHEDULE TABLE' and verify consistency against the TAL and design drawings."
+          }
+        ]
+      },
+      {
+        "sub_step_number": 3,
+        "sub_step_id": "sub-step-pole-field-validation",
+        "sub_step_name": "Mandatory Field Completion & Logic",
+        "details": "Check for mandatory data entry and hierarchical integrity between assembly records.",
+        "instructional_sub_steps": [
+          {
+            "title": "Mandatory Field Audit",
+            "instructions": "Ensure the following columns are populated: Special Use Code, EQ Reference Equipment Desc, EQ Technical Object Type, FLOC Technical Object, Location, and Equipment Owner."
+          },
+          {
+            "title": "Assembly & Hierarchy Validation",
+            "instructions": "For every Assembly Number, verify: 1. Superior Functional Location matches the top-tab Functional Location. 2. FLOC Construction Type matches the design environment (Urban, Rural, Semi-Rural, Coastal). 3. Presence of Equipment Number and Technical Object attributes."
+          }
+        ]
+      }
+    ],
+    "instructional_sub_steps": null
+  },
+  "documents_folder": "/documents/ARP4983-84 - Exp/",
+  "total_files": 1,
+  "extractions": [
+    {
+      "filename": "ARP4983_TAL_20241112.XLSM",
+      "filepath": "/documents/ARP4983-84 - Exp/ARP4983_TAL_20241112.XLSM",
+      "document_type": "TAL",
+      "document_category": "TAL",
+      "document_quality": "spreadsheet",
+      "sheets_processed": [
+        "STREETLIGHT"
+      ],
+      "sheets_skipped": [
+        "PROJECT"
+      ],
+      "step_extraction": {
+        "asset_records": [
+          {
+            "asset_id": "CLMN02002180",
+            "serial_number": "1005338257",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "275W LED ROADLED S-S",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002181",
+            "serial_number": "1005338259",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "275W LED ROADLED S-S",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002182",
+            "serial_number": "1005338261",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002183",
+            "serial_number": "1005338263",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002184",
+            "serial_number": "1005338265",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002185",
+            "serial_number": "1005338267",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002186",
+            "serial_number": "1005338269",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002187",
+            "serial_number": "1005338271",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002188",
+            "serial_number": "1005338273",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002189",
+            "serial_number": "1005338275",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002190",
+            "serial_number": "1005338277",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "165W LED RoadLED Midi",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002191",
+            "serial_number": "1005338279",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "275W LED ROADLED S-S",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "POLE01000886",
+            "serial_number": "1005338281",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "275W LED ROADLED S-S",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": "CLMN02002193",
+            "serial_number": "1005338283",
+            "asset_type": "Street Lighting",
+            "description": "Gen, Street Lighting",
+            "location": "Hoxton Park FieldServiceCentre",
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": "275W LED ROADLED S-S",
+            "condition_rating": null,
+            "status": "Outage Dependant Obj",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": null,
+            "serial_number": null,
+            "asset_type": "EQ02",
+            "description": "Proposed Removed",
+            "location": null,
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": null,
+            "condition_rating": null,
+            "status": "Locked",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": null,
+            "serial_number": null,
+            "asset_type": "EQ02",
+            "description": "Proposed Removed Equipment Number",
+            "location": null,
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": null,
+            "condition_rating": null,
+            "status": "Locked",
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": null,
+            "serial_number": null,
+            "asset_type": null,
+            "description": null,
+            "location": null,
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": null,
+            "condition_rating": null,
+            "status": null,
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          },
+          {
+            "asset_id": null,
+            "serial_number": null,
+            "asset_type": null,
+            "description": "Comments",
+            "location": null,
+            "address": null,
+            "feeder": null,
+            "voltage_level": null,
+            "capacity_rating": null,
+            "manufacturer": null,
+            "model": null,
+            "condition_rating": null,
+            "status": null,
+            "installation_date": null,
+            "last_inspection_date": null,
+            "source_sheet": "STREETLIGHT",
+            "source_document": "ARP4983_TAL_20241112.XLSM"
+          }
+        ],
+        "total_assets": 18,
+        "sheets_processed": [
+          "STREETLIGHT"
+        ]
+      },
+      "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260329_032939/Extraction_ARP4983_TAL_20241112_XLSM_Extract_Asset_Spreadsheet_Data_20260329_033214.json"
+    }
+  ],
+  "timestamp": "20260329_033214",
+  "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260329_032939/ExtractionReport_proc_extract_asset_spreadsheet_20260329_033214.json"
+}
