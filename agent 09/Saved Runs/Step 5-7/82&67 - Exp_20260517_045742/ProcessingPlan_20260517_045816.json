@@ -1,0 +1,80 @@
+{
+  "step1_output_file": "/app/OUTPUT/82&67 - Exp_20260517_045742/DocumentReview_20260517_045804.json",
+  "total_documents": 3,
+  "processing_plan": [
+    {
+      "filename": "URS35318_DESIGN_BRIEF_v1.0.pdf",
+      "document_type": "Design Brief",
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "pdfplumber",
+      "quality_note": "Text-based document. 2440 characters extracted. Reader: pdfplumber.",
+      "confidence": 0.97,
+      "processing_tool_id": "tool-extract-pdf-content",
+      "conversion_required": false,
+      "conversion_type": null,
+      "extraction_method": "Direct text extraction via pdfplumber",
+      "processing_notes": "The document is a text-based PDF with high text quality, suitable for extraction using pdfplumber.",
+      "document_category": "Design Brief",
+      "page_size": "A4",
+      "requires_chunking": false,
+      "chunk_strategy": "none",
+      "estimated_chunks": 1,
+      "route_to_step": 4
+    },
+    {
+      "filename": "URS35318_TAL_20250515_final.XLSM",
+      "document_type": "TAL",
+      "content_type": "text",
+      "text_quality": "high",
+      "recommended_reader": "openpyxl",
+      "quality_note": "Text-based document. 3994 characters extracted. Reader: openpyxl.",
+      "confidence": 0.97,
+      "processing_tool_id": "tool-read-file-content",
+      "conversion_required": false,
+      "conversion_type": null,
+      "extraction_method": "Direct text extraction via openpyxl",
+      "processing_notes": "The document is an Excel macro-enabled spreadsheet with high text quality, suitable for direct extraction using openpyxl.",
+      "document_category": "TAL",
+      "page_size": "A4",
+      "requires_chunking": false,
+      "chunk_strategy": "none",
+      "estimated_chunks": 1,
+      "route_to_step": 6,
+      "worksheet_count": 2,
+      "worksheets_to_analyse": 2,
+      "worksheets": [
+        {
+          "sheet_name": "PROJECT",
+          "row_count": 25,
+          "column_count": 13
+        },
+        {
+          "sheet_name": "PILLAR",
+          "row_count": 70,
+          "column_count": 352
+        }
+      ]
+    },
+    {
+      "filename": "A535774_URS35318_RETIC_NOTES.pdf",
+      "document_type": "Reticulation Notes",
+      "content_type": "image",
+      "text_quality": "none",
+      "recommended_reader": "ocr-required",
+      "quality_note": "PDF appears to be a scanned image. OCR is required to extract text.",
+      "confidence": 0.83,
+      "processing_tool_id": "tool-plan-document-processing",
+      "conversion_required": true,
+      "conversion_type": "pdf-to-png",
+      "extraction_method": "OCR after PDF-to-PNG conversion",
+      "processing_notes": "The document is image-based with no extractable text, requiring OCR for content extraction. The filename suggests it is a reticulation drawing, classifying it as a 'Site Plan'.",
+      "document_category": "Site Plan",
+      "page_size": "A3",
+      "requires_chunking": true,
+      "chunk_strategy": "quadrant-split",
+      "estimated_chunks": 2,
+      "route_to_step": 5
+    }
+  ]
+}

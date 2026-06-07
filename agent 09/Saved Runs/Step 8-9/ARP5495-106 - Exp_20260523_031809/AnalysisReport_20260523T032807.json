@@ -1,0 +1,318 @@
+{
+  "report_type": "Customer Connections Review Analysis Report",
+  "generated_at": "2026-05-23T03:28:07.567739Z",
+  "consolidated_report_path": "/app/OUTPUT/ARP5495-106 - Exp_20260523_031809/ConsolidatedReport_20260523T032747.json",
+  "data_sources": {
+    "funding_items": "0 items \u2014 Design Brief sub-step-extract-funding-determination (step 4)",
+    "supply_requirements": "10 items \u2014 Design Brief LV/HV/SL sub-steps (step 4)",
+    "legend_symbols": "26 symbols \u2014 Drawing legend extraction (step 6)",
+    "asset_register": "14 assets \u2014 Enriched TAL spreadsheet (step 9, Python-built)"
+  },
+  "analysis_report": {
+    "funding_details": {
+      "funding_details": {
+        "total_capital_contribution": null,
+        "contestable_works": [],
+        "non_contestable_works": [],
+        "ancillary_costs": [],
+        "other_funding_items": [],
+        "payment_instructions": {
+          "method": null,
+          "bsb": null,
+          "account": null,
+          "reference": null
+        },
+        "notes": [
+          "No funding_items data was provided. The funding_items list is empty (0 records), therefore no contestable works, non-contestable works, ancillary costs, or other funding items can be extracted or reported."
+        ]
+      }
+    },
+    "method_of_supply_comparison": {
+      "method_of_supply_comparison": {
+        "design_brief_requirements": [],
+        "site_plan_scope_found": [],
+        "missing_from_site_plan": [],
+        "summary": "No supply_requirements data was provided (0 records). There are no items from the Design Brief LV, HV or SL sections to compare against the reference_data legend symbols. Comparison cannot be performed."
+      }
+    },
+    "funding_arrangement_comparison": {
+      "funding_arrangement_comparison": {
+        "design_brief_funded_works": [],
+        "drawing_scope_found": [],
+        "missing_from_drawing": [],
+        "summary": "No funding items were available in funding_items (0 records provided). There are no funded works to compare against the legend symbols in reference_data. Comparison cannot be performed without source data."
+      }
+    },
+    "asset_register": {
+      "asset_register": [
+        {
+          "asset_id": "SLGT00316949",
+          "tal_asset_id": "SLGT00316949",
+          "bare_id": "316949",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316950",
+          "tal_asset_id": "SLGT00316950",
+          "bare_id": "316950",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316951",
+          "tal_asset_id": "SLGT00316951",
+          "bare_id": "316951",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316952",
+          "tal_asset_id": "SLGT00316952",
+          "bare_id": "316952",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316953",
+          "tal_asset_id": "SLGT00316953",
+          "bare_id": "316953",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": null,
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "SLGT00316954",
+          "tal_asset_id": "SLGT00316954",
+          "bare_id": "316954",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": null,
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "SLGT00316955",
+          "tal_asset_id": "SLGT00316955",
+          "bare_id": "316955",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "120W LED 4K ROADLED MIDI Aeros",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316956",
+          "tal_asset_id": "SLGT00316956",
+          "bare_id": "316956",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "175W LED SLED Maximus Pedstran",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small hollow open circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302884",
+          "tal_asset_id": "SLGT00302884",
+          "bare_id": "302884",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "Lantern symbol \u2014 small circle with rays on a short stem",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302885",
+          "tal_asset_id": "SLGT00302885",
+          "bare_id": "302885",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "Lantern symbol \u2014 small circle with rays on a short stem",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302886",
+          "tal_asset_id": "SLGT00302886",
+          "bare_id": "302886",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "Lantern symbol \u2014 small circle with rays on a short stem",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302887",
+          "tal_asset_id": "SLGT00302887",
+          "bare_id": "302887",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "Lantern symbol \u2014 small circle with rays on a short stem",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302888",
+          "tal_asset_id": "SLGT00302888",
+          "bare_id": "302888",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "Lantern symbol \u2014 small circle with rays on a short stem",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302889",
+          "tal_asset_id": "SLGT00302889",
+          "bare_id": "302889",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "NEW SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "Lantern symbol \u2014 small circle with rays on a short stem",
+          "action_status": "new",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        }
+      ],
+      "register_summary": {
+        "total": 14,
+        "new": 12,
+        "remove": 0,
+        "replace": 0,
+        "existing": 0,
+        "unknown": 2,
+        "found_on_diagram": 12,
+        "not_found": 2
+      },
+      "_source": "enriched_assets_step_9_python_built"
+    }
+  },
+  "summary": {
+    "total_assets": 14,
+    "found_on_diagram": 12,
+    "not_found": 2,
+    "supply_scope_gaps": 0,
+    "drawing_scope_gaps": 0
+  },
+  "_content_review": {
+    "reviewed_at": "2026-05-23T03:28:07.567916Z",
+    "issues": [],
+    "section_status": {
+      "funding": "empty",
+      "supply_comparison": "ok",
+      "funding_comparison": "ok",
+      "asset_register": "ok"
+    },
+    "style_complete": false
+  }
+}

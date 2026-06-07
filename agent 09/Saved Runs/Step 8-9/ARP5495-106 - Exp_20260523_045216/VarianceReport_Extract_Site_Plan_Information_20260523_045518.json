@@ -1,0 +1,149 @@
+{
+  "step_name": "Extract Site Plan Information",
+  "step_description": "NOTE: Only process documents with route_to_step=5 (document_category=\"Site Plan\"). TAL spreadsheet files and Design Brief files must be excluded. Using the processing plan from Step 2, filter the document list to only those where 'document_category' is 'Site Plan'. Do not process any document tagged as 'Design Brief'. For each Site Plan document, run the two-phase extraction defined in proc-extract-site-plan-info. Phase 1 extracts all numbered notes and callout annotations (ATTENTION/WARNING/CAUTION/NOTICE) from every page of the drawing in full. Phase 2 analyses those extracted notes to produce four structured checks: (1) Substation Data \u2014 extract the seven Substation Notes fields (Substation Asset Number, Transformer Size, HV Switchgear with 1.5MVA Siemens RLR override rule, Voltage Level, LV Switchgear, Cubicle Size, Earthing); (2) Assets Field Check Compliance \u2014 verify note 'HAVE ALL EXISTING ASSETS BEEN FIELD CHECKED AND ARE ACCURATE AT THE TIME OF DRAWING' is present and answered YES; (3) Easement Restriction \u2014 check for the swimming pool restriction-on-use-of-land easement note; (4) Easement Substation \u2014 check for the padmount substation easement note with dimensions and lot number.",
+  "run_output_files": [
+    "/app/OUTPUT/ARP5495-106 - Exp_20260523_045216/ExtractionReport_proc_extract_site_plan_info_20260523_045414_736012.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260523_045216/ExtractionReport_proc_extract_site_plan_info_20260523_045514_164172.json"
+  ],
+  "missing_files": [],
+  "timestamp": "20260523_045518",
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260523_045216/VarianceReport_Extract_Site_Plan_Information_20260523_045518.json",
+  "num_runs": 2,
+  "files_analysed": 1,
+  "consistency_score": 1.0,
+  "consistent_fields": 11.0,
+  "total_fields": 11,
+  "verdict": "PASS",
+  "summary": "11.0/11 fields consistent across 2 runs (100%) \u2014 PASS",
+  "file_variance": {
+    "A534927_ARP5495_RETIC.pdf": {
+      "num_runs": 2,
+      "consistent_fields": 11,
+      "total_fields": 11,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "sub-step-easement-restriction": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT REQUIRED",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT REQUIRED",
+            "run_2": "NOT REQUIRED"
+          }
+        },
+        "sub-step-easement-substation": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT REQUIRED",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT REQUIRED",
+            "run_2": "NOT REQUIRED"
+          }
+        },
+        "sub-step-extract-all-notes": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "9. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR\nENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n10. HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\n11. ENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN.\n1 THIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECTION POLICY.\n2 ENDEAVOUR ENERGY CONTACT PHONE: 131 081.\n3 DESIGN CERTIFICATION SHALL LAPSE WHERE:-\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION;\nOR\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS.\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\n4 ATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\n5 ATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\n6 WARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEAS CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE: 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\n7 ATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\n8 OPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:\n9 REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR\nENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n10 HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\n11 SDI:\nSubstation Design Instruction\nSAD 0001:\nDesign Drawing Standard\n12 MMI:\nMains Maintenance Instruction\n13 SMI:\nSubstation Maintenance Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS\nDesign - Detailed Procedures\" published by The Australia\n14 CONSIDERED:",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "9. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR\nENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n10. HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\n11. ENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN.\n1 THIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECTION POLICY.\n2 ENDEAVOUR ENERGY CONTACT PHONE: 131 081.\n3 DESIGN CERTIFICATION SHALL LAPSE WHERE:-\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION;\nOR\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS.\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\n4 ATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\n5 ATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\n6 WARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEAS CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE: 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\n7 ATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\n8 OPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:\n9 REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR\nENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n10 HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\n11 SDI:\nSubstation Design Instruction\nSAD 0001:\nDesign Drawing Standard\n12 MMI:\nMains Maintenance Instruction\n13 SMI:\nSubstation Maintenance Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS\nDesign - Detailed Procedures\" published by The Australia\n14 CONSIDERED:",
+            "run_2": "9. REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR\nENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n10. HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\n11. ENVIRONMENTAL MANAGEMENT PLAN: EMP EMS0001\nIS PART OF THE DESIGN.\n1 THIS DRAWING IS TO BE READ IN CONJUNCTION WITH\nTHE RELEVANT ENDEAVOUR ENERGY NETWORK\nSTANDARDS AND CONNECTION POLICY.\n2 ENDEAVOUR ENERGY CONTACT PHONE: 131 081.\n3 DESIGN CERTIFICATION SHALL LAPSE WHERE:-\n(i) NOTICE OF INTENT HAS NOT BEEN RECEIVED\nWITHIN SIX (6) MONTHS OF THIS\nCERTIFICATION;\nOR\n(ii) WORKS COMPLETED CONSTRUCTION HAS\nBEEN INTERRUPTED FOR MORE THAN SIX (6)\nMONTHS.\nWHERE DESIGN CERTIFICATION HAS LAPSED THE\nDESIGN MUST BE RESUBMITTED FOR CERTIFICATION\nBY THE ACCREDITED DESIGNER.\n4 ATTENTION\nPERMANENT SURVEY MARKS MAY EXIST IN THIS\nAREA. THESE MARKS ARE TO BE LOCATED BY A\nSURVEYOR PRIOR TO COMMENCEMENT OF ANY\nWORKS.\n5 ATTENTION\nALL SERVICES SEARCHES MUST BE CHECKED\nBEFORE CONSTRUCTION.\n6 WARNING\nLIVE ENDEAVOUR ENERGY CABLES AND OTHER\nSERVICES IN THIS AREA. PLEAS CONTACT DIAL\nBEFORE YOU DIG ON TELEPHONE: 1100 FOR SEARCH\nTWO (2) DAYS PRIOR TO EXCAVATION.\n7 ATTENTION\nSERVICE PROVIDER TO NOTIFY ENDEAVOUR\nENERGY'S ASSET DATA CUSTOMER DEPARTMENT\nDAILY WHEN CABLE WORKS IS IN PROGRESS.\nTELEPHONE: 131 081.\n8 OPERATIONAL LIMITS\nUNLESS APPROVED OTHERWISE, INTERRUPTION TO\nANY CUSTOMER'S SUPPLY MUST BE AVOIDED. THE\nFOLLOWING ALTERNATIVES SHOULD BE\nCONSIDERED:\n9 REIMBURSEMENTS WILL BE PAID TO THE NOMINATED\nPARTY ON THE LETTER OF INTENT AFTER THE\nWORKS HAVE BEEN COMPLETED AND THE LETTER OF\nACCEPTANCE HAS BEEN ISSUED. THE REIMBURSED\nAMOUNT IS SHOWN IN THE FUNDING ARRANGEMENTS\nFOR SCOPE OF WORK. ANY DISAGREEMENT WITH THE\nAMOUNT SHOULD BE RESOLVED WITH ENDEAVOUR\nENERGY PRIOR TO THE COMMENCEMENT OF WORKS.\n10 HAVE ALL THE EXISTING ASSETS BEEN FIELD\nCHECKED AND ARE ACCURATE AT THE TIME OF\nDESIGN?\n11 SDI:\nSubstation Design Instruction\nSAD 0001:\nDesign Drawing Standard\n12 MMI:\nMains Maintenance Instruction\n13 SMI:\nSubstation Maintenance Instruction\nLDI 0001: Public lighting Electrical Design Element\nAdditionally, where relevant, the design complies with AS\nDesign - Detailed Procedures\" published by The Australia\n14 CONSIDERED:"
+          }
+        },
+        "sub-step-field-check": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT COMPLETED \u2014 note present but answer not filled in",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT COMPLETED \u2014 note present but answer not filled in",
+            "run_2": "NOT COMPLETED \u2014 note present but answer not filled in"
+          }
+        },
+        "sub-step-substation-data.Cubicle Size": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT FOUND",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT FOUND",
+            "run_2": "NOT FOUND"
+          }
+        },
+        "sub-step-substation-data.Earthing": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT FOUND",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT FOUND",
+            "run_2": "NOT FOUND"
+          }
+        },
+        "sub-step-substation-data.HV Switchgear": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT FOUND",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT FOUND",
+            "run_2": "NOT FOUND"
+          }
+        },
+        "sub-step-substation-data.LV Switchgear": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT FOUND",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT FOUND",
+            "run_2": "NOT FOUND"
+          }
+        },
+        "sub-step-substation-data.Substation Asset Number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT FOUND",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT FOUND",
+            "run_2": "NOT FOUND"
+          }
+        },
+        "sub-step-substation-data.Transformer Size": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT FOUND",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT FOUND",
+            "run_2": "NOT FOUND"
+          }
+        },
+        "sub-step-substation-data.Voltage Level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NOT FOUND",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NOT FOUND",
+            "run_2": "NOT FOUND"
+          }
+        }
+      }
+    }
+  }
+}

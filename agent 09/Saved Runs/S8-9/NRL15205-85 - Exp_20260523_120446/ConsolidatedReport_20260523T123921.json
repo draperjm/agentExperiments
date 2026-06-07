@@ -1,0 +1,1231 @@
+{
+  "report_type": "Customer Connections Application Review",
+  "generated_at": "2026-05-23T12:39:21.345920Z",
+  "source_extractions": {
+    "extraction_step_4": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_proc_extract_design_brief_info_20260523_120624_657382.json",
+      "extractions": [
+        {
+          "filename": "NRL15205_DESIGN_BRIEF_v1.1.pdf",
+          "filepath": "/documents/NRL15205-85 - Exp/NRL15205_DESIGN_BRIEF_v1.1.pdf",
+          "document_type": "Design Brief",
+          "document_category": "Design Brief",
+          "input_text_quality": "high",
+          "document_quality": "text",
+          "page_size": "A4",
+          "requires_chunking": false,
+          "chunk_strategy": "none",
+          "estimated_chunks": 1,
+          "process_step_name": "Extract Design Brief Information",
+          "total_sections": 4,
+          "relevant_sections": 2,
+          "sub_step_extractions": {
+            "sub-step-extract-funding-ancillary-fees": {
+              "fees": [],
+              "total_amount_payable": null
+            },
+            "sub-step-extract-sl": {
+              "SL_Works_Section": [],
+              "SL_Visual_Markups": [],
+              "SL_Material_Funding": [],
+              "SL_Standard_Compliance": []
+            },
+            "sub-step-extract-easements": {
+              "easement_requirements": [
+                {
+                  "description": "Easement for Electrical Purposes minimum of 1m wide over the LV supply from Private Pillar 1 burdening Lot 5 DP 244410 in favour of Lot 4 DP 244410 and Lot 3 DP 244410.",
+                  "source_section": "October 2021",
+                  "source_page": 2
+                }
+              ]
+            },
+            "sub-step-extract-substation": {
+              "Substation Works": [
+                {
+                  "description": "Decommission and remove Pole Sub 31174.",
+                  "source_section": "October 2021",
+                  "source_page": 2
+                },
+                {
+                  "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+                  "source_section": "October 2021",
+                  "source_page": 2
+                }
+              ],
+              "Technical Ratings and References": [
+                {
+                  "description": "Currently 25kVA single phase Pole Substation 31174 supplies Lot 3 DP 244410, Lot 4 DP 244410 and Lot 5 DP 244410.",
+                  "source_section": "October 2021",
+                  "source_page": 2
+                },
+                {
+                  "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+                  "source_section": "October 2021",
+                  "source_page": 2
+                }
+              ],
+              "Substation Commissioning Responsibilities": [
+                {
+                  "description": "Network switching, substation commissioning, contract inspection",
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                }
+              ],
+              "Substation Clearances and Standards": []
+            },
+            "sub-step-extract-hv": {
+              "Primary HV Method of Supply": [
+                {
+                  "description": "Replace existing Pole 829583 with a 12.5m/12kN wood Pole 1.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                },
+                {
+                  "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                },
+                {
+                  "description": "Remove HV mains between Pole 1 and Pole 2.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                }
+              ],
+              "HV Infrastructure Funding and Materials": [
+                {
+                  "description": "Capital contribution: 1 x 200 kVA transformer only",
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                },
+                {
+                  "description": "Spare HV duct as per Fact Sheet 11",
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                },
+                {
+                  "description": "Reimbursements to be paid to Endeavour Energy by Customer: Duct usage charge as required",
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                },
+                {
+                  "description": "Customer Funded Non-Contestable Works: Network switching, substation commissioning, contract inspection",
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                }
+              ],
+              "Compliance Standards": []
+            },
+            "sub-step-extract-funding-determination": {
+              "items": [
+                {
+                  "item_description": "1 x 200 kVA transformer only",
+                  "funding_category": "capital contribution",
+                  "responsible_party": "Endeavour Energy",
+                  "amount_or_formula": null,
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                },
+                {
+                  "item_description": "Spare HV duct as per Fact Sheet 11",
+                  "funding_category": "capital contribution",
+                  "responsible_party": "Endeavour Energy",
+                  "amount_or_formula": null,
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                },
+                {
+                  "item_description": "Duct usage charge as required",
+                  "funding_category": "reimbursement",
+                  "responsible_party": "Customer",
+                  "amount_or_formula": null,
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                },
+                {
+                  "item_description": "Network switching, substation commissioning, contract inspection",
+                  "funding_category": "non-contestable",
+                  "responsible_party": "Customer",
+                  "amount_or_formula": null,
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                },
+                {
+                  "item_description": "All other works required",
+                  "funding_category": "contestable",
+                  "responsible_party": "Customer",
+                  "amount_or_formula": null,
+                  "source_section": "Determination of Funding",
+                  "source_page": 3
+                }
+              ]
+            },
+            "sub-step-extract-earthing": {
+              "Earthing Technical Requirements": [
+                {
+                  "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+                  "source_section": "October 2021",
+                  "source_page": 2
+                }
+              ],
+              "Specific Earthing Standards": [],
+              "Substation Specific Earthing": [
+                {
+                  "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+                  "source_section": "October 2021",
+                  "source_page": 2
+                }
+              ]
+            },
+            "sub-step-extract-lv": {
+              "LV Works": [
+                {
+                  "description": "Remove LV overhead mains between Pole 2 and Pole 4.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                },
+                {
+                  "description": "Install LV UGOH down Pole 1 to Private Pillar 1.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                },
+                {
+                  "description": "From Private Pillar 1, extend unmetered consumers mains to Private Pillars 2(Lot 4), Private Pillar 3(Lot 3) and MSB (Lot 5).",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                }
+              ],
+              "Removal and Installation Requirements": [
+                {
+                  "description": "Remove the Overhead (OH) LV cable currently located between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                },
+                {
+                  "description": "String a new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                }
+              ],
+              "Compliance Standards": [
+                {
+                  "description": "Ensure all LV service works comply with the NSW Service and Installation Rules.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                },
+                {
+                  "description": "Confirm the design adheres to Endeavour Energy standards MDI0031 and MCI0005.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                }
+              ],
+              "Service Connections": [
+                {
+                  "description": "New OH road crossing service connection intended to maintain existing services.",
+                  "source_section": "Method Of Supply Requirement",
+                  "source_page": 2
+                }
+              ]
+            },
+            "sub-step-extract-payment-instructions": {
+              "Preferred Payment Method": {
+                "description": "EFT is the primary method",
+                "source_section": "Determination of Funding",
+                "source_page": 3
+              },
+              "Banking Details": {
+                "description": "BSB: 012-003, Account Number: 8376 89858",
+                "source_section": "Determination of Funding",
+                "source_page": 3
+              },
+              "Mandatory Transaction References": {
+                "description": "Unique alphanumeric reference code: ARP4983A2",
+                "source_section": "Determination of Funding",
+                "source_page": 3
+              },
+              "Document Remittance and Restriction Requirements": {
+                "description": "Email for remittance copies: remittances@endeavourenergy.com.au; Credit cards and cheques are not accepted",
+                "source_section": "Determination of Funding",
+                "source_page": 3
+              },
+              "Invoice Policy": {
+                "description": "Formal Tax Invoice is provided following the receipt of payment",
+                "source_section": "Determination of Funding",
+                "source_page": 3
+              }
+            }
+          },
+          "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/Extraction_NRL15205_DESIGN_BRIEF_v1_1_pdf_Extract_Design_Brief_Informati_20260523_120624_657382.json"
+        }
+      ]
+    },
+    "extraction_step_5": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_proc_extract_site_plan_info_20260523_120707_193968.json",
+      "extractions": [
+        {
+          "filename": "A524058_NRL15205_RETIC_NOTES.pdf",
+          "filepath": "",
+          "document_type": "Reticulation Notes",
+          "document_category": "Site Plan",
+          "input_text_quality": "none",
+          "document_quality": "chunked-image",
+          "page_size": "A3",
+          "requires_chunking": true,
+          "chunk_strategy": "quadrant-split",
+          "estimated_chunks": 4,
+          "actual_chunks_processed": 4,
+          "process_step_name": "Extract Site Plan Information",
+          "total_sections": 4,
+          "relevant_sections": 4,
+          "raw_text_from_chunks": "[top-left, p1, seq1] N\nA\n1\n2\nSITE PLAN\nSCALE 1:1000\nB\nExisting\nDwelling\n3X0463\n03\nC\nPole 4\nRemove LV overhead mains from Pole 3\nInstall LV UGOH on Pole 4\nExtend 240mm2 4 Core Al XLPE cable to Pillar 400355\n400355\nB\nRemove LV overhead mains\nbetween Pole 2 and Pole 4\nRemove Pole 3\nEasement for Underground Cables\nAn easement for LV underground cables minimum of 3m wide,\nto be created in favour of Endeavour Energy within existing Lot 5 DP 244410\nover underground cables from Pole 1 to Pillar 400355\nD\nPole Sub 31174\nDecommission and Remove Sub\nRemove Pole 2 and Ground Stay\nNew\nDwelling\n31174\n2\n396216\n3\nXXXXXXXXX-\n4\n-XX-\n3\n3X0464\n968214\nLOT 3\nDP 244410\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\n43\nLOT 4\nDP 244410\n4\nExisting\nDwelling\n49\n3X0465\nA\n1\n95021\nAll weather access\nto substation required\n3X0466\n5\n6\nLOON RD\nOLD KANGALOON RD\nESTABLISH NEW POLE\nCONSTRUCTION TYPE::\nTRANSFORMER SIZE:\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUT\nEARTHING: SEPERATE\nPole 1\nRemove HV overb\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm2 4\n\n[top-right, p1, seq2] 6\n7\n8\nOLD KANGALOON RD\n9\n10\nDIAL BEFORE YOU DIG\nRef: 30993194\nDate: 30/11/2021\nDBYD searches indicates the presence of services\nwithin the proposed work-site. The Level 1 ASP\n/Constructor is to confirm the location of \"all\" services\nprior to the commencement of works.\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime & as listed on the Endeavour Energy Accredited Service Provider's Internet\nsite. These standards include, but are not limited to:\nCP: Connection Policy,\nEMS: Environmental Management Standard,\nMCI: Mains Construction Instruction,\nMDI: Mains Design Instruction,\nPDI: Protection Design Instruction,\nSDI: Substation Design Instruction,\nSAD: Design Drawing Standard,\nMMI: Mains Maintenance Instruction,\nSMI: Substation Maintenance Instruction,\nLDI: Public Lighting Electrical Design Element.\n11\n1\n12\nNOTES\nThis drawing is to be read in conjunction with the relevant Endeavour Energy\nNetwork Standards and Connection Policy.\n2\nEndeavour Energy Contact Phone: 131081.\n3\nDesign certification shall lapse where:\nA\nWARNING\nA current services search of all\nutilities must be carried out prior to\nthe commencement of works.\nWARNING\nExisting live electrical assets located\nin this vicinity, appropriate safety\nprecautions must be utilised.\nAdditionally, where relevant, the design complies with AS/NZS7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\nPower Line Design Pty Ltd indemnifies Endeavour Energy for any loss or damage\nresulting from non-compliance of the design with the above standards.\nSigned:\nName:\nL McKinnon\nL McKinnon\nService Provider Number: 2486 Date: 08/02/2022\n4\n5\n6\n7\nWORKS COMPLETED / FIELD BOOK\n8\nSAP DATA RURAL\nOH SUB 95021\nHV DOF 182679\nTRF 1 9999968\nLV BUSBAR 34588\nF1-FUSE LABEL 991011\nF2 - FUSE LABEL -\nROUTE LENGTHS\nAll route lengths are to be confirmed\non site by the constructor prior to\nordering materials.\nWARNING\nPotentially significant changes to pole\ntop forces may occur during\nconstruction of this project.\nConstructor must give consideration\nto these changes and ensure that the\nconstruction method does not overload\nany pole or structure.\nConstructed By:\nWorks Completed:\nSignature:\nInspected By:\nESTABLISH NEW POLE SUBSTATION NO: 95021\nCONSTRUCTION TYPE:: SEMI RURAL\nTRANSFORMER SIZE: 200kVA, 3 PHASE\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUTORS: 1\nEARTHING: SEPERATE EARTHING\nPole 1\nRemove HV overhead mains from Pole 2\n9\nDate:\nSignature:\nDate:\nASSET RECORDING\n1:\nof:\nContact No:\nHereby certify that assets marked as-built on this drawing have been recorded in\naccordance with Endeavour Energy's Standard SAD 004.\nSignature:\nDate:\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nPrint Name: Tri Minh Truong\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\n(i) Notice of intent has not been received within six (6) months of this certification,\nor\n(ii) Construction has been interrupted for more than six (6) months.\nWhere design certification has lapsed the design must be resubmitted for\ncertification by the accredited designer.\nATTENTION:\nAccredited Service Provider to notify Endeavour Energy asset data customer\ndepartment daily when cable works is in progress (ph. 131 081).\nATTENTION:\nPermanent survey marks may exist in this area. These are to be located by a\nsurveyor prior to commencement of work.\nATTENTION:\nAll services searches must be checked before construction.\nATTENTION:\nThe preparation of this design has been undertaken giving due consideration to\nthe location of existing services. The Constructor is however responsible for the\nverification of services and permanent survey marks prior to the commencement\nof construction. No responsibility nor liability will be accepted by the designer for\ndamage to existing services as a result of this design.\nWARNING:\nLive Endeavour Energy cables & other services in this area.\nPlease contact \"Dial Before You Dig\" on telephone: 1100 for searches two days\nprior to excavation.\nATTENTION:\nHV cable length values shown in 'Urban Subdivision Related Reimbursement -\nDuct and Cable Schedule' and 'Funding Arrangements for Scope of Works' are\nonly reimbursement quantities calculated by Endeavour Energy. For cable\nconstruction quantities refer to cable lengths in HV, LV and SL circuit diagrams.\n10 Reimbursements:\n11\nReimbursements will be paid to the nominated party on the letter of intent after\nthe works have been completed and the letter of acceptance has been issued.\nThe reimbursed amount is shown in the \"Funding Arrangements for Scope of\nWork table\". Any disagreement with the amount should be resolved with\nEndeavour Energy prior to the commencement of works.\nOperational Limitations:\nUnless approved otherwise, interruption to any customer's supply must be\navoided. The following alternatives should be considered:\nmobile generators and substations,\nlive line work,\ndesign alternatives,\nlow voltage parallels,\nwork practices/standards.\nThe cost is to be funded by the customer/developer.\n12 Environmental Management plan:\n13\n14\n15\n15\nEMP EMS0001 is part of this design (refer to SER for details).\nPollution Controls:\nAll the requirements of the Environmental Protection Authority pollution control\nlegislation are to be strictly adhered to.\nTelecommunications:\nTelecommunications assets are NOT affected by the proposed works.\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\n16 Land Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\nB\nC\nD\n\n[bottom-left, p1, seq3] AUTHORISATION OF ESTIMATE VALUE\nOF ENDEAVOUR ENERGY FUNDED ASSETS\nSigned:\nPrint Name: Tri Minh Truong\nService Number: 37130\nF\nFunding Amount: $ 6226.00\nDate: 24/02/2022\nNew\nDwelling\n31174\n2\n396216\nD\nXX\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\nLOT 5\nDP 244410\n43\nOm 10m 20m 30m 40m 50m 60m\n70m 80m\n90m 100m\nSCALE 1:1000\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nCustomer\nASP Level 1 Electrical Works\nEndeavour Energy Supplied Materials\nCustomer Funded\nNon-Contestable Works\nNIL\n\u2022 All works associated with the inspection, testing,\nswitching and the commissioning associated with\nthis project.\nEndeavour Energy Funded & Constructed\nWorks Required Prior to\nCompletion of Customer\nContestable Project\nWorks Required in\nAssociation of Customer\nContestable Project\nCustomer Funded\nIncluding but not limited to:\n\u2022 Pegging of easements, property boundaries and\ninfrastructure locations,\n\u2022 Registering of Easements,\n\u2022 Provide Site Access,\nOwn Service and Service connections,\nConfirm ground levels.\nNIL\nNIL\nEndeavour Energy Funded & Level 1 ASP\nConstructed - Reimbursement (exc GST)\n1 x 200kVA 3 Phase Pole Top Transformer\nTotal EE Capital Contributions (excl PM & Design)\n$5675.00\nTotal EE Capital Contribution (HV Reimbursed)\n6226.00\nCustomer Funded Contestable Works\nAll other works and materials including but not\nlimited to:\n\u2022 Substation establishment & installation,\n\u2022 Excavation & Trenching,\n\u2022 Duct Installation,\nCable Installation (Pulling & Laying),\nPole Installation & Dressing,\nOverhead Installation\nConductor Stringing/Tensioning,\n\u2022 Installation of Earthing,\n\u2022 Removal of Redundant Assets.\nExisting Duct Usage Charges (exc GST)\nNIL\nCo-ordination Supply Required Date\n14 February 2022\nAssets to be Returned to the nearest Endeavour\nEnergy Depot by Level 1 ASP.\n1 x 25kVA single phase Pole top Transformer\nA\nAMENDMENTS\nORIGINAL\nISSUE\nDRAFT No. 01\n90039\n1\n2\nNodes\nA-B\nExisting Driveway\nAll weather access\nto substation required\nTrench Length\n3X0455\nHigh Voltage Trenching\nLow Voltage Trenching\nStreet Light Trenching\nRoad Crossing Trenching\nTOTAL\n0 m\n198 m\n0 m\n0 m\n198 m\nDuct Reimbursement Schedule\nConfiguration\nNew Footpath Ducts\nTotal:\nLV\nThe preparation of this design has been undertaken\ngiving due consideration to the existing services.\nThe project constructor is wholly responsible for\nverifying the exact location of existing services and\npermanent survey marks prior to commencing\nconstruction. No responsibility or liability will be\naccepted by the designer of this project for damage\nto existing services as a result of this design.\nPower Line Design Ref: 3898\n3\npowerlinedesign\nPOWER LINE DESIGN PTY LTD\nPO BOX 338 Mittagong NSW 2575\nPh (02) 4872 1920 Fax (02) 4872 1240\nAccredited Designer Number 2486/ABN: 33107 591 846\n4\nTotal:\nOLD KANGALOON RD\nRoute Length\n(m)\nDuct Reimbursement\n(m) x ($)\nExisting Duct Usage\n(m) x ($)\n198\n200\nPole 1\nRemove HV overh\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm24\nTRENCH\n125mm Duct\n125mm Duct -\n198m\nOm\n0m\nTEMPLATE VERSION No.5.20\n$0\n$0\nREFERENCE DRAWING'S\nTHIS DRAWING\nAND THE\nCOPYRIGHT\nTHEREIN IS THE\nPROPERTY OF\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED,\nREPRODUCED,\nDISTRIBUTED, LOANED OR\nUSED WITHOUT THE\nWRITTEN CONSENT OF\nENDEAVOUR ENERGY\n5\n6\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\nNew Trench\nWORK OR\n\n\n[bottom-right, p1, seq4] sage\n200\nPole 1\nRemove HV overhead mains from Pole 2\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nTRENCH LEGEND\n125mm Duct - Spare\n125mm Duct with New Cable\nNew Trench\nWORK ORDERS\nVING'S\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n6\n7\n\u25c7\nLEGEND\nOverhead Mains - Existing\nAsset\nRemove Existing Overhead Mains\nHV Mains\nExisting Pole to be Replaced\nLV Mains\nSubstation\nExisting Pole to be Removed\nPole Substation - New\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nPrint Name: Tri Minh Truong\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\nPioneer Cost Share Reimbursement Scheme - Expiry Date: N/A\nPro-Rata Reimbursement for Customer's Load Over 50kVA\nNet Asset\nAsset Cost Unit\nEstimate ($) Quantity Capacity (kVA)\nOriginal Customer\nUtilization (kVA)\nMaximum\nReimbursement\nAmount ($)\nA COST SHARE PIONEER REIMBURSEMENT SCHEME IS NOT APPLICABLE\nTO THIS PROJECT\n15\n15\n16\n17\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\nLand Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\n2021 Section 6.4\nSubstation Access:\nUnrestricted 24 hour 7 day access must be provided to Endeavour Energy's staff,\nvehicles and equipment to the new substation & cables Endeavour Energy locks\nto be installed on locked gates. (Refer to MDI0044, section 5.7 for details)\nPole Substation - Remove\nPillar - New Excavation location\nExisting Service Mains\nMATERIAL QUANTITIES SPECIFIED ON THIS DESIGN:\nThe quantities or dimensions specified on this design are based on\ninformation supplied by the developer, DBYD, the Endeavour GIS, field\nbooks and site conditions at the time of the design. As quantities and\ndimensions are subject to change, the Constructor must check all\nquantities and dimensions on site prior to tendering, ordering and\nconstruction.\nKEY DOCUMENTS TABLE\nThe Certification of this project is supported by the following key documents\nDocument Name\nSummary Environmental Report part of EMS 0001\nNotation Date\n30/11/2021\n23/11/2021\nNRL15205-FPJ4689 Notice of Acceptance of Site-Specific Conditions\nDesigner Safety Report\n04/01/2022\n30/11/2021\nEquipment to be returned to Endeavour Energy - FPJ4252\nCustomer Connection Point (CCP)\nInstall New Ground Stay\nExisting Ground Stay to be Removed\n77\nEasement for Underground Cables\nDuct Indicator\n3X0462\n3X0461\nRemove Pole Substation 31174\n3X0460\nInstall New Pole Substation 95021\n985413 829583\nNew\nExisting\nComments\nField Pole No.\nCAMS File No.\nNRL15205\nORIGINAL\nSCALE\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nTHIS DRAWING SUPPLIES 3 LOTS\nC.A.P. No.\nFILE No.\nNRL15205\nLOT\nNUMBERS\nLot 3, 4 & 5\nDP 244410\nNo. OF\nLOTS\nDEVELOPER\nDEVELOPERS\nREPRESENTATIVE\nCONTACT No.\n3\nAndrew Carson\nAndrew Carson\n0404 849 826\nNew\nReplace\nRemove\nExisting\nBracket\nMounting\nHeight (m)\nLanterns\nDO NOT\nSCALE\nDIMENSIONS\nSpan Length\n(m)\nLine Deviation\n(\u00b0)\nMOSS VALE\nCENTRAL\nROBERTSON 2 REF N3\nWINGECARRIBEE\nDRAWN\nR Menzies\nIN\nMETRES\nDATE\n08/02/2022\nCH'D M Baranowiski\n8\nDESIGN\nR Menzies\n9\n10\nLUHOH + B05\nB24 + SUB\nConstruction\nNumber\nHV\nLUGOH + SUB\nConstruction\nNumber\nLV\nConstructions\n43 OLD KANGALOON ROAD\nROBERTSON\nLOT 5 DP 244410\nNRL15205\nRURAL CONNECTION OF LOAD\n11\nX\n4\nX\n3\nX\n2\n750 2000\n12.5M/12kN WOOD\nC\nX\n1\nAuger Dia\n(ww)\nSet Depth\nHole\n(ww)\nType\n(Length / Strength / Material)\nA1\nStay\nRemove\nDesign Pole\nNumber\nPole\nEndeavour\nEnergy\nH\n524058\nSHEET No 1 OF 2 SHEETS\n12\nA\nG\nF\nE",
+          "chunk_details": [
+            {
+              "chunk_id": "chunk_1",
+              "sequence": 1,
+              "page_number": 1,
+              "region": "top-left",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0001.png",
+              "extracted": {
+                "raw_text": "N\nA\n1\n2\nSITE PLAN\nSCALE 1:1000\nB\nExisting\nDwelling\n3X0463\n03\nC\nPole 4\nRemove LV overhead mains from Pole 3\nInstall LV UGOH on Pole 4\nExtend 240mm2 4 Core Al XLPE cable to Pillar 400355\n400355\nB\nRemove LV overhead mains\nbetween Pole 2 and Pole 4\nRemove Pole 3\nEasement for Underground Cables\nAn easement for LV underground cables minimum of 3m wide,\nto be created in favour of Endeavour Energy within existing Lot 5 DP 244410\nover underground cables from Pole 1 to Pillar 400355\nD\nPole Sub 31174\nDecommission and Remove Sub\nRemove Pole 2 and Ground Stay\nNew\nDwelling\n31174\n2\n396216\n3\nXXXXXXXXX-\n4\n-XX-\n3\n3X0464\n968214\nLOT 3\nDP 244410\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\n43\nLOT 4\nDP 244410\n4\nExisting\nDwelling\n49\n3X0465\nA\n1\n95021\nAll weather access\nto substation required\n3X0466\n5\n6\nLOON RD\nOLD KANGALOON RD\nESTABLISH NEW POLE\nCONSTRUCTION TYPE::\nTRANSFORMER SIZE:\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUT\nEARTHING: SEPERATE\nPole 1\nRemove HV overb\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm2 4",
+                "data": {
+                  "sub-step-extract-all-notes": "Pole 4\nRemove LV overhead mains from Pole 3\nInstall LV UGOH on Pole 4\nExtend 240mm2 4 Core Al XLPE cable to Pillar 400355\nRemove LV overhead mains\nbetween Pole 2 and Pole 4\nRemove Pole 3\nEasement for Underground Cables\nAn easement for LV underground cables minimum of 3m wide,\nto be created in favour of Endeavour Energy within existing Lot 5 DP 244410\nover underground cables from Pole 1 to Pillar 400355\nPole Sub 31174\nDecommission and Remove Sub\nRemove Pole 2 and Ground Stay\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\nAll weather access\nto substation required\nPole 1\nRemove HV overb\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm2 4"
+                }
+              }
+            },
+            {
+              "chunk_id": "chunk_2",
+              "sequence": 2,
+              "page_number": 1,
+              "region": "top-right",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0002.png",
+              "extracted": {
+                "raw_text": "6\n7\n8\nOLD KANGALOON RD\n9\n10\nDIAL BEFORE YOU DIG\nRef: 30993194\nDate: 30/11/2021\nDBYD searches indicates the presence of services\nwithin the proposed work-site. The Level 1 ASP\n/Constructor is to confirm the location of \"all\" services\nprior to the commencement of works.\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime & as listed on the Endeavour Energy Accredited Service Provider's Internet\nsite. These standards include, but are not limited to:\nCP: Connection Policy,\nEMS: Environmental Management Standard,\nMCI: Mains Construction Instruction,\nMDI: Mains Design Instruction,\nPDI: Protection Design Instruction,\nSDI: Substation Design Instruction,\nSAD: Design Drawing Standard,\nMMI: Mains Maintenance Instruction,\nSMI: Substation Maintenance Instruction,\nLDI: Public Lighting Electrical Design Element.\n11\n1\n12\nNOTES\nThis drawing is to be read in conjunction with the relevant Endeavour Energy\nNetwork Standards and Connection Policy.\n2\nEndeavour Energy Contact Phone: 131081.\n3\nDesign certification shall lapse where:\nA\nWARNING\nA current services search of all\nutilities must be carried out prior to\nthe commencement of works.\nWARNING\nExisting live electrical assets located\nin this vicinity, appropriate safety\nprecautions must be utilised.\nAdditionally, where relevant, the design complies with AS/NZS7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\nPower Line Design Pty Ltd indemnifies Endeavour Energy for any loss or damage\nresulting from non-compliance of the design with the above standards.\nSigned:\nName:\nL McKinnon\nL McKinnon\nService Provider Number: 2486 Date: 08/02/2022\n4\n5\n6\n7\nWORKS COMPLETED / FIELD BOOK\n8\nSAP DATA RURAL\nOH SUB 95021\nHV DOF 182679\nTRF 1 9999968\nLV BUSBAR 34588\nF1-FUSE LABEL 991011\nF2 - FUSE LABEL -\nROUTE LENGTHS\nAll route lengths are to be confirmed\non site by the constructor prior to\nordering materials.\nWARNING\nPotentially significant changes to pole\ntop forces may occur during\nconstruction of this project.\nConstructor must give consideration\nto these changes and ensure that the\nconstruction method does not overload\nany pole or structure.\nConstructed By:\nWorks Completed:\nSignature:\nInspected By:\nESTABLISH NEW POLE SUBSTATION NO: 95021\nCONSTRUCTION TYPE:: SEMI RURAL\nTRANSFORMER SIZE: 200kVA, 3 PHASE\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUTORS: 1\nEARTHING: SEPERATE EARTHING\nPole 1\nRemove HV overhead mains from Pole 2\n9\nDate:\nSignature:\nDate:\nASSET RECORDING\n1:\nof:\nContact No:\nHereby certify that assets marked as-built on this drawing have been recorded in\naccordance with Endeavour Energy's Standard SAD 004.\nSignature:\nDate:\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nPrint Name: Tri Minh Truong\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\n(i) Notice of intent has not been received within six (6) months of this certification,\nor\n(ii) Construction has been interrupted for more than six (6) months.\nWhere design certification has lapsed the design must be resubmitted for\ncertification by the accredited designer.\nATTENTION:\nAccredited Service Provider to notify Endeavour Energy asset data customer\ndepartment daily when cable works is in progress (ph. 131 081).\nATTENTION:\nPermanent survey marks may exist in this area. These are to be located by a\nsurveyor prior to commencement of work.\nATTENTION:\nAll services searches must be checked before construction.\nATTENTION:\nThe preparation of this design has been undertaken giving due consideration to\nthe location of existing services. The Constructor is however responsible for the\nverification of services and permanent survey marks prior to the commencement\nof construction. No responsibility nor liability will be accepted by the designer for\ndamage to existing services as a result of this design.\nWARNING:\nLive Endeavour Energy cables & other services in this area.\nPlease contact \"Dial Before You Dig\" on telephone: 1100 for searches two days\nprior to excavation.\nATTENTION:\nHV cable length values shown in 'Urban Subdivision Related Reimbursement -\nDuct and Cable Schedule' and 'Funding Arrangements for Scope of Works' are\nonly reimbursement quantities calculated by Endeavour Energy. For cable\nconstruction quantities refer to cable lengths in HV, LV and SL circuit diagrams.\n10 Reimbursements:\n11\nReimbursements will be paid to the nominated party on the letter of intent after\nthe works have been completed and the letter of acceptance has been issued.\nThe reimbursed amount is shown in the \"Funding Arrangements for Scope of\nWork table\". Any disagreement with the amount should be resolved with\nEndeavour Energy prior to the commencement of works.\nOperational Limitations:\nUnless approved otherwise, interruption to any customer's supply must be\navoided. The following alternatives should be considered:\nmobile generators and substations,\nlive line work,\ndesign alternatives,\nlow voltage parallels,\nwork practices/standards.\nThe cost is to be funded by the customer/developer.\n12 Environmental Management plan:\n13\n14\n15\n15\nEMP EMS0001 is part of this design (refer to SER for details).\nPollution Controls:\nAll the requirements of the Environmental Protection Authority pollution control\nlegislation are to be strictly adhered to.\nTelecommunications:\nTelecommunications assets are NOT affected by the proposed works.\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\n16 Land Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\nB\nC\nD",
+                "data": {
+                  "sub-step-extract-all-notes": "1 This drawing is to be read in conjunction with the relevant Endeavour Energy\nNetwork Standards and Connection Policy.\n2 Endeavour Energy Contact Phone: 131081.\n3 Design certification shall lapse where:\n(i) Notice of intent has not been received within six (6) months of this certification,\nor\n(ii) Construction has been interrupted for more than six (6) months.\nWhere design certification has lapsed the design must be resubmitted for\ncertification by the accredited designer.\n4 ATTENTION:\nAccredited Service Provider to notify Endeavour Energy asset data customer\ndepartment daily when cable works is in progress (ph. 131 081).\n5 ATTENTION:\nPermanent survey marks may exist in this area. These are to be located by a\nsurveyor prior to commencement of work.\n6 ATTENTION:\nAll services searches must be checked before construction.\n7 ATTENTION:\nThe preparation of this design has been undertaken giving due consideration to\nthe location of existing services. The Constructor is however responsible for the\nverification of services and permanent survey marks prior to the commencement\nof construction. No responsibility nor liability will be accepted by the designer for\ndamage to existing services as a result of this design.\n8 WARNING:\nLive Endeavour Energy cables & other services in this area.\nPlease contact \"Dial Before You Dig\" on telephone: 1100 for searches two days\nprior to excavation.\n9 ATTENTION:\nHV cable length values shown in 'Urban Subdivision Related Reimbursement -\nDuct and Cable Schedule' and 'Funding Arrangements for Scope of Works' are\nonly reimbursement quantities calculated by Endeavour Energy. For cable\nconstruction quantities refer to cable lengths in HV, LV and SL circuit diagrams.\n10 Reimbursements:\nReimbursements will be paid to the nominated party on the letter of intent after\nthe works have been completed and the letter of acceptance has been issued.\nThe reimbursed amount is shown in the \"Funding Arrangements for Scope of\nWork table\". Any disagreement with the amount should be resolved with\nEndeavour Energy prior to the commencement of works.\n11 Operational Limitations:\nUnless approved otherwise, interruption to any customer's supply must be\navoided. The following alternatives should be considered:\nmobile generators and substations,\nlive line work,\ndesign alternatives,\nlow voltage parallels,\nwork practices/standards.\nThe cost is to be funded by the customer/developer.\n12 Environmental Management plan:\nEMP EMS0001 is part of this design (refer to SER for details).\n13 Pollution Controls:\nAll the requirements of the Environmental Protection Authority pollution control\nlegislation are to be strictly adhered to.\n14 Telecommunications:\nTelecommunications assets are NOT affected by the proposed works.\n15 Existing Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\n15 Underground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\n16 Land Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July"
+                }
+              }
+            },
+            {
+              "chunk_id": "chunk_3",
+              "sequence": 3,
+              "page_number": 1,
+              "region": "bottom-left",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0003.png",
+              "extracted": {
+                "raw_text": "AUTHORISATION OF ESTIMATE VALUE\nOF ENDEAVOUR ENERGY FUNDED ASSETS\nSigned:\nPrint Name: Tri Minh Truong\nService Number: 37130\nF\nFunding Amount: $ 6226.00\nDate: 24/02/2022\nNew\nDwelling\n31174\n2\n396216\nD\nXX\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\nLOT 5\nDP 244410\n43\nOm 10m 20m 30m 40m 50m 60m\n70m 80m\n90m 100m\nSCALE 1:1000\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nCustomer\nASP Level 1 Electrical Works\nEndeavour Energy Supplied Materials\nCustomer Funded\nNon-Contestable Works\nNIL\n\u2022 All works associated with the inspection, testing,\nswitching and the commissioning associated with\nthis project.\nEndeavour Energy Funded & Constructed\nWorks Required Prior to\nCompletion of Customer\nContestable Project\nWorks Required in\nAssociation of Customer\nContestable Project\nCustomer Funded\nIncluding but not limited to:\n\u2022 Pegging of easements, property boundaries and\ninfrastructure locations,\n\u2022 Registering of Easements,\n\u2022 Provide Site Access,\nOwn Service and Service connections,\nConfirm ground levels.\nNIL\nNIL\nEndeavour Energy Funded & Level 1 ASP\nConstructed - Reimbursement (exc GST)\n1 x 200kVA 3 Phase Pole Top Transformer\nTotal EE Capital Contributions (excl PM & Design)\n$5675.00\nTotal EE Capital Contribution (HV Reimbursed)\n6226.00\nCustomer Funded Contestable Works\nAll other works and materials including but not\nlimited to:\n\u2022 Substation establishment & installation,\n\u2022 Excavation & Trenching,\n\u2022 Duct Installation,\nCable Installation (Pulling & Laying),\nPole Installation & Dressing,\nOverhead Installation\nConductor Stringing/Tensioning,\n\u2022 Installation of Earthing,\n\u2022 Removal of Redundant Assets.\nExisting Duct Usage Charges (exc GST)\nNIL\nCo-ordination Supply Required Date\n14 February 2022\nAssets to be Returned to the nearest Endeavour\nEnergy Depot by Level 1 ASP.\n1 x 25kVA single phase Pole top Transformer\nA\nAMENDMENTS\nORIGINAL\nISSUE\nDRAFT No. 01\n90039\n1\n2\nNodes\nA-B\nExisting Driveway\nAll weather access\nto substation required\nTrench Length\n3X0455\nHigh Voltage Trenching\nLow Voltage Trenching\nStreet Light Trenching\nRoad Crossing Trenching\nTOTAL\n0 m\n198 m\n0 m\n0 m\n198 m\nDuct Reimbursement Schedule\nConfiguration\nNew Footpath Ducts\nTotal:\nLV\nThe preparation of this design has been undertaken\ngiving due consideration to the existing services.\nThe project constructor is wholly responsible for\nverifying the exact location of existing services and\npermanent survey marks prior to commencing\nconstruction. No responsibility or liability will be\naccepted by the designer of this project for damage\nto existing services as a result of this design.\nPower Line Design Ref: 3898\n3\npowerlinedesign\nPOWER LINE DESIGN PTY LTD\nPO BOX 338 Mittagong NSW 2575\nPh (02) 4872 1920 Fax (02) 4872 1240\nAccredited Designer Number 2486/ABN: 33107 591 846\n4\nTotal:\nOLD KANGALOON RD\nRoute Length\n(m)\nDuct Reimbursement\n(m) x ($)\nExisting Duct Usage\n(m) x ($)\n198\n200\nPole 1\nRemove HV overh\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm24\nTRENCH\n125mm Duct\n125mm Duct -\n198m\nOm\n0m\nTEMPLATE VERSION No.5.20\n$0\n$0\nREFERENCE DRAWING'S\nTHIS DRAWING\nAND THE\nCOPYRIGHT\nTHEREIN IS THE\nPROPERTY OF\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED,\nREPRODUCED,\nDISTRIBUTED, LOANED OR\nUSED WITHOUT THE\nWRITTEN CONSENT OF\nENDEAVOUR ENERGY\n5\n6\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\nNew Trench\nWORK OR\n",
+                "data": {
+                  "sub-step-extract-all-notes": "Remove HV overhead mains between Pole 1 and Pole 2\nAll weather access to substation required\nPole 1\nRemove HV overh\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm24\nThe preparation of this design has been undertaken\ngiving due consideration to the existing services.\nThe project constructor is wholly responsible for\nverifying the exact location of existing services and\npermanent survey marks prior to commencing\nconstruction. No responsibility or liability will be\naccepted by the designer of this project for damage\nto existing services as a result of this design."
+                }
+              }
+            },
+            {
+              "chunk_id": "chunk_4",
+              "sequence": 4,
+              "page_number": 1,
+              "region": "bottom-right",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0004.png",
+              "extracted": {
+                "raw_text": "sage\n200\nPole 1\nRemove HV overhead mains from Pole 2\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nTRENCH LEGEND\n125mm Duct - Spare\n125mm Duct with New Cable\nNew Trench\nWORK ORDERS\nVING'S\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n6\n7\n\u25c7\nLEGEND\nOverhead Mains - Existing\nAsset\nRemove Existing Overhead Mains\nHV Mains\nExisting Pole to be Replaced\nLV Mains\nSubstation\nExisting Pole to be Removed\nPole Substation - New\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nPrint Name: Tri Minh Truong\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\nPioneer Cost Share Reimbursement Scheme - Expiry Date: N/A\nPro-Rata Reimbursement for Customer's Load Over 50kVA\nNet Asset\nAsset Cost Unit\nEstimate ($) Quantity Capacity (kVA)\nOriginal Customer\nUtilization (kVA)\nMaximum\nReimbursement\nAmount ($)\nA COST SHARE PIONEER REIMBURSEMENT SCHEME IS NOT APPLICABLE\nTO THIS PROJECT\n15\n15\n16\n17\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\nLand Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\n2021 Section 6.4\nSubstation Access:\nUnrestricted 24 hour 7 day access must be provided to Endeavour Energy's staff,\nvehicles and equipment to the new substation & cables Endeavour Energy locks\nto be installed on locked gates. (Refer to MDI0044, section 5.7 for details)\nPole Substation - Remove\nPillar - New Excavation location\nExisting Service Mains\nMATERIAL QUANTITIES SPECIFIED ON THIS DESIGN:\nThe quantities or dimensions specified on this design are based on\ninformation supplied by the developer, DBYD, the Endeavour GIS, field\nbooks and site conditions at the time of the design. As quantities and\ndimensions are subject to change, the Constructor must check all\nquantities and dimensions on site prior to tendering, ordering and\nconstruction.\nKEY DOCUMENTS TABLE\nThe Certification of this project is supported by the following key documents\nDocument Name\nSummary Environmental Report part of EMS 0001\nNotation Date\n30/11/2021\n23/11/2021\nNRL15205-FPJ4689 Notice of Acceptance of Site-Specific Conditions\nDesigner Safety Report\n04/01/2022\n30/11/2021\nEquipment to be returned to Endeavour Energy - FPJ4252\nCustomer Connection Point (CCP)\nInstall New Ground Stay\nExisting Ground Stay to be Removed\n77\nEasement for Underground Cables\nDuct Indicator\n3X0462\n3X0461\nRemove Pole Substation 31174\n3X0460\nInstall New Pole Substation 95021\n985413 829583\nNew\nExisting\nComments\nField Pole No.\nCAMS File No.\nNRL15205\nORIGINAL\nSCALE\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nTHIS DRAWING SUPPLIES 3 LOTS\nC.A.P. No.\nFILE No.\nNRL15205\nLOT\nNUMBERS\nLot 3, 4 & 5\nDP 244410\nNo. OF\nLOTS\nDEVELOPER\nDEVELOPERS\nREPRESENTATIVE\nCONTACT No.\n3\nAndrew Carson\nAndrew Carson\n0404 849 826\nNew\nReplace\nRemove\nExisting\nBracket\nMounting\nHeight (m)\nLanterns\nDO NOT\nSCALE\nDIMENSIONS\nSpan Length\n(m)\nLine Deviation\n(\u00b0)\nMOSS VALE\nCENTRAL\nROBERTSON 2 REF N3\nWINGECARRIBEE\nDRAWN\nR Menzies\nIN\nMETRES\nDATE\n08/02/2022\nCH'D M Baranowiski\n8\nDESIGN\nR Menzies\n9\n10\nLUHOH + B05\nB24 + SUB\nConstruction\nNumber\nHV\nLUGOH + SUB\nConstruction\nNumber\nLV\nConstructions\n43 OLD KANGALOON ROAD\nROBERTSON\nLOT 5 DP 244410\nNRL15205\nRURAL CONNECTION OF LOAD\n11\nX\n4\nX\n3\nX\n2\n750 2000\n12.5M/12kN WOOD\nC\nX\n1\nAuger Dia\n(ww)\nSet Depth\nHole\n(ww)\nType\n(Length / Strength / Material)\nA1\nStay\nRemove\nDesign Pole\nNumber\nPole\nEndeavour\nEnergy\nH\n524058\nSHEET No 1 OF 2 SHEETS\n12\nA\nG\nF\nE",
+                "data": {
+                  "sub-step-extract-all-notes": "Pole 1\nRemove HV overhead mains from Pole 2\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\n15 Existing Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\n15 Underground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5 ,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MDI0044, Annexure 1 for Standard Easement Terms)\n16 Land Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\n2021 - Section 6.4\n17 Substation Access:\nUnrestricted 24 hour 7 day access must be provided to Endeavour Energy's staff,\nvehicles and equipment to the new substation & cables Endeavour Energy locks\nto be installed on locked gates. (Refer to MDI0044 , section 5.7 for details)\nMATERIAL QUANTITIES SPECIFIED ON THIS DESIGN:\nThe quantities or dimensions specified on this design are based on\ninformation supplied by the developer, DBYD, the Endeavour GIS, field\nbooks and site conditions at the time of the design. As quantities and\ndimensions are subject to change, the Constructor must check all\nquantities and dimensions on site prior to tendering, ordering and\nconstruction."
+                }
+              }
+            }
+          ],
+          "stitched_boundaries": [],
+          "sub_step_extractions": {
+            "sub-step-extract-all-notes": {
+              "value": "1 This drawing is to be read in conjunction with the relevant Endeavour Energy\nNetwork Standards and Connection Policy.\n2 Endeavour Energy Contact Phone: 131081.\n3 Design certification shall lapse where:\n(i) Notice of intent has not been received within six (6) months of this certification,\nor\n(ii) Construction has been interrupted for more than six (6) months.\nWhere design certification has lapsed the design must be resubmitted for\ncertification by the accredited designer.\n4 ATTENTION:\nAccredited Service Provider to notify Endeavour Energy asset data customer\ndepartment daily when cable works is in progress (ph. 131 081).\n5 ATTENTION:\nPermanent survey marks may exist in this area. These are to be located by a\nsurveyor prior to commencement of work.\n6 ATTENTION:\nAll services searches must be checked before construction.\n7 ATTENTION:\nThe preparation of this design has been undertaken giving due consideration to\nthe location of existing services. The Constructor is however responsible for the\nverification of services and permanent survey marks prior to the commencement\nof construction. No responsibility nor liability will be accepted by the designer for\ndamage to existing services as a result of this design.\n8 WARNING:\nLive Endeavour Energy cables & other services in this area.\nPlease contact \"Dial Before You Dig\" on telephone: 1100 for searches two days\nprior to excavation.\n9 ATTENTION:\nHV cable length values shown in 'Urban Subdivision Related Reimbursement -\nDuct and Cable Schedule' and 'Funding Arrangements for Scope of Works' are\nonly reimbursement quantities calculated by Endeavour Energy. For cable\nconstruction quantities refer to cable lengths in HV, LV and SL circuit diagrams.\n10 Reimbursements:\nReimbursements will be paid to the nominated party on the letter of intent after\nthe works have been completed and the letter of acceptance has been issued.\nThe reimbursed amount is shown in the \"Funding Arrangements for Scope of\nWork table\". Any disagreement with the amount should be resolved with\nEndeavour Energy prior to the commencement of works.\n11 Operational Limitations:\nUnless approved otherwise, interruption to any customer's supply must be\navoided. The following alternatives should be considered:\nmobile generators and substations,\nlive line work,\ndesign alternatives,\nlow voltage parallels,\nwork practices/standards.\nThe cost is to be funded by the customer/developer.\n12 Environmental Management plan:\nEMP EMS0001 is part of this design (refer to SER for details).\n13 Pollution Controls:\nAll the requirements of the Environmental Protection Authority pollution control\nlegislation are to be strictly adhered to.\n14 Telecommunications:\nTelecommunications assets are NOT affected by the proposed works.\n15 Underground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5 ,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MDI0044, Annexure 1 for Standard Easement Terms)\n16 Land Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\n2021 - Section 6.4\n17 Substation Access:\nUnrestricted 24 hour 7 day access must be provided to Endeavour Energy's staff,\nvehicles and equipment to the new substation & cables Endeavour Energy locks\nto be installed on locked gates. (Refer to MDI0044 , section 5.7 for details)\nMATERIAL QUANTITIES SPECIFIED ON THIS DESIGN:\nThe quantities or dimensions specified on this design are based on\ninformation supplied by the developer, DBYD, the Endeavour GIS, field\nbooks and site conditions at the time of the design. As quantities and\ndimensions are subject to change, the Constructor must check all\nquantities and dimensions on site prior to tendering, ordering and\nconstruction.",
+              "sub_step_name": "Extract All Drawing Notes and Annotations",
+              "phase": 1
+            },
+            "sub-step-substation-data": {
+              "value": {
+                "Substation Asset Number": "95021",
+                "Transformer Size": "200kVA, 3 PHASE",
+                "HV Switchgear": "NOT FOUND",
+                "Voltage Level": "11000V",
+                "LV Switchgear": "NOT FOUND",
+                "Cubicle Size": "NOT FOUND",
+                "Earthing": "SEPERATE EARTHING"
+              },
+              "sub_step_name": "Substation Notes \u2014 Structured Data Extraction",
+              "phase": 2
+            },
+            "sub-step-field-check": {
+              "value": "YES",
+              "sub_step_name": "Assets Field Check Compliance",
+              "phase": 2
+            },
+            "sub-step-easement-restriction": {
+              "value": "NOT REQUIRED",
+              "sub_step_name": "Easement \u2014 Restriction on Use of Land (Swimming Pool Setback)",
+              "phase": 2
+            },
+            "sub-step-easement-substation": {
+              "value": "NOT REQUIRED",
+              "sub_step_name": "Easement \u2014 Padmount Substation Easement Creation",
+              "phase": 2
+            }
+          },
+          "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/Extraction_A524058_NRL15205_RETIC_NOTES_pdf_Extract_Site_Plan_Information_20260523_120707_193968.json"
+        }
+      ]
+    },
+    "extraction_step_6": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_proc_extract_site_plan_info_20260523_121016_561381.json",
+      "extractions": [
+        {
+          "filename": "A524058_NRL15205_RETIC_NOTES.pdf",
+          "filepath": "",
+          "document_type": "Reticulation Notes",
+          "document_category": "Site Plan",
+          "input_text_quality": "none",
+          "document_quality": "chunked-image",
+          "page_size": "A3",
+          "requires_chunking": true,
+          "chunk_strategy": "quadrant-split",
+          "estimated_chunks": 4,
+          "actual_chunks_processed": 4,
+          "process_step_name": "Extract Drawing Legend",
+          "total_sections": 4,
+          "relevant_sections": 4,
+          "raw_text_from_chunks": "[top-left, p1, seq1] D\nC\nB\nN\nA\n1\n2\nSITE PLAN\nSCALE 1:1000\nExisting\nDwelling\n3X0463\n03\nPole 4\nRemove LV overhead mains from Pole 3\nInstall LV UGOH on Pole 4\nExtend 240mm2 4 Core Al XLPE cable to Pillar 400355\n400355\nB\nRemove LV overhead mains\nbetween Pole 2 and Pole 4\nRemove Pole 3\nEasement for Underground Cables\nAn easement for LV underground cables minimum of 3m wide,\nto be created in favour of Endeavour Energy within existing Lot 5 DP 244410\nover underground cables from Pole 1 to Pillar 400355\nPole Sub 31174\nDecommission and Remove Sub\nRemove Pole 2 and Ground Stay\nNew\nDwelling\n31174\n2\n396216\n3\nXXXXXXXXX-\n4\n-XX-\n3\n3X0464\n968214\nLOT 3\nDP 244410\nD\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\n43\nLOT 4\nDP 244410\n4\nExisting\nDwelling\n49\n3X0465\nA\n1\n95021\nAll weather access\nto substation required\n3X0466\n5\n6\nLOON RD\nOLD KANGALOON RD\nESTABLISH NEW POLE\nCONSTRUCTION TYPE::\nTRANSFORMER SIZE:\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUT\nEARTHING: SEPERATE\nPole 1\nRemove HV overb\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm2 4\n\n[top-right, p1, seq2] 6\n7\n8\n9\n10\nDIAL BEFORE YOU DIG\nRef: 30993194\nDate: 30/11/2021\nDBYD searches indicates the presence of services\nwithin the proposed work-site. The Level 1 ASP\n/Constructor is to confirm the location of \"all\" services\nprior to the commencement of works.\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime & as listed on the Endeavour Energy Accredited Service Provider's Internet\nsite. These standards include, but are not limited to:\nCP: Connection Policy,\nEMS: Environmental Management Standard,\nMCI: Mains Construction Instruction,\n11\n1\n12\nNOTES\nThis drawing is to be read in conjunction with the relevant Endeavour Energy\nNetwork Standards and Connection Policy.\n2\nEndeavour Energy Contact Phone: 131081.\n3\nDesign certification shall lapse where:\nA\nMDI: Mains Design Instruction,\nPDI: Protection Design Instruction,\nSDI: Substation Design Instruction,\nSAD: Design Drawing Standard,\nMMI: Mains Maintenance Instruction,\nSMI: Substation Maintenance Instruction,\nLDI: Public Lighting Electrical Design Element.\nWARNING\nA current services search of all\nutilities must be carried out prior to\nthe commencement of works.\nWARNING\nExisting live electrical assets located\nin this vicinity, appropriate safety\nprecautions must be utilised.\nAdditionally, where relevant, the design complies with AS/NZS7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\nPower Line Design Pty Ltd indemnifies Endeavour Energy for any loss or damage\nresulting from non-compliance of the design with the above standards.\nSigned:\nName:\nL McKinnon\nL McKinnon\nService Provider Number: 2486 Date: 08/02/2022\n4\n5\n6\n7\nWORKS COMPLETED / FIELD BOOK\n8\nSAP DATA RURAL\nOH SUB 95021\n182679\n9999968\n34588\nHV DOF\nTRF 1\nLV BUSBAR\nF1-FUSE LABEL 991011\nF2 - FUSE LABEL\nROUTE LENGTHS\nAll route lengths are to be confirmed\non site by the constructor prior to\nordering materials.\nWARNING\nPotentially significant changes to pole\ntop forces may occur during\nconstruction of this project.\nConstructor must give consideration\nto these changes and ensure that the\nconstruction method does not overload\nany pole or structure.\nConstructed By:\nWorks Completed:\nSignature:\nInspected By:\nESTABLISH NEW POLE SUBSTATION NO: 95021\nCONSTRUCTION TYPE:: SEMI RURAL\nTRANSFORMER SIZE: 200kVA, 3 PHASE\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUTORS: 1\nEARTHING: SEPERATE EARTHING\nPole 1\nRemove HV overhead mains from Pole 2\n9\nDate:\nSignature:\nDate:\nASSET RECORDING\n1:\nof:\nContact No:\nHereby certify that assets marked as-built on this drawing have been recorded in\naccordance with Endeavour Energy's Standard SAD 004.\nSignature:\nDate:\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nPrint Name: Tri Minh Truong\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\n(i) Notice of intent has not been received within six (6) months of this certification,\nor\n(ii) Construction has been interrupted for more than six (6) months.\nWhere design certification has lapsed the design must be resubmitted for\ncertification by the accredited designer.\nATTENTION:\nAccredited Service Provider to notify Endeavour Energy asset data customer\ndepartment daily when cable works is in progress (ph. 131081).\nATTENTION:\nPermanent survey marks may exist in this area. These are to be located by a\nsurveyor prior to commencement of work.\nATTENTION:\nAll services searches must be checked before construction.\nATTENTION:\nThe preparation of this design has been undertaken giving due consideration to\nthe location of existing services. The Constructor is however responsible for the\nverification of services and permanent survey marks prior to the commencement\nof construction. No responsibility nor liability will be accepted by the designer for\ndamage to existing services as a result of this design.\nWARNING:\nLive Endeavour Energy cables & other services in this area.\nPlease contact \"Dial Before You Dig\" on telephone: 1100 for searches two days\nprior to excavation.\nATTENTION:\nHV cable length values shown in 'Urban Subdivision Related Reimbursement -\nDuct and Cable Schedule' and 'Funding Arrangements for Scope of Works' are\nonly reimbursement quantities calculated by Endeavour Energy. For cable\nconstruction quantities refer to cable lengths in HV, LV and SL circuit diagrams.\n10 Reimbursements:\n11\nReimbursements will be paid to the nominated party on the letter of intent after\nthe works have been completed and the letter of acceptance has been issued.\nThe reimbursed amount is shown in the \"Funding Arrangements for Scope of\nWork table\". Any disagreement with the amount should be resolved with\nEndeavour Energy prior to the commencement of works.\nOperational Limitations:\nUnless approved otherwise, interruption to any customer's supply must be\navoided. The following alternatives should be considered:\nmobile generators and substations,\nlive line work,\ndesign alternatives,\nlow voltage parallels,\nwork practices/standards.\nThe cost is to be funded by the customer/developer.\n12 Environmental Management plan:\n13\n14\n15\n15\nEMP EMS0001 is part of this design (refer to SER for details).\nPollution Controls:\nAll the requirements of the Environmental Protection Authority pollution control\nlegislation are to be strictly adhered to.\nTelecommunications:\nTelecommunications assets are NOT affected by the proposed works.\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\n16 Land Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\nOLD KANGALOON RD\nB\nC\nD\n\n[bottom-left, p1, seq3] AUTHORISATION OF ESTIMATE VALUE\nOF ENDEAVOUR ENERGY FUNDED ASSETS\nSigned:\nPrint Name: Tri Minh Truong\nService Number: 37130\nF\nFunding Amount: $ 6226.00\nDate: 24/02/2022\nNew\nDwelling\n31174\n2\n396216\nD\nXX\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\nLOT 5\nDP 244410\n43\nOm 10m 20m 30m 40m 50m 60m\n70m 80m\n90m 100m\nSCALE 1:1000\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nCustomer\nASP Level 1 Electrical Works\nEndeavour Energy Supplied Materials\nCustomer Funded\nNon-Contestable Works\nNIL\n\u2022 All works associated with the inspection, testing,\nswitching and the commissioning associated with\nthis project.\nEndeavour Energy Funded & Constructed\nWorks Required Prior to\nCompletion of Customer\nContestable Project\nWorks Required in\nAssociation of Customer\nContestable Project\nCustomer Funded\nIncluding but not limited to:\n\u2022 Pegging of easements, property boundaries and\ninfrastructure locations,\n\u2022 Registering of Easements,\n\u2022 Provide Site Access,\nOwn Service and Service connections,\nConfirm ground levels.\nNIL\nNIL\nEndeavour Energy Funded & Level 1 ASP\nConstructed - Reimbursement (exc GST)\n1 x 200kVA 3 Phase Pole Top Transformer\nTotal EE Capital Contributions (excl PM & Design)\n$5675.00\nTotal EE Capital Contribution (HV Reimbursed)\n6226.00\nCustomer Funded Contestable Works\nAll other works and materials including but not\nlimited to:\n\u2022 Substation establishment & installation,\n\u2022 Excavation & Trenching,\n\u2022 Duct Installation,\nCable Installation (Pulling & Laying),\nPole Installation & Dressing,\nOverhead Installation\nConductor Stringing/Tensioning,\n\u2022 Installation of Earthing,\n\u2022 Removal of Redundant Assets.\nExisting Duct Usage Charges (exc GST)\nNIL\nCo-ordination Supply Required Date\n14 February 2022\nAssets to be Returned to the nearest Endeavour\nEnergy Depot by Level 1 ASP.\n1 x 25kVA single phase Pole top Transformer\nA\nAMENDMENTS\nORIGINAL\nISSUE\nDRAFT No. 01\n90039\n1\n2\nNodes\nA-B\nExisting Driveway\nAll weather access\nto substation required\nTrench Length\n3X0455\nHigh Voltage Trenching\nLow Voltage Trenching\nStreet Light Trenching\nRoad Crossing Trenching\nTOTAL\n0 m\n198 m\n0 m\n0 m\n198 m\nDuct Reimbursement Schedule\nConfiguration\nNew Footpath Ducts\nTotal:\nLV\nThe preparation of this design has been undertaken\ngiving due consideration to the existing services.\nThe project constructor is wholly responsible for\nverifying the exact location of existing services and\npermanent survey marks prior to commencing\nconstruction. No responsibility or liability will be\naccepted by the designer of this project for damage\nto existing services as a result of this design.\nPower Line Design Ref: 3898\n3\npowerlinedesign\nPOWER LINE DESIGN PTY LTD\nPO BOX 338 Mittagong NSW 2575\nPh (02) 4872 1920 Fax (02) 4872 1240\nAccredited Designer Number 2486/ABN: 33107 591 846\n4\nTotal:\nOLD KANGALOON RD\nRoute Length\n(m)\nDuct Reimbursement\n(m) x ($)\nExisting Duct Usage\n(m) x ($)\n198\n200\nPole 1\nRemove HV overh\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm24\nTRENCH\n125mm Duct\n125mm Duct -\n198m\nOm\n0m\nTEMPLATE VERSION No.5.20\n$0\n$0\nREFERENCE DRAWING'S\nTHIS DRAWING\nAND THE\nCOPYRIGHT\nTHEREIN IS THE\nPROPERTY OF\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED,\nREPRODUCED,\nDISTRIBUTED, LOANED OR\nUSED WITHOUT THE\nWRITTEN CONSENT OF\nENDEAVOUR ENERGY\n5\n6\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\nNew Trench\nWORK OR\n\n[bottom-right, p1, seq4] sage\n200\nPole 1\nRemove HV overhead mains from Pole 2\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nTRENCH LEGEND\n125mm Duct - Spare\n125mm Duct - with New Cable\nNew Trench\nWORK ORDERS\nVING'S\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n6\n7\n\u25c7\nLEGEND\nOverhead Mains - Existing\nAsset\nRemove Existing Overhead Mains\nHV Mains\nExisting Pole to be Replaced\nLV Mains\nSubstation\nExisting Pole to be Removed\nPole Substation - New\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nPrint Name: Tri Minh Truong\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\nPioneer Cost Share Reimbursement Scheme - Expiry Date: N/A\nPro-Rata Reimbursement for Customer's Load Over 50kVA\nNet Asset\nAsset Cost Unit\nEstimate ($) Quantity Capacity (kVA)\nOriginal Customer\nUtilization (kVA)\nMaximum\nReimbursement\nAmount ($)\nA COST SHARE PIONEER REIMBURSEMENT SCHEME IS NOT APPLICABLE\nTO THIS PROJECT\n15\n15\n16\n17\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\nLand Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\n2021 Section 6.4\nSubstation Access:\nUnrestricted 24 hour 7 day access must be provided to Endeavour Energy's staff,\nvehicles and equipment to the new substation & cables Endeavour Energy locks\nto be installed on locked gates. (Refer to MDI0044, section 5.7 for details)\nPole Substation - Remove\nPillar - New Excavation location\nExisting Service Mains\nMATERIAL QUANTITIES SPECIFIED ON THIS DESIGN:\nThe quantities or dimensions specified on this design are based on\ninformation supplied by the developer, DBYD, the Endeavour GIS, field\nbooks and site conditions at the time of the design. As quantities and\ndimensions are subject to change, the Constructor must check all\nquantities and dimensions on site prior to tendering, ordering and\nconstruction.\nKEY DOCUMENTS TABLE\nThe Certification of this project is supported by the following key documents\nDocument Name\nSummary Environmental Report part of EMS 0001\nNotation Date\n30/11/2021\n23/11/2021\nNRL15205-FPJ4689 Notice of Acceptance of Site-Specific Conditions\nDesigner Safety Report\n04/01/2022\n30/11/2021\nEquipment to be returned to Endeavour Energy - FPJ4252\nCustomer Connection Point (CCP)\nInstall New Ground Stay\nExisting Ground Stay to be Removed\n77\nEasement for Underground Cables\nDuct Indicator\n3X0462\n3X0461\nRemove Pole Substation 31174\n3X0460\nInstall New Pole Substation 95021\n985413 829583\nNew\nExisting\nComments\nField Pole No.\nCAMS File No.\nNRL15205\nORIGINAL\nSCALE\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nTHIS DRAWING SUPPLIES 3 LOTS\nC.A.P. No.\nFILE No.\nNRL15205\nLOT\nNUMBERS\nLot 3, 4 & 5\nDP 244410\nNo. OF\nLOTS\nDEVELOPER\nDEVELOPERS\nREPRESENTATIVE\nCONTACT No.\n3\nAndrew Carson\nAndrew Carson\n0404 849 826\nNew\nReplace\nRemove\nExisting\nBracket\nMounting\nHeight (m)\nLanterns\nDO NOT\nSCALE\nDIMENSIONS\nSpan Length\n(m)\nLine Deviation\n(\u00b0)\nMOSS VALE\nCENTRAL\nROBERTSON 2 REF N3\nWINGECARRIBEE\nDRAWN\nR Menzies\nIN\nMETRES\nDATE\n08/02/2022\nCH'D\nM Baranowiski\n8\nDESIGN\nR Menzies\n9\n10\nLUHOH + B05\nB24 + SUB\nConstruction\nNumber\nHV\nLUGOH + SUB\nConstruction\nNumber\nLV\nConstructions\n43 OLD KANGALOON ROAD\nROBERTSON\nLOT 5 DP 244410\nNRL15205\nRURAL CONNECTION OF LOAD\n11\nX\n4\nX\n3\nX\n2\n750 2000\n12.5M/12kN WOOD\nC\nX\n1\nAuger Dia\n(ww)\nSet Depth\nHole\n(ww)\nType\n(Length / Strength / Material)\nA1\nStay\nRemove\nDesign Pole\nNumber\nPole\nEndeavour\nEnergy\nH\n524058\nSHEET No 1 OF 2 SHEETS\n12\nA\nG\nF\nE",
+          "chunk_details": [
+            {
+              "chunk_id": "chunk_1",
+              "sequence": 1,
+              "page_number": 1,
+              "region": "top-left",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0001.png",
+              "extracted": {
+                "raw_text": "D\nC\nB\nN\nA\n1\n2\nSITE PLAN\nSCALE 1:1000\nExisting\nDwelling\n3X0463\n03\nPole 4\nRemove LV overhead mains from Pole 3\nInstall LV UGOH on Pole 4\nExtend 240mm2 4 Core Al XLPE cable to Pillar 400355\n400355\nB\nRemove LV overhead mains\nbetween Pole 2 and Pole 4\nRemove Pole 3\nEasement for Underground Cables\nAn easement for LV underground cables minimum of 3m wide,\nto be created in favour of Endeavour Energy within existing Lot 5 DP 244410\nover underground cables from Pole 1 to Pillar 400355\nPole Sub 31174\nDecommission and Remove Sub\nRemove Pole 2 and Ground Stay\nNew\nDwelling\n31174\n2\n396216\n3\nXXXXXXXXX-\n4\n-XX-\n3\n3X0464\n968214\nLOT 3\nDP 244410\nD\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\n43\nLOT 4\nDP 244410\n4\nExisting\nDwelling\n49\n3X0465\nA\n1\n95021\nAll weather access\nto substation required\n3X0466\n5\n6\nLOON RD\nOLD KANGALOON RD\nESTABLISH NEW POLE\nCONSTRUCTION TYPE::\nTRANSFORMER SIZE:\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUT\nEARTHING: SEPERATE\nPole 1\nRemove HV overb\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm2 4",
+                "data": {
+                  "sub-step-extract-legend": [
+                    {
+                      "page": 1,
+                      "symbol_description": "Small solid black filled circle with large X through it",
+                      "label": "REMOVE POLE",
+                      "category": "equipment"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "Small hollow open circle",
+                      "label": "NEW POLE",
+                      "category": "equipment"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "Vertical line with horizontal line at the bottom",
+                      "label": "EARTHING",
+                      "category": "other"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "chunk_id": "chunk_2",
+              "sequence": 2,
+              "page_number": 1,
+              "region": "top-right",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0002.png",
+              "extracted": {
+                "raw_text": "6\n7\n8\n9\n10\nDIAL BEFORE YOU DIG\nRef: 30993194\nDate: 30/11/2021\nDBYD searches indicates the presence of services\nwithin the proposed work-site. The Level 1 ASP\n/Constructor is to confirm the location of \"all\" services\nprior to the commencement of works.\nDESIGN COMPLIANCE AND INDEMNITY\nThis design complies with Endeavour Energy's relevant standards as current at this\ntime & as listed on the Endeavour Energy Accredited Service Provider's Internet\nsite. These standards include, but are not limited to:\nCP: Connection Policy,\nEMS: Environmental Management Standard,\nMCI: Mains Construction Instruction,\n11\n1\n12\nNOTES\nThis drawing is to be read in conjunction with the relevant Endeavour Energy\nNetwork Standards and Connection Policy.\n2\nEndeavour Energy Contact Phone: 131081.\n3\nDesign certification shall lapse where:\nA\nMDI: Mains Design Instruction,\nPDI: Protection Design Instruction,\nSDI: Substation Design Instruction,\nSAD: Design Drawing Standard,\nMMI: Mains Maintenance Instruction,\nSMI: Substation Maintenance Instruction,\nLDI: Public Lighting Electrical Design Element.\nWARNING\nA current services search of all\nutilities must be carried out prior to\nthe commencement of works.\nWARNING\nExisting live electrical assets located\nin this vicinity, appropriate safety\nprecautions must be utilised.\nAdditionally, where relevant, the design complies with AS/NZS7000 \"Overhead Line\nDesign - Detailed Procedures\" published by The Australian Standards.\nPower Line Design Pty Ltd indemnifies Endeavour Energy for any loss or damage\nresulting from non-compliance of the design with the above standards.\nSigned:\nName:\nL McKinnon\nL McKinnon\nService Provider Number: 2486 Date: 08/02/2022\n4\n5\n6\n7\nWORKS COMPLETED / FIELD BOOK\n8\nSAP DATA RURAL\nOH SUB 95021\n182679\n9999968\n34588\nHV DOF\nTRF 1\nLV BUSBAR\nF1-FUSE LABEL 991011\nF2 - FUSE LABEL\nROUTE LENGTHS\nAll route lengths are to be confirmed\non site by the constructor prior to\nordering materials.\nWARNING\nPotentially significant changes to pole\ntop forces may occur during\nconstruction of this project.\nConstructor must give consideration\nto these changes and ensure that the\nconstruction method does not overload\nany pole or structure.\nConstructed By:\nWorks Completed:\nSignature:\nInspected By:\nESTABLISH NEW POLE SUBSTATION NO: 95021\nCONSTRUCTION TYPE:: SEMI RURAL\nTRANSFORMER SIZE: 200kVA, 3 PHASE\nVOLTAGE: 11000V\nHV FUSES: 20A\nLV FUSES: 250A\nNUMBER OF DISTRIBUTORS: 1\nEARTHING: SEPERATE EARTHING\nPole 1\nRemove HV overhead mains from Pole 2\n9\nDate:\nSignature:\nDate:\nASSET RECORDING\n1:\nof:\nContact No:\nHereby certify that assets marked as-built on this drawing have been recorded in\naccordance with Endeavour Energy's Standard SAD 004.\nSignature:\nDate:\nCERTIFIED BY ENDEAVOUR ENERGY\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nPrint Name: Tri Minh Truong\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\n(i) Notice of intent has not been received within six (6) months of this certification,\nor\n(ii) Construction has been interrupted for more than six (6) months.\nWhere design certification has lapsed the design must be resubmitted for\ncertification by the accredited designer.\nATTENTION:\nAccredited Service Provider to notify Endeavour Energy asset data customer\ndepartment daily when cable works is in progress (ph. 131081).\nATTENTION:\nPermanent survey marks may exist in this area. These are to be located by a\nsurveyor prior to commencement of work.\nATTENTION:\nAll services searches must be checked before construction.\nATTENTION:\nThe preparation of this design has been undertaken giving due consideration to\nthe location of existing services. The Constructor is however responsible for the\nverification of services and permanent survey marks prior to the commencement\nof construction. No responsibility nor liability will be accepted by the designer for\ndamage to existing services as a result of this design.\nWARNING:\nLive Endeavour Energy cables & other services in this area.\nPlease contact \"Dial Before You Dig\" on telephone: 1100 for searches two days\nprior to excavation.\nATTENTION:\nHV cable length values shown in 'Urban Subdivision Related Reimbursement -\nDuct and Cable Schedule' and 'Funding Arrangements for Scope of Works' are\nonly reimbursement quantities calculated by Endeavour Energy. For cable\nconstruction quantities refer to cable lengths in HV, LV and SL circuit diagrams.\n10 Reimbursements:\n11\nReimbursements will be paid to the nominated party on the letter of intent after\nthe works have been completed and the letter of acceptance has been issued.\nThe reimbursed amount is shown in the \"Funding Arrangements for Scope of\nWork table\". Any disagreement with the amount should be resolved with\nEndeavour Energy prior to the commencement of works.\nOperational Limitations:\nUnless approved otherwise, interruption to any customer's supply must be\navoided. The following alternatives should be considered:\nmobile generators and substations,\nlive line work,\ndesign alternatives,\nlow voltage parallels,\nwork practices/standards.\nThe cost is to be funded by the customer/developer.\n12 Environmental Management plan:\n13\n14\n15\n15\nEMP EMS0001 is part of this design (refer to SER for details).\nPollution Controls:\nAll the requirements of the Environmental Protection Authority pollution control\nlegislation are to be strictly adhered to.\nTelecommunications:\nTelecommunications assets are NOT affected by the proposed works.\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\n16 Land Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\nOLD KANGALOON RD\nB\nC\nD",
+                "data": {
+                  "sub-step-extract-legend": [
+                    {
+                      "page": 1,
+                      "symbol_description": "Small solid black filled circle",
+                      "label": "EXISTING POLE",
+                      "category": "equipment"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "Small hollow open circle",
+                      "label": "NEW POLE",
+                      "category": "equipment"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "Circle with triangle inside",
+                      "label": "POLE SUBSTATION",
+                      "category": "substation"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "Vertical line with horizontal line at the bottom",
+                      "label": "EARTHING",
+                      "category": "other"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "chunk_id": "chunk_3",
+              "sequence": 3,
+              "page_number": 1,
+              "region": "bottom-left",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0003.png",
+              "extracted": {
+                "raw_text": "AUTHORISATION OF ESTIMATE VALUE\nOF ENDEAVOUR ENERGY FUNDED ASSETS\nSigned:\nPrint Name: Tri Minh Truong\nService Number: 37130\nF\nFunding Amount: $ 6226.00\nDate: 24/02/2022\nNew\nDwelling\n31174\n2\n396216\nD\nXX\nRemove HV overhead mains\nbetween Pole 1 and Pole 2\nLOT 5\nDP 244410\n43\nOm 10m 20m 30m 40m 50m 60m\n70m 80m\n90m 100m\nSCALE 1:1000\nFUNDING ARRANGEMENTS FOR SCOPE OF WORKS\nCustomer\nASP Level 1 Electrical Works\nEndeavour Energy Supplied Materials\nCustomer Funded\nNon-Contestable Works\nNIL\n\u2022 All works associated with the inspection, testing,\nswitching and the commissioning associated with\nthis project.\nEndeavour Energy Funded & Constructed\nWorks Required Prior to\nCompletion of Customer\nContestable Project\nWorks Required in\nAssociation of Customer\nContestable Project\nCustomer Funded\nIncluding but not limited to:\n\u2022 Pegging of easements, property boundaries and\ninfrastructure locations,\n\u2022 Registering of Easements,\n\u2022 Provide Site Access,\nOwn Service and Service connections,\nConfirm ground levels.\nNIL\nNIL\nEndeavour Energy Funded & Level 1 ASP\nConstructed - Reimbursement (exc GST)\n1 x 200kVA 3 Phase Pole Top Transformer\nTotal EE Capital Contributions (excl PM & Design)\n$5675.00\nTotal EE Capital Contribution (HV Reimbursed)\n6226.00\nCustomer Funded Contestable Works\nAll other works and materials including but not\nlimited to:\n\u2022 Substation establishment & installation,\n\u2022 Excavation & Trenching,\n\u2022 Duct Installation,\nCable Installation (Pulling & Laying),\nPole Installation & Dressing,\nOverhead Installation\nConductor Stringing/Tensioning,\n\u2022 Installation of Earthing,\n\u2022 Removal of Redundant Assets.\nExisting Duct Usage Charges (exc GST)\nNIL\nCo-ordination Supply Required Date\n14 February 2022\nAssets to be Returned to the nearest Endeavour\nEnergy Depot by Level 1 ASP.\n1 x 25kVA single phase Pole top Transformer\nA\nAMENDMENTS\nORIGINAL\nISSUE\nDRAFT No. 01\n90039\n1\n2\nNodes\nA-B\nExisting Driveway\nAll weather access\nto substation required\nTrench Length\n3X0455\nHigh Voltage Trenching\nLow Voltage Trenching\nStreet Light Trenching\nRoad Crossing Trenching\nTOTAL\n0 m\n198 m\n0 m\n0 m\n198 m\nDuct Reimbursement Schedule\nConfiguration\nNew Footpath Ducts\nTotal:\nLV\nThe preparation of this design has been undertaken\ngiving due consideration to the existing services.\nThe project constructor is wholly responsible for\nverifying the exact location of existing services and\npermanent survey marks prior to commencing\nconstruction. No responsibility or liability will be\naccepted by the designer of this project for damage\nto existing services as a result of this design.\nPower Line Design Ref: 3898\n3\npowerlinedesign\nPOWER LINE DESIGN PTY LTD\nPO BOX 338 Mittagong NSW 2575\nPh (02) 4872 1920 Fax (02) 4872 1240\nAccredited Designer Number 2486/ABN: 33107 591 846\n4\nTotal:\nOLD KANGALOON RD\nRoute Length\n(m)\nDuct Reimbursement\n(m) x ($)\nExisting Duct Usage\n(m) x ($)\n198\n200\nPole 1\nRemove HV overh\nReplace existing p\nInstall Pole Sub 95\nInstall LV UGOH\nExtend 240mm24\nTRENCH\n125mm Duct\n125mm Duct -\n198m\nOm\n0m\nTEMPLATE VERSION No.5.20\n$0\n$0\nREFERENCE DRAWING'S\nTHIS DRAWING\nAND THE\nCOPYRIGHT\nTHEREIN IS THE\nPROPERTY OF\nENDEAVOUR ENERGY AND\nMAY NOT BE COPIED,\nREPRODUCED,\nDISTRIBUTED, LOANED OR\nUSED WITHOUT THE\nWRITTEN CONSENT OF\nENDEAVOUR ENERGY\n5\n6\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\nNew Trench\nWORK OR",
+                "data": {
+                  "sub-step-extract-legend": [
+                    {
+                      "page": 1,
+                      "symbol_description": "circle",
+                      "label": "125mm Duct",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "filled circle",
+                      "label": "125mm Duct -",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "Hollow open rectangle (outline only)",
+                      "label": "New Trench",
+                      "category": "other"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "chunk_id": "chunk_4",
+              "sequence": 4,
+              "page_number": 1,
+              "region": "bottom-right",
+              "filepath": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/chunks/c2b402f9-368b-4c93-9982-5841d5fa5644/chunk_0004.png",
+              "extracted": {
+                "raw_text": "sage\n200\nPole 1\nRemove HV overhead mains from Pole 2\nReplace existing pole with 12.5m/12kN wood pole\nInstall Pole Sub 95021\nInstall LV UGOH\nExtend 240mm2 4 Core Al XLPE cable to Pillar 968214\nTRENCH LEGEND\n125mm Duct - Spare\n125mm Duct - with New Cable\nNew Trench\nWORK ORDERS\nVING'S\nGENERAL\nOVERHEAD\nUNDERGROUND\nSUBSTATIONS\n6\n7\n\u25c7\nLEGEND\nOverhead Mains - Existing\nAsset\nRemove Existing Overhead Mains\nHV Mains\nExisting Pole to be Replaced\nLV Mains\nSubstation\nExisting Pole to be Removed\nPole Substation - New\nAmendment:\nA\nDate Approved: 24/02/2022\nExaminer's Signature:\nPrint Name: Tri Minh Truong\nThis Certification is issued subject to Endeavour Energy's\nStandard Certification Terms.\nPioneer Cost Share Reimbursement Scheme - Expiry Date: N/A\nPro-Rata Reimbursement for Customer's Load Over 50kVA\nNet Asset\nAsset Cost Unit\nEstimate ($) Quantity Capacity (kVA)\nOriginal Customer\nUtilization (kVA)\nMaximum\nReimbursement\nAmount ($)\nA COST SHARE PIONEER REIMBURSEMENT SCHEME IS NOT APPLICABLE\nTO THIS PROJECT\n15\n15\n16\n17\nExisting Assets:\nHave all the existing assets been field checked and are accurate at the time of\ndesign? YES\nUnderground Cable Easement:\nAn 3.0m wide and variable easement for underground cables is to be created\nover Lot 5,DP 244410 in favour of Endeavour Energy. The underground cables /\nconduits are to be centrally located in the easement. (Refer to Endeavour Energy\nStandard MD10044, Annexure 1 for Standard Easement Terms)\nLand Interests:\nLand Interests required to be registered prior to submission of Letter of\nIntent - as per Land Interest Guidelines for Network Connection Works - July\n2021 Section 6.4\nSubstation Access:\nUnrestricted 24 hour 7 day access must be provided to Endeavour Energy's staff,\nvehicles and equipment to the new substation & cables Endeavour Energy locks\nto be installed on locked gates. (Refer to MDI0044, section 5.7 for details)\nPole Substation - Remove\nPillar - New Excavation location\nExisting Service Mains\nMATERIAL QUANTITIES SPECIFIED ON THIS DESIGN:\nThe quantities or dimensions specified on this design are based on\ninformation supplied by the developer, DBYD, the Endeavour GIS, field\nbooks and site conditions at the time of the design. As quantities and\ndimensions are subject to change, the Constructor must check all\nquantities and dimensions on site prior to tendering, ordering and\nconstruction.\nKEY DOCUMENTS TABLE\nThe Certification of this project is supported by the following key documents\nDocument Name\nSummary Environmental Report part of EMS 0001\nNotation Date\n30/11/2021\n23/11/2021\nNRL15205-FPJ4689 Notice of Acceptance of Site-Specific Conditions\nDesigner Safety Report\n04/01/2022\n30/11/2021\nEquipment to be returned to Endeavour Energy - FPJ4252\nCustomer Connection Point (CCP)\nInstall New Ground Stay\nExisting Ground Stay to be Removed\n77\nEasement for Underground Cables\nDuct Indicator\n3X0462\n3X0461\nRemove Pole Substation 31174\n3X0460\nInstall New Pole Substation 95021\n985413 829583\nNew\nExisting\nComments\nField Pole No.\nCAMS File No.\nNRL15205\nORIGINAL\nSCALE\nAM PROJ. No.\nHV SWITCHING\nEE DEPOT\nEE REGION\nHV OP DIAG\nLOCAL GOV AREA\nTHIS DRAWING SUPPLIES 3 LOTS\nC.A.P. No.\nFILE No.\nNRL15205\nLOT\nNUMBERS\nLot 3, 4 & 5\nDP 244410\nNo. OF\nLOTS\nDEVELOPER\nDEVELOPERS\nREPRESENTATIVE\nCONTACT No.\n3\nAndrew Carson\nAndrew Carson\n0404 849 826\nNew\nReplace\nRemove\nExisting\nBracket\nMounting\nHeight (m)\nLanterns\nDO NOT\nSCALE\nDIMENSIONS\nSpan Length\n(m)\nLine Deviation\n(\u00b0)\nMOSS VALE\nCENTRAL\nROBERTSON 2 REF N3\nWINGECARRIBEE\nDRAWN\nR Menzies\nIN\nMETRES\nDATE\n08/02/2022\nCH'D\nM Baranowiski\n8\nDESIGN\nR Menzies\n9\n10\nLUHOH + B05\nB24 + SUB\nConstruction\nNumber\nHV\nLUGOH + SUB\nConstruction\nNumber\nLV\nConstructions\n43 OLD KANGALOON ROAD\nROBERTSON\nLOT 5 DP 244410\nNRL15205\nRURAL CONNECTION OF LOAD\n11\nX\n4\nX\n3\nX\n2\n750 2000\n12.5M/12kN WOOD\nC\nX\n1\nAuger Dia\n(ww)\nSet Depth\nHole\n(ww)\nType\n(Length / Strength / Material)\nA1\nStay\nRemove\nDesign Pole\nNumber\nPole\nEndeavour\nEnergy\nH\n524058\nSHEET No 1 OF 2 SHEETS\n12\nA\nG\nF\nE",
+                "data": {
+                  "sub-step-extract-legend": [
+                    {
+                      "page": 1,
+                      "symbol_description": "horizontal line",
+                      "label": "Overhead Mains - Existing",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "x-x-x-x-x",
+                      "label": "Remove Existing Overhead Mains",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "circle with fill on bottom half",
+                      "label": "Existing Pole to be Replaced",
+                      "category": "equipment"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "empty circle",
+                      "label": "Existing Pole to be Removed",
+                      "category": "equipment"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "triangle inside a circle",
+                      "label": "Pole Substation - New",
+                      "category": "substation"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "circle with an x inside",
+                      "label": "Pole Substation - Remove",
+                      "category": "substation"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "rectangle",
+                      "label": "Pillar - New Excavation location",
+                      "category": "substation"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "dashed line",
+                      "label": "Existing Service Mains",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "diamond shape",
+                      "label": "Customer Connection Point (CCP)",
+                      "category": "other"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "arrow pointing left",
+                      "label": "Install New Ground Stay",
+                      "category": "earthing"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "arrow pointing left with a slash through it",
+                      "label": "Existing Ground Stay to be Removed",
+                      "category": "earthing"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "z-z-z-z-z",
+                      "label": "Easement for Underground Cables",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "circle with A inside",
+                      "label": "Duct Indicator",
+                      "category": "other"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "empty circle",
+                      "label": "125mm Duct - Spare",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "filled circle",
+                      "label": "125mm Duct - with New Cable",
+                      "category": "cable"
+                    },
+                    {
+                      "page": 1,
+                      "symbol_description": "u shape",
+                      "label": "New Trench",
+                      "category": "other"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "stitched_boundaries": [],
+          "sub_step_extractions": {
+            "sub-step-extract-legend": {
+              "value": [
+                {
+                  "page": 1,
+                  "symbol_description": "diamond shape",
+                  "label": "Customer Connection Point (CCP)",
+                  "category": "other"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "circle with A inside",
+                  "label": "Duct Indicator",
+                  "category": "cable"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "z-z-z-z-z",
+                  "label": "Easement for Underground Cables",
+                  "category": "cable"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "arrow pointing left with a slash through it",
+                  "label": "Existing Ground Stay to be Removed",
+                  "category": "earthing"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "empty circle",
+                  "label": "Existing Pole to be Removed",
+                  "category": "equipment"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "circle with fill on bottom half",
+                  "label": "Existing Pole to be Replaced",
+                  "category": "equipment"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "dashed line",
+                  "label": "Existing Service Mains",
+                  "category": "cable"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "arrow pointing left",
+                  "label": "Install New Ground Stay",
+                  "category": "earthing"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "horizontal line",
+                  "label": "Overhead Mains - Existing",
+                  "category": "cable"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "rectangle",
+                  "label": "Pillar - New Excavation location",
+                  "category": "equipment"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "triangle inside a circle",
+                  "label": "Pole Substation - New",
+                  "category": "equipment"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "circle with an x inside",
+                  "label": "Pole Substation - Remove",
+                  "category": "equipment"
+                },
+                {
+                  "page": 1,
+                  "symbol_description": "x-x-x-x-x",
+                  "label": "Remove Existing Overhead Mains",
+                  "category": "cable"
+                }
+              ],
+              "sub_step_name": "Extract Legend Entries from All Pages",
+              "phase": 1
+            }
+          },
+          "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/Extraction_A524058_NRL15205_RETIC_NOTES_pdf_Extract_Drawing_Legend_20260523_121016_561381.json"
+        }
+      ]
+    },
+    "extraction_step_7": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_proc_extract_asset_spreadsheet_20260523_121322_679156.json",
+      "extractions": [
+        {
+          "filename": "TALNRL15205_20230118142012.XLSM",
+          "filepath": "/documents/NRL15205-85 - Exp/TALNRL15205_20230118142012.XLSM",
+          "document_type": "TAL",
+          "document_category": "TAL",
+          "document_quality": "spreadsheet",
+          "sheets_processed": [
+            "POLE",
+            "PILLAR"
+          ],
+          "sheets_skipped": [
+            "PROJECT"
+          ],
+          "step_extraction": {
+            "asset_records": [
+              {
+                "asset_id": "POLE00985413",
+                "serial_number": null,
+                "asset_type": "Poles",
+                "description": null,
+                "location": "Moss Vale Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "Outage Dependant Obj",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "POLE",
+                "source_document": "TALNRL15205_20230118142012.XLSM"
+              },
+              {
+                "asset_id": "ASSM00628168",
+                "serial_number": null,
+                "asset_type": "Poles",
+                "description": null,
+                "location": "Moss Vale Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "Outage Dependant Obj",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "POLE",
+                "source_document": "TALNRL15205_20230118142012.XLSM"
+              },
+              {
+                "asset_id": "PILL00400355",
+                "serial_number": null,
+                "asset_type": "Pillars",
+                "description": null,
+                "location": "Moss Vale Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "Outage Dependant Obj",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "PILLAR",
+                "source_document": "TALNRL15205_20230118142012.XLSM"
+              },
+              {
+                "asset_id": "PILL00968214",
+                "serial_number": null,
+                "asset_type": "Pillars",
+                "description": null,
+                "location": "Moss Vale Field Service Centre",
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": "Outage Dependant Obj",
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "PILLAR",
+                "source_document": "TALNRL15205_20230118142012.XLSM"
+              },
+              {
+                "asset_id": "ASSM00628169",
+                "serial_number": null,
+                "asset_type": "Pillars",
+                "description": "UG Termination",
+                "location": null,
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "PILLAR",
+                "source_document": "TALNRL15205_20230118142012.XLSM"
+              },
+              {
+                "asset_id": "ASSM00632923",
+                "serial_number": null,
+                "asset_type": "Pillars",
+                "description": "UG Termination",
+                "location": null,
+                "address": null,
+                "feeder": null,
+                "voltage_level": null,
+                "capacity_rating": null,
+                "manufacturer": null,
+                "model": null,
+                "condition_rating": null,
+                "status": null,
+                "installation_date": null,
+                "last_inspection_date": null,
+                "source_sheet": "PILLAR",
+                "source_document": "TALNRL15205_20230118142012.XLSM"
+              }
+            ],
+            "total_assets": 6,
+            "sheets_processed": [
+              "POLE",
+              "PILLAR"
+            ],
+            "rejected_records": 0,
+            "rejected_detail": []
+          },
+          "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/Extraction_TALNRL15205_20230118142012_XLSM_Extract_Asset_Spreadsheet_Data_20260523_121322_679156.json"
+        }
+      ],
+      "asset_extract_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/AssetExtract_20260523_121322_679156.json",
+      "asset_extract": {
+        "total_assets": 6,
+        "source_documents": [
+          "TALNRL15205_20230118142012.XLSM"
+        ],
+        "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/AssetExtract_20260523_121322_679156.json"
+      }
+    },
+    "extraction_step_8": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/AssetSymbolMatches_20260523T123848_318.json",
+      "extractions": [
+        {
+          "filename": "AssetSymbolMatches_20260523T123848_318.json",
+          "document_type": "Asset Symbol Matches",
+          "document_category": "TAL",
+          "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+          "total_sections": 6,
+          "relevant_sections": 3,
+          "sub_step_extractions": {
+            "sub-step-asset-symbol-match": {
+              "updated_assets": [
+                {
+                  "asset_id": "POLE00985413",
+                  "serial_number": null,
+                  "asset_type": "Poles",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "POLE",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "985413",
+                  "symbol_description": "triangle inside a circle",
+                  "label": "Pole Substation - New",
+                  "match_status": "found",
+                  "diagram_location": "Page 1, lower-right area, chunk 4 of 4"
+                },
+                {
+                  "asset_id": "ASSM00628168",
+                  "serial_number": null,
+                  "asset_type": "Poles",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "POLE",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "628168",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found",
+                  "diagram_location": null
+                },
+                {
+                  "asset_id": "PILL00400355",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "400355",
+                  "symbol_description": "rectangle",
+                  "label": "Pillar - New Excavation location",
+                  "match_status": "found",
+                  "diagram_location": "Page 1, upper-left area, chunk 1 of 4"
+                },
+                {
+                  "asset_id": "PILL00968214",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "968214",
+                  "symbol_description": "rectangle",
+                  "label": "Pillar - New Excavation location",
+                  "match_status": "found",
+                  "diagram_location": "Page 1, upper-left area, chunk 1 of 4"
+                },
+                {
+                  "asset_id": "ASSM00628169",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": "UG Termination",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "628169",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found",
+                  "diagram_location": null
+                },
+                {
+                  "asset_id": "ASSM00632923",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": "UG Termination",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "632923",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found",
+                  "diagram_location": null
+                }
+              ],
+              "match_summary": {
+                "total": 6,
+                "found": 3,
+                "not_found": 3
+              }
+            }
+          }
+        }
+      ]
+    },
+    "extraction_step_9": {
+      "total_files": 1,
+      "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/EnrichedAssets_20260523T123909_059.json",
+      "extractions": [
+        {
+          "filename": "EnrichedAssets_20260523T123909_059.json",
+          "document_type": "Enriched Asset Register",
+          "document_category": "TAL",
+          "process_step_name": "Enrich Assets with Legend Data",
+          "total_sections": 6,
+          "relevant_sections": 3,
+          "sub_step_extractions": {
+            "sub-step-asset-enrichment": {
+              "enriched_assets": [
+                {
+                  "asset_id": "POLE00985413",
+                  "serial_number": null,
+                  "asset_type": "Poles",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "POLE",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "985413",
+                  "symbol_description": "triangle inside a circle",
+                  "label": "Pole Substation - New",
+                  "match_status": "found",
+                  "diagram_location": "Page 1, lower-right area, chunk 4 of 4",
+                  "legend_label": "Pole Substation - New",
+                  "legend_category": "equipment",
+                  "match_confidence": "high",
+                  "match_method": "direct"
+                },
+                {
+                  "asset_id": "PILL00400355",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "400355",
+                  "symbol_description": "rectangle",
+                  "label": "Pillar - New Excavation location",
+                  "match_status": "found",
+                  "diagram_location": "Page 1, upper-left area, chunk 1 of 4",
+                  "legend_label": "Pillar - New Excavation location",
+                  "legend_category": "equipment",
+                  "match_confidence": "high",
+                  "match_method": "direct"
+                },
+                {
+                  "asset_id": "PILL00968214",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "968214",
+                  "symbol_description": "rectangle",
+                  "label": "Pillar - New Excavation location",
+                  "match_status": "found",
+                  "diagram_location": "Page 1, upper-left area, chunk 1 of 4",
+                  "legend_label": "Pillar - New Excavation location",
+                  "legend_category": "equipment",
+                  "match_confidence": "high",
+                  "match_method": "direct"
+                },
+                {
+                  "asset_id": "ASSM00628168",
+                  "serial_number": null,
+                  "asset_type": "Poles",
+                  "description": null,
+                  "location": "Moss Vale Field Service Centre",
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": "Outage Dependant Obj",
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "POLE",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "628168",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found",
+                  "diagram_location": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none",
+                  "match_method": "no_sfl"
+                },
+                {
+                  "asset_id": "ASSM00628169",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": "UG Termination",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "628169",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found",
+                  "diagram_location": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none",
+                  "match_method": "no_sfl"
+                },
+                {
+                  "asset_id": "ASSM00632923",
+                  "serial_number": null,
+                  "asset_type": "Pillars",
+                  "description": "UG Termination",
+                  "location": null,
+                  "address": null,
+                  "feeder": null,
+                  "voltage_level": null,
+                  "capacity_rating": null,
+                  "manufacturer": null,
+                  "model": null,
+                  "condition_rating": null,
+                  "status": null,
+                  "installation_date": null,
+                  "last_inspection_date": null,
+                  "source_sheet": "PILLAR",
+                  "source_document": "TALNRL15205_20230118142012.XLSM",
+                  "bare_id": "632923",
+                  "symbol_description": null,
+                  "label": null,
+                  "match_status": "not_found",
+                  "diagram_location": null,
+                  "legend_label": null,
+                  "legend_category": null,
+                  "match_confidence": "none",
+                  "match_method": "no_sfl"
+                }
+              ],
+              "match_summary": {
+                "total": 6,
+                "found_direct": 3,
+                "found_via_sfl": 0,
+                "found_on_drawing": 3,
+                "not_found": 3
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_documents_processed": 6,
+    "extraction_keys": [
+      "extraction_step_4",
+      "extraction_step_5",
+      "extraction_step_6",
+      "extraction_step_7",
+      "extraction_step_8",
+      "extraction_step_9"
+    ]
+  }
+}

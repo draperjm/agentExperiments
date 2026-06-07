@@ -1,0 +1,190 @@
+{
+  "filename": "TALNRL15237_20230113140532.XLSM",
+  "filepath": "/documents/NRL15237-86 - Exp/TALNRL15237_20230113140532.XLSM",
+  "document_type": "TAL",
+  "document_category": "TAL",
+  "document_quality": "spreadsheet",
+  "sheets_processed": [
+    "POLE",
+    "SWITCHGEAR"
+  ],
+  "sheets_skipped": [
+    "PROJECT"
+  ],
+  "step_extraction": {
+    "asset_records": [
+      {
+        "asset_id": "POLE01001157",
+        "serial_number": null,
+        "asset_type": "Poles",
+        "description": "Pole Structure - Distribution Use",
+        "location": "Moss Vale Field Service Centre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "POLE",
+        "source_document": "TALNRL15237_20230113140532.XLSM"
+      },
+      {
+        "asset_id": "POLE01001158",
+        "serial_number": null,
+        "asset_type": "Poles",
+        "description": "Pole Structure - Distribution Use",
+        "location": "Moss Vale Field Service Centre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "POLE",
+        "source_document": "TALNRL15237_20230113140532.XLSM"
+      },
+      {
+        "asset_id": "ASSM00717015",
+        "serial_number": null,
+        "asset_type": "Poles",
+        "description": "HV OH Assembly - Crossarm Type - Bare",
+        "location": "Moss Vale Field Service Centre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "POLE",
+        "source_document": "TALNRL15237_20230113140532.XLSM"
+      },
+      {
+        "asset_id": "ASSM00717016",
+        "serial_number": null,
+        "asset_type": "Poles",
+        "description": "HV OH Assembly - Crossarm Type - Bare",
+        "location": "Moss Vale Field Service Centre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "POLE",
+        "source_document": "TALNRL15237_20230113140532.XLSM"
+      },
+      {
+        "asset_id": "BBLV00037149",
+        "serial_number": null,
+        "asset_type": "LV Busbar",
+        "description": "Gen, LV Busbar",
+        "location": "Moss Vale Field Service Centre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "SWITCHGEAR",
+        "source_document": "TALNRL15237_20230113140532.XLSM"
+      }
+    ],
+    "total_assets": 5,
+    "sheets_processed": [
+      "POLE",
+      "SWITCHGEAR"
+    ],
+    "rejected_records": 3,
+    "rejected_detail": [
+      {
+        "asset_id": null,
+        "serial_number": null,
+        "asset_type": "EQ01",
+        "description": "Proposed Removed Equipment Number",
+        "location": null,
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": "noEQ",
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "SWITCHGEAR",
+        "source_document": "TALNRL15237_20230113140532.XLSM",
+        "_rejection_reasons": [
+          "asset_id is null or empty"
+        ],
+        "_row_index": 0
+      },
+      {
+        "asset_id": null,
+        "serial_number": null,
+        "asset_type": null,
+        "description": null,
+        "location": null,
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "SWITCHGEAR",
+        "source_document": "TALNRL15237_20230113140532.XLSM",
+        "_rejection_reasons": [
+          "asset_id is null or empty"
+        ],
+        "_row_index": 1
+      },
+      {
+        "asset_id": null,
+        "serial_number": null,
+        "asset_type": null,
+        "description": "Comments",
+        "location": null,
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "SWITCHGEAR",
+        "source_document": "TALNRL15237_20230113140532.XLSM",
+        "_rejection_reasons": [
+          "asset_id is null or empty"
+        ],
+        "_row_index": 2
+      }
+    ]
+  }
+}

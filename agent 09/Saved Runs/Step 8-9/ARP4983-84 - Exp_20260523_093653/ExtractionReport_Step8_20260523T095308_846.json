@@ -1,0 +1,121 @@
+{
+  "total_files": 1,
+  "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step8_20260523T095308_846.json",
+  "extractions": [
+    {
+      "filename": "ExtractionReport_Step8_20260523T095308_846.json",
+      "document_type": "Asset Symbol Matches",
+      "document_category": "TAL",
+      "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+      "total_sections": 14,
+      "relevant_sections": 14,
+      "step_extraction": {
+        "total_assets": 14,
+        "sheets_processed": [
+          "site_plan_visual_match"
+        ],
+        "rejected_records": 0,
+        "asset_records": [
+          {
+            "asset_id": "SLGT00302876",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302877",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302878",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302879",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302880",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302881",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302882",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302883",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302884",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302885",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302886",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302887",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302888",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          },
+          {
+            "asset_id": "SLGT00302889",
+            "match_status": "found",
+            "label": "NEW COLUMN",
+            "symbol_description": "Small hollow open square",
+            "diagram_location": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        ]
+      }
+    }
+  ]
+}

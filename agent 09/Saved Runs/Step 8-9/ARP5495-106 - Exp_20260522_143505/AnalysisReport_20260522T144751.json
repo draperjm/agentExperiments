@@ -1,0 +1,361 @@
+{
+  "report_type": "Customer Connections Review Analysis Report",
+  "generated_at": "2026-05-22T14:47:51.637613Z",
+  "consolidated_report_path": "/app/OUTPUT/ARP5495-106 - Exp_20260522_143505/ConsolidatedReport_20260522T144647.json",
+  "data_sources": {
+    "funding_items": "3 items \u2014 Design Brief sub-step-extract-funding-determination (step 4)",
+    "supply_requirements": "23 items \u2014 Design Brief LV/HV/SL sub-steps (step 4)",
+    "legend_symbols": "26 symbols \u2014 Drawing legend extraction (step 6)",
+    "asset_register": "14 assets \u2014 Enriched TAL spreadsheet (step 9, Python-built)"
+  },
+  "analysis_report": {
+    "funding_details": {
+      "funding_details": {
+        "total_capital_contribution": null,
+        "contestable_works": [
+          {
+            "item": "All other works required.",
+            "description": "All other works required.",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "non_contestable_works": [
+          {
+            "item": "Network switching, substation commissioning, contract inspection and ancillary fees.",
+            "description": "Network switching, substation commissioning, contract inspection and ancillary fees.",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "ancillary_costs": [],
+        "other_funding_items": [
+          {
+            "item": "Duct usage charge as required",
+            "description": "Duct usage charge as required",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "payment_instructions": {
+          "method": null,
+          "bsb": null,
+          "account": null,
+          "reference": null
+        },
+        "notes": [
+          "Duct usage charge is categorised under Reimbursements to be paid to Endeavour Energy by Customer.",
+          "No amount or formula values were provided for any funding line items.",
+          "No payment instructions were available in the provided data."
+        ]
+      }
+    },
+    "method_of_supply_comparison": {
+      "method_of_supply_comparison": {
+        "design_brief_requirements": [],
+        "site_plan_scope_found": [],
+        "missing_from_site_plan": [],
+        "summary": "No supply_requirements data was provided in the input. The DATA array contains only funding_items records (from the Determination of Funding Requirements section). Without supply_requirements items extracted from the Design Brief LV, HV and SL sections, no comparison against reference_data legend symbols can be performed. Please provide the supply_requirements dataset to complete this comparison."
+      }
+    },
+    "funding_arrangement_comparison": {
+      "funding_arrangement_comparison": {
+        "design_brief_funded_works": [
+          "Duct usage charge as required",
+          "Network switching, substation commissioning, contract inspection and ancillary fees.",
+          "All other works required."
+        ],
+        "drawing_scope_found": [],
+        "missing_from_drawing": [
+          {
+            "item": "Duct usage charge as required",
+            "design_brief_reference": "January 2025, Page 5",
+            "note": "No legend symbol or label in reference_data corresponds to a duct usage charge. Duct-related symbols are not represented in the drawing legend."
+          },
+          {
+            "item": "Network switching, substation commissioning, contract inspection and ancillary fees.",
+            "design_brief_reference": "January 2025, Page 5",
+            "note": "No legend symbol or label in reference_data corresponds to network switching, substation commissioning, contract inspection or ancillary fees. These are administrative or non-contestable works with no drawing legend representation."
+          },
+          {
+            "item": "All other works required.",
+            "design_brief_reference": "January 2025, Page 5",
+            "note": "This is a general catch-all funding item. No specific legend symbol or label in reference_data can be matched to this broad description."
+          }
+        ],
+        "summary": "All 3 funded works items extracted from the Design Brief Determination of Funding Requirements section (January 2025, Page 5) have no corresponding legend symbol or label in the drawing reference_data. The drawing legend contains cable and equipment symbols but none that represent duct usage charges, network switching, substation commissioning, contract inspection, ancillary fees, or a general all-other-works category. This indicates the funded scope described in the Design Brief cannot be visually confirmed or cross-referenced against the drawing legend as currently provided."
+      }
+    },
+    "asset_register": {
+      "asset_register": [
+        {
+          "asset_id": "SLGT00316949",
+          "tal_asset_id": "SLGT00316949",
+          "bare_id": "316949",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle",
+          "action_status": "existing",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316950",
+          "tal_asset_id": "SLGT00316950",
+          "bare_id": "316950",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle",
+          "action_status": "existing",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316951",
+          "tal_asset_id": "SLGT00316951",
+          "bare_id": "316951",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle",
+          "action_status": "existing",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316952",
+          "tal_asset_id": "SLGT00316952",
+          "bare_id": "316952",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "61W LED 3K ROADLED MIDI STD Vi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle",
+          "action_status": "existing",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316953",
+          "tal_asset_id": "SLGT00316953",
+          "bare_id": "316953",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": null,
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "low",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "SLGT00316954",
+          "tal_asset_id": "SLGT00316954",
+          "bare_id": "316954",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": null,
+          "model": null,
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "low",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "SLGT00316955",
+          "tal_asset_id": "SLGT00316955",
+          "bare_id": "316955",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "120W LED 4K ROADLED MIDI Aeros",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle",
+          "action_status": "existing",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00316956",
+          "tal_asset_id": "SLGT00316956",
+          "bare_id": "316956",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "175W LED SLED Maximus Pedstran",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING POLE",
+          "legend_category": "equipment",
+          "symbol_description": "Small solid black filled circle",
+          "action_status": "existing",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302884",
+          "tal_asset_id": "SLGT00302884",
+          "bare_id": "302884",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302885",
+          "tal_asset_id": "SLGT00302885",
+          "bare_id": "302885",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302886",
+          "tal_asset_id": "SLGT00302886",
+          "bare_id": "302886",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "165W LED RoadLED Midi",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302887",
+          "tal_asset_id": "SLGT00302887",
+          "bare_id": "302887",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302888",
+          "tal_asset_id": "SLGT00302888",
+          "bare_id": "302888",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "SLGT00302889",
+          "tal_asset_id": "SLGT00302889",
+          "bare_id": "302889",
+          "serial_number": null,
+          "asset_type": "Streetlights",
+          "description": "Gen, Street Lighting",
+          "model": "275W LED ROADLED S-S",
+          "source_sheet": "STREETLIGHT",
+          "source_document": "ARP5495_TAL_202503141.XLSM",
+          "legend_label": "EXISTING SL LANTERN",
+          "legend_category": "equipment",
+          "symbol_description": "flower-like symbol",
+          "action_status": "existing",
+          "match_confidence": "medium",
+          "found_on_diagram": true
+        }
+      ],
+      "register_summary": {
+        "total": 14,
+        "new": 0,
+        "remove": 0,
+        "replace": 0,
+        "existing": 14,
+        "unknown": 0,
+        "found_on_diagram": 12,
+        "not_found": 2
+      },
+      "_source": "enriched_assets_step_9_python_built"
+    }
+  },
+  "summary": {
+    "total_assets": 14,
+    "found_on_diagram": 12,
+    "not_found": 2,
+    "supply_scope_gaps": 0,
+    "drawing_scope_gaps": 3
+  },
+  "_content_review": {
+    "reviewed_at": "2026-05-22T14:47:51.637719Z",
+    "issues": [],
+    "section_status": {
+      "funding": "ok",
+      "supply_comparison": "ok",
+      "funding_comparison": "ok",
+      "asset_register": "ok"
+    },
+    "style_complete": true
+  }
+}

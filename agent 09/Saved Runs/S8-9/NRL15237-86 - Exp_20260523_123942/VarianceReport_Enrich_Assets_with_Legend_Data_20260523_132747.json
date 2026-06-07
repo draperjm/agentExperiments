@@ -1,0 +1,2908 @@
+{
+  "step_name": "Enrich Assets with Legend Data",
+  "step_description": "Using the asset records from Step 7 and the symbol matches from Step 8, produce a fully enriched asset register via two-phase SFL linkage. Phase A \u2014 SFL lookup: for each asset whose own bare ID was not found in Step 8 (match_status 'not_found'), read the asset's 'superior_functional_location' field from the Step 7 TAL data (e.g. 'POLE01011307'), strip its prefix and leading zeros to a bare number (e.g. '1011307'), and check whether that bare number is present in Step 8's found_bare_map. If the superior asset WAS found on the drawing, inherit its symbol_description and legend label and set match_confidence to 'high'. Example: SLGT00316949 has superior_functional_location='POLE01011307'; bare SFL number is '1011307'; Step 8 found 1011307 with symbol 'Small hollow open circle' and label 'NEW POLE'; SLGT00316949 is therefore enriched with that label and confidence 'high'. Phase B \u2014 SFL chunk search: for assets whose SFL bare number was not in Step 8's found_bare_map (i.e. the superior asset was not itself in the TAL), search the site plan drawing chunks visually for the SFL bare number, and when found identify the adjacent symbol. Assets with no SFL field and those whose SFL was not found anywhere receive match_confidence 'none'.",
+  "run_output_files": [
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_488.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_561.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_635.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_693.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_730.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_763.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_805.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_842.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_893.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_947.json"
+  ],
+  "missing_files": [],
+  "timestamp": "20260523_132747",
+  "output_file": "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/VarianceReport_Enrich_Assets_with_Legend_Data_20260523_132747.json",
+  "num_runs": 10,
+  "files_analysed": 10,
+  "consistency_score": 1.0,
+  "consistent_fields": 280.0,
+  "total_fields": 280,
+  "verdict": "PASS",
+  "summary": "280.0/280 fields consistent across 10 runs (100%) \u2014 PASS",
+  "file_variance": {
+    "ExtractionReport_Step9_20260523T132746_488.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_561.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_635.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_693.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_730.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_763.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_805.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_842.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_893.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "5"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T132746_947.json": {
+      "num_runs": 1,
+      "consistent_fields": 28,
+      "total_fields": 28,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "none"
+          }
+        },
+        "asset.ASSM00717015.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "no_sfl"
+          }
+        },
+        "asset.ASSM00717015.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "none"
+          }
+        },
+        "asset.ASSM00717016.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "no_sfl"
+          }
+        },
+        "asset.ASSM00717016.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "none",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "none"
+          }
+        },
+        "asset.BBLV00037149.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "no_sfl",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "no_sfl"
+          }
+        },
+        "asset.BBLV00037149.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "high"
+          }
+        },
+        "asset.POLE01001157.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "direct"
+          }
+        },
+        "asset.POLE01001157.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "high"
+          }
+        },
+        "asset.POLE01001158.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "direct"
+          }
+        },
+        "asset.POLE01001158.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "5"
+          }
+        }
+      }
+    }
+  }
+}

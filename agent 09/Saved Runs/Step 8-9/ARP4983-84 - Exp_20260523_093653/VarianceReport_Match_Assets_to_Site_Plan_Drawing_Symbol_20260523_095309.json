@@ -1,0 +1,2235 @@
+{
+  "step_name": "Match Assets to Site Plan Drawing Symbols",
+  "step_description": "Using the asset records from Step 7, the text annotations extracted from the site plan in Step 5 (sub-step-extract-all-notes), and the drawing legend from Step 6, locate each asset in the site plan drawing text and identify which legend symbol is associated with it. For each asset record: (1) Strip all leading alphabetic prefix characters and any leading zeros from the asset_id to produce a bare numeric ID (e.g. SLGT00302876 \u2192 302876, CB00045 \u2192 45, TX0001234 \u2192 1234). (2) Search the Step 5 extracted site plan text for the bare numeric ID as a text token or label \u2014 asset IDs appear as numeric labels adjacent to their drawing symbols in the annotated text. (3) When found, examine the text context immediately surrounding the bare ID to infer which drawing symbol is associated with it, then match that context to the best-fitting legend entry from Step 6 (comparing symbol descriptions and labels). Set symbol_description and label from the matched legend entry and match_status to 'found'. (4) If the bare ID is not found in the extracted text, set symbol_description and label to null and match_status to 'not_found'. Output an updated_assets array containing every original asset record from Step 7 with four new fields added: bare_id, symbol_description, label, and match_status. Also output asset_symbol_matches (the raw per-asset match results) and match_summary totals.",
+  "run_output_files": [
+    "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step8_20260523T095023_407.json",
+    "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step8_20260523T095146_796.json",
+    "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step8_20260523T095308_846.json"
+  ],
+  "missing_files": [],
+  "timestamp": "20260523_095309",
+  "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/VarianceReport_Match_Assets_to_Site_Plan_Drawing_Symbol_20260523_095309.json",
+  "num_runs": 3,
+  "files_analysed": 3,
+  "consistency_score": 1.0,
+  "consistent_fields": 219.0,
+  "total_fields": 219,
+  "verdict": "PASS",
+  "summary": "219.0/219 fields consistent across 3 runs (100%) \u2014 PASS",
+  "file_variance": {
+    "ExtractionReport_Step8_20260523T095023_407.json": {
+      "num_runs": 1,
+      "consistent_fields": 73,
+      "total_fields": 73,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.SLGT00302876.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302876",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302876"
+          }
+        },
+        "asset.SLGT00302876.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302876.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW LANTERN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW LANTERN"
+          }
+        },
+        "asset.SLGT00302876.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302876.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Circle with starburst outer spikes and hollow centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Circle with starburst outer spikes and hollow centre"
+          }
+        },
+        "asset.SLGT00302877.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302877",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302877"
+          }
+        },
+        "asset.SLGT00302877.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302877.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW LANTERN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW LANTERN"
+          }
+        },
+        "asset.SLGT00302877.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302877.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Circle with starburst outer spikes and hollow centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Circle with starburst outer spikes and hollow centre"
+          }
+        },
+        "asset.SLGT00302878.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302878",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302878"
+          }
+        },
+        "asset.SLGT00302878.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302878.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW LANTERN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW LANTERN"
+          }
+        },
+        "asset.SLGT00302878.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302878.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Circle with starburst outer spikes and hollow centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Circle with starburst outer spikes and hollow centre"
+          }
+        },
+        "asset.SLGT00302879.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302879",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302879"
+          }
+        },
+        "asset.SLGT00302879.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302879.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302879.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302879.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302880.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302880",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302880"
+          }
+        },
+        "asset.SLGT00302880.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302880.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302880.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302880.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302881.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302881",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302881"
+          }
+        },
+        "asset.SLGT00302881.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302881.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302881.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302881.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302882.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302882",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302882"
+          }
+        },
+        "asset.SLGT00302882.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302882.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302882.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302882.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302883.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302883",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302883"
+          }
+        },
+        "asset.SLGT00302883.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302883.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302883.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302883.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302884.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302884",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302884"
+          }
+        },
+        "asset.SLGT00302884.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302884.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302884.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302884.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302885.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302885",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302885"
+          }
+        },
+        "asset.SLGT00302885.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302885.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302885.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302885.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302886.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302886",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302886"
+          }
+        },
+        "asset.SLGT00302886.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302886.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302886.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302886.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302887.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302887",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302887"
+          }
+        },
+        "asset.SLGT00302887.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302887.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302887.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302887.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302888.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302888",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302888"
+          }
+        },
+        "asset.SLGT00302888.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302888.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302888.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302888.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "asset.SLGT00302889.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302889",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302889"
+          }
+        },
+        "asset.SLGT00302889.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302889.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW POLE",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW POLE"
+          }
+        },
+        "asset.SLGT00302889.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.SLGT00302889.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "0",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "0"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "14",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "14"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T095146_796.json": {
+      "num_runs": 1,
+      "consistent_fields": 73,
+      "total_fields": 73,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.SLGT00302876.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302876",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302876"
+          }
+        },
+        "asset.SLGT00302876.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302876.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302876.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302876.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302877.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302877",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302877"
+          }
+        },
+        "asset.SLGT00302877.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302877.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302877.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302877.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302878.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302878",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302878"
+          }
+        },
+        "asset.SLGT00302878.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302878.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302878.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302878.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302879.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302879",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302879"
+          }
+        },
+        "asset.SLGT00302879.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302879.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302879.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302879.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302880.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302880",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302880"
+          }
+        },
+        "asset.SLGT00302880.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302880.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302880.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302880.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302881.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302881",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302881"
+          }
+        },
+        "asset.SLGT00302881.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302881.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302881.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302881.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302882.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302882",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302882"
+          }
+        },
+        "asset.SLGT00302882.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302882.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302882.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302882.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302883.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302883",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302883"
+          }
+        },
+        "asset.SLGT00302883.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302883.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302883.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302883.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302884.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302884",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302884"
+          }
+        },
+        "asset.SLGT00302884.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302884.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302884.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302884.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302885.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302885",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302885"
+          }
+        },
+        "asset.SLGT00302885.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302885.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302885.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302885.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302886.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302886",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302886"
+          }
+        },
+        "asset.SLGT00302886.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302886.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302886.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302886.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302887.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302887",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302887"
+          }
+        },
+        "asset.SLGT00302887.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302887.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302887.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302887.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302888.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302888",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302888"
+          }
+        },
+        "asset.SLGT00302888.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302888.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302888.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302888.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302889.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302889",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302889"
+          }
+        },
+        "asset.SLGT00302889.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302889.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302889.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.SLGT00302889.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "0",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "0"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "14",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "14"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T095308_846.json": {
+      "num_runs": 1,
+      "consistent_fields": 73,
+      "total_fields": 73,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.SLGT00302876.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302876",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302876"
+          }
+        },
+        "asset.SLGT00302876.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302876.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302876.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302876.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302877.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302877",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302877"
+          }
+        },
+        "asset.SLGT00302877.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302877.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302877.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302877.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302878.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302878",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302878"
+          }
+        },
+        "asset.SLGT00302878.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302878.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302878.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302878.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302879.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302879",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302879"
+          }
+        },
+        "asset.SLGT00302879.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302879.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302879.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302879.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302880.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302880",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302880"
+          }
+        },
+        "asset.SLGT00302880.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302880.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302880.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302880.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302881.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302881",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302881"
+          }
+        },
+        "asset.SLGT00302881.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302881.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302881.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302881.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302882.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302882",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302882"
+          }
+        },
+        "asset.SLGT00302882.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302882.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302882.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302882.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302883.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302883",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302883"
+          }
+        },
+        "asset.SLGT00302883.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302883.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302883.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302883.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302884.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302884",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302884"
+          }
+        },
+        "asset.SLGT00302884.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302884.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302884.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302884.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302885.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302885",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302885"
+          }
+        },
+        "asset.SLGT00302885.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302885.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302885.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302885.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302886.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302886",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302886"
+          }
+        },
+        "asset.SLGT00302886.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302886.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302886.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302886.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302887.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302887",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302887"
+          }
+        },
+        "asset.SLGT00302887.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302887.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302887.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302887.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302888.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302888",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302888"
+          }
+        },
+        "asset.SLGT00302888.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302888.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302888.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302888.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302889.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302889",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302889"
+          }
+        },
+        "asset.SLGT00302889.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 2, upper-left area, chunk 5 of 8",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 2, upper-left area, chunk 5 of 8"
+          }
+        },
+        "asset.SLGT00302889.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302889.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.SLGT00302889.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "0",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "0"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "14",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "14"
+          }
+        }
+      }
+    }
+  }
+}

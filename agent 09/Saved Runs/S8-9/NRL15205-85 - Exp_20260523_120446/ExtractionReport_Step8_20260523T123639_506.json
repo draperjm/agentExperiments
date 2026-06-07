@@ -1,0 +1,65 @@
+{
+  "total_files": 1,
+  "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123639_506.json",
+  "extractions": [
+    {
+      "filename": "ExtractionReport_Step8_20260523T123639_506.json",
+      "document_type": "Asset Symbol Matches",
+      "document_category": "TAL",
+      "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+      "total_sections": 6,
+      "relevant_sections": 3,
+      "step_extraction": {
+        "total_assets": 6,
+        "sheets_processed": [
+          "site_plan_visual_match"
+        ],
+        "rejected_records": 3,
+        "asset_records": [
+          {
+            "asset_id": "POLE00985413",
+            "match_status": "found",
+            "label": "Pole Substation - New",
+            "symbol_description": "triangle inside a circle",
+            "diagram_location": "Page 1, lower-right area, chunk 4 of 4"
+          },
+          {
+            "asset_id": "ASSM00628168",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "PILL00400355",
+            "match_status": "found",
+            "label": "Pillar - New Excavation location",
+            "symbol_description": "rectangle",
+            "diagram_location": "Page 1, upper-left area, chunk 1 of 4"
+          },
+          {
+            "asset_id": "PILL00968214",
+            "match_status": "found",
+            "label": "Pillar - New Excavation location",
+            "symbol_description": "rectangle",
+            "diagram_location": "Page 1, upper-left area, chunk 1 of 4"
+          },
+          {
+            "asset_id": "ASSM00628169",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "ASSM00632923",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "filename": "URS35318_TAL_20250515_final.XLSM",
+  "filepath": "/documents/82&67 - Exp/URS35318_TAL_20250515_final.XLSM",
+  "document_type": "TAL",
+  "document_category": "TAL",
+  "document_quality": "spreadsheet",
+  "sheets_processed": [
+    "PILLAR"
+  ],
+  "sheets_skipped": [
+    "PROJECT"
+  ],
+  "step_extraction": {
+    "asset_records": [
+      {
+        "asset_id": "PILL00415601",
+        "serial_number": null,
+        "asset_type": "Pillars",
+        "description": "Gen, Structure LV Pillar",
+        "location": "Hoxton Park FieldServiceCentre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": "Outage Dependant Obj",
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "PILLAR",
+        "source_document": "URS35318_TAL_20250515_final.XLSM"
+      },
+      {
+        "asset_id": "PILL00415602",
+        "serial_number": null,
+        "asset_type": "Pillars",
+        "description": "Gen, Structure LV Pillar",
+        "location": "Hoxton Park FieldServiceCentre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": "Outage Dependant Obj",
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "PILLAR",
+        "source_document": "URS35318_TAL_20250515_final.XLSM"
+      },
+      {
+        "asset_id": "ASSM00749529",
+        "serial_number": null,
+        "asset_type": "Pillars",
+        "description": "Gen, UG Termination",
+        "location": "Hoxton Park FieldServiceCentre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "PILLAR",
+        "source_document": "URS35318_TAL_20250515_final.XLSM"
+      },
+      {
+        "asset_id": "ASSM00749530",
+        "serial_number": null,
+        "asset_type": "Pillars",
+        "description": "Gen, UG Termination",
+        "location": "Hoxton Park FieldServiceCentre",
+        "address": null,
+        "feeder": null,
+        "voltage_level": null,
+        "capacity_rating": null,
+        "manufacturer": null,
+        "model": null,
+        "condition_rating": null,
+        "status": null,
+        "installation_date": null,
+        "last_inspection_date": null,
+        "source_sheet": "PILLAR",
+        "source_document": "URS35318_TAL_20250515_final.XLSM"
+      }
+    ],
+    "total_assets": 4,
+    "sheets_processed": [
+      "PILLAR"
+    ],
+    "rejected_records": 0,
+    "rejected_detail": []
+  }
+}

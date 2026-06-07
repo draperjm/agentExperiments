@@ -1,0 +1,121 @@
+{
+  "total_files": 1,
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260523_095626/ExtractionReport_Step9_20260523T101649_599.json",
+  "extractions": [
+    {
+      "filename": "ExtractionReport_Step9_20260523T101649_599.json",
+      "document_type": "Enriched Asset Register",
+      "document_category": "TAL",
+      "process_step_name": "Enrich Assets with Legend Data",
+      "total_sections": 14,
+      "relevant_sections": 6,
+      "step_extraction": {
+        "total_assets": 14,
+        "sheets_processed": [
+          "asset_enrichment_sfl"
+        ],
+        "rejected_records": 8,
+        "asset_records": [
+          {
+            "asset_id": "SLGT00316949",
+            "match_confidence": "high",
+            "legend_label": "EXISTING POLE",
+            "match_method": "direct",
+            "symbol_description": "Small solid black filled circle"
+          },
+          {
+            "asset_id": "SLGT00316950",
+            "match_confidence": "high",
+            "legend_label": "EXISTING POLE",
+            "match_method": "direct",
+            "symbol_description": "Small solid black filled circle"
+          },
+          {
+            "asset_id": "SLGT00316951",
+            "match_confidence": "high",
+            "legend_label": "EXISTING POLE",
+            "match_method": "direct",
+            "symbol_description": "Small solid black filled circle"
+          },
+          {
+            "asset_id": "SLGT00316952",
+            "match_confidence": "high",
+            "legend_label": "EXISTING POLE",
+            "match_method": "direct",
+            "symbol_description": "Small solid black filled circle"
+          },
+          {
+            "asset_id": "SLGT00316955",
+            "match_confidence": "high",
+            "legend_label": "EXISTING POLE",
+            "match_method": "direct",
+            "symbol_description": "Small solid black filled circle"
+          },
+          {
+            "asset_id": "SLGT00316956",
+            "match_confidence": "high",
+            "legend_label": "EXISTING POLE",
+            "match_method": "direct",
+            "symbol_description": "Small solid black filled circle"
+          },
+          {
+            "asset_id": "SLGT00316953",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "SLGT00316954",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "SLGT00302884",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "SLGT00302885",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "SLGT00302886",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "SLGT00302887",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "SLGT00302888",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "SLGT00302889",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          }
+        ]
+      }
+    }
+  ]
+}

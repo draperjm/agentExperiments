@@ -1,0 +1,1803 @@
+{
+  "step_name": "Extract Asset Spreadsheet Data",
+  "step_description": "NOTE: Only process documents with route_to_step=6 (document_category=\"TAL\"). TAL files do not require chunking \u2014 run this step directly after Step 2 without needing Steps 3, 4, or 5. Using the processing plan from Step 2, filter the document list to only those entries with document_category of exactly \"TAL\" (Technical Asset List). These are the spreadsheet files (.xlsx, .xls, .xlsm, .xlsb) identified in Step 1. For each TAL document, use the proc-extract-asset-spreadsheet process as the extraction guide. Each spreadsheet entry from Step 2 includes worksheet_count (total sheets), worksheets_to_analyse (non-empty sheets), and a worksheets array listing each sheet name with its row_count and column_count \u2014 use these to plan how many extraction passes are needed. For each non-empty worksheet: identify the header row, map column names to standard asset fields (Asset ID, Serial Number, Asset Type, Description, Location, Address, Feeder, Voltage Level, Capacity Rating, Manufacturer, Model, Condition Rating, Status, Installation Date, Last Inspection Date), and extract every data row as a structured asset record. Include source_sheet and source_document in every record. Produce a consolidated output with all asset_records across all sheets and all TAL files. OUTPUT FILE: The agent saves a dedicated AssetExtract_{timestamp}.json file to the job output directory. This file contains: process_id, timestamp, source_documents (list of spreadsheet filenames), total_assets (integer), and asset_records (flat array of all extracted asset records across all sheets and all TAL files). This file is stored in state as asset_extraction and is available for use by Step 7 (report consolidation) and any subsequent steps.",
+  "run_output_files": [
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044310_087597.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044337_373813.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044405_325533.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044432_577707.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044500_721143.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044528_448321.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044555_575269.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044621_586436.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044650_834349.json",
+    "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/ExtractionReport_proc_extract_asset_spreadsheet_20260517_044717_456849.json"
+  ],
+  "missing_files": [],
+  "timestamp": "20260517_044744",
+  "output_file": "/app/OUTPUT/NRL15237-86 - Exp_20260517_043437/VarianceReport_Extract_Asset_Spreadsheet_Data_20260517_044744.json",
+  "num_runs": 10,
+  "files_analysed": 1,
+  "consistency_score": 0.991,
+  "consistent_fields": 92.20000000000003,
+  "total_fields": 93,
+  "verdict": "PASS",
+  "summary": "92.20000000000003/93 fields consistent across 10 runs (99%) \u2014 PASS",
+  "file_variance": {
+    "TALNRL15237_20230113140532.XLSM": {
+      "num_runs": 10,
+      "consistent_fields": 86,
+      "total_fields": 93,
+      "file_consistency_score": 0.991,
+      "fields": {
+        "asset.ASSM00717015.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717015",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "ASSM00717015",
+            "run_2": "ASSM00717015",
+            "run_3": "ASSM00717015",
+            "run_4": "ASSM00717015",
+            "run_5": "ASSM00717015",
+            "run_6": "ASSM00717015",
+            "run_7": "ASSM00717015",
+            "run_8": "ASSM00717015",
+            "run_9": "ASSM00717015",
+            "run_10": "ASSM00717015"
+          }
+        },
+        "asset.ASSM00717015.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Poles",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Poles",
+            "run_2": "Poles",
+            "run_3": "Poles",
+            "run_4": "Poles",
+            "run_5": "Poles",
+            "run_6": "Poles",
+            "run_7": "Poles",
+            "run_8": "Poles",
+            "run_9": "Poles",
+            "run_10": "Poles"
+          }
+        },
+        "asset.ASSM00717015.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "HV OH Assembly - Crossarm Type - Bare",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "HV OH Assembly - Crossarm Type - Bare",
+            "run_2": "HV OH Assembly - Crossarm Type - Bare",
+            "run_3": "HV OH Assembly - Crossarm Type - Bare",
+            "run_4": "HV OH Assembly - Crossarm Type - Bare",
+            "run_5": "HV OH Assembly - Crossarm Type - Bare",
+            "run_6": "HV OH Assembly - Crossarm Type - Bare",
+            "run_7": "HV OH Assembly - Crossarm Type - Bare",
+            "run_8": "HV OH Assembly - Crossarm Type - Bare",
+            "run_9": "HV OH Assembly - Crossarm Type - Bare",
+            "run_10": "HV OH Assembly - Crossarm Type - Bare"
+          }
+        },
+        "asset.ASSM00717015.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Moss Vale Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Moss Vale Field Service Centre",
+            "run_2": "Moss Vale Field Service Centre",
+            "run_3": "Moss Vale Field Service Centre",
+            "run_4": "Moss Vale Field Service Centre",
+            "run_5": "Moss Vale Field Service Centre",
+            "run_6": "Moss Vale Field Service Centre",
+            "run_7": "Moss Vale Field Service Centre",
+            "run_8": "Moss Vale Field Service Centre",
+            "run_9": "Moss Vale Field Service Centre",
+            "run_10": "Moss Vale Field Service Centre"
+          }
+        },
+        "asset.ASSM00717015.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717015.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00717016",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "ASSM00717016",
+            "run_2": "ASSM00717016",
+            "run_3": "ASSM00717016",
+            "run_4": "ASSM00717016",
+            "run_5": "ASSM00717016",
+            "run_6": "ASSM00717016",
+            "run_7": "ASSM00717016",
+            "run_8": "ASSM00717016",
+            "run_9": "ASSM00717016",
+            "run_10": "ASSM00717016"
+          }
+        },
+        "asset.ASSM00717016.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Poles",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Poles",
+            "run_2": "Poles",
+            "run_3": "Poles",
+            "run_4": "Poles",
+            "run_5": "Poles",
+            "run_6": "Poles",
+            "run_7": "Poles",
+            "run_8": "Poles",
+            "run_9": "Poles",
+            "run_10": "Poles"
+          }
+        },
+        "asset.ASSM00717016.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "HV OH Assembly - Crossarm Type - Bare",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "HV OH Assembly - Crossarm Type - Bare",
+            "run_2": "HV OH Assembly - Crossarm Type - Bare",
+            "run_3": "HV OH Assembly - Crossarm Type - Bare",
+            "run_4": "HV OH Assembly - Crossarm Type - Bare",
+            "run_5": "HV OH Assembly - Crossarm Type - Bare",
+            "run_6": "HV OH Assembly - Crossarm Type - Bare",
+            "run_7": "HV OH Assembly - Crossarm Type - Bare",
+            "run_8": "HV OH Assembly - Crossarm Type - Bare",
+            "run_9": "HV OH Assembly - Crossarm Type - Bare",
+            "run_10": "HV OH Assembly - Crossarm Type - Bare"
+          }
+        },
+        "asset.ASSM00717016.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Moss Vale Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Moss Vale Field Service Centre",
+            "run_2": "Moss Vale Field Service Centre",
+            "run_3": "Moss Vale Field Service Centre",
+            "run_4": "Moss Vale Field Service Centre",
+            "run_5": "Moss Vale Field Service Centre",
+            "run_6": "Moss Vale Field Service Centre",
+            "run_7": "Moss Vale Field Service Centre",
+            "run_8": "Moss Vale Field Service Centre",
+            "run_9": "Moss Vale Field Service Centre",
+            "run_10": "Moss Vale Field Service Centre"
+          }
+        },
+        "asset.ASSM00717016.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00717016.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "BBLV00037149",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "BBLV00037149",
+            "run_2": "BBLV00037149",
+            "run_3": "BBLV00037149",
+            "run_4": "BBLV00037149",
+            "run_5": "BBLV00037149",
+            "run_6": "BBLV00037149",
+            "run_7": "BBLV00037149",
+            "run_8": "BBLV00037149",
+            "run_9": "BBLV00037149",
+            "run_10": "BBLV00037149"
+          }
+        },
+        "asset.BBLV00037149.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "LV Busbar",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "LV Busbar",
+            "run_2": "LV Busbar",
+            "run_3": "LV Busbar",
+            "run_4": "LV Busbar",
+            "run_5": "LV Busbar",
+            "run_6": "LV Busbar",
+            "run_7": "LV Busbar",
+            "run_8": "LV Busbar",
+            "run_9": "LV Busbar",
+            "run_10": "LV Busbar"
+          }
+        },
+        "asset.BBLV00037149.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, LV Busbar",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, LV Busbar",
+            "run_2": "Gen, LV Busbar",
+            "run_3": "Gen, LV Busbar",
+            "run_4": "Gen, LV Busbar",
+            "run_5": "Gen, LV Busbar",
+            "run_6": "Gen, LV Busbar",
+            "run_7": "Gen, LV Busbar",
+            "run_8": "Gen, LV Busbar",
+            "run_9": "Gen, LV Busbar",
+            "run_10": "Gen, LV Busbar"
+          }
+        },
+        "asset.BBLV00037149.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Moss Vale Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Moss Vale Field Service Centre",
+            "run_2": "Moss Vale Field Service Centre",
+            "run_3": "Moss Vale Field Service Centre",
+            "run_4": "Moss Vale Field Service Centre",
+            "run_5": "Moss Vale Field Service Centre",
+            "run_6": "Moss Vale Field Service Centre",
+            "run_7": "Moss Vale Field Service Centre",
+            "run_8": "Moss Vale Field Service Centre",
+            "run_9": "Moss Vale Field Service Centre",
+            "run_10": "Moss Vale Field Service Centre"
+          }
+        },
+        "asset.BBLV00037149.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.BBLV00037149.status": {
+          "is_consistent": false,
+          "match_rate": 0.8,
+          "unique_value_count": 2,
+          "most_common_value": "Outage Dependant Obj",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Outage Dependant Obj",
+            "run_2": "",
+            "run_3": "Outage Dependant Obj",
+            "run_4": "",
+            "run_5": "Outage Dependant Obj",
+            "run_6": "Outage Dependant Obj",
+            "run_7": "Outage Dependant Obj",
+            "run_8": "Outage Dependant Obj",
+            "run_9": "Outage Dependant Obj",
+            "run_10": "Outage Dependant Obj"
+          }
+        },
+        "asset.BBLV00037149.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001157",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "POLE01001157",
+            "run_2": "POLE01001157",
+            "run_3": "POLE01001157",
+            "run_4": "POLE01001157",
+            "run_5": "POLE01001157",
+            "run_6": "POLE01001157",
+            "run_7": "POLE01001157",
+            "run_8": "POLE01001157",
+            "run_9": "POLE01001157",
+            "run_10": "POLE01001157"
+          }
+        },
+        "asset.POLE01001157.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Poles",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Poles",
+            "run_2": "Poles",
+            "run_3": "Poles",
+            "run_4": "Poles",
+            "run_5": "Poles",
+            "run_6": "Poles",
+            "run_7": "Poles",
+            "run_8": "Poles",
+            "run_9": "Poles",
+            "run_10": "Poles"
+          }
+        },
+        "asset.POLE01001157.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Structure - Distribution Use",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Pole Structure - Distribution Use",
+            "run_2": "Pole Structure - Distribution Use",
+            "run_3": "Pole Structure - Distribution Use",
+            "run_4": "Pole Structure - Distribution Use",
+            "run_5": "Pole Structure - Distribution Use",
+            "run_6": "Pole Structure - Distribution Use",
+            "run_7": "Pole Structure - Distribution Use",
+            "run_8": "Pole Structure - Distribution Use",
+            "run_9": "Pole Structure - Distribution Use",
+            "run_10": "Pole Structure - Distribution Use"
+          }
+        },
+        "asset.POLE01001157.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Moss Vale Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Moss Vale Field Service Centre",
+            "run_2": "Moss Vale Field Service Centre",
+            "run_3": "Moss Vale Field Service Centre",
+            "run_4": "Moss Vale Field Service Centre",
+            "run_5": "Moss Vale Field Service Centre",
+            "run_6": "Moss Vale Field Service Centre",
+            "run_7": "Moss Vale Field Service Centre",
+            "run_8": "Moss Vale Field Service Centre",
+            "run_9": "Moss Vale Field Service Centre",
+            "run_10": "Moss Vale Field Service Centre"
+          }
+        },
+        "asset.POLE01001157.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001157.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE01001158",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "POLE01001158",
+            "run_2": "POLE01001158",
+            "run_3": "POLE01001158",
+            "run_4": "POLE01001158",
+            "run_5": "POLE01001158",
+            "run_6": "POLE01001158",
+            "run_7": "POLE01001158",
+            "run_8": "POLE01001158",
+            "run_9": "POLE01001158",
+            "run_10": "POLE01001158"
+          }
+        },
+        "asset.POLE01001158.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Poles",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Poles",
+            "run_2": "Poles",
+            "run_3": "Poles",
+            "run_4": "Poles",
+            "run_5": "Poles",
+            "run_6": "Poles",
+            "run_7": "Poles",
+            "run_8": "Poles",
+            "run_9": "Poles",
+            "run_10": "Poles"
+          }
+        },
+        "asset.POLE01001158.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Structure - Distribution Use",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Pole Structure - Distribution Use",
+            "run_2": "Pole Structure - Distribution Use",
+            "run_3": "Pole Structure - Distribution Use",
+            "run_4": "Pole Structure - Distribution Use",
+            "run_5": "Pole Structure - Distribution Use",
+            "run_6": "Pole Structure - Distribution Use",
+            "run_7": "Pole Structure - Distribution Use",
+            "run_8": "Pole Structure - Distribution Use",
+            "run_9": "Pole Structure - Distribution Use",
+            "run_10": "Pole Structure - Distribution Use"
+          }
+        },
+        "asset.POLE01001158.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Moss Vale Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Moss Vale Field Service Centre",
+            "run_2": "Moss Vale Field Service Centre",
+            "run_3": "Moss Vale Field Service Centre",
+            "run_4": "Moss Vale Field Service Centre",
+            "run_5": "Moss Vale Field Service Centre",
+            "run_6": "Moss Vale Field Service Centre",
+            "run_7": "Moss Vale Field Service Centre",
+            "run_8": "Moss Vale Field Service Centre",
+            "run_9": "Moss Vale Field Service Centre",
+            "run_10": "Moss Vale Field Service Centre"
+          }
+        },
+        "asset.POLE01001158.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.POLE01001158.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.asset_id": {
+          "is_consistent": false,
+          "match_rate": 0.9,
+          "unique_value_count": 2,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "PRO_REMV_EQ_NO",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.asset_type": {
+          "is_consistent": false,
+          "match_rate": 0.9,
+          "unique_value_count": 2,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "EQ01",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.description": {
+          "is_consistent": false,
+          "match_rate": 0.9,
+          "unique_value_count": 2,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "Proposed Removed Equipment Number",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.status": {
+          "is_consistent": false,
+          "match_rate": 0.9,
+          "unique_value_count": 2,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "noEQ",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.PRO_REMV_EQ_NO.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": false,
+          "match_rate": 0.9,
+          "unique_value_count": 2,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "3",
+            "run_2": "2",
+            "run_3": "3",
+            "run_4": "3",
+            "run_5": "3",
+            "run_6": "3",
+            "run_7": "3",
+            "run_8": "3",
+            "run_9": "3",
+            "run_10": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"POLE\", \"SWITCHGEAR\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_2": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_3": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_4": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_5": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_6": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_7": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_8": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_9": "[\"POLE\", \"SWITCHGEAR\"]",
+            "run_10": "[\"POLE\", \"SWITCHGEAR\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": false,
+          "match_rate": 0.9,
+          "unique_value_count": 2,
+          "most_common_value": "5",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "5",
+            "run_2": "6",
+            "run_3": "5",
+            "run_4": "5",
+            "run_5": "5",
+            "run_6": "5",
+            "run_7": "5",
+            "run_8": "5",
+            "run_9": "5",
+            "run_10": "5"
+          }
+        }
+      }
+    }
+  }
+}

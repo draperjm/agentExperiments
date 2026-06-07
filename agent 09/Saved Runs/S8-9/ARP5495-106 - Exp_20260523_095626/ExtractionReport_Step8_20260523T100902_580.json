@@ -1,0 +1,121 @@
+{
+  "total_files": 1,
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260523_095626/ExtractionReport_Step8_20260523T100902_580.json",
+  "extractions": [
+    {
+      "filename": "ExtractionReport_Step8_20260523T100902_580.json",
+      "document_type": "Asset Symbol Matches",
+      "document_category": "TAL",
+      "process_step_name": "Match Assets to Site Plan Drawing Symbols",
+      "total_sections": 14,
+      "relevant_sections": 6,
+      "step_extraction": {
+        "total_assets": 14,
+        "sheets_processed": [
+          "site_plan_visual_match"
+        ],
+        "rejected_records": 8,
+        "asset_records": [
+          {
+            "asset_id": "SLGT00316949",
+            "match_status": "found",
+            "label": "EXISTING POLE",
+            "symbol_description": "Small solid black filled circle",
+            "diagram_location": "Page 1, lower-left area, chunk 3 of 4"
+          },
+          {
+            "asset_id": "SLGT00316950",
+            "match_status": "found",
+            "label": "EXISTING POLE",
+            "symbol_description": "Small solid black filled circle",
+            "diagram_location": "Page 1, lower-left area, chunk 3 of 4"
+          },
+          {
+            "asset_id": "SLGT00316951",
+            "match_status": "found",
+            "label": "EXISTING POLE",
+            "symbol_description": "Small solid black filled circle",
+            "diagram_location": "Page 1, lower-left area, chunk 3 of 4"
+          },
+          {
+            "asset_id": "SLGT00316952",
+            "match_status": "found",
+            "label": "EXISTING POLE",
+            "symbol_description": "Small solid black filled circle",
+            "diagram_location": "Page 1, lower-left area, chunk 3 of 4"
+          },
+          {
+            "asset_id": "SLGT00316953",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "SLGT00316954",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "SLGT00316955",
+            "match_status": "found",
+            "label": "EXISTING POLE",
+            "symbol_description": "Small solid black filled circle",
+            "diagram_location": "Page 1, lower-left area, chunk 3 of 4"
+          },
+          {
+            "asset_id": "SLGT00316956",
+            "match_status": "found",
+            "label": "EXISTING POLE",
+            "symbol_description": "Small solid black filled circle",
+            "diagram_location": "Page 1, lower-left area, chunk 3 of 4"
+          },
+          {
+            "asset_id": "SLGT00302884",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "SLGT00302885",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "SLGT00302886",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "SLGT00302887",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "SLGT00302888",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          },
+          {
+            "asset_id": "SLGT00302889",
+            "match_status": "not_found",
+            "label": null,
+            "symbol_description": null,
+            "diagram_location": null
+          }
+        ]
+      }
+    }
+  ]
+}

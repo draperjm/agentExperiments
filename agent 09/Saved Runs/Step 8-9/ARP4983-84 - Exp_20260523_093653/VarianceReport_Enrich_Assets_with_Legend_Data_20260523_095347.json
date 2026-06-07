@@ -1,0 +1,2235 @@
+{
+  "step_name": "Enrich Assets with Legend Data",
+  "step_description": "Using the asset records from Step 7 and the symbol matches from Step 8, produce a fully enriched asset register via two-phase SFL linkage. Phase A \u2014 SFL lookup: for each asset whose own bare ID was not found in Step 8 (match_status 'not_found'), read the asset's 'superior_functional_location' field from the Step 7 TAL data (e.g. 'POLE01011307'), strip its prefix and leading zeros to a bare number (e.g. '1011307'), and check whether that bare number is present in Step 8's found_bare_map. If the superior asset WAS found on the drawing, inherit its symbol_description and legend label and set match_confidence to 'high'. Example: SLGT00316949 has superior_functional_location='POLE01011307'; bare SFL number is '1011307'; Step 8 found 1011307 with symbol 'Small hollow open circle' and label 'NEW POLE'; SLGT00316949 is therefore enriched with that label and confidence 'high'. Phase B \u2014 SFL chunk search: for assets whose SFL bare number was not in Step 8's found_bare_map (i.e. the superior asset was not itself in the TAL), search the site plan drawing chunks visually for the SFL bare number, and when found identify the adjacent symbol. Assets with no SFL field and those whose SFL was not found anywhere receive match_confidence 'none'.",
+  "run_output_files": [
+    "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step9_20260523T095346_961.json",
+    "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step9_20260523T095347_030.json",
+    "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step9_20260523T095347_144.json"
+  ],
+  "missing_files": [],
+  "timestamp": "20260523_095347",
+  "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/VarianceReport_Enrich_Assets_with_Legend_Data_20260523_095347.json",
+  "num_runs": 3,
+  "files_analysed": 3,
+  "consistency_score": 1.0,
+  "consistent_fields": 219.0,
+  "total_fields": 219,
+  "verdict": "PASS",
+  "summary": "219.0/219 fields consistent across 3 runs (100%) \u2014 PASS",
+  "file_variance": {
+    "ExtractionReport_Step9_20260523T095346_961.json": {
+      "num_runs": 1,
+      "consistent_fields": 73,
+      "total_fields": 73,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.SLGT00302876.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302876",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302876"
+          }
+        },
+        "asset.SLGT00302876.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302876.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302876.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302876.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302877.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302877",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302877"
+          }
+        },
+        "asset.SLGT00302877.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302877.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302877.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302877.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302878.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302878",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302878"
+          }
+        },
+        "asset.SLGT00302878.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302878.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302878.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302878.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302879.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302879",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302879"
+          }
+        },
+        "asset.SLGT00302879.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302879.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302879.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302879.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302880.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302880",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302880"
+          }
+        },
+        "asset.SLGT00302880.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302880.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302880.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302880.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302881.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302881",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302881"
+          }
+        },
+        "asset.SLGT00302881.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302881.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302881.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302881.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302882.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302882",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302882"
+          }
+        },
+        "asset.SLGT00302882.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302882.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302882.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302882.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302883.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302883",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302883"
+          }
+        },
+        "asset.SLGT00302883.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302883.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302883.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302883.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302884.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302884",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302884"
+          }
+        },
+        "asset.SLGT00302884.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302884.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302884.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302884.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302885.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302885",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302885"
+          }
+        },
+        "asset.SLGT00302885.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302885.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302885.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302885.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302886.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302886",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302886"
+          }
+        },
+        "asset.SLGT00302886.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302886.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302886.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302886.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302887.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302887",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302887"
+          }
+        },
+        "asset.SLGT00302887.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302887.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302887.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302887.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302888.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302888",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302888"
+          }
+        },
+        "asset.SLGT00302888.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302888.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302888.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302888.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302889.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302889",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302889"
+          }
+        },
+        "asset.SLGT00302889.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302889.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "high"
+          }
+        },
+        "asset.SLGT00302889.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "direct"
+          }
+        },
+        "asset.SLGT00302889.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Small hollow open square"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "0",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "0"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "14",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "14"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T095347_030.json": {
+      "num_runs": 1,
+      "consistent_fields": 73,
+      "total_fields": 73,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.SLGT00302876.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302876",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302876"
+          }
+        },
+        "asset.SLGT00302876.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302876.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302876.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302876.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302877.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302877",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302877"
+          }
+        },
+        "asset.SLGT00302877.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302877.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302877.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302877.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302878.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302878",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302878"
+          }
+        },
+        "asset.SLGT00302878.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302878.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302878.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302878.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302879.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302879",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302879"
+          }
+        },
+        "asset.SLGT00302879.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302879.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302879.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302879.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302880.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302880",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302880"
+          }
+        },
+        "asset.SLGT00302880.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302880.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302880.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302880.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302881.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302881",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302881"
+          }
+        },
+        "asset.SLGT00302881.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302881.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302881.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302881.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302882.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302882",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302882"
+          }
+        },
+        "asset.SLGT00302882.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302882.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302882.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302882.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302883.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302883",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302883"
+          }
+        },
+        "asset.SLGT00302883.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302883.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302883.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302883.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302884.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302884",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302884"
+          }
+        },
+        "asset.SLGT00302884.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302884.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302884.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302884.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302885.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302885",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302885"
+          }
+        },
+        "asset.SLGT00302885.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302885.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302885.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302885.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302886.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302886",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302886"
+          }
+        },
+        "asset.SLGT00302886.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302886.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302886.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302886.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302887.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302887",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302887"
+          }
+        },
+        "asset.SLGT00302887.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302887.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302887.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302887.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302888.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302888",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302888"
+          }
+        },
+        "asset.SLGT00302888.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302888.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302888.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302888.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302889.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302889",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "SLGT00302889"
+          }
+        },
+        "asset.SLGT00302889.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302889.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "high"
+          }
+        },
+        "asset.SLGT00302889.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "direct"
+          }
+        },
+        "asset.SLGT00302889.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Small hollow open square"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "0",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "0"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "14",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "14"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step9_20260523T095347_144.json": {
+      "num_runs": 1,
+      "consistent_fields": 73,
+      "total_fields": 73,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.SLGT00302876.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302876",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302876"
+          }
+        },
+        "asset.SLGT00302876.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302876.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302876.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302876.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302877.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302877",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302877"
+          }
+        },
+        "asset.SLGT00302877.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302877.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302877.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302877.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302878.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302878",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302878"
+          }
+        },
+        "asset.SLGT00302878.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302878.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302878.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302878.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302879.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302879",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302879"
+          }
+        },
+        "asset.SLGT00302879.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302879.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302879.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302879.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302880.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302880",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302880"
+          }
+        },
+        "asset.SLGT00302880.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302880.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302880.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302880.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302881.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302881",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302881"
+          }
+        },
+        "asset.SLGT00302881.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302881.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302881.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302881.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302882.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302882",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302882"
+          }
+        },
+        "asset.SLGT00302882.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302882.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302882.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302882.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302883.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302883",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302883"
+          }
+        },
+        "asset.SLGT00302883.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302883.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302883.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302883.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302884.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302884",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302884"
+          }
+        },
+        "asset.SLGT00302884.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302884.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302884.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302884.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302885.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302885",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302885"
+          }
+        },
+        "asset.SLGT00302885.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302885.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302885.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302885.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302886.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302886",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302886"
+          }
+        },
+        "asset.SLGT00302886.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302886.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302886.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302886.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302887.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302887",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302887"
+          }
+        },
+        "asset.SLGT00302887.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302887.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302887.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302887.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302888.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302888",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302888"
+          }
+        },
+        "asset.SLGT00302888.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302888.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302888.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302888.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "asset.SLGT00302889.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302889",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "SLGT00302889"
+          }
+        },
+        "asset.SLGT00302889.legend_label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "NEW COLUMN",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "NEW COLUMN"
+          }
+        },
+        "asset.SLGT00302889.match_confidence": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "high",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "high"
+          }
+        },
+        "asset.SLGT00302889.match_method": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "direct",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "direct"
+          }
+        },
+        "asset.SLGT00302889.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Small hollow open square",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Small hollow open square"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "0",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "0"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"asset_enrichment_sfl\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "[\"asset_enrichment_sfl\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "14",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "14"
+          }
+        }
+      }
+    }
+  }
+}

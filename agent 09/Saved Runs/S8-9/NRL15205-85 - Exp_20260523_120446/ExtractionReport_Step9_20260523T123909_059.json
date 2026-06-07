@@ -1,0 +1,65 @@
+{
+  "total_files": 1,
+  "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step9_20260523T123909_059.json",
+  "extractions": [
+    {
+      "filename": "ExtractionReport_Step9_20260523T123909_059.json",
+      "document_type": "Enriched Asset Register",
+      "document_category": "TAL",
+      "process_step_name": "Enrich Assets with Legend Data",
+      "total_sections": 6,
+      "relevant_sections": 3,
+      "step_extraction": {
+        "total_assets": 6,
+        "sheets_processed": [
+          "asset_enrichment_sfl"
+        ],
+        "rejected_records": 3,
+        "asset_records": [
+          {
+            "asset_id": "POLE00985413",
+            "match_confidence": "high",
+            "legend_label": "Pole Substation - New",
+            "match_method": "direct",
+            "symbol_description": "triangle inside a circle"
+          },
+          {
+            "asset_id": "PILL00400355",
+            "match_confidence": "high",
+            "legend_label": "Pillar - New Excavation location",
+            "match_method": "direct",
+            "symbol_description": "rectangle"
+          },
+          {
+            "asset_id": "PILL00968214",
+            "match_confidence": "high",
+            "legend_label": "Pillar - New Excavation location",
+            "match_method": "direct",
+            "symbol_description": "rectangle"
+          },
+          {
+            "asset_id": "ASSM00628168",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "ASSM00628169",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "ASSM00632923",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "report_type": "Customer Connections Review Analysis Report",
+  "generated_at": "2026-05-23T06:13:46.915768Z",
+  "consolidated_report_path": "/app/OUTPUT/NRL15205-85 - Exp_20260523_060530/ConsolidatedReport_20260523T061310.json",
+  "data_sources": {
+    "funding_items": "5 items \u2014 Design Brief sub-step-extract-funding-determination (step 4)",
+    "supply_requirements": "12 items \u2014 Design Brief LV/HV/SL sub-steps (step 4)",
+    "legend_symbols": "13 symbols \u2014 Drawing legend extraction (step 6)",
+    "asset_register": "6 assets \u2014 Enriched TAL spreadsheet (step 9, Python-built)"
+  },
+  "analysis_report": {
+    "funding_details": {
+      "funding_details": {
+        "total_capital_contribution": null,
+        "contestable_works": [
+          {
+            "item": "All other works required",
+            "description": "All other works required",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "non_contestable_works": [
+          {
+            "item": "Network switching, substation commissioning, contract inspection",
+            "description": "Network switching, substation commissioning, contract inspection",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "ancillary_costs": [
+          {
+            "item": "Duct usage charge as required",
+            "description": "Duct usage charge as required",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "other_funding_items": [
+          {
+            "item": "1 x 200 kVA transformer only",
+            "description": "1 x 200 kVA transformer only",
+            "amount": null,
+            "responsible_party": "Endeavour Energy"
+          },
+          {
+            "item": "Spare HV duct as per Fact Sheet 11",
+            "description": "Spare HV duct as per Fact Sheet 11",
+            "amount": null,
+            "responsible_party": "Endeavour Energy"
+          }
+        ],
+        "payment_instructions": {
+          "method": null,
+          "bsb": null,
+          "account": null,
+          "reference": null
+        },
+        "notes": [
+          "1 x 200 kVA transformer only and Spare HV duct as per Fact Sheet 11 are classified as capital contribution funded by Endeavour Energy and placed under other_funding_items as they do not map to contestable, non-contestable, or ancillary categories.",
+          "Duct usage charge as required is classified as a reimbursement to be paid to Endeavour Energy by the Customer and placed under ancillary_costs.",
+          "No amount or formula values were available for any funding item.",
+          "No payment instructions were present in the provided data."
+        ]
+      }
+    },
+    "method_of_supply_comparison": {
+      "method_of_supply_comparison": {
+        "design_brief_requirements": [],
+        "site_plan_scope_found": [],
+        "missing_from_site_plan": [],
+        "summary": "No supply_requirements data was provided in the dataset. The input contains only funding_items records (sourced from the Determination of Funding section). Without supply_requirements items pre-extracted from the Design Brief LV, HV, and SL sections, no comparison against the reference_data legend symbols can be performed. Please provide the supply_requirements dataset to complete this analysis."
+      }
+    },
+    "funding_arrangement_comparison": {
+      "funding_arrangement_comparison": {
+        "design_brief_funded_works": [
+          "1 x 200 kVA transformer only",
+          "Spare HV duct as per Fact Sheet 11",
+          "Duct usage charge as required",
+          "Network switching, substation commissioning, contract inspection",
+          "All other works required"
+        ],
+        "drawing_scope_found": [
+          "1 x 200 kVA transformer only: Pole Substation - New",
+          "Spare HV duct as per Fact Sheet 11: Duct Indicator"
+        ],
+        "missing_from_drawing": [
+          {
+            "item": "Duct usage charge as required",
+            "design_brief_reference": "Determination of Funding, Page 3",
+            "note": "Duct usage charge is a financial/administrative reimbursement item. No corresponding legend symbol exists in the drawing to represent this charge."
+          },
+          {
+            "item": "Network switching, substation commissioning, contract inspection",
+            "design_brief_reference": "Determination of Funding, Page 3",
+            "note": "These are non-contestable service activities (switching, commissioning, inspection). No corresponding legend symbol exists in the drawing to represent these works."
+          },
+          {
+            "item": "All other works required",
+            "design_brief_reference": "Determination of Funding, Page 3",
+            "note": "This is a broad catch-all contestable works item. No specific corresponding legend symbol exists in the drawing to represent this scope."
+          }
+        ],
+        "summary": "Of the 5 funded works items identified in the Design Brief Determination of Funding Requirements section (Page 3), 2 have corresponding legend symbols in the drawing: the 200 kVA transformer aligns with the 'Pole Substation - New' symbol, and the spare HV duct aligns with the 'Duct Indicator' symbol. The remaining 3 items \u2014 duct usage charge, network switching/commissioning/inspection, and all other works \u2014 have no corresponding legend symbols in the drawing. This is expected for financial/administrative and service-based items, but the broad 'All other works required' category warrants further review to confirm all physical works are adequately represented on the drawing."
+      }
+    },
+    "asset_register": {
+      "asset_register": [
+        {
+          "asset_id": "POLE00985413",
+          "tal_asset_id": "POLE00985413",
+          "bare_id": "985413",
+          "serial_number": null,
+          "asset_type": "Poles",
+          "description": null,
+          "model": null,
+          "source_sheet": "POLE",
+          "source_document": "TALNRL15205_20230118142012.XLSM",
+          "legend_label": "Pole Substation - New",
+          "legend_category": "equipment",
+          "symbol_description": "triangle inside a circle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "PILL00400355",
+          "tal_asset_id": "PILL00400355",
+          "bare_id": "400355",
+          "serial_number": null,
+          "asset_type": "Pillars",
+          "description": null,
+          "model": null,
+          "source_sheet": "PILLAR",
+          "source_document": "TALNRL15205_20230118142012.XLSM",
+          "legend_label": "Pillar - New Excavation location",
+          "legend_category": "equipment",
+          "symbol_description": "rectangle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "PILL00968214",
+          "tal_asset_id": "PILL00968214",
+          "bare_id": "968214",
+          "serial_number": null,
+          "asset_type": "Pillars",
+          "description": null,
+          "model": null,
+          "source_sheet": "PILLAR",
+          "source_document": "TALNRL15205_20230118142012.XLSM",
+          "legend_label": "Pillar - New Excavation location",
+          "legend_category": "equipment",
+          "symbol_description": "rectangle",
+          "action_status": "new",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "ASSM00628168",
+          "tal_asset_id": "ASSM00628168",
+          "bare_id": "628168",
+          "serial_number": null,
+          "asset_type": "Poles",
+          "description": null,
+          "model": null,
+          "source_sheet": "POLE",
+          "source_document": "TALNRL15205_20230118142012.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "ASSM00628169",
+          "tal_asset_id": "ASSM00628169",
+          "bare_id": "628169",
+          "serial_number": null,
+          "asset_type": "Pillars",
+          "description": "UG Termination",
+          "model": null,
+          "source_sheet": "PILLAR",
+          "source_document": "TALNRL15205_20230118142012.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "ASSM00632923",
+          "tal_asset_id": "ASSM00632923",
+          "bare_id": "632923",
+          "serial_number": null,
+          "asset_type": "Pillars",
+          "description": "UG Termination",
+          "model": null,
+          "source_sheet": "PILLAR",
+          "source_document": "TALNRL15205_20230118142012.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        }
+      ],
+      "register_summary": {
+        "total": 6,
+        "new": 3,
+        "remove": 0,
+        "replace": 0,
+        "existing": 0,
+        "unknown": 3,
+        "found_on_diagram": 3,
+        "not_found": 3
+      },
+      "_source": "enriched_assets_step_9_python_built"
+    }
+  },
+  "summary": {
+    "total_assets": 6,
+    "found_on_diagram": 3,
+    "not_found": 3,
+    "supply_scope_gaps": 0,
+    "drawing_scope_gaps": 3
+  },
+  "_content_review": {
+    "reviewed_at": "2026-05-23T06:13:46.915891Z",
+    "issues": [],
+    "section_status": {
+      "funding": "ok",
+      "supply_comparison": "ok",
+      "funding_comparison": "ok",
+      "asset_register": "ok"
+    },
+    "style_complete": true
+  }
+}

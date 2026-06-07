@@ -1,0 +1,121 @@
+{
+  "total_files": 1,
+  "output_file": "/app/OUTPUT/ARP4983-84 - Exp_20260523_093653/ExtractionReport_Step9_20260523T095347_030.json",
+  "extractions": [
+    {
+      "filename": "ExtractionReport_Step9_20260523T095347_030.json",
+      "document_type": "Enriched Asset Register",
+      "document_category": "TAL",
+      "process_step_name": "Enrich Assets with Legend Data",
+      "total_sections": 14,
+      "relevant_sections": 14,
+      "step_extraction": {
+        "total_assets": 14,
+        "sheets_processed": [
+          "asset_enrichment_sfl"
+        ],
+        "rejected_records": 0,
+        "asset_records": [
+          {
+            "asset_id": "SLGT00302876",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302877",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302878",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302879",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302880",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302881",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302882",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302883",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302884",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302885",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302886",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302887",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302888",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          },
+          {
+            "asset_id": "SLGT00302889",
+            "match_confidence": "high",
+            "legend_label": "NEW COLUMN",
+            "match_method": "direct",
+            "symbol_description": "Small hollow open square"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,4083 @@
+{
+  "step_name": "Extract Asset Spreadsheet Data",
+  "step_description": "NOTE: Only process documents with route_to_step=6 (document_category=\"TAL\"). TAL files do not require chunking \u2014 run this step directly after Step 2 without needing Steps 3, 4, or 5. Using the processing plan from Step 2, filter the document list to only those entries with document_category of exactly \"TAL\" (Technical Asset List). These are the spreadsheet files (.xlsx, .xls, .xlsm, .xlsb) identified in Step 1. For each TAL document, use the proc-extract-asset-spreadsheet process as the extraction guide. Each spreadsheet entry from Step 2 includes worksheet_count (total sheets), worksheets_to_analyse (non-empty sheets), and a worksheets array listing each sheet name with its row_count and column_count \u2014 use these to plan how many extraction passes are needed. For each non-empty worksheet: identify the header row, map column names to standard asset fields (Asset ID, Serial Number, Asset Type, Description, Location, Address, Feeder, Voltage Level, Capacity Rating, Manufacturer, Model, Condition Rating, Status, Installation Date, Last Inspection Date), and extract every data row as a structured asset record. Include source_sheet and source_document in every record. Produce a consolidated output with all asset_records across all sheets and all TAL files. OUTPUT FILE: The agent saves a dedicated AssetExtract_{timestamp}.json file to the job output directory. This file contains: process_id, timestamp, source_documents (list of spreadsheet filenames), total_assets (integer), and asset_records (flat array of all extracted asset records across all sheets and all TAL files). This file is stored in state as asset_extraction and is available for use by Step 7 (report consolidation) and any subsequent steps.",
+  "run_output_files": [
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032251_319147.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032322_996188.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032352_579004.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032421_048656.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032449_799787.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032518_346228.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032546_637431.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032614_670558.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032642_946827.json",
+    "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/ExtractionReport_proc_extract_asset_spreadsheet_20260517_032711_526587.json"
+  ],
+  "missing_files": [],
+  "timestamp": "20260517_032740",
+  "output_file": "/app/OUTPUT/ARP5495-106 - Exp_20260517_031613/VarianceReport_Extract_Asset_Spreadsheet_Data_20260517_032740.json",
+  "num_runs": 10,
+  "files_analysed": 1,
+  "consistency_score": 0.997,
+  "consistent_fields": 212.39999999999998,
+  "total_fields": 213,
+  "verdict": "PASS",
+  "summary": "212.39999999999998/213 fields consistent across 10 runs (100%) \u2014 PASS",
+  "file_variance": {
+    "ARP5495_TAL_202503141.XLSM": {
+      "num_runs": 10,
+      "consistent_fields": 211,
+      "total_fields": 213,
+      "file_consistency_score": 0.997,
+      "fields": {
+        "asset.SLGT00302884.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302884",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302884",
+            "run_2": "SLGT00302884",
+            "run_3": "SLGT00302884",
+            "run_4": "SLGT00302884",
+            "run_5": "SLGT00302884",
+            "run_6": "SLGT00302884",
+            "run_7": "SLGT00302884",
+            "run_8": "SLGT00302884",
+            "run_9": "SLGT00302884",
+            "run_10": "SLGT00302884"
+          }
+        },
+        "asset.SLGT00302884.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00302884.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00302884.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Hoxton Park FieldServiceCentre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Hoxton Park FieldServiceCentre",
+            "run_2": "Hoxton Park FieldServiceCentre",
+            "run_3": "Hoxton Park FieldServiceCentre",
+            "run_4": "Hoxton Park FieldServiceCentre",
+            "run_5": "Hoxton Park FieldServiceCentre",
+            "run_6": "Hoxton Park FieldServiceCentre",
+            "run_7": "Hoxton Park FieldServiceCentre",
+            "run_8": "Hoxton Park FieldServiceCentre",
+            "run_9": "Hoxton Park FieldServiceCentre",
+            "run_10": "Hoxton Park FieldServiceCentre"
+          }
+        },
+        "asset.SLGT00302884.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "165W LED RoadLED Midi",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "165W LED RoadLED Midi",
+            "run_2": "165W LED RoadLED Midi",
+            "run_3": "165W LED RoadLED Midi",
+            "run_4": "165W LED RoadLED Midi",
+            "run_5": "165W LED RoadLED Midi",
+            "run_6": "165W LED RoadLED Midi",
+            "run_7": "165W LED RoadLED Midi",
+            "run_8": "165W LED RoadLED Midi",
+            "run_9": "165W LED RoadLED Midi",
+            "run_10": "165W LED RoadLED Midi"
+          }
+        },
+        "asset.SLGT00302884.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302884.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302885",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302885",
+            "run_2": "SLGT00302885",
+            "run_3": "SLGT00302885",
+            "run_4": "SLGT00302885",
+            "run_5": "SLGT00302885",
+            "run_6": "SLGT00302885",
+            "run_7": "SLGT00302885",
+            "run_8": "SLGT00302885",
+            "run_9": "SLGT00302885",
+            "run_10": "SLGT00302885"
+          }
+        },
+        "asset.SLGT00302885.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00302885.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00302885.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Hoxton Park FieldServiceCentre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Hoxton Park FieldServiceCentre",
+            "run_2": "Hoxton Park FieldServiceCentre",
+            "run_3": "Hoxton Park FieldServiceCentre",
+            "run_4": "Hoxton Park FieldServiceCentre",
+            "run_5": "Hoxton Park FieldServiceCentre",
+            "run_6": "Hoxton Park FieldServiceCentre",
+            "run_7": "Hoxton Park FieldServiceCentre",
+            "run_8": "Hoxton Park FieldServiceCentre",
+            "run_9": "Hoxton Park FieldServiceCentre",
+            "run_10": "Hoxton Park FieldServiceCentre"
+          }
+        },
+        "asset.SLGT00302885.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "165W LED RoadLED Midi",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "165W LED RoadLED Midi",
+            "run_2": "165W LED RoadLED Midi",
+            "run_3": "165W LED RoadLED Midi",
+            "run_4": "165W LED RoadLED Midi",
+            "run_5": "165W LED RoadLED Midi",
+            "run_6": "165W LED RoadLED Midi",
+            "run_7": "165W LED RoadLED Midi",
+            "run_8": "165W LED RoadLED Midi",
+            "run_9": "165W LED RoadLED Midi",
+            "run_10": "165W LED RoadLED Midi"
+          }
+        },
+        "asset.SLGT00302885.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302885.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302886",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302886",
+            "run_2": "SLGT00302886",
+            "run_3": "SLGT00302886",
+            "run_4": "SLGT00302886",
+            "run_5": "SLGT00302886",
+            "run_6": "SLGT00302886",
+            "run_7": "SLGT00302886",
+            "run_8": "SLGT00302886",
+            "run_9": "SLGT00302886",
+            "run_10": "SLGT00302886"
+          }
+        },
+        "asset.SLGT00302886.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00302886.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00302886.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Hoxton Park FieldServiceCentre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Hoxton Park FieldServiceCentre",
+            "run_2": "Hoxton Park FieldServiceCentre",
+            "run_3": "Hoxton Park FieldServiceCentre",
+            "run_4": "Hoxton Park FieldServiceCentre",
+            "run_5": "Hoxton Park FieldServiceCentre",
+            "run_6": "Hoxton Park FieldServiceCentre",
+            "run_7": "Hoxton Park FieldServiceCentre",
+            "run_8": "Hoxton Park FieldServiceCentre",
+            "run_9": "Hoxton Park FieldServiceCentre",
+            "run_10": "Hoxton Park FieldServiceCentre"
+          }
+        },
+        "asset.SLGT00302886.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "165W LED RoadLED Midi",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "165W LED RoadLED Midi",
+            "run_2": "165W LED RoadLED Midi",
+            "run_3": "165W LED RoadLED Midi",
+            "run_4": "165W LED RoadLED Midi",
+            "run_5": "165W LED RoadLED Midi",
+            "run_6": "165W LED RoadLED Midi",
+            "run_7": "165W LED RoadLED Midi",
+            "run_8": "165W LED RoadLED Midi",
+            "run_9": "165W LED RoadLED Midi",
+            "run_10": "165W LED RoadLED Midi"
+          }
+        },
+        "asset.SLGT00302886.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302886.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302887",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302887",
+            "run_2": "SLGT00302887",
+            "run_3": "SLGT00302887",
+            "run_4": "SLGT00302887",
+            "run_5": "SLGT00302887",
+            "run_6": "SLGT00302887",
+            "run_7": "SLGT00302887",
+            "run_8": "SLGT00302887",
+            "run_9": "SLGT00302887",
+            "run_10": "SLGT00302887"
+          }
+        },
+        "asset.SLGT00302887.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00302887.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00302887.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Hoxton Park FieldServiceCentre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Hoxton Park FieldServiceCentre",
+            "run_2": "Hoxton Park FieldServiceCentre",
+            "run_3": "Hoxton Park FieldServiceCentre",
+            "run_4": "Hoxton Park FieldServiceCentre",
+            "run_5": "Hoxton Park FieldServiceCentre",
+            "run_6": "Hoxton Park FieldServiceCentre",
+            "run_7": "Hoxton Park FieldServiceCentre",
+            "run_8": "Hoxton Park FieldServiceCentre",
+            "run_9": "Hoxton Park FieldServiceCentre",
+            "run_10": "Hoxton Park FieldServiceCentre"
+          }
+        },
+        "asset.SLGT00302887.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "275W LED ROADLED S-S",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "275W LED ROADLED S-S",
+            "run_2": "275W LED ROADLED S-S",
+            "run_3": "275W LED ROADLED S-S",
+            "run_4": "275W LED ROADLED S-S",
+            "run_5": "275W LED ROADLED S-S",
+            "run_6": "275W LED ROADLED S-S",
+            "run_7": "275W LED ROADLED S-S",
+            "run_8": "275W LED ROADLED S-S",
+            "run_9": "275W LED ROADLED S-S",
+            "run_10": "275W LED ROADLED S-S"
+          }
+        },
+        "asset.SLGT00302887.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302887.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302888",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302888",
+            "run_2": "SLGT00302888",
+            "run_3": "SLGT00302888",
+            "run_4": "SLGT00302888",
+            "run_5": "SLGT00302888",
+            "run_6": "SLGT00302888",
+            "run_7": "SLGT00302888",
+            "run_8": "SLGT00302888",
+            "run_9": "SLGT00302888",
+            "run_10": "SLGT00302888"
+          }
+        },
+        "asset.SLGT00302888.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00302888.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00302888.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Hoxton Park FieldServiceCentre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Hoxton Park FieldServiceCentre",
+            "run_2": "Hoxton Park FieldServiceCentre",
+            "run_3": "Hoxton Park FieldServiceCentre",
+            "run_4": "Hoxton Park FieldServiceCentre",
+            "run_5": "Hoxton Park FieldServiceCentre",
+            "run_6": "Hoxton Park FieldServiceCentre",
+            "run_7": "Hoxton Park FieldServiceCentre",
+            "run_8": "Hoxton Park FieldServiceCentre",
+            "run_9": "Hoxton Park FieldServiceCentre",
+            "run_10": "Hoxton Park FieldServiceCentre"
+          }
+        },
+        "asset.SLGT00302888.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "275W LED ROADLED S-S",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "275W LED ROADLED S-S",
+            "run_2": "275W LED ROADLED S-S",
+            "run_3": "275W LED ROADLED S-S",
+            "run_4": "275W LED ROADLED S-S",
+            "run_5": "275W LED ROADLED S-S",
+            "run_6": "275W LED ROADLED S-S",
+            "run_7": "275W LED ROADLED S-S",
+            "run_8": "275W LED ROADLED S-S",
+            "run_9": "275W LED ROADLED S-S",
+            "run_10": "275W LED ROADLED S-S"
+          }
+        },
+        "asset.SLGT00302888.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302888.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00302889",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00302889",
+            "run_2": "SLGT00302889",
+            "run_3": "SLGT00302889",
+            "run_4": "SLGT00302889",
+            "run_5": "SLGT00302889",
+            "run_6": "SLGT00302889",
+            "run_7": "SLGT00302889",
+            "run_8": "SLGT00302889",
+            "run_9": "SLGT00302889",
+            "run_10": "SLGT00302889"
+          }
+        },
+        "asset.SLGT00302889.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00302889.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00302889.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Hoxton Park FieldServiceCentre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Hoxton Park FieldServiceCentre",
+            "run_2": "Hoxton Park FieldServiceCentre",
+            "run_3": "Hoxton Park FieldServiceCentre",
+            "run_4": "Hoxton Park FieldServiceCentre",
+            "run_5": "Hoxton Park FieldServiceCentre",
+            "run_6": "Hoxton Park FieldServiceCentre",
+            "run_7": "Hoxton Park FieldServiceCentre",
+            "run_8": "Hoxton Park FieldServiceCentre",
+            "run_9": "Hoxton Park FieldServiceCentre",
+            "run_10": "Hoxton Park FieldServiceCentre"
+          }
+        },
+        "asset.SLGT00302889.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "275W LED ROADLED S-S",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "275W LED ROADLED S-S",
+            "run_2": "275W LED ROADLED S-S",
+            "run_3": "275W LED ROADLED S-S",
+            "run_4": "275W LED ROADLED S-S",
+            "run_5": "275W LED ROADLED S-S",
+            "run_6": "275W LED ROADLED S-S",
+            "run_7": "275W LED ROADLED S-S",
+            "run_8": "275W LED ROADLED S-S",
+            "run_9": "275W LED ROADLED S-S",
+            "run_10": "275W LED ROADLED S-S"
+          }
+        },
+        "asset.SLGT00302889.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00302889.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316949",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316949",
+            "run_2": "SLGT00316949",
+            "run_3": "SLGT00316949",
+            "run_4": "SLGT00316949",
+            "run_5": "SLGT00316949",
+            "run_6": "SLGT00316949",
+            "run_7": "SLGT00316949",
+            "run_8": "SLGT00316949",
+            "run_9": "SLGT00316949",
+            "run_10": "SLGT00316949"
+          }
+        },
+        "asset.SLGT00316949.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316949.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00316949.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316949.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "61W LED 3K ROADLED MIDI STD Vi",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_2": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_3": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_4": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_5": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_6": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_7": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_8": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_9": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_10": "61W LED 3K ROADLED MIDI STD Vi"
+          }
+        },
+        "asset.SLGT00316949.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316949.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316950",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316950",
+            "run_2": "SLGT00316950",
+            "run_3": "SLGT00316950",
+            "run_4": "SLGT00316950",
+            "run_5": "SLGT00316950",
+            "run_6": "SLGT00316950",
+            "run_7": "SLGT00316950",
+            "run_8": "SLGT00316950",
+            "run_9": "SLGT00316950",
+            "run_10": "SLGT00316950"
+          }
+        },
+        "asset.SLGT00316950.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316950.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00316950.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316950.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "61W LED 3K ROADLED MIDI STD Vi",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_2": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_3": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_4": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_5": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_6": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_7": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_8": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_9": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_10": "61W LED 3K ROADLED MIDI STD Vi"
+          }
+        },
+        "asset.SLGT00316950.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316950.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316951",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316951",
+            "run_2": "SLGT00316951",
+            "run_3": "SLGT00316951",
+            "run_4": "SLGT00316951",
+            "run_5": "SLGT00316951",
+            "run_6": "SLGT00316951",
+            "run_7": "SLGT00316951",
+            "run_8": "SLGT00316951",
+            "run_9": "SLGT00316951",
+            "run_10": "SLGT00316951"
+          }
+        },
+        "asset.SLGT00316951.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316951.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00316951.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316951.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "61W LED 3K ROADLED MIDI STD Vi",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_2": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_3": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_4": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_5": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_6": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_7": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_8": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_9": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_10": "61W LED 3K ROADLED MIDI STD Vi"
+          }
+        },
+        "asset.SLGT00316951.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316951.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316952",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316952",
+            "run_2": "SLGT00316952",
+            "run_3": "SLGT00316952",
+            "run_4": "SLGT00316952",
+            "run_5": "SLGT00316952",
+            "run_6": "SLGT00316952",
+            "run_7": "SLGT00316952",
+            "run_8": "SLGT00316952",
+            "run_9": "SLGT00316952",
+            "run_10": "SLGT00316952"
+          }
+        },
+        "asset.SLGT00316952.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316952.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00316952.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316952.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "61W LED 3K ROADLED MIDI STD Vi",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_2": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_3": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_4": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_5": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_6": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_7": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_8": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_9": "61W LED 3K ROADLED MIDI STD Vi",
+            "run_10": "61W LED 3K ROADLED MIDI STD Vi"
+          }
+        },
+        "asset.SLGT00316952.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316952.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316953",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316953",
+            "run_2": "SLGT00316953",
+            "run_3": "SLGT00316953",
+            "run_4": "SLGT00316953",
+            "run_5": "SLGT00316953",
+            "run_6": "SLGT00316953",
+            "run_7": "SLGT00316953",
+            "run_8": "SLGT00316953",
+            "run_9": "SLGT00316953",
+            "run_10": "SLGT00316953"
+          }
+        },
+        "asset.SLGT00316953.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316953.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316953.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.status": {
+          "is_consistent": false,
+          "match_rate": 0.7,
+          "unique_value_count": 3,
+          "most_common_value": "X",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "X",
+            "run_2": "X (Deletion Flag)",
+            "run_3": "X",
+            "run_4": "X",
+            "run_5": "X",
+            "run_6": "X",
+            "run_7": "",
+            "run_8": "X",
+            "run_9": "X",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316953.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316954",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316954",
+            "run_2": "SLGT00316954",
+            "run_3": "SLGT00316954",
+            "run_4": "SLGT00316954",
+            "run_5": "SLGT00316954",
+            "run_6": "SLGT00316954",
+            "run_7": "SLGT00316954",
+            "run_8": "SLGT00316954",
+            "run_9": "SLGT00316954",
+            "run_10": "SLGT00316954"
+          }
+        },
+        "asset.SLGT00316954.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316954.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316954.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.status": {
+          "is_consistent": false,
+          "match_rate": 0.7,
+          "unique_value_count": 3,
+          "most_common_value": "X",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "X",
+            "run_2": "X (Deletion Flag)",
+            "run_3": "X",
+            "run_4": "X",
+            "run_5": "X",
+            "run_6": "X",
+            "run_7": "",
+            "run_8": "X",
+            "run_9": "X",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316954.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316955",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316955",
+            "run_2": "SLGT00316955",
+            "run_3": "SLGT00316955",
+            "run_4": "SLGT00316955",
+            "run_5": "SLGT00316955",
+            "run_6": "SLGT00316955",
+            "run_7": "SLGT00316955",
+            "run_8": "SLGT00316955",
+            "run_9": "SLGT00316955",
+            "run_10": "SLGT00316955"
+          }
+        },
+        "asset.SLGT00316955.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316955.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00316955.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316955.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "120W LED 4K ROADLED MIDI Aeros",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "120W LED 4K ROADLED MIDI Aeros",
+            "run_2": "120W LED 4K ROADLED MIDI Aeros",
+            "run_3": "120W LED 4K ROADLED MIDI Aeros",
+            "run_4": "120W LED 4K ROADLED MIDI Aeros",
+            "run_5": "120W LED 4K ROADLED MIDI Aeros",
+            "run_6": "120W LED 4K ROADLED MIDI Aeros",
+            "run_7": "120W LED 4K ROADLED MIDI Aeros",
+            "run_8": "120W LED 4K ROADLED MIDI Aeros",
+            "run_9": "120W LED 4K ROADLED MIDI Aeros",
+            "run_10": "120W LED 4K ROADLED MIDI Aeros"
+          }
+        },
+        "asset.SLGT00316955.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316955.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.address": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "SLGT00316956",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "SLGT00316956",
+            "run_2": "SLGT00316956",
+            "run_3": "SLGT00316956",
+            "run_4": "SLGT00316956",
+            "run_5": "SLGT00316956",
+            "run_6": "SLGT00316956",
+            "run_7": "SLGT00316956",
+            "run_8": "SLGT00316956",
+            "run_9": "SLGT00316956",
+            "run_10": "SLGT00316956"
+          }
+        },
+        "asset.SLGT00316956.asset_type": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Streetlights",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Streetlights",
+            "run_2": "Streetlights",
+            "run_3": "Streetlights",
+            "run_4": "Streetlights",
+            "run_5": "Streetlights",
+            "run_6": "Streetlights",
+            "run_7": "Streetlights",
+            "run_8": "Streetlights",
+            "run_9": "Streetlights",
+            "run_10": "Streetlights"
+          }
+        },
+        "asset.SLGT00316956.capacity_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.condition_rating": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Gen, Street Lighting",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Gen, Street Lighting",
+            "run_2": "Gen, Street Lighting",
+            "run_3": "Gen, Street Lighting",
+            "run_4": "Gen, Street Lighting",
+            "run_5": "Gen, Street Lighting",
+            "run_6": "Gen, Street Lighting",
+            "run_7": "Gen, Street Lighting",
+            "run_8": "Gen, Street Lighting",
+            "run_9": "Gen, Street Lighting",
+            "run_10": "Gen, Street Lighting"
+          }
+        },
+        "asset.SLGT00316956.feeder": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.installation_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.last_inspection_date": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Windsor Field Service Centre",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Windsor Field Service Centre",
+            "run_2": "Windsor Field Service Centre",
+            "run_3": "Windsor Field Service Centre",
+            "run_4": "Windsor Field Service Centre",
+            "run_5": "Windsor Field Service Centre",
+            "run_6": "Windsor Field Service Centre",
+            "run_7": "Windsor Field Service Centre",
+            "run_8": "Windsor Field Service Centre",
+            "run_9": "Windsor Field Service Centre",
+            "run_10": "Windsor Field Service Centre"
+          }
+        },
+        "asset.SLGT00316956.manufacturer": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.model": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "175W LED SLED Maximus Pedstran",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "175W LED SLED Maximus Pedstran",
+            "run_2": "175W LED SLED Maximus Pedstran",
+            "run_3": "175W LED SLED Maximus Pedstran",
+            "run_4": "175W LED SLED Maximus Pedstran",
+            "run_5": "175W LED SLED Maximus Pedstran",
+            "run_6": "175W LED SLED Maximus Pedstran",
+            "run_7": "175W LED SLED Maximus Pedstran",
+            "run_8": "175W LED SLED Maximus Pedstran",
+            "run_9": "175W LED SLED Maximus Pedstran",
+            "run_10": "175W LED SLED Maximus Pedstran"
+          }
+        },
+        "asset.SLGT00316956.serial_number": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "asset.SLGT00316956.voltage_level": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "",
+            "run_2": "",
+            "run_3": "",
+            "run_4": "",
+            "run_5": "",
+            "run_6": "",
+            "run_7": "",
+            "run_8": "",
+            "run_9": "",
+            "run_10": ""
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "0",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "0",
+            "run_2": "0",
+            "run_3": "0",
+            "run_4": "0",
+            "run_5": "0",
+            "run_6": "0",
+            "run_7": "0",
+            "run_8": "0",
+            "run_9": "0",
+            "run_10": "0"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"STREETLIGHT\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "[\"STREETLIGHT\"]",
+            "run_2": "[\"STREETLIGHT\"]",
+            "run_3": "[\"STREETLIGHT\"]",
+            "run_4": "[\"STREETLIGHT\"]",
+            "run_5": "[\"STREETLIGHT\"]",
+            "run_6": "[\"STREETLIGHT\"]",
+            "run_7": "[\"STREETLIGHT\"]",
+            "run_8": "[\"STREETLIGHT\"]",
+            "run_9": "[\"STREETLIGHT\"]",
+            "run_10": "[\"STREETLIGHT\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "14",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "14",
+            "run_2": "14",
+            "run_3": "14",
+            "run_4": "14",
+            "run_5": "14",
+            "run_6": "14",
+            "run_7": "14",
+            "run_8": "14",
+            "run_9": "14",
+            "run_10": "14"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3408 @@
+{
+  "step_name": "Match Assets to Site Plan Drawing Symbols",
+  "step_description": "Using the asset records from Step 7, the text annotations extracted from the site plan in Step 5 (sub-step-extract-all-notes), and the drawing legend from Step 6, locate each asset in the site plan drawing text and identify which legend symbol is associated with it. For each asset record: (1) Strip all leading alphabetic prefix characters and any leading zeros from the asset_id to produce a bare numeric ID (e.g. SLGT00302876 \u2192 302876, CB00045 \u2192 45, TX0001234 \u2192 1234). (2) Search the Step 5 extracted site plan text for the bare numeric ID as a text token or label \u2014 asset IDs appear as numeric labels adjacent to their drawing symbols in the annotated text. (3) When found, examine the text context immediately surrounding the bare ID to infer which drawing symbol is associated with it, then match that context to the best-fitting legend entry from Step 6 (comparing symbol descriptions and labels). Set symbol_description and label from the matched legend entry and match_status to 'found'. (4) If the bare ID is not found in the extracted text, set symbol_description and label to null and match_status to 'not_found'. Output an updated_assets array containing every original asset record from Step 7 with four new fields added: bare_id, symbol_description, label, and match_status. Also output asset_symbol_matches (the raw per-asset match results) and match_summary totals.",
+  "run_output_files": [
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T121648_092.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123251_400.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123338_658.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123425_309.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123508_813.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123555_938.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123639_506.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123722_432.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123804_289.json",
+    "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/ExtractionReport_Step8_20260523T123848_318.json"
+  ],
+  "missing_files": [],
+  "timestamp": "20260523_123848",
+  "output_file": "/app/OUTPUT/NRL15205-85 - Exp_20260523_120446/VarianceReport_Match_Assets_to_Site_Plan_Drawing_Symbol_20260523_123848.json",
+  "num_runs": 10,
+  "files_analysed": 10,
+  "consistency_score": 1.0,
+  "consistent_fields": 330.0,
+  "total_fields": 330,
+  "verdict": "PASS",
+  "summary": "330.0/330 fields consistent across 10 runs (100%) \u2014 PASS",
+  "file_variance": {
+    "ExtractionReport_Step8_20260523T121648_092.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_1": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123251_400.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_2": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123338_658.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_3": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123425_309.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_4": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123508_813.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_5": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123555_938.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_6": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123639_506.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_7": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123722_432.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_8": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123804_289.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_9": "6"
+          }
+        }
+      }
+    },
+    "ExtractionReport_Step8_20260523T123848_318.json": {
+      "num_runs": 1,
+      "consistent_fields": 33,
+      "total_fields": 33,
+      "file_consistency_score": 1.0,
+      "fields": {
+        "asset.ASSM00628168.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628168",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "ASSM00628168"
+          }
+        },
+        "asset.ASSM00628168.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00628168.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00628168.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "not_found"
+          }
+        },
+        "asset.ASSM00628168.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00628169.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00628169",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "ASSM00628169"
+          }
+        },
+        "asset.ASSM00628169.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00628169.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00628169.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "not_found"
+          }
+        },
+        "asset.ASSM00628169.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00632923.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "ASSM00632923",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "ASSM00632923"
+          }
+        },
+        "asset.ASSM00632923.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00632923.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.ASSM00632923.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "not_found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "not_found"
+          }
+        },
+        "asset.ASSM00632923.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": ""
+          }
+        },
+        "asset.PILL00400355.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00400355",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "PILL00400355"
+          }
+        },
+        "asset.PILL00400355.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00400355.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00400355.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "found"
+          }
+        },
+        "asset.PILL00400355.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "rectangle"
+          }
+        },
+        "asset.PILL00968214.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "PILL00968214",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "PILL00968214"
+          }
+        },
+        "asset.PILL00968214.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, upper-left area, chunk 1 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "Page 1, upper-left area, chunk 1 of 4"
+          }
+        },
+        "asset.PILL00968214.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pillar - New Excavation location",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "Pillar - New Excavation location"
+          }
+        },
+        "asset.PILL00968214.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "found"
+          }
+        },
+        "asset.PILL00968214.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "rectangle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "rectangle"
+          }
+        },
+        "asset.POLE00985413.asset_id": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "POLE00985413",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "POLE00985413"
+          }
+        },
+        "asset.POLE00985413.diagram_location": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Page 1, lower-right area, chunk 4 of 4",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "Page 1, lower-right area, chunk 4 of 4"
+          }
+        },
+        "asset.POLE00985413.label": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "Pole Substation - New",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "Pole Substation - New"
+          }
+        },
+        "asset.POLE00985413.match_status": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "found",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "found"
+          }
+        },
+        "asset.POLE00985413.symbol_description": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "triangle inside a circle",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "triangle inside a circle"
+          }
+        },
+        "rejected_records": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "3",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "3"
+          }
+        },
+        "sheets_processed": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "[\"site_plan_visual_match\"]",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "[\"site_plan_visual_match\"]"
+          }
+        },
+        "total_assets": {
+          "is_consistent": true,
+          "match_rate": 1.0,
+          "unique_value_count": 1,
+          "most_common_value": "6",
+          "fuzzy_variants_absorbed": null,
+          "values_by_run": {
+            "run_10": "6"
+          }
+        }
+      }
+    }
+  }
+}

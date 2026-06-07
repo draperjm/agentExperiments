@@ -1,0 +1,58 @@
+{
+  "total_files": 1,
+  "output_file": "/app/OUTPUT/NRL15237-86 - Exp_20260523_123942/ExtractionReport_Step9_20260523T132746_842.json",
+  "extractions": [
+    {
+      "filename": "ExtractionReport_Step9_20260523T132746_842.json",
+      "document_type": "Enriched Asset Register",
+      "document_category": "TAL",
+      "process_step_name": "Enrich Assets with Legend Data",
+      "total_sections": 5,
+      "relevant_sections": 2,
+      "step_extraction": {
+        "total_assets": 5,
+        "sheets_processed": [
+          "asset_enrichment_sfl"
+        ],
+        "rejected_records": 3,
+        "asset_records": [
+          {
+            "asset_id": "POLE01001157",
+            "match_confidence": "high",
+            "legend_label": null,
+            "match_method": "direct",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "POLE01001158",
+            "match_confidence": "high",
+            "legend_label": null,
+            "match_method": "direct",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "ASSM00717015",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "ASSM00717016",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          },
+          {
+            "asset_id": "BBLV00037149",
+            "match_confidence": "none",
+            "legend_label": null,
+            "match_method": "no_sfl",
+            "symbol_description": null
+          }
+        ]
+      }
+    }
+  ]
+}

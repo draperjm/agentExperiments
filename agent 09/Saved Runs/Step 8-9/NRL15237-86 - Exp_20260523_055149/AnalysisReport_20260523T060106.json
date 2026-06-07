@@ -1,0 +1,206 @@
+{
+  "report_type": "Customer Connections Review Analysis Report",
+  "generated_at": "2026-05-23T06:01:06.828371Z",
+  "consolidated_report_path": "/app/OUTPUT/NRL15237-86 - Exp_20260523_055149/ConsolidatedReport_20260523T060036.json",
+  "data_sources": {
+    "funding_items": "3 items \u2014 Design Brief sub-step-extract-funding-determination (step 4)",
+    "supply_requirements": "10 items \u2014 Design Brief LV/HV/SL sub-steps (step 4)",
+    "legend_symbols": "7 symbols \u2014 Drawing legend extraction (step 6)",
+    "asset_register": "5 assets \u2014 Enriched TAL spreadsheet (step 9, Python-built)"
+  },
+  "analysis_report": {
+    "funding_details": {
+      "funding_details": {
+        "total_capital_contribution": null,
+        "contestable_works": [
+          {
+            "item": "All other works required.",
+            "description": "All other works required.",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "non_contestable_works": [
+          {
+            "item": "Network switching, substation commissioning, contract inspection",
+            "description": "Network switching, substation commissioning, contract inspection",
+            "amount": null,
+            "responsible_party": "Customer"
+          }
+        ],
+        "ancillary_costs": [],
+        "other_funding_items": [
+          {
+            "item": "Capital contribution for 11kV 25kVA Single Phase Pole Top Transformer.",
+            "description": "Capital contribution for 11kV 25kVA Single Phase Pole Top Transformer.",
+            "amount": null,
+            "responsible_party": "Endeavour Energy"
+          }
+        ],
+        "payment_instructions": {
+          "method": null,
+          "bsb": null,
+          "account": null,
+          "reference": null
+        },
+        "notes": [
+          "All amounts are null as no monetary values or formulas were provided in the funding_items data.",
+          "The capital contribution item has been placed in other_funding_items as its funding_category is 'capital contribution', which does not map to contestable, non_contestable, or ancillary categories.",
+          "No payment_instructions data was available in the provided dataset.",
+          "Only items present in the funding_items list have been included; no additional items have been inferred or invented."
+        ]
+      }
+    },
+    "method_of_supply_comparison": {
+      "method_of_supply_comparison": {
+        "design_brief_requirements": [],
+        "site_plan_scope_found": [],
+        "missing_from_site_plan": [],
+        "summary": "No supply_requirements data was provided in the input. The data supplied contains only funding_items records (capital contribution, non-contestable, and contestable funding line items from the Determination of Funding section). Without supply_requirements items extracted from the Design Brief LV, HV and SL sections, no comparison against reference_data legend symbols can be performed. Please provide the supply_requirements dataset to complete this analysis."
+      }
+    },
+    "funding_arrangement_comparison": {
+      "funding_arrangement_comparison": {
+        "design_brief_funded_works": [
+          "Capital contribution for 11kV 25kVA Single Phase Pole Top Transformer.",
+          "Network switching, substation commissioning, contract inspection",
+          "All other works required."
+        ],
+        "drawing_scope_found": [
+          "Capital contribution for 11kV 25kVA Single Phase Pole Top Transformer.: Pole Substation"
+        ],
+        "missing_from_drawing": [
+          {
+            "item": "Network switching, substation commissioning, contract inspection",
+            "design_brief_reference": "Determination of Funding, Page 3",
+            "note": "No legend symbol found in reference_data representing network switching, substation commissioning or contract inspection activities."
+          },
+          {
+            "item": "All other works required.",
+            "design_brief_reference": "Determination of Funding, Page 3",
+            "note": "No specific legend symbol found in reference_data corresponding to this general works description."
+          }
+        ],
+        "summary": "Of the 3 funded works items extracted from the Design Brief Determination of Funding section, 1 item has a corresponding legend symbol in the drawing reference data: the 11kV 25kVA Single Phase Pole Top Transformer maps to the 'Pole Substation' legend symbol (Circle with triangle inside). The remaining 2 items \u2014 network switching/substation commissioning/contract inspection and all other works required \u2014 have no direct corresponding legend symbol in the drawing, indicating these funded activities are not explicitly represented in the drawing legend and may require further verification against the drawing content."
+      }
+    },
+    "asset_register": {
+      "asset_register": [
+        {
+          "asset_id": "POLE01001157",
+          "tal_asset_id": "POLE01001157",
+          "bare_id": "1001157",
+          "serial_number": null,
+          "asset_type": "Poles",
+          "description": "Pole Structure - Distribution Use",
+          "model": null,
+          "source_sheet": "POLE",
+          "source_document": "TALNRL15237_20230113140532.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "POLE01001158",
+          "tal_asset_id": "POLE01001158",
+          "bare_id": "1001158",
+          "serial_number": null,
+          "asset_type": "Poles",
+          "description": "Pole Structure - Distribution Use",
+          "model": null,
+          "source_sheet": "POLE",
+          "source_document": "TALNRL15237_20230113140532.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "high",
+          "found_on_diagram": true
+        },
+        {
+          "asset_id": "ASSM00717015",
+          "tal_asset_id": "ASSM00717015",
+          "bare_id": "717015",
+          "serial_number": null,
+          "asset_type": "Poles",
+          "description": "HV OH Assembly - Crossarm Type - Bare",
+          "model": null,
+          "source_sheet": "POLE",
+          "source_document": "TALNRL15237_20230113140532.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "ASSM00717016",
+          "tal_asset_id": "ASSM00717016",
+          "bare_id": "717016",
+          "serial_number": null,
+          "asset_type": "Poles",
+          "description": "HV OH Assembly - Crossarm Type - Bare",
+          "model": null,
+          "source_sheet": "POLE",
+          "source_document": "TALNRL15237_20230113140532.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        },
+        {
+          "asset_id": "BBLV00037149",
+          "tal_asset_id": "BBLV00037149",
+          "bare_id": "37149",
+          "serial_number": null,
+          "asset_type": "LV Busbar",
+          "description": "Gen, LV Busbar",
+          "model": null,
+          "source_sheet": "SWITCHGEAR",
+          "source_document": "TALNRL15237_20230113140532.XLSM",
+          "legend_label": null,
+          "legend_category": null,
+          "symbol_description": null,
+          "action_status": "unknown",
+          "match_confidence": "none",
+          "found_on_diagram": false
+        }
+      ],
+      "register_summary": {
+        "total": 5,
+        "new": 0,
+        "remove": 0,
+        "replace": 0,
+        "existing": 0,
+        "unknown": 5,
+        "found_on_diagram": 2,
+        "not_found": 3
+      },
+      "_source": "enriched_assets_step_9_python_built"
+    }
+  },
+  "summary": {
+    "total_assets": 5,
+    "found_on_diagram": 2,
+    "not_found": 3,
+    "supply_scope_gaps": 0,
+    "drawing_scope_gaps": 2
+  },
+  "_content_review": {
+    "reviewed_at": "2026-05-23T06:01:06.828491Z",
+    "issues": [],
+    "section_status": {
+      "funding": "ok",
+      "supply_comparison": "ok",
+      "funding_comparison": "ok",
+      "asset_register": "ok"
+    },
+    "style_complete": true
+  }
+}

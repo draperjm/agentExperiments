@@ -1,0 +1,233 @@
+{
+  "filename": "NRL15205_DESIGN_BRIEF_v1.1.pdf",
+  "filepath": "/documents/NRL15205-85 - Exp/NRL15205_DESIGN_BRIEF_v1.1.pdf",
+  "document_type": "Design Brief",
+  "document_category": "Design Brief",
+  "input_text_quality": "high",
+  "document_quality": "text",
+  "page_size": "A4",
+  "requires_chunking": false,
+  "chunk_strategy": "none",
+  "estimated_chunks": 1,
+  "process_step_name": "Extract Design Brief Information",
+  "total_sections": 4,
+  "relevant_sections": 2,
+  "sub_step_extractions": {
+    "sub-step-extract-funding-ancillary-fees": {
+      "fees": [],
+      "total_amount_payable": null
+    },
+    "sub-step-extract-sl": {
+      "SL_Works_Section": [],
+      "SL_Visual_Markups": [],
+      "SL_Material_Funding": [],
+      "SL_Standard_Compliance": []
+    },
+    "sub-step-extract-easements": {
+      "easement_requirements": [
+        {
+          "description": "Easement for Electrical Purposes minimum of 1m wide over the LV supply from Private Pillar 1 burdening Lot 5 DP 244410 in favour of Lot 4 DP 244410 and Lot 3 DP 244410.",
+          "source_section": "October 2021",
+          "source_page": 2
+        }
+      ]
+    },
+    "sub-step-extract-lv": {
+      "LV Works": [
+        {
+          "description": "Remove the Overhead (OH) LV cable currently located between pole ref '23' and pole ref '20' on the southern side of Elizabeth Drive.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        },
+        {
+          "description": "String a new OH cable between pole ref '3' and pole ref '20' on the northern side of Elizabeth Drive.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        }
+      ],
+      "Compliance Standards": [
+        {
+          "description": "Ensure all LV service works comply with the NSW Service and Installation Rules.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        },
+        {
+          "description": "Confirm the design adheres to Endeavour Energy standards MDI0031 and MCI0005.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        }
+      ],
+      "Service Connections": [
+        {
+          "description": "Locate the General section regarding the 'New OH road crossing service connection' intended to maintain existing services.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        }
+      ]
+    },
+    "sub-step-extract-earthing": {
+      "Earthing Technical Requirements": [
+        {
+          "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+          "source_section": "October 2021",
+          "source_page": 2
+        }
+      ],
+      "Specific Earthing Standards": [],
+      "Substation Specific Earthing": [
+        {
+          "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+          "source_section": "October 2021",
+          "source_page": 2
+        }
+      ]
+    },
+    "sub-step-extract-funding-determination": {
+      "items": [
+        {
+          "item_description": "1 x 200 kVA transformer only",
+          "funding_category": "capital contribution",
+          "responsible_party": "Endeavour Energy",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        },
+        {
+          "item_description": "Spare HV duct as per Fact Sheet 11",
+          "funding_category": "capital contribution",
+          "responsible_party": "Endeavour Energy",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        },
+        {
+          "item_description": "Duct usage charge as required",
+          "funding_category": "reimbursements to be paid to Endeavour Energy by Customer",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        },
+        {
+          "item_description": "Network switching, substation commissioning, contract inspection",
+          "funding_category": "customer funded non-contestable works",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        },
+        {
+          "item_description": "All other works required",
+          "funding_category": "customer funded contestable works",
+          "responsible_party": "Customer",
+          "amount_or_formula": null,
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        }
+      ]
+    },
+    "sub-step-extract-payment-instructions": {
+      "Preferred Payment Method": {
+        "description": "EFT is the primary method",
+        "source_section": "Determination of Funding",
+        "source_page": 3
+      },
+      "Banking Details": {
+        "description": "BSB: 012-003, Account Number: 8376 89858",
+        "source_section": "Determination of Funding",
+        "source_page": 3
+      },
+      "Mandatory Transaction References": {
+        "description": "Unique alphanumeric reference code (e.g., ARP4983A2) must be quoted in the EFT transaction field",
+        "source_section": "Determination of Funding",
+        "source_page": 3
+      },
+      "Document Remittance and Restriction Requirements": {
+        "description": "Email for remittance copies: remittances@endeavourenergy.com.au; credit cards and cheques are not accepted",
+        "source_section": "Determination of Funding",
+        "source_page": 3
+      },
+      "Invoice Policy": {
+        "description": "Formal Tax Invoice will be provided following the receipt of payment",
+        "source_section": "Determination of Funding",
+        "source_page": 3
+      }
+    },
+    "sub-step-extract-hv": {
+      "Primary HV Method of Supply": [
+        {
+          "description": "Replace existing Pole 829583 with a 12.5m/12kN wood Pole 1.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        },
+        {
+          "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        },
+        {
+          "description": "Remove HV mains between Pole 1 and Pole 2.",
+          "source_section": "Method Of Supply Requirement",
+          "source_page": 2
+        }
+      ],
+      "HV Infrastructure Funding and Materials": [
+        {
+          "description": "Capital contribution: 1 x 200 kVA transformer only",
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        },
+        {
+          "description": "Spare HV duct as per Fact Sheet 11",
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        },
+        {
+          "description": "Reimbursements to be paid to Endeavour Energy by Customer: Duct usage charge as required",
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        },
+        {
+          "description": "Customer Funded Non-Contestable Works: Network switching, substation commissioning, contract inspection",
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        }
+      ],
+      "Compliance Standards": []
+    },
+    "sub-step-extract-substation": {
+      "Substation Works": [
+        {
+          "description": "Decommission and remove Pole Sub 31174.",
+          "source_section": "October 2021",
+          "source_page": 2
+        },
+        {
+          "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1, with Separate Earthing.",
+          "source_section": "October 2021",
+          "source_page": 2
+        }
+      ],
+      "Technical Ratings and References": [
+        {
+          "description": "Currently 25kVA single phase Pole Substation 31174 supplies Lot 3 DP 244410, Lot 4 DP 244410 and Lot 5 DP 244410.",
+          "source_section": "October 2021",
+          "source_page": 2
+        },
+        {
+          "description": "Install a 200kVA, 3 Phase Semi Rural Substation on the new 12.5m/12kN Pole 1.",
+          "source_section": "October 2021",
+          "source_page": 2
+        }
+      ],
+      "Substation Commissioning Responsibilities": [
+        {
+          "description": "Network switching, substation commissioning, contract inspection",
+          "source_section": "Determination of Funding",
+          "source_page": 3
+        }
+      ],
+      "Substation Clearances and Standards": []
+    }
+  }
+}
