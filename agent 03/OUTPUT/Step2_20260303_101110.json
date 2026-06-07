@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Horizontal line with a long dash followed by two short dashes",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Series of short evenly spaced horizontal dashes",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Horizontal line with a long dash followed by a single short dash",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Horizontal line with a pattern of a long dash, a forward slash, a short dash, and another forward slash",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Two parallel solid horizontal lines",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Solid black circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Solid black square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Hollow square outline",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Solid black vertical rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Hollow vertical rectangle outline",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Symbol consisting of a vertical and horizontal line intersecting, with four shorter diagonal lines also intersecting at the same center point",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Circle with an inscribed plus sign",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Triangle with an inscribed plus sign",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with an inscribed 'X' symbol",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Horizontal dashed line with a short vertical line centered on each dash",
+    "asset_type": "EXISTING FENCE"
+  }
+]

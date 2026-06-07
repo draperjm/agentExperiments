@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Single solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single dashed horizontal line",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating dashes and dots (dash-dot-dash pattern)",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Two parallel dashed horizontal lines",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Two parallel horizontal lines, each composed of repeating dash-slash patterns (e.g., -/-)",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Two parallel thick solid horizontal lines",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid square",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid circle",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow rectangle",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "A cross symbol inside a circle, with four short lines extending outwards horizontally and vertically from the circle",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Circle with a cross inside it",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Triangle with a cross inside it",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Square with an 'X' inside it",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Solid horizontal line with perpendicular short tick marks at regular intervals below it",
+    "asset_type": "EXISTING FENCE"
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "Icon": "Single solid horizontal line",
+    "asset_type": "EXISTING OVERHEAD CONDUCTOR"
+  },
+  {
+    "Icon": "Single long-dashed horizontal line",
+    "asset_type": "EXISTING UNDERGROUND MAINS"
+  },
+  {
+    "Icon": "Single short-dashed horizontal line",
+    "asset_type": "LAY 40MM PVC DUCT"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and single dots",
+    "asset_type": "LOW VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating short dashes and two dots",
+    "asset_type": "HIGH VOLTAGE TRENCHING"
+  },
+  {
+    "Icon": "Thick solid horizontal line with a right-pointing arrow at its right end",
+    "asset_type": "INSTALL DUCTS"
+  },
+  {
+    "Icon": "Thick solid horizontal line without an arrow",
+    "asset_type": "EXISTING DUCTS"
+  },
+  {
+    "Icon": "Small solid filled circle",
+    "asset_type": "EXISTING POLE"
+  },
+  {
+    "Icon": "Small solid filled square",
+    "asset_type": "EXISTING COLUMN"
+  },
+  {
+    "Icon": "Small hollow square",
+    "asset_type": "NEW COLUMN"
+  },
+  {
+    "Icon": "Small solid filled vertical rectangle",
+    "asset_type": "EXISTING PILLAR"
+  },
+  {
+    "Icon": "Small hollow vertical rectangle",
+    "asset_type": "NEW PILLAR"
+  },
+  {
+    "Icon": "Four-pointed star shape (cross with diagonals) composed of thin lines",
+    "asset_type": "NEW LANTERN"
+  },
+  {
+    "Icon": "Four-pointed star shape enclosed within a circle",
+    "asset_type": "EXISTING LANTERN"
+  },
+  {
+    "Icon": "Upright triangle enclosed within a circle",
+    "asset_type": "EXISTING POLE SUBSTATION"
+  },
+  {
+    "Icon": "Large hollow square with an 'X' drawn inside",
+    "asset_type": "NEW PADMOUNT SUBSTATION"
+  },
+  {
+    "Icon": "Single horizontal line composed of alternating long dashes and two shorter perpendicular hash marks",
+    "asset_type": "EXISTING FENCE"
+  }
+]

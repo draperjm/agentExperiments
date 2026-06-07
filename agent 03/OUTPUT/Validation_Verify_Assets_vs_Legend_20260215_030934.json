@@ -1,0 +1,48 @@
+{
+  "is_valid": true,
+  "confidence": "Medium",
+  "score": 95,
+  "summary": "The agent successfully processed all input assets and generated a structured verification report. All expected symbols were reported as observed and verified, maintaining internal consistency with the input.",
+  "checks": [
+    {
+      "check": "Output is a valid JSON object.",
+      "passed": true,
+      "detail": "The output data is a well-formed JSON object."
+    },
+    {
+      "check": "Output contains 'report' key with 'verification_report' list as specified in validation criteria.",
+      "passed": true,
+      "detail": "The output structure matches the expected format: `{\"status\": ..., \"report\": {\"verification_report\": [...]}, \"output_file\": ...}`."
+    },
+    {
+      "check": "Number of assets in the input `asset_map` matches the number of entries in `verification_report`.",
+      "passed": true,
+      "detail": "Input `asset_map` has 39 entries, and `output.report.verification_report` also has 39 entries, indicating completeness."
+    },
+    {
+      "check": "All assets from the input `asset_map` are represented in the output `verification_report`.",
+      "passed": true,
+      "detail": "Each `asset_number` and `asset_type` from the input `asset_map` is present in the output `verification_report`."
+    },
+    {
+      "check": "Values for `asset_number`, `asset_type`, and `expected_icon_description` in the output match the corresponding input values.",
+      "passed": true,
+      "detail": "All `asset_number`, `asset_type`, and `expected_icon_description` fields in the output's verification report accurately reflect the input data."
+    },
+    {
+      "check": "The `observed_symbol` in the output consistently matches the `expected_icon_description` for each asset.",
+      "passed": true,
+      "detail": "For every asset, the `observed_symbol` is an exact match to the `expected_icon_description`, implying successful verification by the agent."
+    },
+    {
+      "check": "The `status` for all assets is 'VERIFIED' and `confidence` is 'High', consistent with observed symbols matching expectations.",
+      "passed": true,
+      "detail": "All assets are marked as 'VERIFIED' with 'High' confidence, which is consistent with the reported exact matches between expected and observed symbols."
+    }
+  ],
+  "issues": [],
+  "recommendations": [
+    "While the agent's output is internally consistent, the core task of 'visually cross-reference' could not be validated directly by the QA validator without access to the actual P&ID drawing. This is a system limitation for validation rather than an agent issue, but it means confidence cannot be 'High' from an external validation perspective."
+  ],
+  "step_name": "Verify Assets vs Legend"
+}
